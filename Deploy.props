@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <CommonArea>trunk</CommonArea>
+    <QmlArea>Main</QmlArea>
+    <QmlVersionArea>trunk</QmlVersionArea>
+    <UpdateSystemArea>trunk</UpdateSystemArea>
+    <RestApiArea>trunk</RestApiArea>
+    <SettingsArea>trunk</SettingsArea>
+    <AutoRunHelperArea>trunk</AutoRunHelperArea>
+    <Log4QtArea>trunk</Log4QtArea>
+    <BugTrapArea>1.3.3718.38316</BugTrapArea>
+    <UpdateSystemViewModelArea>trunk</UpdateSystemViewModelArea>
+    <CoreArea>trunk</CoreArea>
+    <LibtorrentWrapperArea>trunk</LibtorrentWrapperArea>
+    <GameDownloaderArea>trunk</GameDownloaderArea>
+    <GameExecutorArea>trunk</GameExecutorArea>
+    <ApplicationArea>trunk</ApplicationArea>
+    <OpenSSLArea>0.9.8r</OpenSSLArea>
+    <QmlExtensionArea>trunk</QmlExtensionArea>
+    <QxmppArea>0.6.3</QxmppArea>
+    <MarketingArea>trunk</MarketingArea>
+    <CASettingsArea>trunk</CASettingsArea>
+    <OverlayArea>trunk</OverlayArea>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="CommonArea">
+      <Value>$(CommonArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="QmlArea">
+      <Value>$(QmlArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="QmlVersionArea">
+      <Value>$(QmlVersionArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="UpdateSystemArea">
+      <Value>$(UpdateSystemArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="RestApiArea">
+      <Value>$(RestApiArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="SettingsArea">
+      <Value>$(SettingsArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="AutoRunHelperArea">
+      <Value>$(AutoRunHelperArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="Log4QtArea">
+      <Value>$(Log4QtArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BugTrapArea">
+      <Value>$(BugTrapArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="UpdateSystemViewModelArea">
+      <Value>$(UpdateSystemViewModelArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CoreArea">
+      <Value>$(CoreArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LibtorrentWrapperArea">
+      <Value>$(LibtorrentWrapperArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GameDownloaderArea">
+      <Value>$(GameDownloaderArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GameExecutorArea">
+      <Value>$(GameExecutorArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ApplicationArea">
+      <Value>$(ApplicationArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="OpenSSLArea">
+      <Value>$(OpenSSLArea)</Value>
+    </BuildMacro>
+    <BuildMacro Include="QmlExtensionArea">
+      <Value>$(QmlExtensionArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="QxmppArea">
+      <Value>$(QxmppArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="MarketingArea">
+      <Value>$(MarketingArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CASettingsArea">
+      <Value>$(CASettingsArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="OverlayArea">
+      <Value>$(OverlayArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

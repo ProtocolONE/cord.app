@@ -1,0 +1,1 @@
+CALL "D:\Prog\Qt\!GIT\QGNA Application\application\\Etc\tsmerge.cmd" en "D:\Prog\Qt\!GIT\QGNA Application\application\!build\qGNA\Debug\languages\qgna" "D:\Prog\Qt\!GIT\QGNA Application\application\!build\qGNA\Debug\."

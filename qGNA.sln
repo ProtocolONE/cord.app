@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qGNA", "qGNA\qGNA.vcxproj", "{7ACF4961-015A-43B4-99D5-DA43AD44C41F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C4F26DF-8DE3-4800-9788-C688F6F15708}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy.props = Deploy.props
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Features", "Features\Features.vcxproj", "{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FeaturesTest", "FeaturesTest\FeaturesTest.vcxproj", "{44E05BFD-69EC-4EC8-869A-C0CF79299582}"
+	ProjectSection(ProjectDependencies) = postProject
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Debug|Win32.Build.0 = Debug|Win32
+		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Release|Win32.ActiveCfg = Release|Win32
+		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Release|Win32.Build.0 = Release|Win32
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Debug|Win32.Build.0 = Debug|Win32
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Release|Win32.ActiveCfg = Release|Win32
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Release|Win32.Build.0 = Release|Win32
+		{44E05BFD-69EC-4EC8-869A-C0CF79299582}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44E05BFD-69EC-4EC8-869A-C0CF79299582}.Debug|Win32.Build.0 = Debug|Win32
+		{44E05BFD-69EC-4EC8-869A-C0CF79299582}.Release|Win32.ActiveCfg = Release|Win32
+		{44E05BFD-69EC-4EC8-869A-C0CF79299582}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		QtVersion = $(DefaultQtVersion)
+	EndGlobalSection
+EndGlobal
