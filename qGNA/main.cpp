@@ -64,13 +64,6 @@ void initBugTrap()
     BT_InstallSehFilter();
 }
 
-void initAutorun()
-{
-  SettingsViewModel model;
-  int autoStart = model.autoStart();
-  model.addToAutoStart(autoStart == 1 || autoStart == 2, autoStart == 2);
-}
-
 int main(int argc, char *argv[]) 
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
@@ -140,7 +133,6 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  initAutorun();
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
   QString imageFormatsPath = root;

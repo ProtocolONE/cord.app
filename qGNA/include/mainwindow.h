@@ -152,6 +152,8 @@ private:
   void translatorsParse();
   void initializeUpdateSettings();
   int checkUpdateInterval();
+
+  void initAutorun();
   
   GGS::RestApi::FakeCache _fakeCache;
   GGS::RestApi::GameNetCredential _credential;

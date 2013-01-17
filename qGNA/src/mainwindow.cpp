@@ -60,7 +60,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   translatorsParse();
   
   GGS::Settings::Settings settings;
-  selectLanguage(settings.value("qGNA/language").toString());                                                             
+  this->selectLanguage(settings.value("qGNA/language").toString());                                                             
+  
+  this->settingsViewModel = new SettingsViewModel(this);
+  this->initAutorun();
   
   qRegisterMetaType<TrayWindow::MenuLabel>("MenuLabel");
   qRegisterMetaType<TrayWindow::ContextMenuType>("ContextMenuType"); 
@@ -106,7 +109,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   }
   
   licenseModel = new LicenseViewModel(this);
-  settingsViewModel = new SettingsViewModel(this);
   this->_selectMw2ServerViewModel = new SelectMw2ServerViewModel(this);
 
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
@@ -1199,4 +1201,10 @@ void MainWindow::migrateInstallDate(const QString& serviceId)
     return;
 
   settings.setValue("installDate", QDateTime::currentDateTime());
+}
+
+void MainWindow::initAutorun()
+{
+  int autoStart = this->settingsViewModel->autoStart();
+  this->settingsViewModel->addToAutoStart(autoStart == 1 || autoStart == 2, autoStart == 2);
 }
