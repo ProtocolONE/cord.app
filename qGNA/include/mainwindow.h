@@ -8,6 +8,8 @@
 #include "viewmodel/GameSettingsViewModel.h"
 
 #include "traywindow.h"
+#include <ServiceLoader.h>
+
 #include <QmlMessageAdapter.h>
 #include <Features/RememberGameDownloading.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
@@ -29,8 +31,6 @@
 
 #include <GameDownloader/Builder.h>
 #include <GameDownloader/StartType.h>
-#include <GameDownloader/Hooks/InstallDependency.h>
-#include <GameDownloader/Hooks/OldGameClientMigrate.h>
 
 #include <LibtorrentWrapper/Wrapper>
 #include <LibtorrentWrapper/TorrentConfig>
@@ -120,8 +120,6 @@ public slots:
   void openExternalBrowser(const QString& url);
   void logout();
 
-  QString getDate(quint64 unixTimeStamp); // Helper функция для QML   
-
   void downloadButtonStart(QString serviceId);
   void downloadButtonPause(QString serviceId);
   
@@ -144,6 +142,13 @@ public slots:
   void startBackgroundCheckUpdate();
   bool isWindowVisible();
 
+  bool anyLicenseAccepted();
+  QString startingService();
+  QString getExpectedInstallPath(const QString& serviceId);
+  void setServiceInstallPath(const QString& serviceId, const QString& path, bool createShortcuts);
+  void acceptFirstLicense(const QString& serviceId);
+  void initFinished();
+
 private:
   const QString getEmptyString() { return ""; }
   void loadPlugin(QString pluginName);
@@ -154,7 +159,10 @@ private:
   int checkUpdateInterval();
 
   void initAutorun();
-  
+  bool isUseOpenGLrender();
+
+  void createShortcut(const QString& pathToLnk, const GGS::Core::Service* service);
+
   GGS::RestApi::FakeCache _fakeCache;
   GGS::RestApi::GameNetCredential _credential;
   GGS::RestApi::RestApiManager _restapiManager;
@@ -177,9 +185,6 @@ private:
 
   QPoint mLastMousePosition;
   bool m_WindowState; // false - normal size, true - max size  
-
-  bool isUseOpenGLrender();
-  void createShortcut(const QString& pathToLnk, const GGS::Core::Service* service);
   
 signals:
   void nickNameChanged();
@@ -256,26 +261,20 @@ private slots:
 
 private:
   void initServices();
-  void initService(const QString& id, const QString& torrentUrl, const QString& name);
-
-  void setExecuteUrl(const QString& id, QString currentInstallPath);
-
-  void initGAService(const QString& id);
 
   void checkLicense(const QString& serviceId);
   void startGame(const QString& serviceId);
 
   void prepairGameDownloader();
   void initializeStopDownloadServiceOnExecuteGameFeature();
-  void migrateInstallDate(const QString& serviceId);
+  void postUpdateInit();
 
   GGS::Core::Service* getService(const QString& id);
 
+  ServiceLoader _serviceLoader;
+
   QMap<QString,QTranslator*> translators;
   GGS::GameDownloader::Builder _gameDownloaderBuilder;
-  GGS::GameDownloader::Hooks::InstallDependency _installDependencyHook;
-  GGS::GameDownloader::Hooks::OldGameClientMigrate _oldGameClientMigrate;
-  QHash<QString, GGS::Core::Service *> _serviceMap;
 
   GGS::GameExecutor::GameExecutorService _gameExecutorService;
   GGS::GameExecutor::ServiceInfoCounter _gameExecutorServiceInfoCounter;

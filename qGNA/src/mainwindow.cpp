@@ -6,17 +6,6 @@
 #include <Core/Marketing.h>
 #include <Core/System/FileInfo.h>
 
-#include <Features/CASettingsFix.h>
-
-#include <GameExecutor/Hook/RestoreResolution>
-#include <GameExecutor/Hook/DisableIEDefalutProxy>
-#include <GameExecutor/Hook/DisableDEP>
-#include <GameExecutor/Hook/DownloadCustomFile>
-#include <GameExecutor/Hook/Mw2DownloadAndCheckXmlConfig.h>
-#include <GameExecutor/Hook/DisableAeroHook.h>
-#include <GameExecutor/Hook/DefaultAikaSettings.h>
-#include <GameExecutor/Hook/BannerDownload.h>
-
 #include <GameExecutor/Executor/ExecutableFile>
 #include <GameExecutor/Executor/WebLink>
 
@@ -25,6 +14,7 @@
 #include <RestApi/RequestFactory.h>
 
 #include <Application/WindowHelper.h>
+#include <Application/ArgumentParser.h>
 
 #include <Settings/settings.h>
 
@@ -34,6 +24,7 @@
 #include <QtGui/QBoxLayout>
 #include <QtGui/QDesktopWidget>
 #include <QtDeclarative/QDeclarativeProperty>
+#include <Core/System/HardwareId.h>
 
 // TODO сделать место поточнее и вывод ошибки с фразой вроде "Couldn't connect to"
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
@@ -47,17 +38,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   this->_restapiManager.setCache(&_fakeCache);
   GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
   
-  setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
-   
+  this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
   this->setWindowTitle("qGNA " + this->_fileVersion);
-
-  setWindowFlags(Qt::Window 
+  this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
     | Qt::WindowMaximizeButtonHint 
     | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы       
 
-  translatorsParse();
+  this->translatorsParse();
   
   GGS::Settings::Settings settings;
   this->selectLanguage(settings.value("qGNA/language").toString());                                                             
@@ -84,33 +73,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   QString mid = midSettings.value("MID", "").toString();
   this->_marketingTargetFeatures.init("qGNA", mid);
   
+  int installerKey = midSettings.value("InstKey").toInt();
+  this->_marketingTargetFeatures.setInstallerKey(installerKey);
+  
   //next 2 lines QGNA-60
-  nQMLContainer = new MQDeclarativeView();
-  connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int)));
+  this->nQMLContainer = new MQDeclarativeView();
+  SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
 
   this->loadPlugin("QmlExtensionX86");
 
-  nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+  this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-  if (QGLFormat::hasOpenGL() && QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0) && QCoreApplication::arguments().contains("-opengl"))
+  if (QGLFormat::hasOpenGL() 
+    && QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0) 
+    && QCoreApplication::arguments().contains("-opengl"))
   {
     QGLFormat format; 
     format.setVersion(2,0);
     QGLFormat::setDefaultFormat(format);
     QGLWidget *glWidget = new QGLWidget(format);
-    nQMLContainer->setViewport(glWidget);
+    this->nQMLContainer->setViewport(glWidget);
     this->setFixedSize(800,400); 
-    qDebug() << "Render: Use OpenGL 2.0";
+    DEBUG_LOG << "Render: Use OpenGL 2.0";
   } else {
     setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
     setStyleSheet("background:transparent;");
     this->setFixedSize(808,408); 
-    qDebug() << "Render: Use rester engine.";
+    DEBUG_LOG << "Render: Use rester engine.";
   }
   
-  licenseModel = new LicenseViewModel(this);
+  this->licenseModel = new LicenseViewModel(this);
   this->_selectMw2ServerViewModel = new SelectMw2ServerViewModel(this);
-
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
     
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(incomingPortChanged()), this, SLOT(settingsIncomingPortChangedSlot())));
@@ -136,13 +129,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("trayMenu", this->_trayWindow);   
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
-
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
 
   nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
-
-  nQMLContainer->setAlignment(Qt::AlignCenter);                                                                               
-  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);                                                         
 
   QObject *item = nQMLContainer->rootObject();
 
@@ -151,7 +140,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowClose()), this, SLOT(onWindowClose())));
 
-  setCentralWidget(nQMLContainer);
+  this->setCentralWidget(nQMLContainer);
 
   nQMLContainer->setAlignment(Qt::AlignCenter);
   nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView); 
@@ -159,28 +148,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   this->hide();
 
   this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png");                  
-  _fileVersion = QString();
-
-  this->prepairGameDownloader();
 
   Message::setAdapter(messageAdapter);
 
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(activate()), this, SLOT(activateWindow())));
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(menuClick(int)), this, SLOT(menuItemTrigger(int))));
-
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(started(const GGS::Core::Service &)),
-    this, SLOT(onServiceStarted(const GGS::Core::Service &))));
-
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-    this, SLOT(onServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
-
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(started(const GGS::Core::Service &)),
-    &this->_gameExecutorServiceInfoCounter, SLOT(started(const GGS::Core::Service &))));
-
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-    &this->_gameExecutorServiceInfoCounter, SLOT(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
-
-  this->initializeStopDownloadServiceOnExecuteGameFeature();
 }
 
 MainWindow::~MainWindow()
@@ -225,9 +197,8 @@ void MainWindow::activateWindow()
 
 void MainWindow::menuItemTrigger(int index)
 {
-  if (index == TrayWindow::QuitMenu){
+  if (index == TrayWindow::QuitMenu)
     emit this->closeMainWindow();  
-  }
 }
 
 bool MainWindow::isDownloading(QString serviceId)
@@ -237,13 +208,6 @@ bool MainWindow::isDownloading(QString serviceId)
     return false;
 
   return this->_gameDownloaderBuilder.gameDownloader().isInProgress(service);
-}
-
-QString MainWindow::getDate( quint64 unixTimeStamp )
-{
-  QDateTime timestamp;
-  timestamp.setTime_t(unixTimeStamp);
-  return timestamp.toString("dd.MM.yyyy");
 }
 
 void MainWindow::translatorsParse()
@@ -261,7 +225,7 @@ void MainWindow::translatorsParse()
     fileName.remove("qgna_");
     fileName.remove(".qm");
 
-    if (fileName.size() == 2){  
+    if (fileName.size() == 2) {  
       translators[fileName] = new QTranslator(this);
       translators[fileName]->load(fileInfo.fileName(), QCoreApplication::applicationDirPath() + "/Languages/"); // TODO да да, знаю, сделаю красиво позже.
     }
@@ -299,7 +263,7 @@ void MainWindow::onSystemBarReleased(int MouseX, int MouseY)
 
 void MainWindow::onSystemBarPositionChanged(int MouseX, int MouseY) 
 {
-  move( pos() + (QPoint(MouseX,MouseY) - mLastMousePosition));   
+  move(pos() + (QPoint(MouseX,MouseY) - mLastMousePosition));   
 }
 
 void MainWindow::onWindowClose()
@@ -377,15 +341,13 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
 
   }
 
-  QString open("open");
-
   SHELLEXECUTEINFOW shex;
   ZeroMemory(&shex, sizeof(shex));
 
-  shex.cbSize			  = sizeof( SHELLEXECUTEINFO ); 
+  shex.cbSize			  = sizeof(SHELLEXECUTEINFO);
   shex.fMask			  = 0; 
   shex.hwnd			    = 0;
-  shex.lpVerb			  = reinterpret_cast<const WCHAR*>(open.utf16()); 
+  shex.lpVerb			  = L"open"; 
   shex.lpFile			  = reinterpret_cast<const WCHAR*>(exe.utf16()); 
   shex.lpParameters	= reinterpret_cast<const WCHAR*>(commandLineArgs.utf16()); 
   shex.lpDirectory	= reinterpret_cast<const WCHAR*>(dir.utf16()); 
@@ -396,7 +358,7 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
     return;
   }
 
-  qWarning() << "Can't restart qGNA";
+  WARNING_LOG << "Can't restart qGNA";
 }
 
 void MainWindow::openExternalBrowser(const QString& url)
@@ -406,7 +368,6 @@ void MainWindow::openExternalBrowser(const QString& url)
   {
     authUrl = url;
   } else {
-    //"https://gnlogin.ru/?auth={0}&rp={1}";
     authUrl = "https://gnlogin.ru/?auth=";
     authUrl.append(this->_credential.cookie());
     authUrl.append("&rp=");
@@ -437,148 +398,24 @@ void MainWindow::initServices()
   // QGNA-183 выпиливание всех следов RoT в qGNA
   this->_gameSettingsViewModel->removeShortCutByName("RageofTitans");
 
-  this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
-  this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
-  this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
-  this->initService("300006010000000000", "http://fs0.gamenet.ru/update/mw2/", "MW2");
-  this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
-  this->initGAService("300007010000000000");
-
-  this->_gameDownloaderBuilder.gameDownloader().registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
-  this->_gameDownloaderBuilder.gameDownloader().registerHook("300006010000000000", 0, 10, &this->_installDependencyHook);
+  this->_serviceLoader.setDownloadBuilder(&this->_gameDownloaderBuilder);
+  this->_serviceLoader.setExecutor(&this->_gameExecutorService);
+  this->_serviceLoader.init();
   
-  this->_gameSettingsViewModel->setServiceList(&this->_serviceMap);
-}
-
-void MainWindow::initService(const QString& id, const QString& torrentUrl, const QString& name)
-{
-  using namespace GGS::Core; 
-  Service *service = new Service();
-  service->setArea(Service::Live);
-  service->setIsDownloadable(true);
-  service->setName(name);
-
-  QString root = QCoreApplication::applicationDirPath();
-
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+  this->_gameExecutorService.addHook(
+    *this->_serviceLoader.getService("300006010000000000"),
+    this->_selectMw2ServerViewModel);
   
-  QString defaultDownloadPath = settings.value("DownloadPath", "").toString();
-  
-  if (defaultDownloadPath.isEmpty())
-    defaultDownloadPath = root + "/Downloads/";
+  this->_gameExecutorService.addHook(
+    *this->_serviceLoader.getService("300005010000000000"), 
+    this->_enterNickViewModel, 0);
 
-  bool hasDownloadPath = (id == "300002010000000000" || id == "300009010000000000");
-  service->setHashDownloadPath(hasDownloadPath);
-  
-  settings.beginGroup(id);
-  QString currentDownloadPath = settings.value("DownloadPath").toString();
-  if (currentDownloadPath.isEmpty())
-    currentDownloadPath = QString("%1/%2/").arg(defaultDownloadPath, name);
-
-  QString currentInstallPath = settings.value("InstallPath").toString();
-  
-  if (currentInstallPath.isEmpty()) {
-    currentInstallPath = QString("%1/Games/%2/").arg(root, name);
-    service->setIsDefaultInstallPath(false);
-  } else {
-    service->setIsDefaultInstallPath(true);
-  }
-
-  settings.endGroup();
-
-  service->setDownloadPath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
-  service->setInstallPath(currentInstallPath);
-  service->setTorrentFilePath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
-
-  if (id == "300002010000000000" || id == "300009010000000000")
-    service->setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
-  else
-    service->setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-
-  service->setId(id);
-  service->setTorrentUrl(torrentUrl);
-
-  if (id != "300007010000000000") {
-    this->_gameDownloaderBuilder.gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
-  }
-
-  this->_serviceMap[id] = service;
-  
-  if (id == "300003010000000000") {
-    GGS::GameExecutor::Hook::DisableDEP *dep = new GGS::GameExecutor::Hook::DisableDEP(service);
-    this->_gameExecutorService.addHook(*service, dep, 0);
-  }
-
-  if (id == "300002010000000000") {
-    GGS::GameExecutor::Hook::DisableIEDefalutProxy *ieproxy = new GGS::GameExecutor::Hook::DisableIEDefalutProxy(service);
-    this->_gameExecutorService.addHook(*service, ieproxy, 0);
-
-    GGS::GameExecutor::Hook::RestoreResolution *resolution = new GGS::GameExecutor::Hook::RestoreResolution(service);
-    this->_gameExecutorService.addHook(*service, resolution, 0);
-    this->_gameExecutorService.addHook(*service, new GGS::GameExecutor::Hook::DefaultAikaSettings(service), 0);
-  }
-
-  if (id == "300003010000000000") {
-    GGS::GameExecutor::Hook::DownloadCustomFile *hook = new GGS::GameExecutor::Hook::DownloadCustomFile(service);
-    this->_gameExecutorService.addHook(*service, hook, 100);
-  }
-  
-  if (id == "300006010000000000") {
-     this->_gameExecutorService.addHook(*service, this->_selectMw2ServerViewModel);
-     this->_gameExecutorService.addHook(*service, new GGS::GameExecutor::Hook::Mw2DownloadAndCheckXmlConfig(service), 100);
-  }
-
-  if (id == "300009010000000000") {
-    Features::CASettingsFix *hook = new Features::CASettingsFix(service);
-    hook->setResolution(QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen()));
-    SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
-      hook, SLOT(install(const GGS::Core::Service *))));
-    this->_gameExecutorService.addHook(*service, hook);
-
-    this->_gameExecutorService.addHook(*service, new GGS::GameExecutor::Hook::DisableIEDefalutProxy(service), 0);
-    this->_gameExecutorService.addHook(*service, new GGS::GameExecutor::Hook::BannerDownload(service), 0);
-      
-    QSysInfo::WinVersion version = QSysInfo::windowsVersion();
-    if (version == QSysInfo::WV_VISTA || version == QSysInfo::WV_WINDOWS7)
-      this->_gameExecutorService.addHook(*service, new GGS::GameExecutor::Hook::DisableAeroHook(service));
-  }
-
-  this->setExecuteUrl(id, currentInstallPath);
-  
-  if (id == "300005010000000000") {
-    service->setExternalDependencyList("dxwebsetup.exe,/Q");
-  } else if (id == "300006010000000000") {
-    service->setExternalDependencyList("vcredist_x86.exe,/Q");
-  }
-
-  if (id == "300005010000000000") 
-    this->_gameExecutorService.addHook(*service, this->_enterNickViewModel, 0);  
-    
-  this->migrateInstallDate(id);
-}
-
-void MainWindow::initGAService(const QString& id)
-{
-  using namespace GGS::Core;
-  Service *service = new Service();
-  service->setArea(Service::Live);
-  service->setIsDownloadable(false);
-  service->setName(id);
-  service->setId(id);
-
-  QUrl url("http://www.playga.ru/");
-  service->setGameId("83");
-  service->setUrl(url);
-
-  this->_serviceMap[id] = service;
+  this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
 }
 
 GGS::Core::Service* MainWindow::getService(const QString& id)
 {
-  if (!this->_serviceMap.contains(id))
-    return 0;
-
-  return this->_serviceMap[id];
+  return this->_serviceLoader.getService(id);
 }
 
 void MainWindow::prepairGameDownloader()
@@ -602,7 +439,6 @@ void MainWindow::prepairGameDownloader()
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(progressExtractionChanged(QString, qint8, qint64, qint64)), 
     this, SLOT(progressExtractionChanged(QString, qint8, qint64, qint64))));
 
-
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     this, SLOT(gameDownloaderStarted(const GGS::Core::Service *, GGS::GameDownloader::StartType))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(finished(const GGS::Core::Service *)), 
@@ -613,7 +449,6 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(gameDownloaderStopping(const GGS::Core::Service *))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(failed(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderFailed(const GGS::Core::Service *))));
-
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(shutdownCompleted()),
     this, SLOT(shutdownCompleted())));
@@ -699,8 +534,9 @@ void MainWindow::gameDownloaderStopping(const GGS::Core::Service *service)
   emit this->downloaderStopping(service->id());
 }
 
-void MainWindow::updateFinishedSlot() {
-  emit this->updateFinished();
+void MainWindow::updateFinishedSlot() 
+{
+  this->postUpdateInit();
 }
 
 void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
@@ -766,7 +602,7 @@ void MainWindow::initializeUpdateSettings()
   this->_installUpdateGnaPath = QString("");
 #endif
 
-  _updateUrl = QString("http://fs0.gamenet.ru/update/qgna/%1/").arg(_updateArea);
+  this->_updateUrl = QString("http://fs0.gamenet.ru/update/qgna/%1/").arg(_updateArea);
   QString updateCrc = QString("%1update.crc.7z").arg(this->_updateUrl);
   this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 
@@ -800,12 +636,7 @@ void MainWindow::licenseOkPressed()
   settings.setValue("LicenseHash", hash);
 
   QString pathToInstall = licenseModel->pathToInstall();
-
-  service->setInstallPath(pathToInstall);
-  if (!service->hashDownloadPath()) {
-    service->setDownloadPath(pathToInstall);
-    service->setTorrentFilePath(pathToInstall); 
-  }
+  this->setServiceInstallPath(serviceId, pathToInstall, false);
 
   this->licenseModel->closeLicense();
   this->startGame(serviceId);
@@ -817,16 +648,18 @@ void MainWindow::checkLicense(const QString& serviceId)
   settings.beginGroup(serviceId);
   QString hash = settings.value("LicenseHash", "").toString();
 
-  if (hash.isEmpty()) {
-    GGS::RestApi::Commands::Service::GetLicense *cmd = new GGS::RestApi::Commands::Service::GetLicense(serviceId);
-    connect(cmd, SIGNAL(result(GGS::RestApi::CommandBase::CommandResults)), this, SLOT(licenseResult(GGS::RestApi::CommandBase::CommandResults)));
-
-    cmd->setHash(hash);
-    cmd->execute();
+  if (!hash.isEmpty()) {
+    this->startGame(serviceId);
     return;
   }
 
-  this->startGame(serviceId);
+  GGS::RestApi::Commands::Service::GetLicense *cmd = new GGS::RestApi::Commands::Service::GetLicense(serviceId);
+  SIGNAL_CONNECT_CHECK(connect(
+    cmd, SIGNAL(result(GGS::RestApi::CommandBase::CommandResults)), 
+    this, SLOT(licenseResult(GGS::RestApi::CommandBase::CommandResults))));
+
+  cmd->setHash(hash);
+  cmd->execute();
 }
 
 void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
@@ -853,7 +686,7 @@ void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
   QString hash = cmd->responseHash();
   QString license = cmd->licenseText();
 
-  this->licenseModel->setPathToInstall(service->installPath());
+  this->licenseModel->setPathToInstall(this->_serviceLoader.getExpectedInstallPath(serviceId));
   this->licenseModel->setLicense(license);
   this->licenseModel->openLicense(serviceId, hash);
 }
@@ -871,7 +704,7 @@ void MainWindow::startGame(const QString& serviceId)
     settings.setValue("InstallPath", service->installPath());
     service->setIsDefaultInstallPath(true);
     settings.endGroup();
-    this->setExecuteUrl(serviceId, service->installPath());
+    this->_serviceLoader.setExecuteUrl(serviceId, service->installPath());
     this->_gameDownloaderBuilder.gameDownloader().start(service, GGS::GameDownloader::Normal);
   } else {
     bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
@@ -881,66 +714,6 @@ void MainWindow::startGame(const QString& serviceId)
     }
 
     this->_gameExecutorService.execute(*service);
-  }
-}
-
-void MainWindow::setExecuteUrl(const QString& id, QString currentInstallPath)
-{
-  // HACK тут везде предполагается что сервис в зоне live. Если это не так надо все пути делать правильно вычисляемыми.
-  GGS::Core::Service *service = this->getService(id);
-  if (id == "300002010000000000") {
-    QUrl url;
-    url.setScheme("exe");
-    url.setPath(QString("%1/live/aikaru.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
-    url.addQueryItem("args", "%login% %token% 300002010000000000 login");
-    service->setGameId("631");
-    service->setUrl(url);
-  } else if (id == "300003010000000000") {
-    QUrl url;
-    url.setScheme("exe");
-    url.setPath(QString("%1/live/client/client.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
-    url.addQueryItem("args", "%userId% %appKey% %token%");
-    url.addQueryItem("downloadCustomFile", 
-      "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/bs/,1,config/lastlogin.xml,http://files.gamenet.ru/update/bs/,0");
-    service->setGameId("71");
-    service->setUrl(url);
-  } else if (id == "300005010000000000") {
-    QUrl url;
-    url.setScheme("exe");
-    url.setPath(QString("%1/live/WarInc.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
-    url.addQueryItem("args", "-WOUpdatedOk -gna %userId% %appKey% %token%");
-    service->setGameId("70");
-    service->setUrl(url);
-  } else if (id == "300006010000000000") {
-    QUrl url;
-    url.setScheme("exe");
-    url.setPath(QString("%1/live/mw2_bin/mw2.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
-    url.addQueryItem("args", "%serverinfo% %userId% %token% %appKey%");
-    url.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
-    
-    service->setGameId("84");
-    service->setUrl(url);
-  } else if (id == "300009010000000000") {
-    QUrl url;
-    url.setScheme("exe");
-    url.setPath(QString("%1/live/engine.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
-    url.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
-
-#ifdef _DEBUG
-    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-#else
-    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-#endif
-
-    url.addQueryItem("injectDll", injectedDll);
-
-    service->setGameId("92");
-    service->setUrl(url);
   }
 }
 
@@ -1056,9 +829,8 @@ int MainWindow::checkUpdateInterval()
   QDateTime now = QDateTime::currentDateTimeUtc();
   now = now.addSecs(14400); // Moscow time UTC+4
   int hour = now.time().hour();
-  if (hour >= 14) {
+  if (hour >= 14)
     return 7200000;
-  }
 
   return 1800000;
 }
@@ -1183,28 +955,102 @@ void MainWindow::gameDownloaderServiceInstalled(const GGS::Core::Service *servic
 
 void MainWindow::gameDownloaderServiceUpdated(const GGS::Core::Service *service)
 {
-   Q_CHECK_PTR(service);
+  Q_CHECK_PTR(service);
   this->activateWindow();
   emit this->selectService(service->id());
-}
-
-void MainWindow::migrateInstallDate(const QString& serviceId)
-{
-  if (!this->_gameDownloaderBuilder.gameDownloader().isInstalled(serviceId))
-    return;
-
-  GGS::Settings::Settings settings;
-  settings.beginGroup("GameDownloader");
-  settings.beginGroup(serviceId);
-
-  if (settings.contains("installDate"))
-    return;
-
-  settings.setValue("installDate", QDateTime::currentDateTime());
 }
 
 void MainWindow::initAutorun()
 {
   int autoStart = this->settingsViewModel->autoStart();
   this->settingsViewModel->addToAutoStart(autoStart == 1 || autoStart == 2, autoStart == 2);
+}
+
+void MainWindow::postUpdateInit()
+{
+  this->prepairGameDownloader();
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(started(const GGS::Core::Service &)),
+    this, SLOT(onServiceStarted(const GGS::Core::Service &))));
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
+    this, SLOT(onServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(started(const GGS::Core::Service &)),
+    &this->_gameExecutorServiceInfoCounter, SLOT(started(const GGS::Core::Service &))));
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
+    &this->_gameExecutorServiceInfoCounter, SLOT(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
+
+  this->initializeStopDownloadServiceOnExecuteGameFeature();
+}
+
+bool MainWindow::anyLicenseAccepted()
+{
+  return this->_serviceLoader.anyLicenseAccepted();
+}
+
+QString MainWindow::startingService()
+{
+  Application::ArgumentParser parser;
+  parser.parse(QCoreApplication::arguments());
+
+  if (!parser.contains("startservice"))
+    return "0";
+
+  QStringList arguments = parser.commandArguments("startservice");
+  if (arguments.count() > 0)
+    return arguments.at(0);
+
+  return "0";
+}
+ 
+QString MainWindow::getExpectedInstallPath(const QString& serviceId)
+{
+  return this->_serviceLoader.getExpectedInstallPath(serviceId);
+}
+
+void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& path, bool createShortcuts)
+{
+  GGS::Core::Service *service = this->getService(serviceId);
+  if (!service)
+    return;
+
+  service->setInstallPath(path);
+  service->setIsDefaultInstallPath(false);
+
+  if (service->hashDownloadPath()) {
+    QString downloadPath = this->_serviceLoader.hasDefaultDownloadPath(serviceId) 
+      ? QString("%1/dist").arg(path) 
+      : service->downloadPath();
+
+    service->setDownloadPath(downloadPath);
+    service->setTorrentFilePath(downloadPath);
+  } else {
+    service->setDownloadPath(path);
+    service->setTorrentFilePath(path); 
+  }
+
+  if (createShortcuts) {
+    this->_gameSettingsViewModel->createShortcutOnDesktop(service);
+    this->_gameSettingsViewModel->createShortcutInMainMenu(service);
+  }
+}
+
+void MainWindow::acceptFirstLicense(const QString& serviceId)
+{
+  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+  GGS::Core::Service *service = this->getService(serviceId);
+  if (service)
+    settings.beginGroup(serviceId);
+
+  Core::Marketing::sendInstallerStepOnce(Core::Marketing::InstallAcceptLicense);
+  settings.setValue("LicenseHash", "1");
+
+  this->initFinished(); 
+}
+
+void MainWindow::initFinished()
+{
+  emit this->updateFinished();
 }
