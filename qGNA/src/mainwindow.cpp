@@ -269,9 +269,17 @@ void MainWindow::onSystemBarPositionChanged(int MouseX, int MouseY)
 
 void MainWindow::onWindowClose()
 {
+  DEBUG_LOG << "Shutting down";
+
   this->repaint();
   this->hide();
   this->_gameDownloaderBuilder.gameDownloader().shutdown(); 
+}
+
+void MainWindow::onForceWindowClose()
+{
+  DEBUG_LOG << "onForceWindowClose Shutting down";
+  this->onWindowClose();
 }
 
 void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie) 
@@ -326,9 +334,6 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
   if (shouldStartWithSameArguments) {
     QStringList args = QCoreApplication::arguments();
     args.removeFirst();
-
-    if (!this->isVisible())
-      args << "/minimized";
 
     if (args.size() > 0) {
       commandLineArgs = args.join("\" \"");
@@ -478,6 +483,8 @@ void MainWindow::prepairGameDownloader()
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
+
+  //this->_donwloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
 }
 
 void MainWindow::progressChanged(QString serviceId, qint8 progress)
@@ -547,6 +554,7 @@ void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
 
 void MainWindow::shutdownCompleted()
 {
+  DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
 }
 
@@ -773,6 +781,7 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
   } else if (name == "gogamenetmoney") {
     this->openExternalBrowser("http://www.gamenet.ru/money");
   } else if (name == "uninstall") {
+    DEBUG_LOG << "command uninstall";
     this->onWindowClose();
   }
 }

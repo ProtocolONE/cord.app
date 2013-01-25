@@ -66,6 +66,8 @@ void initBugTrap()
 
 int main(int argc, char *argv[]) 
 {
+  qDebug() << "Started";
+
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
   app.setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "/images/icon.png"));
@@ -104,8 +106,6 @@ int main(int argc, char *argv[])
 
   LogManager::qtLogger()->addAppender(&appender);
   LogManager::setThreshold(Level::ALL_INT);
-   
-  //LogManager::setHandleQtMessages(true);
 
 #ifndef _DEBUG
   LogManager::setHandleQtMessages(true);
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
   if (!app.containsCommand("minimized"))
       w.activateWindow();
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onWindowClose()), Qt::DirectConnection)); 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onForceWindowClose()), Qt::DirectConnection)); 
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(secondInstanceExecuteRequest()), &app, SLOT(allowSecondInstance()), Qt::DirectConnection)); 
 

@@ -239,6 +239,7 @@ private slots:
   void onSystemBarReleased(int MouseX, int MouseY);
   void onSystemBarPositionChanged(int MouseX, int MouseY);
   void onWindowClose();
+  void onForceWindowClose();
   void menuItemTrigger(int index);
 
   void progressChanged(QString serviceId, qint8 progress);

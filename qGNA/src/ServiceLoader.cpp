@@ -176,13 +176,13 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
     url.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
 
-#ifdef _DEBUG
-    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-#else
-    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-#endif
-
-    url.addQueryItem("injectDll", injectedDll);
+//#ifdef _DEBUG
+//    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+//#else
+//    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+//#endif
+//
+//    url.addQueryItem("injectDll", injectedDll);
 
     service->setGameId("92");
     service->setUrl(url);
