@@ -186,6 +186,7 @@ void MainWindow::setMediumAvatarUrl(const QString& mediumAvatarUrl) {
 
 void MainWindow::activateWindow()
 {
+  DEBUG_LOG << "activateWindow";
   // Это нам покажет окно
   this->setFocusPolicy(Qt::StrongFocus);
   this->setWindowState(Qt::WindowActive); 
@@ -983,6 +984,7 @@ void MainWindow::postUpdateInit()
     &this->_gameExecutorServiceInfoCounter, SLOT(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
 
   this->initializeStopDownloadServiceOnExecuteGameFeature();
+//  this->_donwloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
 }
 
 bool MainWindow::anyLicenseAccepted()

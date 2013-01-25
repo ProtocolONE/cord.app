@@ -105,6 +105,8 @@ int main(int argc, char *argv[])
   LogManager::qtLogger()->addAppender(&appender);
   LogManager::setThreshold(Level::ALL_INT);
    
+  //LogManager::setHandleQtMessages(true);
+
 #ifndef _DEBUG
   LogManager::setHandleQtMessages(true);
 #endif
