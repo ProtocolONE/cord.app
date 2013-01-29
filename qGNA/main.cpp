@@ -66,8 +66,6 @@ void initBugTrap()
 
 int main(int argc, char *argv[]) 
 {
-  qDebug() << "Started";
-
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
   app.setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "/images/icon.png"));

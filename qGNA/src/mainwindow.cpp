@@ -29,7 +29,9 @@
 // TODO сделать место поточнее и вывод ошибки с фразой вроде "Couldn't connect to"
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) 
+  : QMainWindow(parent)
+  , _gameDownloadInitialized(false)
 {
   this->initializeUpdateSettings();
 
@@ -273,7 +275,12 @@ void MainWindow::onWindowClose()
 
   this->repaint();
   this->hide();
-  this->_gameDownloaderBuilder.gameDownloader().shutdown(); 
+  if (this->_gameDownloadInitialized) {
+    this->_gameDownloaderBuilder.gameDownloader().shutdown(); 
+  } else {
+    DEBUG_LOG << "fast shutdownCompleted";
+    QCoreApplication::quit();
+  }
 }
 
 void MainWindow::onForceWindowClose()
@@ -484,6 +491,7 @@ void MainWindow::prepairGameDownloader()
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
 
+  this->_gameDownloadInitialized = true;
   //this->_donwloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
 }
 

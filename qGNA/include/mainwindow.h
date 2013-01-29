@@ -186,6 +186,7 @@ private:
 
   QPoint mLastMousePosition;
   bool m_WindowState; // false - normal size, true - max size  
+  bool _gameDownloadInitialized;
   
 signals:
   void nickNameChanged();
