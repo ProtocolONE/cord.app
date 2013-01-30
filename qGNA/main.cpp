@@ -36,7 +36,7 @@ using namespace Log4Qt;
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
 
-bool initDatabase() 
+bool initDatabase()
 {
   GGS::Settings::InitializeHelper helper;
   helper.setFileName(QString("%1/settings.sql").arg(QCoreApplication::applicationDirPath()));

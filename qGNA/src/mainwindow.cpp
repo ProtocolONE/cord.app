@@ -491,8 +491,8 @@ void MainWindow::prepairGameDownloader()
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
 
+  this->_downloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
   this->_gameDownloadInitialized = true;
-  //this->_donwloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
 }
 
 void MainWindow::progressChanged(QString serviceId, qint8 progress)

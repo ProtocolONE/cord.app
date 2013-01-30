@@ -14,7 +14,7 @@
 #include <Features/RememberGameDownloading.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Jabber.h>
-//#include <Features/GameDownloader/GameDownloadStatistics.h>
+#include <Features/GameDownloader/GameDownloadStatistics.h>
 
 #include <Marketing/MarketingTarget.h>
 
@@ -290,7 +290,7 @@ private:
   GGS::Marketing::MarketingTarget _marketingTargetFeatures;
   Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
   Features::Jabber _jabber;
-  //Features::GameDownloader::GameDownloadStatistics _donwloadStatistics;
+  Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
 
 protected:
   void closeEvent(QCloseEvent* event);
