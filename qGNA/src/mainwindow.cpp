@@ -14,7 +14,6 @@
 #include <RestApi/RequestFactory.h>
 
 #include <Application/WindowHelper.h>
-#include <Application/ArgumentParser.h>
 
 #include <Settings/settings.h>
 
@@ -32,8 +31,18 @@
 MainWindow::MainWindow(QWidget *parent) 
   : QMainWindow(parent)
   , _gameDownloadInitialized(false)
+  , _gameArea(GGS::Core::Service::Live)
 {
   this->initializeUpdateSettings();
+
+  this->_commandLineArguments.parse(QCoreApplication::arguments());
+
+  if (this->_commandLineArguments.contains("gamepts"))
+    this->_gameArea = GGS::Core::Service::Pts;
+
+  if (this->_commandLineArguments.contains("gametest"))
+    this->_gameArea = GGS::Core::Service::Tst;
+
 
   this->_restapiManager.setUri("https://gnapi.com:8443/restapi");
   this->_restapiManager.setRequest(GGS::RestApi::RequestFactory::Http);
@@ -88,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   if (QGLFormat::hasOpenGL() 
     && QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0) 
-    && QCoreApplication::arguments().contains("-opengl"))
+    && this->_commandLineArguments.contains("opengl"))
   {
     QGLFormat format; 
     format.setVersion(2,0);
@@ -149,7 +158,7 @@ MainWindow::MainWindow(QWidget *parent)
   
   this->hide();
 
-  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png");                  
+  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png");
 
   Message::setAdapter(messageAdapter);
 
@@ -413,7 +422,7 @@ void MainWindow::initServices()
 
   this->_serviceLoader.setDownloadBuilder(&this->_gameDownloaderBuilder);
   this->_serviceLoader.setExecutor(&this->_gameExecutorService);
-  this->_serviceLoader.init();
+  this->_serviceLoader.init(this->_gameArea);
   
   this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300006010000000000"),
@@ -1011,13 +1020,10 @@ bool MainWindow::anyLicenseAccepted()
 
 QString MainWindow::startingService()
 {
-  Application::ArgumentParser parser;
-  parser.parse(QCoreApplication::arguments());
-
-  if (!parser.contains("startservice"))
+  if (!this->_commandLineArguments.contains("startservice"))
     return "0";
 
-  QStringList arguments = parser.commandArguments("startservice");
+  QStringList arguments = this->_commandLineArguments.commandArguments("startservice");
   if (arguments.count() > 0)
     return arguments.at(0);
 

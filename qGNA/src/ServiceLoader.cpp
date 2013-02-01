@@ -33,8 +33,10 @@ QHash<QString, GGS::Core::Service *>& ServiceLoader::serviceMap()
   return this->_serviceMap;
 }
 
-void ServiceLoader::init()
+void ServiceLoader::init(GGS::Core::Service::Area gameArea)
 {
+  this->_gameArea = gameArea;
+
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
@@ -58,7 +60,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
 {
   GGS::Core::Service *service = new GGS::Core::Service();
   service->setId(id);
-  service->setArea(GGS::Core::Service::Live);
+  service->setArea(this->_gameArea);
   service->setIsDownloadable(true);
   service->setName(name);
 
@@ -110,10 +112,8 @@ void ServiceLoader::initGAService()
   service->setIsDownloadable(false);
   service->setName(id);
   service->setId(id);
-
-  QUrl url("http://www.playga.ru/");
   service->setGameId("83");
-  service->setUrl(url);
+  service->setUrl(QUrl("http://www.playga.ru/"));
 
   this->_serviceMap[id] = service;
 }
@@ -136,16 +136,16 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   if (id == "300002010000000000") {
     QUrl url;
     url.setScheme("exe");
-    url.setPath(QString("%1/live/aikaru.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
+    url.setPath(QString("%1/%2/aikaru.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%login% %token% 300002010000000000 login");
     service->setGameId("631");
     service->setUrl(url);
   } else if (id == "300003010000000000") {
     QUrl url;
     url.setScheme("exe");
-    url.setPath(QString("%1/live/client/client.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
+    url.setPath(QString("%1/%2/client/client.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%userId% %appKey% %token%");
     url.addQueryItem("downloadCustomFile", 
       "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/bs/,1,config/lastlogin.xml,http://files.gamenet.ru/update/bs/,0");
@@ -154,16 +154,16 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   } else if (id == "300005010000000000") {
     QUrl url;
     url.setScheme("exe");
-    url.setPath(QString("%1/live/WarInc.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
+    url.setPath(QString("%1/%2/WarInc.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "-WOUpdatedOk -gna %userId% %appKey% %token%");
     service->setGameId("70");
     service->setUrl(url);
   } else if (id == "300006010000000000") {
     QUrl url;
     url.setScheme("exe");
-    url.setPath(QString("%1/live/mw2_bin/mw2.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
+    url.setPath(QString("%1/%2/mw2_bin/mw2.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%serverinfo% %userId% %token% %appKey%");
     url.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
 
@@ -172,8 +172,8 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   } else if (id == "300009010000000000") {
     QUrl url;
     url.setScheme("exe");
-    url.setPath(QString("%1/live/engine.exe").arg(currentInstallPath));
-    url.addQueryItem("workingDir", QString("%1/live/").arg(currentInstallPath));
+    url.setPath(QString("%1/%2/engine.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
 
 //#ifdef _DEBUG

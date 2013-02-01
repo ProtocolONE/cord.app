@@ -40,6 +40,8 @@
 #include <GameExecutor/GameExecutorService.h>
 #include <GameExecutor/ServiceInfoCounter>
 
+#include <Application/ArgumentParser.h>
+
 #include <QtCore/QDebug>
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
@@ -187,6 +189,8 @@ private:
   QPoint mLastMousePosition;
   bool m_WindowState; // false - normal size, true - max size  
   bool _gameDownloadInitialized;
+  GGS::Application::ArgumentParser _commandLineArguments;
+  GGS::Core::Service::Area _gameArea;
   
 signals:
   void nickNameChanged();
