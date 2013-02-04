@@ -9,6 +9,7 @@
 ****************************************************************************/
 
 #include <Features/GameDownloader/GameDownloadStatistics.h>
+#include <Features/GameDownloader/ExternalIpAddress.h>
 #include <Core/Marketing.h>
 
 #include <QtCore/QVariantMap>
@@ -46,6 +47,11 @@ namespace Features {
       this->_timer.setInterval(30000);
       SIGNAL_CONNECT_CHECK(QObject::connect(&this->_timer, SIGNAL(timeout()), this, SLOT(saveTimer())));
       this->_timer.start();
+
+      ExternalIpAddress *externalIp = new ExternalIpAddress(this);
+      SIGNAL_CONNECT_CHECK(QObject::connect(externalIp, SIGNAL(result(QString)), 
+        this, SLOT(externalIpResult(QString))));
+      externalIp->execute();
     }
 
     void GameDownloadStatistics::progressDownloadChanged(
@@ -118,7 +124,11 @@ namespace Features {
         " DownloadServiceTime" << downloadTime << 
         " AvgSpeed" << avgSpeed << 
         " GnaRestartCount" << stats->applicationRestartCount() << 
-        " DownloadPath" << service->installPath();
+        " DownloadPath" << service->installPath() <<
+        " Ip" << this->_externalIp;
+
+      if (!this->_externalIp.isEmpty())
+        args["ExternalIp"] = this->_externalIp;
 
       Marketing::sendOnceByService(Marketing::SendDownloadServiceInfo, service->id(), args);
       this->_statisticMap.remove(service->id());
@@ -155,6 +165,15 @@ namespace Features {
         stats->update(0, 0, 0);
         stats->save();
       }
+    }
+
+    void GameDownloadStatistics::externalIpResult(QString ip)
+    {
+      ExternalIpAddress *sender = qobject_cast<ExternalIpAddress *>(QObject::sender());
+      if (sender)
+        sender->deleteLater();
+
+      this->_externalIp = ip;
     }
 
   }

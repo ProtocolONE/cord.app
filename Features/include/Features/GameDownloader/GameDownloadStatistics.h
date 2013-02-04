@@ -40,12 +40,14 @@ namespace Features {
       void failed(const GGS::Core::Service *service); 
 
       void saveTimer();
+      void externalIpResult(QString ip);
 
     private:
       GGS::GameDownloader::GameDownloadService* _downloader;
       QHash<QString, DownloadStats*> _statisticMap;
       QTimer _timer;
       QMutex _mutex;
+      QString _externalIp;
     };
 
   }
