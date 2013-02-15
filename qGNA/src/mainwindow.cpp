@@ -213,6 +213,8 @@ void MainWindow::activateWindow()
 
   // Эта функция активирует окно и поднмиает его повех всех окон
   GGS::Application::WindowHelper::activate(this->winId());
+
+  this->repaint();
 }
 
 void MainWindow::menuItemTrigger(int index)
