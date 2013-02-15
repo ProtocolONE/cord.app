@@ -132,6 +132,14 @@ MainWindow::MainWindow(QWidget *parent)
   this->_gameSettingsViewModel = new GameSettingsViewModel(this);
   this->_gameSettingsViewModel->setGameDownloader(&this->_gameDownloaderBuilder.gameDownloader());
   
+  // HACK - уточнить что это полезно и зачем это
+  //nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
+  //nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
+  //nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+  //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
+  // END of HACK
+
+
   nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
   nQMLContainer->rootContext()->setContextProperty("licenseModel", licenseModel);
@@ -571,6 +579,8 @@ void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
 
 void MainWindow::shutdownCompleted()
 {
+  this->_gameDownloaderBuilder.torrentWrapper().shutdown();
+
   DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
 }
@@ -1010,7 +1020,6 @@ void MainWindow::postUpdateInit()
     &this->_gameExecutorServiceInfoCounter, SLOT(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
 
   this->initializeStopDownloadServiceOnExecuteGameFeature();
-//  this->_donwloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
 }
 
 bool MainWindow::anyLicenseAccepted()

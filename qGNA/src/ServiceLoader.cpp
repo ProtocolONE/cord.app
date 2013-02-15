@@ -133,16 +133,15 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   // HACK тут везде предполагается что сервис в зоне live. Если это не так надо все пути делать правильно вычисляемыми.
   // https://jira.gamenet.ru:8443/browse/GN-6523 - вот вообщем то и тикет для этого
   GGS::Core::Service *service = this->getService(id);
+  QUrl url;
+
   if (id == "300002010000000000") {
-    QUrl url;
     url.setScheme("exe");
     url.setPath(QString("%1/%2/aikaru.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%login% %token% 300002010000000000 login");
     service->setGameId("631");
-    service->setUrl(url);
   } else if (id == "300003010000000000") {
-    QUrl url;
     url.setScheme("exe");
     url.setPath(QString("%1/%2/client/client.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -150,17 +149,25 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("downloadCustomFile", 
       "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/bs/,1,config/lastlogin.xml,http://files.gamenet.ru/update/bs/,0");
     service->setGameId("71");
-    service->setUrl(url);
+
+    // HACK
+    //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
+    
+    #ifdef _DEBUG
+        QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+    #else
+        QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+    #endif
+    
+    url.addQueryItem("injectDll", injectedDll);
+
   } else if (id == "300005010000000000") {
-    QUrl url;
     url.setScheme("exe");
     url.setPath(QString("%1/%2/WarInc.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "-WOUpdatedOk -gna %userId% %appKey% %token%");
     service->setGameId("70");
-    service->setUrl(url);
   } else if (id == "300006010000000000") {
-    QUrl url;
     url.setScheme("exe");
     url.setPath(QString("%1/%2/mw2_bin/mw2.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -168,9 +175,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
 
     service->setGameId("84");
-    service->setUrl(url);
   } else if (id == "300009010000000000") {
-    QUrl url;
     url.setScheme("exe");
     url.setPath(QString("%1/%2/engine.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -185,8 +190,9 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 //    url.addQueryItem("injectDll", injectedDll);
 
     service->setGameId("92");
-    service->setUrl(url);
   }
+
+  service->setUrl(url);
 }
 
 void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
