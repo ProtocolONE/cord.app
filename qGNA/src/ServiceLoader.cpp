@@ -153,13 +153,13 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     // HACK
     //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
     
-    #ifdef _DEBUG
-        QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-    #else
-        QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-    #endif
-    
-    url.addQueryItem("injectDll", injectedDll);
+    //#ifdef _DEBUG
+    //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+    //#else
+    //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+    //#endif
+    //
+    //url.addQueryItem("injectDll", injectedDll);
 
   } else if (id == "300005010000000000") {
     url.setScheme("exe");
