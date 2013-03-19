@@ -540,24 +540,32 @@ void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service)
   QString id = service->id();
   emit this->downloaderFinished(id);
   emit this->progressbarChange(id, 100, -1, -1);     
+}
 
-  if (!this->isWindowVisible()) {
-    emit this->selectService(id);
-    return;
-  }
-  
-  if (this->_restapiManager.credential().userId().isEmpty()) {
-    emit this->authBeforeStartGameRequest(id);
-    return;
-  }
+void MainWindow::executeService(QString id) {
+	GGS::Core::Service *service = this->_serviceLoader.getService(id);
 
-  if (id == "300002010000000000" 
-    || id == "300003010000000000" 
-    || id == "300005010000000000"  
-    || id == "300006010000000000"
-    || id == "300009010000000000") {
-      this->_gameExecutorService.execute(*service);
-  }
+	if (!service) {
+		return;
+	}
+
+	if (!this->isWindowVisible()) {
+		emit this->selectService(id);
+		return;
+	}
+
+	if (this->_restapiManager.credential().userId().isEmpty()) {
+		emit this->authBeforeStartGameRequest(id);
+		return;
+	}
+
+	if (id == "300002010000000000" || 
+		id == "300003010000000000" || 
+		id == "300005010000000000" || 
+		id == "300006010000000000" || 
+		id == "300009010000000000") {
+			this->_gameExecutorService.execute(*service);
+	}
 }
 
 void MainWindow::gameDownloaderStopped(const GGS::Core::Service *service)

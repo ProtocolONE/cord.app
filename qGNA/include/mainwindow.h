@@ -138,7 +138,8 @@ public slots:
   void commandRecieved(QString name, QStringList arguments);       
   void updateFinishedSlot();
   void activateWindow();
-  
+  void executeService(QString id);
+
   void setTechName(QString& techName);
   void setNickName(QString& nickName);
 
@@ -252,10 +253,10 @@ private slots:
   void progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total);
 
   void gameDownloaderStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
-  void gameDownloaderFinished(const GGS::Core::Service *service);
   void gameDownloaderStopped(const GGS::Core::Service *service);
   void gameDownloaderStopping(const GGS::Core::Service *service);     
   void gameDownloaderFailed(const GGS::Core::Service *service); 
+  void gameDownloaderFinished(const GGS::Core::Service *service);
   void gameDownloaderStatusMessageChanged(const GGS::Core::Service *service, const QString& message);
   void torrentListenPortChangedSlot(unsigned short port);
   void gameDownloaderServiceInstalled(const GGS::Core::Service *service); 
