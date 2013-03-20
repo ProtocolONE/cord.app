@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 
   Features::RemouteStartGame remouteStartGame;
   SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(commandRecieved(QString, QStringList)), &remouteStartGame, SLOT(commandRecieved(QString, QStringList)), Qt::QueuedConnection));  
-  SIGNAL_CONNECT_CHECK(QObject::connect(&remouteStartGame, SIGNAL(startGameRequest(QString)), &w, SLOT(downloadButtonStart(QString))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&remouteStartGame, SIGNAL(startGameRequest(QString)), &w, SLOT(removeStartGame(QString))));
 
   GGS::Settings::SettingsSaver saver; 
   GGS::Settings::Settings::setSettingsSaver(&saver); 

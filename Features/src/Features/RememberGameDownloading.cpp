@@ -32,11 +32,8 @@ namespace Features {
     settings.setValue("service", "");
   }
 
-  void RememberGameDownloading::commandRecieved(QString name, QStringList arguments)
-  {
-    if (name == "startservice") 
-      return;
-    
+  void RememberGameDownloading::update()
+  {   
     GGS::Settings::Settings settings;
     settings.beginGroup("RememberGameDownloading");
     QString serviceId = settings.value("service", QString()).toString();

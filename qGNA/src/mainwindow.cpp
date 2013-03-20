@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
   , _gameArea(GGS::Core::Service::Live)
 {
   this->initializeUpdateSettings();
+  this->initRestApi();
 
   this->_commandLineArguments.parse(QCoreApplication::arguments());
 
@@ -43,12 +44,6 @@ MainWindow::MainWindow(QWidget *parent)
   if (this->_commandLineArguments.contains("gametest"))
     this->_gameArea = GGS::Core::Service::Tst;
 
-
-  this->_restapiManager.setUri("https://gnapi.com:8443/restapi");
-  this->_restapiManager.setRequest(GGS::RestApi::RequestFactory::Http);
-  this->_restapiManager.setCache(&_fakeCache);
-  GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
-  
   this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
   this->setWindowTitle("qGNA " + this->_fileVersion);
   this->setWindowFlags(Qt::Window 
@@ -162,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent)
   this->setCentralWidget(nQMLContainer);
 
   nQMLContainer->setAlignment(Qt::AlignCenter);
-  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView); 
+  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
   
   this->hide();
 
@@ -173,6 +168,10 @@ MainWindow::MainWindow(QWidget *parent)
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), this, SLOT(activateWindow())));
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(activate()), this, SLOT(activateWindow())));
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(menuClick(int)), this, SLOT(menuItemTrigger(int))));
+
+  if (!this->_commandLineArguments.contains("startservice")) {
+	SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
+  }
 }
 
 MainWindow::~MainWindow()
@@ -498,8 +497,9 @@ void MainWindow::prepairGameDownloader()
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     &this->_rembrGameFeature, SLOT(started(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(finished(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(finished(const GGS::Core::Service *)),  
     &this->_rembrGameFeature, SLOT(finished(const GGS::Core::Service *))));
+
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_rembrGameFeature, SIGNAL(startGameRequest(QString)), this, SLOT(downloadButtonStart(QString))));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(statusMessageChanged(const GGS::Core::Service *, const QString&)), 
@@ -517,12 +517,12 @@ void MainWindow::prepairGameDownloader()
 
 void MainWindow::progressChanged(QString serviceId, qint8 progress)
 {
-  emit this->progressbarChange(serviceId, progress, -1, -1); 
+  emit this->progressbarChange(serviceId, progress, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0); 
 }
 
 void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
 {
-  emit this->progressbarChange(serviceId, progress, args.totalWantedDone(), args.totalWanted());
+  emit this->progressbarChange(serviceId, progress, args.totalWantedDone(), args.totalWanted(), args.directTotalDownload(), args.peerTotalDownload(), args.payloadTotalDownload(), args.peerPayloadDownloadRate(), args.payloadDownloadRate(), args.directPayloadDownloadRate(), args.playloadUploadRate(), args.totalPayloadUpload());
 }
 
 void MainWindow::progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total)
@@ -539,7 +539,7 @@ void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service)
 {
   QString id = service->id();
   emit this->downloaderFinished(id);
-  emit this->progressbarChange(id, 100, -1, -1);     
+  emit this->progressbarChange(id, 100, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0);     
 }
 
 void MainWindow::executeService(QString id) {
@@ -596,8 +596,24 @@ void MainWindow::shutdownCompleted()
   QCoreApplication::quit();
 }
 
+void MainWindow::removeStartGame(QString serviceId) {
+	GGS::Settings::Settings settings;
+	settings.beginGroup("gameExecutor/serviceInfo/" + serviceId + "/");
+	int successCount = settings.value("successCount", 0).toInt();
+	int failedCount = settings.value("failedCount", 0).toInt();
+
+	if (failedCount + successCount > 0) {
+		this->selectService(serviceId);
+		return;
+	}
+
+	this->downloadButtonStart(serviceId);
+}
+
 void MainWindow::downloadButtonStart(QString serviceId) 
 {
+  qDebug() << "downloadButtonStart " << serviceId;
+
   GGS::Core::Service *service = this->getService(serviceId);
   if (!service)
     return;
@@ -808,8 +824,6 @@ void MainWindow::torrentListenPortChangedSlot(unsigned short port)
 
 void MainWindow::commandRecieved(QString name, QStringList arguments)
 {
-  this->_rembrGameFeature.commandRecieved(name, arguments);
-
   if (name == "activate") {
     this->activateWindow();
   } else if (name == "gogamenethelper" && arguments.size() > 0) {
@@ -1098,4 +1112,22 @@ void MainWindow::acceptFirstLicense(const QString& serviceId)
 void MainWindow::initFinished()
 {
   emit this->updateFinished();
+}
+
+void MainWindow::initRestApi()
+{
+  //Port selection due to https://jira.gamenet.ru:8443/browse/QGNA-285
+
+  QStringList ports = (QStringList() << "443" << "7443" << "8443" << "9443" << "10443" << "11443");
+  QString  apiUrl = "https://gnapi.com:" + ports.takeAt(qrand() % ports.count()) + "/restapi";
+
+  GGS::Settings::Settings settings;
+  settings.setValue("qGNA/restApi/url", apiUrl);
+
+  qDebug() << "Using rest api url " << apiUrl;
+
+  this->_restapiManager.setUri(apiUrl);
+  this->_restapiManager.setRequest(GGS::RestApi::RequestFactory::Http);
+  this->_restapiManager.setCache(&_fakeCache);
+  GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
 }

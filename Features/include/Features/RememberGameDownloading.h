@@ -20,7 +20,7 @@ namespace Features {
   public slots:
     void started(const GGS::Core::Service *service);
     void finished(const GGS::Core::Service *service);
-    void commandRecieved(QString name, QStringList arguments);       
+    void update();       
 
   signals:
     void startGameRequest(QString serviceId);
