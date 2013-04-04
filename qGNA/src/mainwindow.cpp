@@ -826,13 +826,27 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
 {
   if (name == "activate") {
     this->activateWindow();
-  } else if (name == "gogamenethelper" && arguments.size() > 0) {
+	return;
+  } 
+
+  if (name == "gogamenethelper" && arguments.size() > 0) {
     QString gameId = arguments.at(0);
     QString url = QString("http://www.gamenet.ru/games/%1/helper").arg(gameId);
     this->openExternalBrowser(url);
-  } else if (name == "gogamenetmoney") {
+	return;
+  } 
+
+  if (name == "gogamenetmoney") {
     this->openExternalBrowser("http://www.gamenet.ru/money");
-  } else if (name == "uninstall") {
+	return;
+  }
+  
+  if (name == "gocombatarmsrating") {
+	this->openExternalBrowser("http://www.combatarms.ru/ratings/user/");
+	return;
+  } 
+  
+  if (name == "uninstall") {
     DEBUG_LOG << "command uninstall";
     this->onWindowClose();
   }
