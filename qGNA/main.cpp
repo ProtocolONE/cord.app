@@ -26,7 +26,7 @@
 
 #include <Log4Qt/LogManager>
 #include <Log4Qt/Level>
-#include <Log4Qt/FileAppender>
+#include <Log4Qt/RollingFileAppender>
 #include <Log4Qt/TTCCLayout>
 
 #include <BugTrap\BugTrap.h>
@@ -53,7 +53,7 @@ bool initDatabase()
   return true;
 }
 
-void initBugTrap()
+void initBugTrap(const QString &path)
 {
     BT_SetAppName(_T("QGNA Application"));
     BT_SetAppVersion(_T(STRFILEVER));
@@ -61,16 +61,21 @@ void initBugTrap()
     BT_SetSupportURL(_T("https://support.gamenet.ru"));
     BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
     BT_SetSupportServer(_T("fs1.gamenet.ru"), 9999);
+    BT_AddLogFile(QString(path + "/qgna.log").utf16());
+    BT_AddLogFile(QString(path + "/qgna.log.1").utf16());
     BT_InstallSehFilter();
 }
 
 int main(int argc, char *argv[]) 
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
-  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
-  app.setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "/images/icon.png"));
+  QString path = QCoreApplication::applicationDirPath();
 
-  initBugTrap();
+  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
+  app.setWindowIcon(QIcon(path + "/images/icon.png"));
+  app.addLibraryPath(path + "/plugins");
+  
+  initBugTrap(path);
   
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
@@ -83,22 +88,17 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  QString root = QCoreApplication::applicationDirPath();
-  QString qrcPath = root;
-  qrcPath.append("/qGNA.rcc");
-
   GGS::ResourceHelper::ResourceLoader loader;
-  loader.load(qrcPath); 
+  loader.load(path + "/qGNA.rcc"); 
 
   QThread::currentThread()->setObjectName("Main thread");
 
   TTCCLayout layout(TTCCLayout::ISO8601);
   layout.retain();
 
-  QString logPath = app.applicationDirPath();
-  logPath.append("/qgna.log");
-
-  FileAppender appender(&layout, logPath, true);
+  RollingFileAppender appender(&layout, path + "/qgna.log", true);
+  appender.setMaximumFileSize(1000000);
+  appender.setMaxBackupIndex(1);
   appender.retain();
   appender.activateOptions();
 
@@ -109,8 +109,8 @@ int main(int argc, char *argv[])
   LogManager::setHandleQtMessages(true);
 #endif
 
-  qDebug() << "started";
-  qDebug() << "UAC: " << GGS::AutoRunHelper::UACHelper::isUacEnabled();
+  qDebug() << "Application started";
+  qDebug() << "UAC enabled: " << GGS::AutoRunHelper::UACHelper::isUacEnabled();
   qDebug() << "Admin Group: " << GGS::AutoRunHelper::UACHelper::isUserAdminByRole(); 
   qDebug() << "Admin: " << GGS::AutoRunHelper::UACHelper::isUserAdmin();
 
@@ -135,10 +135,6 @@ int main(int argc, char *argv[])
 
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
-  QString imageFormatsPath = root;
-  root.append("/plugins");
-  app.addLibraryPath(root);
-   
   MainWindow w;
   if (!app.containsCommand("minimized"))
       w.activateWindow();

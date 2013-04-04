@@ -310,7 +310,7 @@ void MainWindow::onForceWindowClose()
 
 void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie) 
 {
-  qDebug() << "[DEBUG] userId " << userId;// не хочу палить авторизацию в логе << " appKey " << appKey;
+  qDebug() << "Auth success with userId " << userId;
 
   this->_trayWindow->setMenuType(TrayWindow::FullMenu);
 
