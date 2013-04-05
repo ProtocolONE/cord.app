@@ -17,7 +17,7 @@
     <GameDownloaderArea>trunk</GameDownloaderArea>
     <GameExecutorArea>trunk</GameExecutorArea>
     <ApplicationArea>trunk</ApplicationArea>
-    <OpenSSLArea>1.0.1e</OpenSSLArea>
+    <OpenSSLArea>0.9.8r</OpenSSLArea>
     <QmlExtensionArea>trunk</QmlExtensionArea>
     <QxmppArea>0.6.3</QxmppArea>
     <MarketingArea>trunk</MarketingArea>
