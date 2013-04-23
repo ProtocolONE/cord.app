@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
   SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
 
   this->loadPlugin("QmlExtensionX86");
+  this->loadPlugin("QmlOverlayX86");
 
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   
@@ -158,10 +159,13 @@ MainWindow::MainWindow(QWidget *parent)
 
   Message::setAdapter(messageAdapter);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), this, SLOT(activateWindow())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameExecutorService, 
+    SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), this, SLOT(activateWindow())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(activate()), this, SLOT(activateWindow())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(menuClick(int)), this, SLOT(menuItemTrigger(int))));
 
   if (!this->_commandLineArguments.contains("startservice")) {
-	SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
+	  SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
   }
 }
 
@@ -341,13 +345,13 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
   if (shouldStartWithSameArguments) {
     QStringList args = QCoreApplication::arguments();
     args.removeFirst();
-
+    
     if (args.size() > 0) {
       commandLineArgs = args.join("\" \"");
       commandLineArgs.prepend(L'"');
       commandLineArgs.append(L'"');
     }
-
+    
   } else {
     if (!this->isVisible())
       commandLineArgs = "/minimized";
@@ -501,18 +505,19 @@ void MainWindow::progressChanged(QString serviceId, qint8 progress)
 
 void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
 {
-  emit this->progressbarChange(serviceId, 
-	  progress, 
-	  args.totalWantedDone(), 
-	  args.totalWanted(), 
-	  args.directTotalDownload(), 
-	  args.peerTotalDownload(), 
-	  args.payloadTotalDownload(), 
-	  args.peerPayloadDownloadRate(), 
-	  args.payloadDownloadRate(), 
-	  args.directPayloadDownloadRate(), 
-	  args.playloadUploadRate(), 
-	  args.totalPayloadUpload());
+  emit this->progressbarChange(
+    serviceId, 
+    progress, 
+    args.totalWantedDone(), 
+    args.totalWanted(), 
+    args.directTotalDownload(), 
+    args.peerTotalDownload(), 
+    args.payloadTotalDownload(), 
+    args.peerPayloadDownloadRate(), 
+    args.payloadDownloadRate(), 
+    args.directPayloadDownloadRate(), 
+    args.playloadUploadRate(), 
+    args.totalPayloadUpload());
 }
 
 void MainWindow::progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total)

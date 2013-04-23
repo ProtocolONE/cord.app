@@ -210,6 +210,10 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     bool ok;
     int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
     if (overlayEnabled != 0 || !ok) {
+      // HACK
+      //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Release\\OverlayX86d.dll");
+      //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
+
       // Выключили 01.03.2013
       #ifdef _DEBUG
           QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
@@ -217,10 +221,9 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
           QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
       #endif
       
-      query.addQueryItem("injectDll", injectedDll);
+      url.addQueryItem("injectDll", injectedDll);
     }
 
-    url.setQuery(query);
   } else if (id == "300005010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/WarInc.exe").arg(currentInstallPath, service->areaString()));
