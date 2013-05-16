@@ -116,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent)
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(numConnectionsChanged()), this, SLOT(settingsNumConnectionsChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(downloadSpeedChanged()), this, SLOT(settingsDownloadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(uploadSpeedChanged()), this, SLOT(settingsUploadSpeedChangedSlot())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(applicationAreaChanged()), this, SLOT(applicationAreaChanged())));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(licenseModel, SIGNAL(result()), this, SLOT(licenseOkPressed())));
 
@@ -1144,4 +1145,9 @@ void MainWindow::initRestApi()
   this->_restapiManager.setRequest(GGS::RestApi::RequestFactory::Http);
   this->_restapiManager.setCache(&_fakeCache);
   GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
+}
+
+void MainWindow::applicationAreaChanged()
+{
+  this->restartApplication(false);
 }

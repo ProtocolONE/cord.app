@@ -14,9 +14,11 @@ class SettingsViewModel : public QObject
 
     Q_PROPERTY(bool notifyWhenStartedGameNet READ notifyWhenStartedGameNet WRITE setNotifyWhenStartedGameNet NOTIFY notifyWhenStartedGameNetChanged)
     Q_PROPERTY(bool notifyStartEndGameDownload READ notifyStartEndGameDownload WRITE setNotifyStartEndGameDownload NOTIFY notifyStartEndGameDownloadChanged)
-    Q_PROPERTY(bool notifyDisconnectFriendFromNetwork READ notifyDisconnectFriendFromNetwork WRITE setNotifyDisconnectFriendFromNetwork NOTIFY notifyDisconnectFriendFromNetworkChanged)    
-    Q_PROPERTY(bool notifyDisconnectFriendFromGame READ notifyDisconnectFriendFromGame WRITE setNotifyDisconnectFriendFromGame NOTIFY notifyDisconnectFriendFromGameChanged)    
-    Q_PROPERTY(bool notifyNewMessage READ notifyNewMessage WRITE setNotifyNewMessage NOTIFY notifyNewMessageChanged)    
+    Q_PROPERTY(bool notifyDisconnectFriendFromNetwork READ notifyDisconnectFriendFromNetwork WRITE setNotifyDisconnectFriendFromNetwork NOTIFY notifyDisconnectFriendFromNetworkChanged)
+    Q_PROPERTY(bool notifyDisconnectFriendFromGame READ notifyDisconnectFriendFromGame WRITE setNotifyDisconnectFriendFromGame NOTIFY notifyDisconnectFriendFromGameChanged)
+    Q_PROPERTY(bool notifyNewMessage READ notifyNewMessage WRITE setNotifyNewMessage NOTIFY notifyNewMessageChanged)
+
+    Q_PROPERTY(bool isPublicTestVersion READ isPublicTestVersion NOTIFY isPublicTestVersionChanged)
 
 public:
     explicit SettingsViewModel(QObject *parent = 0);
@@ -51,13 +53,16 @@ public slots:
     QString uploadSpeed();
     void setUploadSpeed(const QString& _speed);
 
-public slots:
     void setAutoStart(int _autostart);
     int autoStart();
 
     void setDefaultSettings();
     void addToAutoStart(bool autostart, bool isMinimized); 
     void loadSettings();
+
+    bool isPublicTestVersion();
+    void switchClientVersion();
+
 private:
     bool _instantlySave;
 
@@ -73,6 +78,9 @@ signals:
     void notifyNewMessageChanged();
     void downloadSpeedChanged();
     void uploadSpeedChanged();
+    void isPublicTestVersionChanged();
+
+    void applicationAreaChanged();
 };
 
 #endif // SETTINGSVIEWMODEL_H

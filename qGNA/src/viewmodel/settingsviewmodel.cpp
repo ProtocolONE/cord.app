@@ -1,9 +1,11 @@
 #include "viewmodel\settingsviewmodel.h"
 #include <Settings\Settings.h>
-#include <qdatetime.h>
+#include <Core/UI/Message>
 
 #include <AutoRunHelper.h>
 #include <QtConcurrentRun>
+
+#include <QtCore/QDateTime>
 
 SettingsViewModel::SettingsViewModel(QObject *parent)
   : QObject(parent)
@@ -241,4 +243,39 @@ void SettingsViewModel::setDefaultSettings()
 void SettingsViewModel::loadSettings()
 {
 
+}
+
+bool SettingsViewModel::isPublicTestVersion()
+{
+  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
+  bool ok = false;
+  int area = settings.value("Repository", 0).toInt(&ok);
+  if (!ok)
+    area = 0;
+
+  return area == 1;
+}
+
+void SettingsViewModel::switchClientVersion()
+{
+  using namespace GGS::Core::UI;
+
+  if (Message::question(
+    tr("INFO_CAPTION"), 
+    tr("CHANGE_APPLICATION_AREA"), 
+    (Message::StandardButton)(Message::Yes | Message::Cancel)) != Message::Yes) {
+      emit this->isPublicTestVersionChanged();
+      return;
+  }
+  
+  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
+  bool ok = false;
+  int area = settings.value("Repository", 0).toInt(&ok);
+  if (!ok)
+    area = 0;
+
+  area = area == 0 ? 1 : 0;
+
+  settings.setValue("Repository", area);
+  emit this->applicationAreaChanged();
 }

@@ -277,6 +277,7 @@ private slots:
 	void checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result);
 
 	void restApiGenericError(GGS::RestApi::CommandBase::Error, QString message);
+  void applicationAreaChanged();
 
 private:
 	void initServices();
