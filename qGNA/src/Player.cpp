@@ -1,45 +1,37 @@
-#include <Player.h>
+#include "Player.h"
 #include <QDebug>
 
 Player::Player(QDeclarativeItem *parent) 
   : QDeclarativeItem(parent),
-    _autoPlay(true)   
+    _autoPlay(true),
+    _media(new Phonon::MediaObject(this)),
+    _output(new Phonon::AudioOutput(Phonon::MusicCategory, this))
 {
-
-  this->_media = new QMediaPlayer(parent);
-
-  QObject::connect(this->_media, SIGNAL(stateChanged(QMediaPlayer::State)),
-    this, SLOT(stateChanged(QMediaPlayer::State)));
-
-  QObject::connect(this->_media, SIGNAL(error(QMediaPlayer::Error)), this, SIGNAL(error()));
-
-  QObject::connect(this->_media, &QMediaPlayer::mediaStatusChanged, 
-    this, &Player::mediaStatusChanged);
- 
+  Phonon::createPath(this->_media, this->_output);
+  QObject::connect(this->_media, SIGNAL(finished()), this, SIGNAL(finished()));
+  QObject::connect(this->_media, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
+    this, SLOT(stateChanged(Phonon::State, Phonon::State)));
 }
 
 Player::~Player()
 {
 }
 
-void Player::mediaStatusChanged(QMediaPlayer::MediaStatus status)
-{
-  if (status == QMediaPlayer::EndOfMedia) {
-    emit this->finished();
-  }
-}
-
-void Player::stateChanged(QMediaPlayer::State state)
+void Player::stateChanged(Phonon::State newstate, Phonon::State oldstate)
 { 
-  switch(state) {
-  case QMediaPlayer::PlayingState:
+  switch(newstate) {
+  case Phonon::PlayingState:
     emit this->playing();
     break;
-  case QMediaPlayer::StoppedState:
+  case Phonon::StoppedState:
     emit this->stopped();
     break;
-  case QMediaPlayer::PausedState:
+  case Phonon::PausedState:
     emit this->paused();
+    break;
+  case Phonon::ErrorState:
+    qDebug() << this->_media->errorString();
+    emit this->error();
     break;
   }
 }
@@ -49,10 +41,10 @@ QString Player::source() const
   return this->_source;
 }
 
-void Player::setSource(const QString &value)
+void Player::setSource(QString value)
 {
   if (value != this->_source) {
-    this->_media->setMedia(QUrl(value));
+    this->_media->setCurrentSource(Phonon::MediaSource(value));
 
     this->_source = value;
     emit this->sourceChanged();
@@ -89,11 +81,11 @@ void Player::setAutoPlay(bool value)
 
 qreal Player::volume() const
 {
-  return this->_media->volume();
+  return this->_output->volume();
 }
 
 void Player::setVolume(qreal value)
 {
-  emit this->_media->setVolume(value);
+  this->_output->setVolume(value);
   emit this->volumeChanged();
 }

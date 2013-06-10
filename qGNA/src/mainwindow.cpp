@@ -77,6 +77,10 @@ void MainWindow::initialize()
   qmlRegisterType<GGS::UpdateSystem::UpdateManagerViewModel>("qGNA.Library", 1, 0, "UpdateManagerViewModel");             
   qmlRegisterType<SelectMw2ServerListModel>("qGNA.Library", 1, 0, "SelectMw2ServerListModel"); 
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");             
+
+  qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
+  qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
+
   qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
 
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
@@ -121,7 +125,6 @@ void MainWindow::initialize()
   //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
   // END of HACK
 
-  nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
   nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
   nQMLContainer->rootContext()->setContextProperty("licenseModel", licenseModel);
@@ -136,7 +139,25 @@ void MainWindow::initialize()
 
   QObject *item = nQMLContainer->rootObject();
   QDeclarativeItem *rootItem = qobject_cast<QDeclarativeItem*>(item);
-  
+
+    if (QGLFormat::hasOpenGL() 
+    && QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0) 
+    && this->_commandLineArguments.contains("opengl"))
+  {
+    QGLFormat format; 
+    format.setVersion(2,0);
+    QGLFormat::setDefaultFormat(format);
+    QGLWidget *glWidget = new QGLWidget(format);
+    this->nQMLContainer->setViewport(glWidget);
+	this->setFixedSize(rootItem->width(), rootItem->height()); 
+    DEBUG_LOG << "Render: Use OpenGL 2.0";
+  } else {
+    setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
+    setStyleSheet("background:transparent;");
+    this->setFixedSize(rootItem->width(), rootItem->height()); 
+    DEBUG_LOG << "Render: Use rester engine.";
+  }
+
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
