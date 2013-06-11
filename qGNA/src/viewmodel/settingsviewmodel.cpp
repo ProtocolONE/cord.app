@@ -3,7 +3,7 @@
 #include <Core/UI/Message>
 
 #include <AutoRunHelper.h>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 
 #include <QtCore/QDateTime>
 
@@ -90,7 +90,7 @@ QString SettingsViewModel::numConnections()
   return num;
 }
 
-void SettingsViewModel::setNumConnections( const QString& _num )
+void SettingsViewModel::setNumConnections(const QString& _num)
 {
   QString tmp = this->numConnections();
   if (tmp == _num)
@@ -233,6 +233,7 @@ void SettingsViewModel::setDefaultSettings()
   setNotifyNewMessage(true);
   setDownloadSpeed("0");
   setUploadSpeed("0"); 
+  setSeedEnabled(true);
 
   GGS::Settings::Settings settings;
   settings.setValue("qGNA/language", "ru" , true);
@@ -278,4 +279,21 @@ void SettingsViewModel::switchClientVersion()
 
   settings.setValue("Repository", area);
   emit this->applicationAreaChanged();
+}
+
+bool SettingsViewModel::seedEnabled()
+{
+  GGS::Settings::Settings settings;
+  return settings.value("qGNA/seedEnabled", true).toBool();
+}
+
+void SettingsViewModel::setSeedEnabled(bool value)
+{
+  bool tmp = this->seedEnabled();
+  if (tmp == value)
+    return;
+
+  GGS::Settings::Settings settings;
+  settings.setValue("qGNA/seedEnabled", value, this->_instantlySave); 
+  emit this->seedEnabledChanged();
 }

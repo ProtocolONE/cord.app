@@ -4,6 +4,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QHash>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <Qtcore/QByteArray>
 
 namespace GGS {
   namespace Core {
@@ -52,12 +54,20 @@ public slots:
   const QString& downloadPath();
   void setDownloadPath(const QString& downloadPath);
 
+  static QString getGameDirectory(GGS::Core::Service *service, const QString& defaultDir);
+
+  QString browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir);
+  
+  static QStringList deserialize(QByteArray serialized);
+  static QByteArray serialize(QStringList stringList);
+  
 signals:
   void installPathChanged();
   void downloadPathChanged();
   void hasDownloadPathChanged();
 
 private:
+  QString getFolderName(int type);
 
   QHash<QString, GGS::Core::Service *> *_serviceList;
   GGS::GameDownloader::GameDownloadService *_gameDownloader;

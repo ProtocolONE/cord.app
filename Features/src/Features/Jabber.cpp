@@ -27,7 +27,7 @@ namespace Features {
   void Jabber::authSuccess(const QString& userId, const QString& appKey)
   {
     QCryptographicHash hash(QCryptographicHash::Md5);
-    hash.addData(appKey.toAscii());
+    hash.addData(appKey.toLatin1());
 
     QString pass = QString(hash.result().toHex());
     

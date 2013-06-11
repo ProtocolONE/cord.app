@@ -1,8 +1,10 @@
 #include "viewmodel/LicenseViewModel.h"
+#include "viewmodel/GameSettingsViewModel.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
-#include <QtGui/QFileDialog>
+#include <QtWidgets/QFileDialog>
+
   
 LicenseViewModel::LicenseViewModel(QObject *parent)
   : QObject(parent)
@@ -18,10 +20,11 @@ LicenseViewModel::~LicenseViewModel()
 
 }
 
-void LicenseViewModel::openLicense(const QString& serviceId, const QString& hash)
+void LicenseViewModel::openLicense(GGS::Core::Service* service, const QString& hash)
 {
-  this->_serviceId = serviceId;
+  this->_serviceId = service->id();
   this->_hash = hash;
+  this->_service = service;
   emit this->openLicenseBlock(); 
 }
 
@@ -72,13 +75,8 @@ void LicenseViewModel::okPressed() {
 
 void LicenseViewModel::searchPressed()
 {
-  QString newDirectory = QFileDialog::getExistingDirectory(0, tr("CAPTION_OPEN_DIR"), this->_pathToInstall, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-  qDebug() << "[LicenseViewModel] searchPressed." << newDirectory;
+  QString newDirectory = GameSettingsViewModel::getGameDirectory(this->_service, this->_service->installPath());
   if (newDirectory.isEmpty())
-    return;
-
-  QDir dir(newDirectory);
-  if (!dir.exists())
     return;
 
   this->setPathToInstall(newDirectory);

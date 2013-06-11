@@ -1,6 +1,7 @@
 ﻿#include <viewmodel/SelectMw2Server/SelectMw2ServerListModel.h>
 
 #include "mainwindow.h"
+#include "Player.h"
 
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
@@ -20,10 +21,13 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QSysInfo>
 #include <QtCore/QFlags>
-#include <QtGui/QBoxLayout>
-#include <QtGui/QDesktopWidget>
+#include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QDesktopWidget>
 #include <QtDeclarative/QDeclarativeProperty>
 #include <Core/System/HardwareId.h>
+#include <QPluginLoader>
+
+#include <HookEngine/HookEngine.h>
 
 // TODO сделать место поточнее и вывод ошибки с фразой вроде "Couldn't connect to"
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
@@ -32,6 +36,15 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
   , _gameDownloadInitialized(false)
   , _gameArea(GGS::Core::Service::Live)
+{
+  this->hide();
+}
+
+MainWindow::~MainWindow()
+{
+}
+
+void MainWindow::initialize()
 {
   this->initializeUpdateSettings();
   this->initRestApi();
@@ -46,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
   this->setWindowTitle("qGNA " + this->_fileVersion);
+  this->_serviceLoader.setApplicationVersion(this->_fileVersion);
   this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
@@ -53,70 +67,42 @@ MainWindow::MainWindow(QWidget *parent)
     | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы       
 
   this->translatorsParse();
-  
+
   GGS::Settings::Settings settings;
   this->selectLanguage(settings.value("qGNA/language").toString());                                                             
-  
+
   this->settingsViewModel = new SettingsViewModel(this);
   this->initAutorun();
-  
-  qRegisterMetaType<TrayWindow::MenuLabel>("MenuLabel");
-  qRegisterMetaType<TrayWindow::ContextMenuType>("ContextMenuType"); 
-   
+
   qmlRegisterType<GGS::UpdateSystem::UpdateManagerViewModel>("qGNA.Library", 1, 0, "UpdateManagerViewModel");             
   qmlRegisterType<SelectMw2ServerListModel>("qGNA.Library", 1, 0, "SelectMw2ServerListModel"); 
+  qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");             
+  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
 
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
-  qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
+  qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", ""); 
+ 
+  this->initMarketing();
 
-  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
-  qmlRegisterType<TrayWindow>("qGNA.Library", 1, 0,  "TrayWindow");   
-
-  this->_trayWindow = new TrayWindow();
-  this->_trayWindow->setMenuType(TrayWindow::OnlyQuitMenu);
-
-  QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  QString mid = midSettings.value("MID", "").toString();
-  this->_marketingTargetFeatures.init("qGNA", mid);
-  
-  int installerKey = midSettings.value("InstKey").toInt();
-  this->_marketingTargetFeatures.setInstallerKey(installerKey);
-  
   //next 2 lines QGNA-60
-  this->nQMLContainer = new MQDeclarativeView();
+  this->nQMLContainer = new MQDeclarativeView(this);
   SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
 
+  this->loadPlugin("QmlOverlayX86");
   this->loadPlugin("QmlExtensionX86");
 
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-  if (QGLFormat::hasOpenGL() 
-    && QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0) 
-    && this->_commandLineArguments.contains("opengl"))
-  {
-    QGLFormat format; 
-    format.setVersion(2,0);
-    QGLFormat::setDefaultFormat(format);
-    QGLWidget *glWidget = new QGLWidget(format);
-    this->nQMLContainer->setViewport(glWidget);
-    this->setFixedSize(800,400); 
-    DEBUG_LOG << "Render: Use OpenGL 2.0";
-  } else {
-    setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
-    setStyleSheet("background:transparent;");
-    this->setFixedSize(808,408); 
-    DEBUG_LOG << "Render: Use rester engine.";
-  }
-  
   this->licenseModel = new LicenseViewModel(this);
   this->_selectMw2ServerViewModel = new SelectMw2ServerViewModel(this);
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
-    
+
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(incomingPortChanged()), this, SLOT(settingsIncomingPortChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(numConnectionsChanged()), this, SLOT(settingsNumConnectionsChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(downloadSpeedChanged()), this, SLOT(settingsDownloadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(uploadSpeedChanged()), this, SLOT(settingsUploadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(applicationAreaChanged()), this, SLOT(applicationAreaChanged())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(seedEnabledChanged()), this, SLOT(seedEnabledChanged())));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(licenseModel, SIGNAL(result()), this, SLOT(licenseOkPressed())));
 
@@ -126,8 +112,8 @@ MainWindow::MainWindow(QWidget *parent)
   messageAdapter = new QmlMessageAdapter(this);
 
   this->_gameSettingsViewModel = new GameSettingsViewModel(this);
-  this->_gameSettingsViewModel->setGameDownloader(&this->_gameDownloaderBuilder.gameDownloader());
-  
+  this->_gameSettingsViewModel->setGameDownloader(&this->_gameDownloader);
+
   // HACK - уточнить что это полезно и зачем это
   //nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
   //nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
@@ -135,50 +121,57 @@ MainWindow::MainWindow(QWidget *parent)
   //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
   // END of HACK
 
-
+  nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
   nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
   nQMLContainer->rootContext()->setContextProperty("licenseModel", licenseModel);
   nQMLContainer->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
   nQMLContainer->rootContext()->setContextProperty("selectMw2ServerModel", this->_selectMw2ServerViewModel);
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
-  nQMLContainer->rootContext()->setContextProperty("trayMenu", this->_trayWindow);   
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
-
   nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
+  nQMLContainer->setAlignment(Qt::AlignCenter);
+  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
   QObject *item = nQMLContainer->rootObject();
-
+  QDeclarativeItem *rootItem = qobject_cast<QDeclarativeItem*>(item);
+  
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowClose()), this, SLOT(onWindowClose())));
 
   this->setCentralWidget(nQMLContainer);
-
-  nQMLContainer->setAlignment(Qt::AlignCenter);
-  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
-  
-  this->hide();
-
-  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png");
+  this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
+  this->setStyleSheet("background:transparent;");
+  this->setFixedSize(rootItem->width(), rootItem->height()); 
+  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png"); 
 
   Message::setAdapter(messageAdapter);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), this, SLOT(activateWindow())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(activate()), this, SLOT(activateWindow())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(menuClick(int)), this, SLOT(menuItemTrigger(int))));
+  if (!this->_commandLineArguments.contains("minimized")) 
+    this->activateWindow();
 
   if (!this->_commandLineArguments.contains("startservice")) {
-	SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
+    SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
   }
+
+  GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna);
+  GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
+
+  QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
+
+  this->_keyboardLayoutHelper.update();
 }
 
-MainWindow::~MainWindow()
-{
-  delete this->_trayWindow;
-  this->_trayWindow = 0;
+bool MainWindow::nativeEvent(const QByteArray & eventType, void * message, long * result) { 
+  MSG* msg = reinterpret_cast<MSG*>(message);
+
+  if (msg->message == WM_KEYUP) 
+    this->_keyboardLayoutHelper.update();
+
+  return QMainWindow::nativeEvent(eventType, message, result); 
 }
 
 void MainWindow::setTechName(QString& techName){
@@ -213,15 +206,9 @@ void MainWindow::activateWindow()
   this->showNormal();
 
   // Эта функция активирует окно и поднмиает его повех всех окон
-  GGS::Application::WindowHelper::activate(this->winId());
+  GGS::Application::WindowHelper::activate((HWND)this->winId());
 
   this->repaint();
-}
-
-void MainWindow::menuItemTrigger(int index)
-{
-  if (index == TrayWindow::QuitMenu)
-    emit this->closeMainWindow();  
 }
 
 bool MainWindow::isDownloading(QString serviceId)
@@ -230,7 +217,7 @@ bool MainWindow::isDownloading(QString serviceId)
   if (!service)
     return false;
 
-  return this->_gameDownloaderBuilder.gameDownloader().isInProgress(service);
+  return this->_gameDownloader.isInProgress(service);
 }
 
 void MainWindow::translatorsParse()
@@ -295,8 +282,9 @@ void MainWindow::onWindowClose()
 
   this->repaint();
   this->hide();
+
   if (this->_gameDownloadInitialized) {
-    this->_gameDownloaderBuilder.gameDownloader().shutdown(); 
+    this->_gameDownloader.shutdown(); 
   } else {
     DEBUG_LOG << "fast shutdownCompleted";
     QCoreApplication::quit();
@@ -312,8 +300,6 @@ void MainWindow::onForceWindowClose()
 void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie) 
 {
   qDebug() << "Auth success with userId " << userId;
-
-  this->_trayWindow->setMenuType(TrayWindow::FullMenu);
 
   GGS::RestApi::GameNetCredential credential;
   credential.setUserId(userId);
@@ -361,17 +347,16 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
   if (shouldStartWithSameArguments) {
     QStringList args = QCoreApplication::arguments();
     args.removeFirst();
-
+    
     if (args.size() > 0) {
       commandLineArgs = args.join("\" \"");
       commandLineArgs.prepend(L'"');
       commandLineArgs.append(L'"');
     }
-
+    
   } else {
     if (!this->isVisible())
-      commandLineArgs = "/minimized";
-
+      commandLineArgs = "/minimized"; 
   }
 
   SHELLEXECUTEINFOW shex;
@@ -385,12 +370,12 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
   shex.lpParameters	= reinterpret_cast<const WCHAR*>(commandLineArgs.utf16()); 
   shex.lpDirectory	= reinterpret_cast<const WCHAR*>(dir.utf16()); 
   shex.nShow			  = SW_NORMAL; 
-  
+
   if (::ShellExecuteExW(&shex)) {
-    QCoreApplication::exit();
+    this->onWindowClose();
     return;
   }
-
+  
   WARNING_LOG << "Can't restart qGNA";
 }
 
@@ -413,8 +398,6 @@ void MainWindow::openExternalBrowser(const QString& url)
 
 void MainWindow::logout()
 {
-  this->_trayWindow->setMenuType(TrayWindow::OnlyQuitMenu);
-
   this->_credential.setAppKey("");
   this->_credential.setUserId("");
   this->_credential.setCookie("");
@@ -431,7 +414,7 @@ void MainWindow::initServices()
   // QGNA-183 выпиливание всех следов RoT в qGNA
   this->_gameSettingsViewModel->removeShortCutByName("RageofTitans");
 
-  this->_serviceLoader.setDownloadBuilder(&this->_gameDownloaderBuilder);
+  this->_serviceLoader.setGameDownloader(&this->_gameDownloader);
   this->_serviceLoader.setExecutor(&this->_gameExecutorService);
   this->_serviceLoader.init(this->_gameArea);
   
@@ -456,38 +439,53 @@ void MainWindow::prepairGameDownloader()
   QString root = QCoreApplication::applicationDirPath();
   this->initServices();
 
-  this->_gameDownloaderBuilder.torrentWrapper().setListeningPort(11789);
+  bool ok = false;
+  unsigned short port = settingsViewModel->incomingPort().toUShort(&ok);
+  if (ok)
+    this->_gameDownloader.setListeningPort(port);
+
   QString torrentConfigPath = root;
   torrentConfigPath.append("/torrents");
-  this->_gameDownloaderBuilder.torrentWrapper().setTorrentConfigDirectoryPath(torrentConfigPath);
-  this->_gameDownloaderBuilder.torrentWrapper().initEngine();
+  this->_gameDownloader.setTorrentConfigDirectoryPath(torrentConfigPath);
 
-  this->_gameDownloaderBuilder.build();
-  this->_gameDownloaderBuilder.gameDownloader().setTimeoutForResume(120);
+  this->_gameDownloader.init();
+  this->_gameDownloader.setTimeoutForResume(600);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(progressChanged(QString, qint8)), 
+  this->settingsDownloadSpeedChangedSlot();
+  this->settingsUploadSpeedChangedSlot();
+  this->settingsNumConnectionsChangedSlot();
+  
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressChanged(QString, qint8)), 
       this, SLOT(progressChanged(QString, qint8))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
     this, SLOT(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(progressExtractionChanged(QString, qint8, qint64, qint64)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressExtractionChanged(QString, qint8, qint64, qint64)), 
     this, SLOT(progressExtractionChanged(QString, qint8, qint64, qint64))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(totalProgressChanged(const GGS::Core::Service *, qint8)), 
+    this, SLOT(downloadGameTotalProgressChanged(const GGS::Core::Service *, qint8))));
+   
+
+
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(downloadProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
+    this, SLOT(downloadGameProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
+  
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     this, SLOT(gameDownloaderStarted(const GGS::Core::Service *, GGS::GameDownloader::StartType))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(finished(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(finished(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderFinished(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(stopped(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(stopped(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderStopped(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(stopping(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(stopping(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderStopping(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(failed(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(failed(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderFailed(const GGS::Core::Service *))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(shutdownCompleted()),
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(shutdownCompleted()),
     this, SLOT(shutdownCompleted())));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.torrentWrapper(), SIGNAL(listeningPortChanged(unsigned short)),
-    this, SLOT(torrentListenPortChangedSlot(unsigned short))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(listeningPortChanged(unsigned short)),
+    this, SLOT(torrentListenPortChangedSlot(unsigned short)))); 
 
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
   gameExecutorByLauncher->setWorkingDirectory(QCoreApplication::applicationDirPath());
@@ -496,24 +494,64 @@ void MainWindow::prepairGameDownloader()
   GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
   this->_gameExecutorService.registerExecutor(webLinkExecutor);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
+  // HACK Для того чтобы работало закрытие приложений и не менять QProcess хукнем CreateProcess и добавим недостающий флаг
+  // ВНИМАНИЕ любое вызов CreateProcess из приложения qGNA попадет сюда. Надо это учесть.
+  
+  // HACK отключено 03.10.2013. Чтобы можно было запустить процесс с флагом CREATE_BREAKAWAY_FROM_JOB у текущего джоба процесса
+  // должен в лимит флагах стоять соотвествующий флаг JOB_OBJECT_LIMIT_BREAKAWAY_OK 
+  //auto hook = HookEngine::createHook<HookEngine::Stdcall, BOOL, LPCWSTR, LPWSTR, void*, void*, BOOL, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFO, LPPROCESS_INFORMATION>("Kernel32.dll", "CreateProcessW");
+  //hook->assignHook([hook] (LPCWSTR a1, LPWSTR a2, void* a3, void* a4, BOOL a5, DWORD dwCreationFlags, LPVOID a6, LPCWSTR a7, LPSTARTUPINFO a8, LPPROCESS_INFORMATION a9) -> BOOL {
+  //  return hook->original(a1, a2, a3, a4, a5, dwCreationFlags | CREATE_BREAKAWAY_FROM_JOB, a6, a7, a8, a9);
+  //});
+
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     &this->_rembrGameFeature, SLOT(started(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(finished(const GGS::Core::Service *)),  
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(finished(const GGS::Core::Service *)),  
     &this->_rembrGameFeature, SLOT(finished(const GGS::Core::Service *))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_rembrGameFeature, SIGNAL(startGameRequest(QString)), this, SLOT(downloadButtonStart(QString))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(
+    &this->_rembrGameFeature, SIGNAL(startGameRequest(QString)), 
+    this, SLOT(downloadButtonStart(QString))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(statusMessageChanged(const GGS::Core::Service *, const QString&)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(
+    &this->_serviceLoader, SIGNAL(startGameRequest(QString)), 
+    this, SLOT(downloadButtonStart(QString))));
+
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(statusMessageChanged(const GGS::Core::Service *, const QString&)), 
     this, SLOT(gameDownloaderStatusMessageChanged(const GGS::Core::Service *, const QString&))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceInstalled(const GGS::Core::Service *))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
 
-  this->_downloadStatistics.init(&this->_gameDownloaderBuilder.gameDownloader());
+  this->_downloadStatistics.init(&this->_gameDownloader);
   this->_gameDownloadInitialized = true;
+}
+
+void MainWindow::downloadGameTotalProgressChanged(const GGS::Core::Service *service, qint8 progress)
+{
+  emit totalProgressChanged(service->id(), progress);
+}
+
+void MainWindow::downloadGameProgressChanged(
+  const GGS::Core::Service *service, 
+  qint8 progress, 
+  GGS::Libtorrent::EventArgs::ProgressEventArgs args)
+{
+  emit this->downloadProgressChanged(service->id(), 
+    progress, 
+    args.totalWantedDone(), 
+    args.totalWanted(), 
+    args.directTotalDownload(), 
+    args.peerTotalDownload(), 
+    args.payloadTotalDownload(), 
+    args.peerPayloadDownloadRate(), 
+    args.payloadDownloadRate(), 
+    args.directPayloadDownloadRate(), 
+    args.playloadUploadRate(), 
+    args.totalPayloadUpload());
 }
 
 void MainWindow::progressChanged(QString serviceId, qint8 progress)
@@ -523,7 +561,18 @@ void MainWindow::progressChanged(QString serviceId, qint8 progress)
 
 void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
 {
-  emit this->progressbarChange(serviceId, progress, args.totalWantedDone(), args.totalWanted(), args.directTotalDownload(), args.peerTotalDownload(), args.payloadTotalDownload(), args.peerPayloadDownloadRate(), args.payloadDownloadRate(), args.directPayloadDownloadRate(), args.playloadUploadRate(), args.totalPayloadUpload());
+  emit this->progressbarChange(serviceId, 
+	  progress, 
+	  args.totalWantedDone(), 
+	  args.totalWanted(), 
+	  args.directTotalDownload(), 
+	  args.peerTotalDownload(), 
+	  args.payloadTotalDownload(), 
+	  args.peerPayloadDownloadRate(), 
+	  args.payloadDownloadRate(), 
+	  args.directPayloadDownloadRate(), 
+	  args.playloadUploadRate(), 
+	  args.totalPayloadUpload());
 }
 
 void MainWindow::progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total)
@@ -564,7 +613,9 @@ void MainWindow::executeService(QString id) {
 		id == "300003010000000000" || 
 		id == "300005010000000000" || 
 		id == "300006010000000000" || 
-		id == "300009010000000000") {
+		id == "300009010000000000" || 
+    id == "100009010000000000" ||
+    id == "100003010000000000") {
 			this->_gameExecutorService.execute(*service);
 	}
 }
@@ -591,8 +642,7 @@ void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
 
 void MainWindow::shutdownCompleted()
 {
-  this->_gameDownloaderBuilder.torrentWrapper().shutdown();
-
+  this->_gameExecutorService.shutdown();
   DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
 }
@@ -611,7 +661,7 @@ void MainWindow::removeStartGame(QString serviceId) {
 	this->downloadButtonStart(serviceId);
 }
 
-void MainWindow::downloadButtonStart(QString serviceId) 
+void MainWindow::downloadButtonStart(QString serviceId)
 {
   qDebug() << "downloadButtonStart " << serviceId;
 
@@ -634,7 +684,7 @@ void MainWindow::downloadButtonPause(QString serviceId)
     return;
 
   if (service->isDownloadable())
-    this->_gameDownloaderBuilder.gameDownloader().stop(service);
+    this->_gameDownloader.stop(service);
   else
     this->_gameExecutorService.execute(*service);
 }
@@ -712,6 +762,9 @@ void MainWindow::checkLicense(const QString& serviceId)
   settings.beginGroup(serviceId);
   QString hash = settings.value("LicenseHash", "").toString();
 
+  if (serviceId == "100009010000000000" || serviceId == "100003010000000000")  // TMP
+    hash = "fake_hash";
+
   if (!hash.isEmpty()) {
     this->startGame(serviceId);
     return;
@@ -752,7 +805,7 @@ void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
 
   this->licenseModel->setPathToInstall(this->_serviceLoader.getExpectedInstallPath(serviceId));
   this->licenseModel->setLicense(license);
-  this->licenseModel->openLicense(serviceId, hash);
+  this->licenseModel->openLicense(service, hash);
 }
 
 void MainWindow::startGame(const QString& serviceId)
@@ -769,7 +822,7 @@ void MainWindow::startGame(const QString& serviceId)
     service->setIsDefaultInstallPath(true);
     settings.endGroup();
     this->_serviceLoader.setExecuteUrl(serviceId, service->installPath());
-    this->_gameDownloaderBuilder.gameDownloader().start(service, GGS::GameDownloader::Normal);
+    this->_gameDownloader.start(service, GGS::GameDownloader::Normal);
   } else {
     bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
     if (!isAuthed) {
@@ -787,7 +840,7 @@ void MainWindow::settingsIncomingPortChangedSlot()
   bool ok;
   unsigned short tmp = port.toUShort(&ok);
   if (ok)
-    this->_gameDownloaderBuilder.torrentWrapper().changeListeningPort(tmp);
+    this->_gameDownloader.changeListeningPort(tmp);
 }
 
 void MainWindow::settingsNumConnectionsChangedSlot()
@@ -796,7 +849,7 @@ void MainWindow::settingsNumConnectionsChangedSlot()
   bool ok;
   qint32 tmp = numConnection.toInt(&ok);
   if (ok)
-    this->_gameDownloaderBuilder.torrentWrapper().setMaxConnection(tmp);
+    this->_gameDownloader.setMaxConnection(tmp);
 }
 
 void MainWindow::settingsDownloadSpeedChangedSlot()
@@ -805,7 +858,7 @@ void MainWindow::settingsDownloadSpeedChangedSlot()
   bool ok;
   qint32 tmp = speed.toInt(&ok);
   if (ok)
-    this->_gameDownloaderBuilder.torrentWrapper().setDownloadRateLimit(tmp * 1024);
+    this->_gameDownloader.setDownloadRateLimit(tmp * 1024);
 }
 
 void MainWindow::settingsUploadSpeedChangedSlot()
@@ -814,7 +867,7 @@ void MainWindow::settingsUploadSpeedChangedSlot()
   bool ok;
   qint32 tmp = speed.toInt(&ok);
   if (ok)
-    this->_gameDownloaderBuilder.torrentWrapper().setUploadRateLimit(tmp * 1024);
+    this->_gameDownloader.setUploadRateLimit(tmp * 1024);
 }
 
 void MainWindow::torrentListenPortChangedSlot(unsigned short port)
@@ -846,11 +899,6 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
 	this->openExternalBrowser("http://www.combatarms.ru/ratings/user/");
 	return;
   } 
-  
-  if (name == "uninstall") {
-    DEBUG_LOG << "command uninstall";
-    this->onWindowClose();
-  }
 }
 
 void MainWindow::onServiceStarted(const GGS::Core::Service &service)
@@ -867,7 +915,7 @@ void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameE
     emit this->needAuth();
     break;
   case GGS::GameExecutor::ServiceAccountBlockedError:
-    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"));
+    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
     break;
   case GGS::GameExecutor::ServiceAuthorizationImpossible:
     GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_AUTHORIZATION_IMPOSSIBLE_INFO"));
@@ -886,8 +934,8 @@ void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameE
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-  delete this->_trayWindow;
-  this->_trayWindow = 0;
+  this->hide();
+  event->ignore();
 }
 
 void MainWindow::gameDownloaderStatusMessageChanged(const GGS::Core::Service *service, const QString& message)
@@ -923,7 +971,7 @@ void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper:
       DEBUG_LOG << "New update found. Restart required.";
 
       if (!this->_gameExecutorService.isAnyGameStarted() 
-        && !this->_gameDownloaderBuilder.gameDownloader().isAnyServiceInProgress()) {
+        && !this->_gameDownloader.isAnyServiceInProgress()) {
 
         if (this->isVisible())
           GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
@@ -968,37 +1016,37 @@ bool MainWindow::isWindowVisible()
 
 void MainWindow::loadPlugin(QString pluginName)
 {
-  QString message = QString("Couldn't load plugin %1").arg(pluginName);
+  QString message;
 
 #ifdef _DEBUG
-  QString pluginPath = QString("%1/%2d.dll").arg(QCoreApplication::applicationDirPath(), pluginName);
+  QString pluginPath = QString("%1/%2d.dll").arg(QCoreApplication::applicationDirPath(), pluginName); 
 #else
   QString pluginPath = QString("%1/%2.dll").arg(QCoreApplication::applicationDirPath(), pluginName);
 #endif
 
-  nQMLContainer->engine()->importPlugin(pluginPath, "Tulip", &message);
+  qDebug() << "Install plugin " << pluginPath << nQMLContainer->engine()->importPlugin(pluginPath, "Tulip", &message) << message;
 }
 
 void MainWindow::initializeStopDownloadServiceOnExecuteGameFeature()
 {
   SIGNAL_CONNECT_CHECK(connect(&this->_stopDownloadServiceOnExecuteGame, 
     SIGNAL(downloadStopRequest(const GGS::Core::Service *)),
-    &this->_gameDownloaderBuilder.gameDownloader(), 
+    &this->_gameDownloader, 
     SLOT(stop(const GGS::Core::Service *)), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(&this->_stopDownloadServiceOnExecuteGame, 
     SIGNAL(downloadStartRequest(const GGS::Core::Service *, GGS::GameDownloader::StartType)),
-    &this->_gameDownloaderBuilder.gameDownloader(), 
+    &this->_gameDownloader, 
     SLOT(start(const GGS::Core::Service *, GGS::GameDownloader::StartType)), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(&this->_stopDownloadServiceOnExecuteGame,
     SIGNAL(torrentSessionPauseRequest()), 
-    &this->_gameDownloaderBuilder.torrentWrapper(), 
+    &this->_gameDownloader,
     SLOT(pauseSession()), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(&this->_stopDownloadServiceOnExecuteGame,
     SIGNAL(torrentSessionResumeRequest()), 
-    &this->_gameDownloaderBuilder.torrentWrapper(), 
+    &this->_gameDownloader,
     SLOT(resumeSession()), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(this, SIGNAL(serviceStarted(QString)), 
@@ -1007,19 +1055,19 @@ void MainWindow::initializeStopDownloadServiceOnExecuteGameFeature()
   SIGNAL_CONNECT_CHECK(connect(this, SIGNAL(serviceFinished(QString, int)), 
     &this->_stopDownloadServiceOnExecuteGame, SLOT(onGameFinished()), Qt::QueuedConnection));
 
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloaderBuilder.gameDownloader(),
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloader,
     SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)),
     &this->_stopDownloadServiceOnExecuteGame, SLOT(onServiceStartDownload(const GGS::Core::Service *, GGS::GameDownloader::StartType)), Qt::QueuedConnection));
 
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloaderBuilder.gameDownloader(),
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloader,
     SIGNAL(finished(const GGS::Core::Service *)),
     &this->_stopDownloadServiceOnExecuteGame, SLOT(onServiceFinishDownload(const GGS::Core::Service *)), Qt::QueuedConnection));
 
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloaderBuilder.gameDownloader(),
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloader,
     SIGNAL(stopped(const GGS::Core::Service *)),
     &this->_stopDownloadServiceOnExecuteGame, SLOT(onServiceFinishDownload(const GGS::Core::Service *)), Qt::QueuedConnection));
 
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloaderBuilder.gameDownloader(),
+  SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloader,
     SIGNAL(failed(const GGS::Core::Service *)),
     &this->_stopDownloadServiceOnExecuteGame, SLOT(onServiceFinishDownload(const GGS::Core::Service *)), Qt::QueuedConnection));
 }
@@ -1150,4 +1198,39 @@ void MainWindow::initRestApi()
 void MainWindow::applicationAreaChanged()
 {
   this->restartApplication(false);
+}
+
+void MainWindow::seedEnabledChanged()
+{
+    this->_gameDownloader.setSeedEnabled(this->settingsViewModel->seedEnabled());
+}
+
+bool MainWindow::event(QEvent* event) {
+    switch(event->type()) {
+        case QEvent::WindowActivate:
+            emit this->windowActivate();
+            break;
+        case QEvent::WindowDeactivate:
+            emit this->windowDeactivate();
+            break;
+    }
+
+    return QMainWindow::event(event);
+}
+
+void MainWindow::initMarketing()
+{
+  QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+  QString mid = midSettings.value("MID", "").toString();
+  this->_marketingTargetFeatures.init("qGNA", mid);
+
+  int installerKey = midSettings.value("InstKey").toInt();
+  this->_marketingTargetFeatures.setInstallerKey(installerKey);
+}
+
+void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
+    if (event->buttons() & Qt::LeftButton)
+        emit this->leftMouseClick(event->x(), event->y()); 
+
+    QDeclarativeView::mousePressEvent(event);
 }

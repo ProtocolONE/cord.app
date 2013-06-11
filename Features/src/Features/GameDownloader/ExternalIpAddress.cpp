@@ -46,7 +46,7 @@ namespace Features {
 
       QString remouteIp;
       if (reply->error() == QNetworkReply::NoError && reply->hasRawHeader(QByteArray("Remote-ip")))
-        remouteIp = QString::fromAscii(reply->rawHeader(QByteArray("Remote-ip")));
+        remouteIp = QString::fromLatin1(reply->rawHeader(QByteArray("Remote-ip")));
 
       this->result(remouteIp);
     }

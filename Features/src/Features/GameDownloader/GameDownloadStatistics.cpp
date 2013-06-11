@@ -11,6 +11,7 @@
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/GameDownloader/ExternalIpAddress.h>
 #include <Core/Marketing.h>
+#include <Core/Service.h>
 
 #include <QtCore/QVariantMap>
 #include <QtCore/QMutexLocker>

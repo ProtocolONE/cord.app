@@ -1,4 +1,5 @@
 ﻿#include "mainwindow.h"
+#include "Uninstall.h"
 #include "viewmodel\SettingsViewModel.h"
 
 #include <version.h>
@@ -7,8 +8,8 @@
 #include <Features/RememberGameDownloading.h>
 #include <Features/ThronInstaller.h>
 
-#include <Core/Marketing.h>
 #include <Core/System/Shell/UrlProtocolHelper.h>
+#include <Core/Marketing.h>
 
 #include <ResourceHelper/ResourceLoader.h>
 
@@ -21,7 +22,7 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QResource>
 
 #include <Log4Qt/LogManager>
@@ -55,28 +56,29 @@ bool initDatabase()
 
 void initBugTrap(const QString &path)
 {
-    BT_SetAppName(_T("QGNA Application"));
-    BT_SetAppVersion(_T(STRFILEVER));
-    BT_SetSupportEMail(_T("support@gamenet.ru"));
-    BT_SetSupportURL(_T("https://support.gamenet.ru"));
-    BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
-    BT_SetSupportServer(_T("fs1.gamenet.ru"), 9999);
-    BT_AddLogFile(QString(path + "/qgna.log").utf16());
-    BT_AddLogFile(QString(path + "/qgna.log.1").utf16());
-    BT_InstallSehFilter();
+  BT_SetAppName(_T("QGNA Application"));
+  BT_SetAppVersion(_T(STRFILEVER));
+  BT_SetSupportEMail(_T("support@gamenet.ru"));
+  BT_SetSupportURL(_T("https://support.gamenet.ru"));
+  BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
+  BT_SetSupportServer(_T("fs1.gamenet.ru"), 9999);
+  BT_AddLogFile((LPCTSTR)QString(path + "/qgna.log").toLocal8Bit().constData());
+  BT_AddLogFile((LPCTSTR)QString(path + "/qgna.log.1").toLocal8Bit().constData());
+  BT_InstallSehFilter();
 }
 
 int main(int argc, char *argv[]) 
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+
   QString path = QCoreApplication::applicationDirPath();
 
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
-  app.setWindowIcon(QIcon(path + "/images/icon.png"));
+  app.setWindowIcon(QIcon(path + "/images/qgna.ico"));
   app.addLibraryPath(path + "/plugins");
-  
+
   initBugTrap(path);
-  
+
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
     QStringList arguments;
@@ -104,7 +106,7 @@ int main(int argc, char *argv[])
 
   LogManager::qtLogger()->addAppender(&appender);
   LogManager::setThreshold(Level::ALL_INT);
-
+  
 #ifndef _DEBUG
   LogManager::setHandleQtMessages(true);
 #endif
@@ -118,7 +120,7 @@ int main(int argc, char *argv[])
   if(!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
     if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {    
       qDebug() << "Restart failed. May be user didn't accept UAC.";
-      
+
       LogManager::qtLogger()->removeAllAppenders(); 
       return -1;
     }
@@ -127,17 +129,25 @@ int main(int argc, char *argv[])
     return 0;
   }
 #endif
+  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+  settings.setValue("Path",  QDir::toNativeSeparators(path));
 
   if (!initDatabase()) {
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
+    LogManager::qtLogger()->removeAllAppenders(); 
     return -1;
+  }
+
+  if (app.containsCommand("uninstall")) {
+    Uninstall::run(app.arguments());
+    LogManager::qtLogger()->removeAllAppenders(); 
+    return 0;
   }
 
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
   MainWindow w;
-  if (!app.containsCommand("minimized"))
-      w.activateWindow();
+  QTimer::singleShot(0, &w, SLOT(initialize()));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onForceWindowClose()), Qt::DirectConnection)); 
 
@@ -151,13 +161,10 @@ int main(int argc, char *argv[])
 
   GGS::Settings::SettingsSaver saver; 
   GGS::Settings::Settings::setSettingsSaver(&saver); 
-  
+
   Features::ThronInstaller installer;
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &app, SLOT(initializeFinished())));
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &installer, SLOT(downloadAndInstall())));
-
-  GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna);
-  GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
 
   int result = app.exec();
 

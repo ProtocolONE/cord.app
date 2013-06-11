@@ -16,37 +16,10 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_QmlMessageAdapter.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SelectMw2ServerListModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SelectMw2ServerViewModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_traywindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_EnterNickNameViewModel.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_QmlMessageAdapter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SelectMw2ServerListModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SelectMw2ServerViewModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_traywindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TrayWindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\viewmodel\SelectMw2Server\SelectMw2ServerListModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\viewmodel\SelectMw2Server\SelectMw2ServerViewModel.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\QmlMessageAdapter.cpp">
@@ -76,6 +49,33 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ServiceLoader.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\viewmodel\SelectMw2Server\SelectMw2ServerViewModel.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\viewmodel\SelectMw2Server\SelectMw2ServerListModel.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SelectMw2ServerViewModel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SelectMw2ServerViewModel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SelectMw2ServerListModel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SelectMw2ServerListModel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MainView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MainView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -91,10 +91,13 @@
     <CustomBuild Include="include\QmlMessageAdapter.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\traywindow.h">
+    <CustomBuild Include="include\viewmodel\EnterNickNameViewModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\viewmodel\EnterNickNameViewModel.h">
+    <CustomBuild Include="include\viewmodel\GameSettingsViewModel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\ServiceLoader.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\viewmodel\SelectMw2Server\SelectMw2ServerViewModel.h">
@@ -103,10 +106,7 @@
     <CustomBuild Include="include\viewmodel\SelectMw2Server\SelectMw2ServerListModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\viewmodel\GameSettingsViewModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\ServiceLoader.h">
+    <CustomBuild Include="include\MainView.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

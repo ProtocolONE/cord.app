@@ -19,10 +19,12 @@
     <ApplicationArea>trunk</ApplicationArea>
     <OpenSSLArea>0.9.8r</OpenSSLArea>
     <QmlExtensionArea>trunk</QmlExtensionArea>
-    <QxmppArea>0.6.3</QxmppArea>
+    <QxmppArea>0.7.7</QxmppArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
     <OverlayArea>trunk</OverlayArea>
+    <HookEngineArea>1.0</HookEngineArea>
+    <ThettaArea>trunk</ThettaArea>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
@@ -102,6 +104,14 @@
     </BuildMacro>
     <BuildMacro Include="OverlayArea">
       <Value>$(OverlayArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="HookEngineArea">
+      <Value>$(HookEngineArea)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ThettaArea">
+      <Value>$(ThettaArea)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

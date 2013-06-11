@@ -2,10 +2,10 @@
 
 #include <Core/Service>
 
-#include <GameDownloader/Builder.h>
+#include <GameDownloader/GameDownloadService.h>
 #include <GameDownloader/Hooks/InstallDependency.h>
-#include <GameDownloader/Hooks/OldGameClientMigrate.h>
 
+#include <GameExecutor/Hook/ExternalDependency.h>
 #include <GameExecutor/GameExecutorService.h>
 
 #include <QtCore/QObject>
@@ -23,7 +23,7 @@ public:
 
   void init(GGS::Core::Service::Area gameArea = GGS::Core::Service::Live);
   void setExecutor(GGS::GameExecutor::GameExecutorService *executor);
-  void setDownloadBuilder(GGS::GameDownloader::Builder *builder);
+  void setGameDownloader(GGS::GameDownloader::GameDownloadService *gameDownloader);
 
   void setExecuteUrl(const QString& id, QString currentInstallPath);
 
@@ -36,23 +36,30 @@ public:
   QString getExpectedInstallPath(const QString& serviceId);
   bool anyLicenseAccepted();
 
+  QString applicationVersion() const;
+  void setApplicationVersion(const QString& value);
+
 private:
   QHash<QString, GGS::Core::Service *> _serviceMap;
   GGS::GameExecutor::GameExecutorService *_gameExecutorService;
-  GGS::GameDownloader::Builder *_gameDownloaderBuilder;
+  GGS::GameDownloader::GameDownloadService *_gameDownloader;
 
   GGS::GameDownloader::Hooks::InstallDependency _installDependencyHook;
-  GGS::GameDownloader::Hooks::OldGameClientMigrate _oldGameClientMigrate;
   GGS::Core::Service::Area _gameArea;
+  QString _applicationVersion;
 
   void initService(const QString& id, const QString& torrentUrl, const QString& name);
   void initHooks(const QString& id, GGS::Core::Service* service);
 
   void initGAService();
+  void initFJService();
   void migrateInstallDate(const QString& serviceId);
 
   QString getBestDrive(const QString& serviceId);
   int getDiskFreeSpaceInMb(LPCWSTR drive);
   bool hasEnoughSpace(const QString& serviceId, int free);
+
+signals:
+  void startGameRequest(QString);
 };
 

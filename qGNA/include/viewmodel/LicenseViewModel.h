@@ -2,6 +2,7 @@
 #define LICENSEVIEWMODEL_H
 
 #include <QObject>
+#include <Core/Service>
 
 class LicenseViewModel : public QObject
 {
@@ -32,7 +33,7 @@ public slots:
 
     void okPressed();
     void searchPressed();
-    void openLicense(const QString& serviceId, const QString& hash);
+    void openLicense(GGS::Core::Service* service, const QString& hash);
     void closeLicense();
 
 private:
@@ -44,6 +45,8 @@ private:
 
   QString _serviceId;
   QString _hash;
+
+  GGS::Core::Service* _service;
 
 signals:
   void shurtCutInDesktopChanged();

@@ -3,6 +3,8 @@
 #include <Settings/Settings>
 #include <Features/CASettingsFix.h>
 
+#include <Features/Thetta/ThettaMonitor.h>
+
 #include <GameExecutor/Hook/RestoreResolution>
 #include <GameExecutor/Hook/DisableIEDefalutProxy>
 #include <GameExecutor/Hook/DisableDEP>
@@ -17,9 +19,10 @@
 #include <QtCore/QSettings>
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
+#include <QtCore/QUrlQuery>
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDesktopWidget>
 
 ServiceLoader::ServiceLoader(QObject *parent) : QObject(parent)
 {
@@ -43,10 +46,14 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea)
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
   this->initService("300006010000000000", "http://fs0.gamenet.ru/update/mw2/", "MW2");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
-  this->initGAService();
+  this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
+  this->initService("100003010000000000", "http://gnlupdate.tst.local/update/bs/", "BSTest");
 
-  this->_gameDownloaderBuilder->gameDownloader().registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
-  this->_gameDownloaderBuilder->gameDownloader().registerHook("300006010000000000", 0, 10, &this->_installDependencyHook);
+  this->initGAService();
+  this->initFJService();
+
+  this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
+  this->_gameDownloader->registerHook("300006010000000000", 0, 10, &this->_installDependencyHook);
 }
 
 GGS::Core::Service* ServiceLoader::getService(const QString& id)
@@ -65,7 +72,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setIsDownloadable(true);
   service->setName(name);
 
-  bool hasDownloadPath = (id == "300002010000000000" || id == "300009010000000000");
+  bool hasDownloadPath = (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000");
   service->setHashDownloadPath(hasDownloadPath);
 
   QString root = QCoreApplication::applicationDirPath();
@@ -90,7 +97,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setInstallPath(currentInstallPath);
   service->setTorrentFilePath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
 
-  if (id == "300002010000000000" || id == "300009010000000000")
+  if (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000" )
     service->setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
   else
     service->setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
@@ -119,36 +126,80 @@ void ServiceLoader::initGAService()
   this->_serviceMap[id] = service;
 }
 
+void ServiceLoader::initFJService()
+{
+  using namespace GGS::Core;
+  QString id("300011010000000000");
+  Service *service = new Service();
+  service->setArea(Service::Live);
+  service->setIsDownloadable(false);
+  service->setName(id);
+  service->setId(id);
+  service->setGameId("759");
+  service->setUrl(QUrl("http://www.gamenet.ru/games/ferma/play/?fullscreen=1"));
+
+  this->_serviceMap[id] = service;
+}
+
 void ServiceLoader::setExecutor(GGS::GameExecutor::GameExecutorService *executor)
 {
   this->_gameExecutorService = executor;
 }
 
-void ServiceLoader::setDownloadBuilder(GGS::GameDownloader::Builder *builder)
+void ServiceLoader::setGameDownloader(GGS::GameDownloader::GameDownloadService *gameDownloader)
 {
-  this->_gameDownloaderBuilder = builder;
+  this->_gameDownloader = gameDownloader;
 }
 
 void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 {
-  // HACK тут везде предполагается что сервис в зоне live. Если это не так надо все пути делать правильно вычисляемыми.
-  // https://jira.gamenet.ru:8443/browse/GN-6523 - вот вообщем то и тикет для этого
   GGS::Core::Service *service = this->getService(id);
   QUrl url;
 
+  // HACK !!!!!!!!!!!!!
+  //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Release\\OverlayX86.dll");
+
   if (id == "300002010000000000") {
-    url.setScheme("exe");
+    url.setScheme("exe"); 
     url.setPath(QString("%1/%2/aikaru.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("args", "%login% %token% 300002010000000000 login");
+
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    query.addQueryItem("args", "%login% %token% 300002010000000000 login");
+    query.addQueryItem("downloadCustomFile", "UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
+
     service->setGameId("631");
+
+    // 26.08.2031 HACK Выключено из-за проблемы на XP
+    
+//    GGS::Settings::Settings settings;
+//    settings.beginGroup("gameExecutor");
+//    settings.beginGroup("serviceInfo");
+//    settings.beginGroup(id);
+//
+//    bool ok;
+//    int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
+//    if (overlayEnabled != 0 || !ok) {
+//#ifdef _DEBUG
+//      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+//#else
+//      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+//#endif
+//
+//      url.addQueryItem("injectDll", injectedDll);
+//    }
+
+    url.setQuery(query);
   } else if (id == "300003010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/client/client.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("args", "%userId% %appKey% %token%");
-    url.addQueryItem("downloadCustomFile", 
+
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    query.addQueryItem("args", "%userId% %appKey% %token%");
+    query.addQueryItem("downloadCustomFile", 
       "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/bs/,1,config/lastlogin.xml,http://files.gamenet.ru/update/bs/,0");
+    
     service->setGameId("71");
 
     GGS::Settings::Settings settings;
@@ -159,40 +210,47 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     bool ok;
     int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
     if (overlayEnabled != 0 || !ok) {
-      // HACK
-      //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
-
       // Выключили 01.03.2013
-      //#ifdef _DEBUG
-      //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-      //#else
-      //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-      //#endif
-      //
-      //url.addQueryItem("injectDll", injectedDll);
-
+      #ifdef _DEBUG
+          QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+      #else
+          QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+      #endif
+      
+      query.addQueryItem("injectDll", injectedDll);
     }
 
+    url.setQuery(query);
   } else if (id == "300005010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/WarInc.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("args", "-WOUpdatedOk -gna %userId% %appKey% %token%");
+
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    query.addQueryItem("args", "-WOUpdatedOk -gna %userId% %appKey% %token%");
+    url.setQuery(query);
+
     service->setGameId("70");
   } else if (id == "300006010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/mw2_bin/mw2.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("args", "%serverinfo% %userId% %token% %appKey%");
-    url.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
+
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    query.addQueryItem("args", "%serverinfo% %userId% %token% %appKey%");
+    query.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
+    url.setQuery(query);
 
     service->setGameId("84");
   } else if (id == "300009010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/engine.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
 
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    query.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
+    query.addQueryItem("downloadCustomFile", "Profiles/player.txt,http://files.gamenet.ru/update/ca/,0");
+    
 //#ifdef _DEBUG
 //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
 //#else
@@ -201,7 +259,25 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 //
 //    url.addQueryItem("injectDll", injectedDll);
 
+    url.setQuery(query);
     service->setGameId("92");
+  } else if (id == "100009010000000000") {
+    url.setScheme("exe");
+    url.setPath(QString("%1/%2/sample.exe").arg(currentInstallPath, service->areaString()));
+
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    url.setQuery(query);
+    service->setGameId("92");
+  } else if (id == "100003010000000000") {
+    url.setScheme("exe");
+    url.setPath(QString("%1/%2/sample.exe").arg(currentInstallPath, service->areaString()));
+
+    QUrlQuery query;
+    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    url.setQuery(query);
+
+    service->setGameId("71");
   }
 
   service->setUrl(url);
@@ -212,23 +288,35 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
   using namespace GGS::GameExecutor::Hook;
   using namespace GGS::GameDownloader::Hooks;
 
-  if (id != "300007010000000000")
-    this->_gameDownloaderBuilder->gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
+  // 26.06.2013 Так как старых ГНА уже очень мало, и история со всплывашкой в этой хуке мешает гайду, он отключен.
+  //if (id != "300007010000000000")
+  //  this->_gameDownloaderBuilder->gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
 
   if (id == "300003010000000000") {
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
-    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
+    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
+
+    // HACK !!!!!!
+    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
+    thettaMonitor->setApplicationVersion(this->_applicationVersion);
+    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
 
   if (id == "300002010000000000") {
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new RestoreResolution(service), 0);
     this->_gameExecutorService->addHook(*service, new DefaultAikaSettings(service), 0);
+    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
   }
 
   if (id == "300006010000000000") {
+    GGS::GameExecutor::Hook::ExternalDependency* executeInstallDependencyHook = new GGS::GameExecutor::Hook::ExternalDependency(service);
+    executeInstallDependencyHook->setExternalDepencyList("vcredist_x86.exe,/Q");
+    QObject::connect(executeInstallDependencyHook, SIGNAL(externalDependencyInstalled(QString)), this, SIGNAL(startGameRequest(QString)));
+
     this->_gameExecutorService->addHook(*service, new Mw2DownloadAndCheckXmlConfig(service), 100);
     this->_gameExecutorService->addHook(*service, new RestoreFileModification(service), 0);
+    this->_gameExecutorService->addHook(*service, executeInstallDependencyHook, 0);
     service->setExternalDependencyList("vcredist_x86.exe,/Q");
   }
 
@@ -236,13 +324,17 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     Features::CASettingsFix *hook = new Features::CASettingsFix(service);
     hook->setResolution(QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen()));
     SIGNAL_CONNECT_CHECK(QObject::connect(
-      &this->_gameDownloaderBuilder->gameDownloader(), SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
+      this->_gameDownloader, SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
       hook, SLOT(install(const GGS::Core::Service *))));
 
-    this->_gameExecutorService->addHook(*service, hook);
+    this->_gameExecutorService->addHook(*service, hook, 0);
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new BannerDownload(service), 0);
+    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
 
+    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
+    thettaMonitor->setApplicationVersion(this->_applicationVersion);
+    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 
     DWORD verion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));
@@ -262,7 +354,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
 
 void ServiceLoader::migrateInstallDate(const QString& serviceId)
 {
-  if (!this->_gameDownloaderBuilder->gameDownloader().isInstalled(serviceId))
+  if (!this->_gameDownloader->isInstalled(serviceId))
     return;
 
   GGS::Settings::Settings settings;
@@ -401,4 +493,14 @@ bool ServiceLoader::anyLicenseAccepted()
     return true;
 
   return false;
+}
+
+QString ServiceLoader::applicationVersion() const
+{
+  return this->_applicationVersion;
+}
+
+void ServiceLoader::setApplicationVersion(const QString& value)
+{
+  this->_applicationVersion = value;
 }

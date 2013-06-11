@@ -19,6 +19,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(bool notifyNewMessage READ notifyNewMessage WRITE setNotifyNewMessage NOTIFY notifyNewMessageChanged)
 
     Q_PROPERTY(bool isPublicTestVersion READ isPublicTestVersion NOTIFY isPublicTestVersionChanged)
+    Q_PROPERTY(bool seedEnabled READ seedEnabled WRITE setSeedEnabled NOTIFY seedEnabledChanged)
 
 public:
     explicit SettingsViewModel(QObject *parent = 0);
@@ -63,6 +64,9 @@ public slots:
     bool isPublicTestVersion();
     void switchClientVersion();
 
+    bool seedEnabled();
+    void setSeedEnabled(bool value);
+
 private:
     bool _instantlySave;
 
@@ -81,6 +85,7 @@ signals:
     void isPublicTestVersionChanged();
 
     void applicationAreaChanged();
+    void seedEnabledChanged();
 };
 
 #endif // SETTINGSVIEWMODEL_H
