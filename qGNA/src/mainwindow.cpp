@@ -25,6 +25,8 @@
 #include <QtDeclarative/QDeclarativeProperty>
 #include <Core/System/HardwareId.h>
 
+#include <HookEngine/HookEngine.h>
+
 // TODO сделать место поточнее и вывод ошибки с фразой вроде "Couldn't connect to"
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -281,6 +283,10 @@ void MainWindow::onWindowClose()
 
   this->repaint();
   this->hide();
+  
+  delete this->_trayWindow;
+  this->_trayWindow = 0;
+
   if (this->_gameDownloadInitialized) {
     this->_gameDownloaderBuilder.gameDownloader().shutdown(); 
   } else {
@@ -478,6 +484,13 @@ void MainWindow::prepairGameDownloader()
   GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
   this->_gameExecutorService.registerExecutor(webLinkExecutor);
 
+  // HACK Для того чтобы работало закрытие приложений и не менять QProcess хукнем CreateProcess и добавим недостающий флаг
+  // ВНИМАНИЕ любое вызов CreateProcess из приложения qGNA попадет сюда. Надо это учесть.
+  auto hook = HookEngine::createHook<HookEngine::Stdcall, BOOL, LPCWSTR, LPWSTR, void*, void*, BOOL, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFO, LPPROCESS_INFORMATION>("Kernel32.dll", "CreateProcessW");
+  hook->assignHook([hook] (LPCWSTR a1, LPWSTR a2, void* a3, void* a4, BOOL a5, DWORD dwCreationFlags, LPVOID a6, LPCWSTR a7, LPSTARTUPINFO a8, LPPROCESS_INFORMATION a9) -> BOOL {
+    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags | CREATE_BREAKAWAY_FROM_JOB, a6, a7, a8, a9);
+  });
+
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     &this->_rembrGameFeature, SLOT(started(const GGS::Core::Service *))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloaderBuilder.gameDownloader(), SIGNAL(finished(const GGS::Core::Service *)),  
@@ -585,8 +598,8 @@ void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
 
 void MainWindow::shutdownCompleted()
 {
+  this->_gameExecutorService.shutdown();
   this->_gameDownloaderBuilder.torrentWrapper().shutdown();
-
   DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
 }
@@ -880,6 +893,7 @@ void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameE
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+  this->onWindowClose();
 }
 
 void MainWindow::gameDownloaderStatusMessageChanged(const GGS::Core::Service *service, const QString& message)
