@@ -17,7 +17,7 @@ public:
   virtual ~Player();
 
   QString source() const;
-  void setSource(QString value);
+  void setSource(const QString &value);
   bool autoPlay() const;
   void setAutoPlay(bool value);
   qreal volume() const;

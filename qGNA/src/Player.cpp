@@ -1,4 +1,4 @@
-#include "Player.h"
+#include <Player.h>
 #include <QDebug>
 
 Player::Player(QDeclarativeItem *parent) 
@@ -30,7 +30,6 @@ void Player::stateChanged(Phonon::State newstate, Phonon::State oldstate)
     emit this->paused();
     break;
   case Phonon::ErrorState:
-    qDebug() << this->_media->errorString();
     emit this->error();
     break;
   }
@@ -41,7 +40,7 @@ QString Player::source() const
   return this->_source;
 }
 
-void Player::setSource(QString value)
+void Player::setSource(const QString &value)
 {
   if (value != this->_source) {
     this->_media->setCurrentSource(Phonon::MediaSource(value));
