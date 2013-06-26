@@ -1,16 +1,22 @@
 #include <Player.h>
 #include <QDebug>
 
+#ifdef _DEBUG
+//#define DISABLE_PHONONE 1
+#endif
 Player::Player(QDeclarativeItem *parent) 
   : QDeclarativeItem(parent),
-    _autoPlay(true),
-    _media(new Phonon::MediaObject(this)),
-    _output(new Phonon::AudioOutput(Phonon::MusicCategory, this))
+    _autoPlay(true)   
 {
+#ifndef DISABLE_PHONONE
+  this->_media = new Phonon::MediaObject(parent);
+  this->_output = new Phonon::AudioOutput(Phonon::MusicCategory, parent);
+
   Phonon::createPath(this->_media, this->_output);
   QObject::connect(this->_media, SIGNAL(finished()), this, SIGNAL(finished()));
   QObject::connect(this->_media, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
     this, SLOT(stateChanged(Phonon::State, Phonon::State)));
+#endif
 }
 
 Player::~Player()
@@ -42,6 +48,10 @@ QString Player::source() const
 
 void Player::setSource(const QString &value)
 {
+#ifdef DISABLE_PHONONE
+  return;
+#endif
+
   if (value != this->_source) {
     this->_media->setCurrentSource(Phonon::MediaSource(value));
 
@@ -80,11 +90,19 @@ void Player::setAutoPlay(bool value)
 
 qreal Player::volume() const
 {
+#ifdef DISABLE_PHONONE
+  return 0;
+#endif
+
   return this->_output->volume();
 }
 
 void Player::setVolume(qreal value)
 {
+#ifdef DISABLE_PHONONE
+  return;
+#endif
+
   this->_output->setVolume(value);
   emit this->volumeChanged();
 }

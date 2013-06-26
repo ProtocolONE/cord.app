@@ -12,6 +12,7 @@ class Player: public QDeclarativeItem
   Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged) 
   Q_PROPERTY(qreal volume READ volume WRITE setVolume NOTIFY volumeChanged) 
   Q_PROPERTY(bool autoPlay READ autoPlay WRITE setAutoPlay NOTIFY autoPlayChanged) 
+
 public:
   explicit Player(QDeclarativeItem *parent = 0);
   virtual ~Player();

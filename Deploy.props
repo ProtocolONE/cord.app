@@ -22,7 +22,7 @@
     <QxmppArea>0.7.7</QxmppArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
-    <OverlayArea>qgna-260</OverlayArea>
+    <OverlayArea>trunk</OverlayArea>
     <HookEngineArea>1.0</HookEngineArea>
   </PropertyGroup>
   <PropertyGroup />

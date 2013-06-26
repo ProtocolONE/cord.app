@@ -283,9 +283,6 @@ void MainWindow::onWindowClose()
 
   this->repaint();
   this->hide();
-  
-  delete this->_trayWindow;
-  this->_trayWindow = 0;
 
   if (this->_gameDownloadInitialized) {
     this->_gameDownloaderBuilder.gameDownloader().shutdown(); 

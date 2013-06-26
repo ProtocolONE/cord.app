@@ -301,16 +301,17 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86
 
 @REM QT binaries
 
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtCore%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtGui%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtXml%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtSql%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtNetwork%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtScript%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtWebKit%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtXmlPatterns%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtDeclarative%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\QtOpenGL%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\phonon%D%4.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"
