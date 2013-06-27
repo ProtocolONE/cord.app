@@ -176,7 +176,7 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%4.dll" "$(TargetDir)imag
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%4.dll" "$(TargetDir)sqldrivers\"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\phonon_backend\phonon_ds9%D%4.dll" "$(TargetDir)phonon_backend\"
+xcopy /Y /I /R /E "$(QTDIR)\pluginsphonon_backend\phonon_ds9%D%4.dll" "$(TargetDir)phonon_backend\"
 
 xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)QtWebKit\"
 echo plugin qmlwebkitplugind &gt; "$(TargetDir)QtWebKit\qmldir"
@@ -319,7 +319,7 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%4.dll" "$(TargetDir)imag
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%4.dll" "$(TargetDir)sqldrivers\"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\phonon_backend\phonon_ds9%D%4.dll" "$(TargetDir)phonon_backend\"
+xcopy /Y /I /R /E "$(QTDIR)\pluginsphonon_backend\phonon_ds9%D%4.dll" "$(TargetDir)phonon_backend\"
 
 xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)QtWebKit\"
 echo plugin qmlwebkitplugin &gt; "$(TargetDir)QtWebKit\qmldir"
