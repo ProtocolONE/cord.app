@@ -166,7 +166,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("args", "%login% %token% 300002010000000000 login");
 	
 	url.addQueryItem("downloadCustomFile", 
-      "UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2,UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
+      "UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
 
     service->setGameId("631");
 
