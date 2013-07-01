@@ -309,7 +309,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new RestoreResolution(service), 0);
     this->_gameExecutorService->addHook(*service, new DefaultAikaSettings(service), 0);
-	this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
+    //this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
   }
 
   if (id == "300006010000000000") {
