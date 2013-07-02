@@ -75,7 +75,8 @@ void LicenseViewModel::okPressed() {
 
 void LicenseViewModel::searchPressed()
 {
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(this->_service, this->_service->installPath());
+  QString newDirectory = QFileDialog::getExistingDirectory(qobject_cast<QWidget*>(this->parent()), tr("CAPTION_OPEN_DIR"), this->_pathToInstall, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+  qDebug() << "[LicenseViewModel] searchPressed." << newDirectory;
   if (newDirectory.isEmpty())
     return;
 
