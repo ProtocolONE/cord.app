@@ -95,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(downloadSpeedChanged()), this, SLOT(settingsDownloadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(uploadSpeedChanged()), this, SLOT(settingsUploadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(applicationAreaChanged()), this, SLOT(applicationAreaChanged())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(seedEnabledChanged()), this, SLOT(seedEnabledChanged())));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(licenseModel, SIGNAL(result()), this, SLOT(licenseOkPressed())));
 
@@ -444,6 +445,7 @@ void MainWindow::prepairGameDownloader()
   QString torrentConfigPath = root;
   torrentConfigPath.append("/torrents");
   this->_gameDownloaderBuilder.torrentWrapper().setTorrentConfigDirectoryPath(torrentConfigPath);
+  
   this->_gameDownloaderBuilder.torrentWrapper().initEngine();
 
   this->_gameDownloaderBuilder.build();
@@ -1154,24 +1156,7 @@ void MainWindow::applicationAreaChanged()
   this->restartApplication(false);
 }
 
-bool MainWindow::event(QEvent* event) {
-    switch(event->type()) {
-        case QEvent::WindowActivate:
-            qDebug() << "windowActivate";
-            emit this->windowActivate();
-            break;
-        case QEvent::WindowDeactivate:
-            qDebug() << "windowDeactivate";
-            emit this->windowDeactivate();
-            break;
-    }
-
-    return QMainWindow::event(event);
-}
-
-void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
-    if (event->buttons() & Qt::LeftButton)
-        emit this->leftMouseClick(event->x(), event->y()); 
-
-    QDeclarativeView::mousePressEvent(event);
+void MainWindow::seedEnabledChanged()
+{
+  this->_gameDownloaderBuilder.torrentWrapper().setSeedEnabled(this->settingsViewModel->seedEnabled());
 }

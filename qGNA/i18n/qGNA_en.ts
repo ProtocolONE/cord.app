@@ -21,30 +21,30 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="870"/>
-        <location filename="../src/mainwindow.cpp" line="873"/>
-        <location filename="../src/mainwindow.cpp" line="876"/>
-        <location filename="../src/mainwindow.cpp" line="928"/>
+        <location filename="../src/mainwindow.cpp" line="872"/>
+        <location filename="../src/mainwindow.cpp" line="875"/>
+        <location filename="../src/mainwindow.cpp" line="878"/>
+        <location filename="../src/mainwindow.cpp" line="930"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="870"/>
+        <location filename="../src/mainwindow.cpp" line="872"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="875"/>
         <source>SERVICE_AUTHORIZATION_IMPOSSIBLE_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="878"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="928"/>
+        <location filename="../src/mainwindow.cpp" line="930"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>
@@ -57,12 +57,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="264"/>
+        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="265"/>
         <source>INFO_CAPTION</source>
         <translation type="unfinished">Information</translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="265"/>
+        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="266"/>
         <source>CHANGE_APPLICATION_AREA</source>
         <translation type="unfinished"></translation>
     </message>

@@ -268,6 +268,7 @@ private slots:
 	void gameDownloaderServiceInstalled(const GGS::Core::Service *service); 
 	void gameDownloaderServiceUpdated(const GGS::Core::Service *service); 
 	void removeStartGame(QString serviceId);
+  void seedEnabledChanged();
 
 	void shutdownCompleted();
 	void checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result);
