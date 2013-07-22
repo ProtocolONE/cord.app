@@ -136,7 +136,7 @@ void ServiceLoader::initFJService()
   service->setName(id);
   service->setId(id);
   service->setGameId("759");
-  service->setUrl(QUrl("http://www.gamenet.ru/games/ferma/"));
+  service->setUrl(QUrl("http://www.gamenet.ru/games/ferma/play"));
 
   this->_serviceMap[id] = service;
 }
