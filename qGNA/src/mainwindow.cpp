@@ -1149,3 +1149,25 @@ void MainWindow::applicationAreaChanged()
 {
   this->restartApplication(false);
 }
+
+bool MainWindow::event(QEvent* event) {
+    switch(event->type()) {
+        case QEvent::WindowActivate:
+            qDebug() << "windowActivate";
+            emit this->windowActivate();
+            break;
+        case QEvent::WindowDeactivate:
+            qDebug() << "windowDeactivate";
+            emit this->windowDeactivate();
+            break;
+    }
+
+    return QMainWindow::event(event);
+}
+
+void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
+    if (event->buttons() & Qt::LeftButton)
+        emit this->leftMouseClick(event->x(), event->y()); 
+
+    QDeclarativeView::mousePressEvent(event);
+}

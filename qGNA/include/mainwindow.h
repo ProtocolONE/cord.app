@@ -67,12 +67,9 @@ using namespace Features;
 class MQDeclarativeView: public QDeclarativeView    
 {
 	Q_OBJECT
+
 protected:
-	void	mousePressEvent(QMouseEvent* event){
-		if (event->buttons() & Qt::LeftButton)
-			emit this->leftMouseClick(event->x(), event->y()); 
-		QDeclarativeView::mousePressEvent(event);
-	}
+	void mousePressEvent(QMouseEvent* event);
 
 signals:
 	void leftMouseClick(int globalX, int globalY); 
@@ -237,6 +234,8 @@ signals:
 	void leftMouseClick(int globalX, int globalY); 
 
 	void closeMainWindow();
+    void windowDeactivate();
+    void windowActivate();
 
 	void serviceStarted(QString service);
 	void serviceFinished(QString service, int serviceState);
@@ -308,6 +307,7 @@ private:
 
 protected:
 	void closeEvent(QCloseEvent* event);
+    bool event(QEvent* event);
 };
 
 #endif // MAINWINDOW_H
