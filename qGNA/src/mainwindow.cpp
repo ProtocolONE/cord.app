@@ -437,7 +437,11 @@ void MainWindow::prepairGameDownloader()
   QString root = QCoreApplication::applicationDirPath();
   this->initServices();
 
-  this->_gameDownloaderBuilder.torrentWrapper().setListeningPort(11789);
+  bool ok = false;
+  unsigned short port = settingsViewModel->incomingPort().toUShort(&ok);
+  if(ok)
+    this->_gameDownloaderBuilder.torrentWrapper().setListeningPort(port);
+
   QString torrentConfigPath = root;
   torrentConfigPath.append("/torrents");
   this->_gameDownloaderBuilder.torrentWrapper().setTorrentConfigDirectoryPath(torrentConfigPath);

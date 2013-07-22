@@ -136,7 +136,7 @@ void ServiceLoader::initFJService()
   service->setName(id);
   service->setId(id);
   service->setGameId("759");
-  service->setUrl(QUrl("http://www.gamenet.ru/games/ferma/play"));
+  service->setUrl(QUrl("http://www.gamenet.ru/games/ferma/play/?fullscreen=1"));
 
   this->_serviceMap[id] = service;
 }
@@ -165,8 +165,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%login% %token% 300002010000000000 login");
 	
-	url.addQueryItem("downloadCustomFile", 
-      "UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
+    url.addQueryItem("downloadCustomFile", "UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
 
     service->setGameId("631");
 
@@ -309,7 +308,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new RestoreResolution(service), 0);
     this->_gameExecutorService->addHook(*service, new DefaultAikaSettings(service), 0);
-    //this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
+    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
   }
 
   if (id == "300006010000000000") {
