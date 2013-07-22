@@ -437,15 +437,10 @@ void MainWindow::prepairGameDownloader()
   QString root = QCoreApplication::applicationDirPath();
   this->initServices();
 
-  bool ok = false;
-  unsigned short port = settingsViewModel->incomingPort().toUShort(&ok);
-  if(ok)
-    this->_gameDownloaderBuilder.torrentWrapper().setListeningPort(port);
-
+  this->_gameDownloaderBuilder.torrentWrapper().setListeningPort(11789);
   QString torrentConfigPath = root;
   torrentConfigPath.append("/torrents");
   this->_gameDownloaderBuilder.torrentWrapper().setTorrentConfigDirectoryPath(torrentConfigPath);
-  
   this->_gameDownloaderBuilder.torrentWrapper().initEngine();
 
   this->_gameDownloaderBuilder.build();
@@ -1158,5 +1153,25 @@ void MainWindow::applicationAreaChanged()
 
 void MainWindow::seedEnabledChanged()
 {
-  this->_gameDownloaderBuilder.torrentWrapper().setSeedEnabled(this->settingsViewModel->seedEnabled());
+    this->_gameDownloaderBuilder.torrentWrapper().setSeedEnabled(this->settingsViewModel->seedEnabled());
+}
+
+bool MainWindow::event(QEvent* event) {
+    switch(event->type()) {
+        case QEvent::WindowActivate:
+            emit this->windowActivate();
+            break;
+        case QEvent::WindowDeactivate:
+            emit this->windowDeactivate();
+            break;
+    }
+
+    return QMainWindow::event(event);
+}
+
+void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
+    if (event->buttons() & Qt::LeftButton)
+        emit this->leftMouseClick(event->x(), event->y()); 
+
+    QDeclarativeView::mousePressEvent(event);
 }
