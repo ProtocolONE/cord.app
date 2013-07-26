@@ -266,18 +266,13 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   } else if (id == "100009010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/sample.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
 
-    QUrlQuery query;
-    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.setQuery(query);
     service->setGameId("92");
   } else if (id == "100003010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/sample.exe").arg(currentInstallPath, service->areaString()));
-
-    QUrlQuery query;
-    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    url.setQuery(query);
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
 
     service->setGameId("71");
   }

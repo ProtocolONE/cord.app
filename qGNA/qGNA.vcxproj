@@ -196,10 +196,9 @@ del "$(TargetDir)\*.ilk"</Command>
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_XML_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_SCRIPT_LIB;QT_WEBKIT_LIB;QT_XMLPATTERNS_LIB;QT_DECLARATIVE_LIB;QT_PHONON_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtDeclarative;$(QTDIR)\include\phonon;.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include\UpdateSystem;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystemViewModel\$(UpdateSystemViewModelArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
