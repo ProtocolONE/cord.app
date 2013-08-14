@@ -3,7 +3,7 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
-#include <QtWidgets/QFileDialog>
+#include <QtGui/QFileDialog>
 
   
 LicenseViewModel::LicenseViewModel(QObject *parent)
@@ -75,8 +75,7 @@ void LicenseViewModel::okPressed() {
 
 void LicenseViewModel::searchPressed()
 {
-  QString newDirectory = QFileDialog::getExistingDirectory(qobject_cast<QWidget*>(this->parent()), tr("CAPTION_OPEN_DIR"), this->_pathToInstall, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-  qDebug() << "[LicenseViewModel] searchPressed." << newDirectory;
+  QString newDirectory = GameSettingsViewModel::getGameDirectory(this->_service, this->_service->installPath());
   if (newDirectory.isEmpty())
     return;
 

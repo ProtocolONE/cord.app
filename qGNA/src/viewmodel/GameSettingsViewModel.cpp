@@ -98,25 +98,18 @@ void GameSettingsViewModel::createShortcut(const QString& path, GGS::Core::Servi
   lnkroot.append("\\");
   lnkroot.append(service->name());
   lnkroot.append(".lnk");
-  
+
   GGS::Settings::Settings settings;
   settings.beginGroup("GameInstallInfo");
   settings.beginGroup(service->id());
-  QStringList icons = this->deserialize(settings.value("iconPaths", QByteArray()).toByteArray());
-  icons << lnkroot;
-  settings.setValue("iconPaths", this->serialize(icons));
-  
-  settings.endGroup();
-  QStringList filesToDelete = this->deserialize(settings.value("filesToDelete", QByteArray()).toByteArray());
-  filesToDelete << lnkroot;
-  settings.setValue("filesToDelete", this->serialize(filesToDelete));
-  
+  settings.setValue("icon", lnkroot);
+
   GGS::Core::System::Shell::ShortCut object;
   object.setArguments(QString("/uri:gamenet://startservice/%1").arg(service->id()));
   object.setDescription(QString("Short cut for game %1").arg(service->name()));
   object.setShowCmd(GGS::Core::System::Shell::ShortCut::MinNoActive);
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
-  // UNDONE: проверить что эта функция кошерна - у нее в дескрипшене есть фишка про смену дериктории самим аппликейшеном.
+  // UNDONE: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
   object.setPath(QCoreApplication::applicationFilePath());
 
   QString iconPath = QString("%1/images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), service->id());
@@ -247,9 +240,11 @@ QString GetFolderName(int type) {
 
 QString GameSettingsViewModel::browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir)
 {
-  GGS::Core::Service service;
-  service.setName(name);
-  return this->getGameDirectory(&service, defaultDir);
+  GGS::Core::Service *service = new GGS::Core::Service(this);
+  service->setName(name);
+  QString dir = this->getGameDirectory(service, defaultDir);
+  service->deleteLater();
+  return dir;
 }
 
 QString GameSettingsViewModel::getGameDirectory(GGS::Core::Service *service, const QString& defaultDir)

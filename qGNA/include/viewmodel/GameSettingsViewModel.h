@@ -57,10 +57,7 @@ public slots:
   static QString getGameDirectory(GGS::Core::Service *service, const QString& defaultDir);
 
   QString browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir);
-  
-  static QStringList deserialize(QByteArray serialized);
-  static QByteArray serialize(QStringList stringList);
-  
+
 signals:
   void installPathChanged();
   void downloadPathChanged();

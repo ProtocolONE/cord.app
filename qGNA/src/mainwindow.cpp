@@ -756,7 +756,7 @@ void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
 
   this->licenseModel->setPathToInstall(this->_serviceLoader.getExpectedInstallPath(serviceId));
   this->licenseModel->setLicense(license);
-  this->licenseModel->openLicense(serviceId, hash);
+  this->licenseModel->openLicense(service, hash);
 }
 
 void MainWindow::startGame(const QString& serviceId)
