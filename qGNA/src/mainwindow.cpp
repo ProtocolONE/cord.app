@@ -850,11 +850,6 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
 	this->openExternalBrowser("http://www.combatarms.ru/ratings/user/");
 	return;
   } 
-  
-  if (name == "uninstall") {
-    DEBUG_LOG << "command uninstall";
-    this->onWindowClose();
-  }
 }
 
 void MainWindow::onServiceStarted(const GGS::Core::Service &service)
@@ -890,7 +885,8 @@ void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameE
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-  this->onWindowClose();
+  this->hide();
+  event->ignore();
 }
 
 void MainWindow::gameDownloaderStatusMessageChanged(const GGS::Core::Service *service, const QString& message)

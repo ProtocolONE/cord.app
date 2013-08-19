@@ -9,24 +9,24 @@
         <translation>Open directory</translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="262"/>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="272"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="286"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="296"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="263"/>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="273"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="287"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="297"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="288"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="312"/>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="289"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="313"/>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -41,30 +41,30 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="875"/>
-        <location filename="../src/mainwindow.cpp" line="878"/>
-        <location filename="../src/mainwindow.cpp" line="881"/>
-        <location filename="../src/mainwindow.cpp" line="933"/>
+        <location filename="../src/mainwindow.cpp" line="870"/>
+        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="941"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="875"/>
+        <location filename="../src/mainwindow.cpp" line="870"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="878"/>
+        <location filename="../src/mainwindow.cpp" line="873"/>
         <source>SERVICE_AUTHORIZATION_IMPOSSIBLE_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="881"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="933"/>
+        <location filename="../src/mainwindow.cpp" line="941"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>

@@ -67,9 +67,45 @@ void initBugTrap(const QString &path)
   BT_InstallSehFilter();
 }
 
+void uninstall(QString argument) {
+    GGS::Settings::Settings settings;
+    QStringList filesToDelete;
+
+    if (argument.isEmpty()) {
+      settings.beginGroup("filesToDelete");
+      filesToDelete = GameSettingsViewModel::deserialize(settings.value("filesToDelete", QByteArray()).toByteArray());
+    } else {
+      settings.beginGroup("GameInstallInfo");
+      settings.beginGroup(argument);
+      filesToDelete = GameSettingsViewModel::deserialize(settings.value("iconPaths", QByteArray()).toByteArray());
+    }
+
+    Q_FOREACH(QString fileName, filesToDelete)
+      if (!QFile::remove(fileName))
+        DEBUG_LOG << "Warning delete " << fileName << " access denied";
+}
+
+
 int main(int argc, char *argv[]) 
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+  if (app.containsCommand("uninstall")) {
+    bool next = false;
+    Q_FOREACH(QString argument, app.arguments()) {
+      if (argument == "/uninstall") {
+        next = true;
+        continue;
+      }
+
+      if (next) {
+        uninstall(argument);
+        return 0;
+      }
+    }
+    
+    uninstall(QString());
+    return 0;
+  }
 
   QString path = QCoreApplication::applicationDirPath();
 

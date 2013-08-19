@@ -308,7 +308,7 @@ private:
 
 protected:
 	void closeEvent(QCloseEvent* event);
-    bool event(QEvent* event);
+  bool event(QEvent* event);
 };
 
 #endif // MAINWINDOW_H
