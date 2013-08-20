@@ -71,16 +71,6 @@ int main(int argc, char *argv[])
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
 
-  if (!initDatabase()) {
-	  MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
-	  return -1;
-  }
-
-  if (app.containsCommand("uninstall")) {
-	  Uninstall::run(app.arguments());
-	  return 0;
-  }
-
   QString path = QCoreApplication::applicationDirPath();
 
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
@@ -141,6 +131,16 @@ int main(int argc, char *argv[])
 #endif
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));
+
+  if (!initDatabase()) {
+	  MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
+	  return -1;
+  }
+
+  if (app.containsCommand("uninstall")) {
+	  Uninstall::run(app.arguments());
+	  return 0;
+  }
 
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
