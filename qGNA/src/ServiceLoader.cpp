@@ -169,26 +169,23 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     service->setGameId("631");
 
-    // 26.08.2031 HACK Выключено из-за проблемы на XP
-    
-//    GGS::Settings::Settings settings;
-//    settings.beginGroup("gameExecutor");
-//    settings.beginGroup("serviceInfo");
-//    settings.beginGroup(id);
-//
-//    bool ok;
-//    int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
-//    if (overlayEnabled != 0 || !ok) {
-//#ifdef _DEBUG
-//      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-//#else
-//      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-//#endif
-//
-//      url.addQueryItem("injectDll", injectedDll);
-//    }
+    GGS::Settings::Settings settings;
+    settings.beginGroup("gameExecutor");
+    settings.beginGroup("serviceInfo");
+    settings.beginGroup(id);
 
-    url.setQuery(query);
+    bool ok;
+    int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
+    if (overlayEnabled != 0 || !ok) {
+#ifdef _DEBUG
+      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+#else
+      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+#endif
+
+      url.addQueryItem("injectDll", injectedDll);
+    }
+
   } else if (id == "300003010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/client/client.exe").arg(currentInstallPath, service->areaString()));
@@ -209,10 +206,6 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     bool ok;
     int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
     if (overlayEnabled != 0 || !ok) {
-      // HACK
-      //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Release\\OverlayX86d.dll");
-      //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
-
       // Выключили 01.03.2013
       #ifdef _DEBUG
           QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
