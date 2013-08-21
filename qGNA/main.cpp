@@ -62,8 +62,8 @@ void initBugTrap(const QString &path)
   BT_SetSupportURL(_T("https://support.gamenet.ru"));
   BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
   BT_SetSupportServer(_T("fs1.gamenet.ru"), 9999);
-  BT_AddLogFile((LPCTSTR)QString(path + "/qgna.log").toLocal8Bit().constData());
-  BT_AddLogFile((LPCTSTR)QString(path + "/qgna.log.1").toLocal8Bit().constData());
+  BT_AddLogFile(QString(path + "/qgna.log").utf16());
+  BT_AddLogFile(QString(path + "/qgna.log.1").utf16());
   BT_InstallSehFilter();
 }
 
@@ -133,13 +133,15 @@ int main(int argc, char *argv[])
   settings.setValue("Path",  QDir::toNativeSeparators(path));
 
   if (!initDatabase()) {
-	  MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
-	  return -1;
+    MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
+    LogManager::qtLogger()->removeAllAppenders(); 
+    return -1;
   }
 
   if (app.containsCommand("uninstall")) {
-	  Uninstall::run(app.arguments());
-	  return 0;
+    Uninstall::run(app.arguments());
+    LogManager::qtLogger()->removeAllAppenders(); 
+    return 0;
   }
 
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
