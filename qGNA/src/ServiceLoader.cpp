@@ -240,6 +240,9 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   } else if (id == "300009010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/engine.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
+    url.addQueryItem("downloadCustomFile", "Profiles/player.txt,http://files.gamenet.ru/update/ca/,0");
 
     QUrlQuery query;
     query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -321,10 +324,6 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new BannerDownload(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
-
-    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-    thettaMonitor->setApplicationVersion(this->_applicationVersion);
-    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 
     DWORD verion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));
