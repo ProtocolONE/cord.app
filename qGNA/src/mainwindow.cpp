@@ -508,6 +508,10 @@ void MainWindow::prepairGameDownloader()
     &this->_rembrGameFeature, SIGNAL(startGameRequest(QString)), 
     this, SLOT(downloadButtonStart(QString))));
 
+  SIGNAL_CONNECT_CHECK(QObject::connect(
+    &this->_serviceLoader, SIGNAL(startGameRequest(QString)), 
+    this, SLOT(downloadButtonStart(QString))));
+
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(statusMessageChanged(const GGS::Core::Service *, const QString&)), 
     this, SLOT(gameDownloaderStatusMessageChanged(const GGS::Core::Service *, const QString&))));
 
