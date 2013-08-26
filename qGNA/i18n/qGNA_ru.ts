@@ -12,23 +12,23 @@
         <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="286"/>
         <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="296"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
-        <translation type="unfinished"></translation>
+        <translation>Внимание</translation>
     </message>
     <message>
         <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="287"/>
         <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="297"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
-        <translation type="unfinished"></translation>
+        <translation>Установка игры в папку (%1) не возможна.</translation>
     </message>
     <message>
         <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="312"/>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
-        <translation type="unfinished"></translation>
+        <translation>Внимание</translation>
     </message>
     <message>
         <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="313"/>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы устанавливаете игру в директорию, которая уже содержит файлы. При деинсталляции все содержимое данной директории будет удалено. Вы уверены?</translation>
     </message>
 </context>
 <context>
