@@ -22,7 +22,7 @@ void Uninstall::run(const QStringList& arguments) {
 	QStringList filesToDelete;
 
 	if (args.isEmpty()) {
-		settings.beginGroup("filesToDelete");
+		settings.beginGroup("GameInstallInfo");
 		filesToDelete = GameSettingsViewModel::deserialize(settings.value("filesToDelete", QByteArray()).toByteArray());
 	} else {
 		settings.beginGroup("GameInstallInfo");

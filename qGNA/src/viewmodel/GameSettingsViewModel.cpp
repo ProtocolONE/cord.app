@@ -102,8 +102,15 @@ void GameSettingsViewModel::createShortcut(const QString& path, GGS::Core::Servi
   GGS::Settings::Settings settings;
   settings.beginGroup("GameInstallInfo");
   settings.beginGroup(service->id());
-  settings.setValue("icon", lnkroot);
-
+  QStringList icons = this->deserialize(settings.value("iconPaths", QByteArray()).toByteArray());
+  icons << lnkroot;
+  settings.setValue("iconPaths", this->serialize(icons));
+  
+  settings.endGroup();
+  QStringList filesToDelete = this->deserialize(settings.value("filesToDelete", QByteArray()).toByteArray());
+  filesToDelete << lnkroot;
+  settings.setValue("filesToDelete", this->serialize(filesToDelete));
+  
   GGS::Core::System::Shell::ShortCut object;
   object.setArguments(QString("/uri:gamenet://startservice/%1").arg(service->id()));
   object.setDescription(QString("Short cut for game %1").arg(service->name()));

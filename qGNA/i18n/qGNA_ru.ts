@@ -4,29 +4,29 @@
 <context>
     <name>GameSettingsViewModel</name>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="258"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="257"/>
         <source>CAPTION_OPEN_DIR</source>
         <translation>Выберите папку</translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="286"/>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="296"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="285"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="295"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="287"/>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="297"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="286"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="296"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
         <translation>Установка игры в папку (%1) не возможна.</translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="312"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="311"/>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="313"/>
+        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="312"/>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
         <translation>Вы устанавливаете игру в директорию, которая уже содержит файлы. При деинсталляции все содержимое данной директории будет удалено. Вы уверены?</translation>
     </message>
