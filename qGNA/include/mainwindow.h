@@ -50,7 +50,6 @@
 #include <QtDeclarative/qdeclarativeview.h>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QDesktopServices>
-#include <QGLWidget>
 #include <QMainWindow>
 #include <QMouseEvent>
 
@@ -165,6 +164,7 @@ private:
 
   void initAutorun();
   void initRestApi();
+  void initMarketing();
   bool isUseOpenGLrender();
 
   void createShortcut(const QString& pathToLnk, const GGS::Core::Service* service);

@@ -73,18 +73,13 @@ void MainWindow::initialize()
 
   qmlRegisterType<GGS::UpdateSystem::UpdateManagerViewModel>("qGNA.Library", 1, 0, "UpdateManagerViewModel");             
   qmlRegisterType<SelectMw2ServerListModel>("qGNA.Library", 1, 0, "SelectMw2ServerListModel"); 
+  qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");             
+  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
 
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
-
-  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
-
-  QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  QString mid = midSettings.value("MID", "").toString();
-  this->_marketingTargetFeatures.init("qGNA", mid);
-
-  int installerKey = midSettings.value("InstKey").toInt();
-  this->_marketingTargetFeatures.setInstallerKey(installerKey);
+ 
+  this->initMarketing();
 
   //next 2 lines QGNA-60
   this->nQMLContainer = new MQDeclarativeView(this);
@@ -131,40 +126,22 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
-
   nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
+  nQMLContainer->setAlignment(Qt::AlignCenter);
+  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
   QObject *item = nQMLContainer->rootObject();
   QDeclarativeItem *rootItem = qobject_cast<QDeclarativeItem*>(item);
-
-  if (QGLFormat::hasOpenGL() 
-    && QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0) 
-    && this->_commandLineArguments.contains("opengl"))
-  {
-    QGLFormat format; 
-    format.setVersion(2,0);
-    QGLFormat::setDefaultFormat(format);
-    QGLWidget *glWidget = new QGLWidget(format);
-    this->nQMLContainer->setViewport(glWidget);
-    this->setFixedSize(rootItem->width(), rootItem->height()); 
-    DEBUG_LOG << "Render: Use OpenGL 2.0";
-  } else {
-    setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
-    setStyleSheet("background:transparent;");
-    this->setFixedSize(rootItem->width(), rootItem->height()); 
-    DEBUG_LOG << "Render: Use rester engine.";
-  }
-
+  
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowClose()), this, SLOT(onWindowClose())));
 
   this->setCentralWidget(nQMLContainer);
-
-  nQMLContainer->setAlignment(Qt::AlignCenter);
-  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
-
+  this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
+  this->setStyleSheet("background:transparent;");
+  this->setFixedSize(rootItem->width(), rootItem->height()); 
   this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png");
 
   Message::setAdapter(messageAdapter);
@@ -175,6 +152,9 @@ void MainWindow::initialize()
   if (!this->_commandLineArguments.contains("startservice")) {
     SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
   }
+
+  GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna);
+  GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
 }
 
 void MainWindow::setTechName(QString& techName){
@@ -1212,6 +1192,16 @@ bool MainWindow::event(QEvent* event) {
     }
 
     return QMainWindow::event(event);
+}
+
+void MainWindow::initMarketing()
+{
+  QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+  QString mid = midSettings.value("MID", "").toString();
+  this->_marketingTargetFeatures.init("qGNA", mid);
+
+  int installerKey = midSettings.value("InstKey").toInt();
+  this->_marketingTargetFeatures.setInstallerKey(installerKey);
 }
 
 void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
