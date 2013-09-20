@@ -155,6 +155,10 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\Qml
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)"
 
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
+
 @REM QT binaries
 
 xcopy /Y /I /R /E "$(QTDIR)\bin\QtCore%D%4.dll" "$(TargetDir)"
@@ -296,6 +300,10 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\Qml
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
 
 @REM QT binaries
 

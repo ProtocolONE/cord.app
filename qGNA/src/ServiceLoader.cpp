@@ -290,11 +290,6 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
   if (id == "300003010000000000") {
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
-
-    // HACK !!!!!!
-    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-    thettaMonitor->setApplicationVersion(this->_applicationVersion);
-    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
 
   if (id == "300002010000000000") {
@@ -326,6 +321,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new BannerDownload(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
+    this->_gameExecutorService->addHook(*service, new Features::Thetta::ThettaMonitor(service), 99);
 
     DWORD verion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));

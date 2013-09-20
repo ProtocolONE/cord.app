@@ -437,7 +437,7 @@ void MainWindow::prepairGameDownloader()
   this->settingsDownloadSpeedChangedSlot();
   this->settingsUploadSpeedChangedSlot();
   this->settingsNumConnectionsChangedSlot();
-
+  
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressChanged(QString, qint8)), 
       this, SLOT(progressChanged(QString, qint8))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
@@ -447,6 +447,7 @@ void MainWindow::prepairGameDownloader()
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(totalProgressChanged(const GGS::Core::Service *, qint8)), 
     this, SLOT(downloadGameTotalProgressChanged(const GGS::Core::Service *, qint8))));
+   
 
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(downloadProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
@@ -467,7 +468,7 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(shutdownCompleted())));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(listeningPortChanged(unsigned short)),
-    this, SLOT(torrentListenPortChangedSlot(unsigned short))));
+    this, SLOT(torrentListenPortChangedSlot(unsigned short)))); 
 
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
   gameExecutorByLauncher->setWorkingDirectory(QCoreApplication::applicationDirPath());
