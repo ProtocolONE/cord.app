@@ -67,6 +67,7 @@
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <Profile>true</Profile>
+      <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <PreBuildEvent>
       <Command>$(QTDIR)\bin\rcc.exe -compress 3 -threshold 4 -binary  "$(QGNAQMLDIR)\$(ProjectName).qrc" -o "$(TargetDir)\_$(ProjectName).rcc"
