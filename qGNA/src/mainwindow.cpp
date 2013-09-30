@@ -57,6 +57,7 @@ void MainWindow::initialize()
 
   this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
   this->setWindowTitle("qGNA " + this->_fileVersion);
+  this->_serviceLoader.setApplicationVersion(this->_fileVersion);
   this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
