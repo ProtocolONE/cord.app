@@ -53,6 +53,8 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 
+#include "KeyboardLayoutHelper.h"
+
 /*!
 \class MQDeclarativeView
 
@@ -193,6 +195,7 @@ private:
   bool _gameDownloadInitialized;
   GGS::Application::ArgumentParser _commandLineArguments;
   GGS::Core::Service::Area _gameArea;
+  KeyboardLayoutHelper _keyboardLayoutHelper;
 
 signals:
   void nickNameChanged();
@@ -331,5 +334,6 @@ private:
 
 protected:
 	void closeEvent(QCloseEvent* event);
-	bool event(QEvent* event);
+  bool event(QEvent* event);
+  bool winEvent(MSG* message, long* result);
 };

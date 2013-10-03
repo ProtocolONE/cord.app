@@ -119,6 +119,7 @@ void MainWindow::initialize()
   //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
   // END of HACK
 
+  nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
   nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
   nQMLContainer->rootContext()->setContextProperty("licenseModel", licenseModel);
@@ -143,11 +144,11 @@ void MainWindow::initialize()
   this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
   this->setStyleSheet("background:transparent;");
   this->setFixedSize(rootItem->width(), rootItem->height()); 
-  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png");
+  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png"); 
 
   Message::setAdapter(messageAdapter);
 
-  if (!this->_commandLineArguments.contains("minimized"))
+  if (!this->_commandLineArguments.contains("minimized")) 
     this->activateWindow();
 
   if (!this->_commandLineArguments.contains("startservice")) {
@@ -156,6 +157,18 @@ void MainWindow::initialize()
 
   GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna);
   GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
+
+  QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
+
+  this->_keyboardLayoutHelper.update();
+}
+
+bool MainWindow::winEvent(MSG* message, long* result)
+{
+  if (message->message == WM_KEYUP) 
+    this->_keyboardLayoutHelper.update();
+
+  return QMainWindow::winEvent(message, result);
 }
 
 void MainWindow::setTechName(QString& techName){
@@ -418,6 +431,43 @@ GGS::Core::Service* MainWindow::getService(const QString& id)
   return this->_serviceLoader.getService(id);
 }
 
+// HACK 03.10.2013 При необходимости исопользования Job для закрытия дочерних процессов, необходимо проверять возможность
+// запуска процесса с флагом CREATE_BREAKAWAY_FROM_JOB. Функцию можно вынести в хелпера.
+//bool isBreakAwayAvailable() {
+//  static bool isInitialized = false;
+//  static bool result = false;
+//
+//  if (isInitialized)
+//    return result;
+//
+//  BOOL isJob;
+//  if (!IsProcessInJob(GetCurrentProcess(), NULL, &isJob)) {
+//    result = false;
+//    isInitialized = true;
+//    return result;
+//  }
+//
+//  if (!isJob) {
+//    result = true;
+//    isInitialized = true;
+//    return result;
+//  }
+//
+//  JOBOBJECT_EXTENDED_LIMIT_INFORMATION jeli = { 0 };
+//  DWORD out;
+//  if (!QueryInformationJobObject(NULL, JobObjectExtendedLimitInformation, &jeli, sizeof(JOBOBJECT_EXTENDED_LIMIT_INFORMATION), &out)) {
+//    result = false;
+//    isInitialized = true;
+//    return result;
+//  }
+//
+//  result = (jeli.BasicLimitInformation.LimitFlags & JOB_OBJECT_LIMIT_BREAKAWAY_OK)
+//    || (jeli.BasicLimitInformation.LimitFlags & JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK);
+//
+//  isInitialized = true;
+//  return result;
+//}
+
 void MainWindow::prepairGameDownloader()
 {
   QString root = QCoreApplication::applicationDirPath();
@@ -448,8 +498,6 @@ void MainWindow::prepairGameDownloader()
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(totalProgressChanged(const GGS::Core::Service *, qint8)), 
     this, SLOT(downloadGameTotalProgressChanged(const GGS::Core::Service *, qint8))));
-   
-
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(downloadProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
     this, SLOT(downloadGameProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
@@ -480,10 +528,16 @@ void MainWindow::prepairGameDownloader()
 
   // HACK Для того чтобы работало закрытие приложений и не менять QProcess хукнем CreateProcess и добавим недостающий флаг
   // ВНИМАНИЕ любое вызов CreateProcess из приложения qGNA попадет сюда. Надо это учесть.
-  auto hook = HookEngine::createHook<HookEngine::Stdcall, BOOL, LPCWSTR, LPWSTR, void*, void*, BOOL, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFO, LPPROCESS_INFORMATION>("Kernel32.dll", "CreateProcessW");
-  hook->assignHook([hook] (LPCWSTR a1, LPWSTR a2, void* a3, void* a4, BOOL a5, DWORD dwCreationFlags, LPVOID a6, LPCWSTR a7, LPSTARTUPINFO a8, LPPROCESS_INFORMATION a9) -> BOOL {
-    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags | CREATE_BREAKAWAY_FROM_JOB, a6, a7, a8, a9);
-  });
+  
+  // HACK отключено 03.10.2013. Чтобы можно было запустить процесс с флагом CREATE_BREAKAWAY_FROM_JOB у текущего джоба процесса
+  // должен в лимит флагах стоять соотвествующий флаг JOB_OBJECT_LIMIT_BREAKAWAY_OK 
+  //auto hook = HookEngine::createHook<HookEngine::Stdcall, BOOL, LPCWSTR, LPWSTR, void*, void*, BOOL, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFO, LPPROCESS_INFORMATION>("Kernel32.dll", "CreateProcessW");
+  //hook->assignHook([hook] (LPCWSTR a1, LPWSTR a2, void* a3, void* a4, BOOL a5, DWORD dwCreationFlags, LPVOID a6, LPCWSTR a7, LPSTARTUPINFO a8, LPPROCESS_INFORMATION a9) -> BOOL {
+  //  if (isBreakAwayAvailable()) 
+  //    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags | CREATE_BREAKAWAY_FROM_JOB, a6, a7, a8, a9);
+  //  else
+  //    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags, a6, a7, a8, a9);
+  //});
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     &this->_rembrGameFeature, SLOT(started(const GGS::Core::Service *))));
