@@ -291,10 +291,10 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
 
-    // HACK !!!!!!
-    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-    thettaMonitor->setApplicationVersion(this->_applicationVersion);
-    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
+    // HACK !!!!!! Для БС драйвер отключен 
+    //Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
+    //thettaMonitor->setApplicationVersion(this->_applicationVersion);
+    //this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
 
   if (id == "300002010000000000") {
