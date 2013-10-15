@@ -298,7 +298,6 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
 
     // HACK !!!!!! Для БС драйвер отключен 
     Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-	thettaMonitor->setDriver(this->_driver);
     thettaMonitor->setApplicationVersion(this->_applicationVersion);
     this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
