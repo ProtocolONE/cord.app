@@ -954,7 +954,7 @@ void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameE
     GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
     break;
   case GGS::GameExecutor::ServiceAuthorizationImpossible:
-    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_AUTHORIZATION_IMPOSSIBLE_INFO"));
+    //INFO Handled in qml 
     break;
   case GGS::GameExecutor::PakkanenPermissionDenied:
     GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_CBT_PERMISSION_INFO").arg(service.name()));
