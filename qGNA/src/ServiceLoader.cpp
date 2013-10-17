@@ -41,6 +41,11 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea)
 {
   this->_gameArea = gameArea;
 
+  QString thettaDirectory = QString("%1/Thetta").arg(QCoreApplication::applicationDirPath());
+  this->_driver = new Thetta::Driver(this);
+  this->_driver->setPath(thettaDirectory);
+  this->_driver->setName(QString("Thetta"));
+
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
@@ -292,9 +297,10 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
 
     // HACK !!!!!! Для БС драйвер отключен 
-    //Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-    //thettaMonitor->setApplicationVersion(this->_applicationVersion);
-    //this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
+    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
+	thettaMonitor->setDriver(this->_driver);
+    thettaMonitor->setApplicationVersion(this->_applicationVersion);
+    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
 
   if (id == "300002010000000000") {
@@ -328,6 +334,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
 
     Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
+	thettaMonitor->setDriver(this->_driver);
     thettaMonitor->setApplicationVersion(this->_applicationVersion);
     this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <Thetta/Driver.h>
+#include <Thetta/Logger.h>
+
 #include <Core/Service>
 
 #include <GameDownloader/GameDownloadService.h>
@@ -13,6 +16,10 @@
 #include <QtCore/QString>
 
 #include <Windows.h>
+
+namespace Thetta {
+	class Driver;
+}
 
 class ServiceLoader : public QObject
 {
@@ -58,6 +65,8 @@ private:
   QString getBestDrive(const QString& serviceId);
   int getDiskFreeSpaceInMb(LPCWSTR drive);
   bool hasEnoughSpace(const QString& serviceId, int free);
+
+  Thetta::Driver* _driver;
 
 signals:
   void startGameRequest(QString);
