@@ -114,6 +114,7 @@ public:
   Q_INVOKABLE void saveLanguage(const QString& language);
   Q_INVOKABLE void selectLanguage(const QString& language);
   void setFileVersion(const QString& fileVersion) { _fileVersion = fileVersion; }
+  void release();
 
 public slots:
   void restartApplication(bool shouldStartWithSameArguments = true);

@@ -167,6 +167,7 @@ int main(int argc, char *argv[])
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &installer, SLOT(downloadAndInstall())));
 
   int result = app.exec();
+  w.release();
 
   LogManager::qtLogger()->removeAllAppenders(); 
 

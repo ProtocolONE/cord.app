@@ -426,6 +426,11 @@ void MainWindow::initServices()
   this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
 }
 
+void MainWindow::release()
+{
+  this->_gameDownloader.release();
+}
+
 GGS::Core::Service* MainWindow::getService(const QString& id)
 {
   return this->_serviceLoader.getService(id);
