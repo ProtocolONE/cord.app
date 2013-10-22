@@ -636,7 +636,7 @@ void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service)
 void MainWindow::executeService(QString id) {
 	GGS::Core::Service *service = this->_serviceLoader.getService(id);
 
-	if (!service) {
+	if (!service || this->_gameExecutorService.isGameStarted(service->id())) {
 		return;
 	}
 
@@ -852,7 +852,7 @@ void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
 void MainWindow::startGame(const QString& serviceId)
 {
   GGS::Core::Service *service = this->getService(serviceId);
-  if (!service)
+  if (!service || this->_gameExecutorService.isGameStarted(serviceId))
     return;
 
   if (service->isDownloadable()) {
