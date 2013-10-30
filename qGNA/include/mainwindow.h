@@ -13,6 +13,7 @@
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Jabber.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
+#include <Features/TaskList.h>
 
 #include <Marketing/MarketingTarget.h>
 
@@ -211,6 +212,8 @@ signals:
   void updateAreaChanged();
   void updateUrlChanged();
 
+  void navigate(QString page);
+
   void totalProgressChanged(QString serviceId, qint8 progress);
   void downloadProgressChanged(QString serviceId, int progress, qint64 totalWantedDone, qint64 totalWanted,
     qint64 directTotalDownload,
@@ -332,6 +335,7 @@ private:
   Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
   Features::Jabber _jabber;
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
+  Features::TaskList _taskList;
 
 protected:
 	void closeEvent(QCloseEvent* event);
