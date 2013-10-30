@@ -48,6 +48,7 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea)
 
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
+  this->initService("300012010000000000", "http://fs0.gamenet.ru/update/reborn/", "Reborn");
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
   this->initService("300006010000000000", "http://fs0.gamenet.ru/update/mw2/", "MW2");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
@@ -233,6 +234,16 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.setQuery(query);
 
     service->setGameId("70");
+  } else if (id == "300012010000000000") { // TODO
+    url.setScheme("exe");
+    url.setPath(QString("%1/%2/client/Client.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("args", "%userId% %token%");
+
+    url.addQueryItem("downloadCustomFile", 
+      "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/reborn/,1,config/lastlogin.xml,http://files.gamenet.ru/update/reborn/,0");
+
+    service->setGameId("760");
   } else if (id == "300006010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/mw2_bin/mw2.exe").arg(currentInstallPath, service->areaString()));
@@ -292,11 +303,15 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
   //if (id != "300007010000000000")
   //  this->_gameDownloaderBuilder->gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
 
+  if (id == "300012010000000000") {
+    this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
+    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);   
+  }
+
   if (id == "300003010000000000") {
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
 
-    // HACK !!!!!! Для БС драйвер отключен 
     Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
     thettaMonitor->setApplicationVersion(this->_applicationVersion);
     this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
@@ -333,7 +348,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
 
     Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-	thettaMonitor->setDriver(this->_driver);
+	  thettaMonitor->setDriver(this->_driver);
     thettaMonitor->setApplicationVersion(this->_applicationVersion);
     this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 
@@ -407,6 +422,9 @@ bool ServiceLoader::hasEnoughSpace(const QString& serviceId, int free)
 
   if (serviceId == "300009010000000000")
     return free > 4800;
+  
+  if (serviceId == "300012010000000000")
+    return free > 3300;
 
   return free > 1000;
 }

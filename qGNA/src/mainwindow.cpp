@@ -667,7 +667,8 @@ void MainWindow::executeService(QString id) {
 		id == "300006010000000000" || 
 		id == "300009010000000000" || 
     id == "100009010000000000" ||
-    id == "100003010000000000") {
+    id == "100003010000000000" ||
+    id == "300012010000000000") {
 			this->_gameExecutorService.execute(*service);
 	}
 }
@@ -968,7 +969,7 @@ void MainWindow::onServiceStarted(const GGS::Core::Service &service)
   emit this->serviceStarted(service.id());
 }
 
-void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
+void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state) 
 {
   emit this->serviceFinished(service.id(), state);
 
