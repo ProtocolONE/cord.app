@@ -651,10 +651,12 @@ void MainWindow::executeService(QString id) {
 		return;
 	}
 
+  /*
 	if (!this->isWindowVisible()) {
 		emit this->selectService(id);
 		return;
 	}
+  */
 
 	if (this->_restapiManager.credential().userId().isEmpty()) {
 		emit this->authBeforeStartGameRequest(id);
