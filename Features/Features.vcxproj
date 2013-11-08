@@ -14,16 +14,10 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_ExternalIpAddress.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_TaskList.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ExternalIpAddress.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_TaskList.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitor.cpp">
@@ -85,7 +79,6 @@
     <ClCompile Include="src\Features\RememberGameDownloading.cpp" />
     <ClCompile Include="src\Features\RemouteStartGame.cpp" />
     <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp" />
-    <ClCompile Include="src\Features\TaskList.cpp" />
     <ClCompile Include="src\Features\Thetta\Json.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaMonitor.cpp" />
     <ClCompile Include="src\Features\ThronInstaller.cpp" />
@@ -211,16 +204,6 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="include\Features\TaskList.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing TaskList.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -D_UNICODE "-I.\GeneratedFiles" "-I$(ProjectDir)include" "-I$(QGNACOMMONDIR)\Qxmpp\$(QxmppArea)\include\qxmpp" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I." "-I$(QTDIR)\include\QtNetwork"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing TaskList.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -D_UNICODE "-I$(QGNACOMMONDIR)\Qxmpp\$(QxmppArea)\include\qxmpp" "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(ProjectDir)include" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QTDIR)\include\QtNetwork"</Command>
-    </CustomBuild>
     <ClInclude Include="include\Features\Thetta\Json.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

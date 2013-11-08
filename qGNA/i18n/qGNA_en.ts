@@ -41,24 +41,24 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="960"/>
-        <location filename="../src/mainwindow.cpp" line="966"/>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="971"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
+        <location filename="../src/mainwindow.cpp" line="1030"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="960"/>
+        <location filename="../src/mainwindow.cpp" line="971"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="966"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1030"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>

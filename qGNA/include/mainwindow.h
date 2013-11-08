@@ -13,7 +13,6 @@
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Jabber.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
-#include <Features/TaskList.h>
 
 #include <Marketing/MarketingTarget.h>
 
@@ -335,7 +334,6 @@ private:
   Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
   Features::Jabber _jabber;
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
-  Features::TaskList _taskList;
 
 protected:
 	void closeEvent(QCloseEvent* event);

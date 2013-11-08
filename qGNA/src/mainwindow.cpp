@@ -40,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-  this->_taskList.killTasksList();
-  this->_taskList.commit();
 }
 
 void MainWindow::initialize()
@@ -130,7 +128,6 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
-  nQMLContainer->rootContext()->setContextProperty("taskList", &this->_taskList);
 
   nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
   nQMLContainer->setAlignment(Qt::AlignCenter);
@@ -165,13 +162,7 @@ void MainWindow::initialize()
   QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
 
   this->_keyboardLayoutHelper.update();
-
-  this->_taskList.setMoreGamesCaption(tr("TASK_LIST_MORE_GAMES"));
-  this->_taskList.setAllGamesCaption(tr("TASK_LIST_ALL_GAMES"));
-  this->_taskList.addTask("-settings", tr("TASK_LIST_SETTING"));
-  this->_taskList.addTask("-quit", tr("TASK_LIST_QUIT"));
-
-  this->_taskList.commit();
+                                              
 }
 
 bool MainWindow::winEvent(MSG* message, long* result)
