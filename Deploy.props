@@ -22,7 +22,7 @@
     <QxmppArea>0.7.7</QxmppArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
-    <OverlayArea>1.0.172_fixed</OverlayArea>
+    <OverlayArea>trunk</OverlayArea>
     <HookEngineArea>1.0</HookEngineArea>
     <ThettaArea>1.0.66</ThettaArea>
   </PropertyGroup>
