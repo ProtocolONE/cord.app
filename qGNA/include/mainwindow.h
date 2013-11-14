@@ -221,7 +221,7 @@ signals:
     int peerPayloadDownloadRate,
     int payloadDownloadRate,
     int directPayloadDownloadRate,
-    int playloadUploadRate,
+    int payloadUploadRate,
     qint64 totalPayloadUpload);
 
   void progressbarChange(QString serviceId, int progress, qint64 totalWantedDone, qint64 totalWanted, // @DEPRECATED
@@ -231,7 +231,7 @@ signals:
     int peerPayloadDownloadRate,
     int payloadDownloadRate,
     int directPayloadDownloadRate,
-    int playloadUploadRate,
+    int payloadUploadRate,
     qint64 totalPayloadUpload);
 
   void progressbarExtractionChange(QString serviceId, int progress, qint64 totalWantedDone, qint64 totalWanted);// @DEPRECATED

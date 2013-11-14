@@ -592,7 +592,7 @@ void MainWindow::downloadGameProgressChanged(
     args.peerPayloadDownloadRate(), 
     args.payloadDownloadRate(), 
     args.directPayloadDownloadRate(), 
-    args.playloadUploadRate(), 
+    args.payloadUploadRate(), 
     args.totalPayloadUpload());
 }
 
@@ -603,19 +603,18 @@ void MainWindow::progressChanged(QString serviceId, qint8 progress)
 
 void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
 {
-  emit this->progressbarChange(
-    serviceId, 
-    progress, 
-    args.totalWantedDone(), 
-    args.totalWanted(), 
-    args.directTotalDownload(), 
-    args.peerTotalDownload(), 
-    args.payloadTotalDownload(), 
-    args.peerPayloadDownloadRate(), 
-    args.payloadDownloadRate(), 
-    args.directPayloadDownloadRate(), 
-    args.playloadUploadRate(), 
-    args.totalPayloadUpload());
+  emit this->progressbarChange(serviceId, 
+	  progress, 
+	  args.totalWantedDone(), 
+	  args.totalWanted(), 
+	  args.directTotalDownload(), 
+	  args.peerTotalDownload(), 
+	  args.payloadTotalDownload(), 
+	  args.peerPayloadDownloadRate(), 
+	  args.payloadDownloadRate(), 
+	  args.directPayloadDownloadRate(), 
+	  args.payloadUploadRate(), 
+	  args.totalPayloadUpload());
 }
 
 void MainWindow::progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total)
