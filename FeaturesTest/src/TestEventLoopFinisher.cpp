@@ -31,3 +31,8 @@ void TestEventLoopFinisher::timeoutTick()
   this->_timeoutKill = true;
   this->terminateLoop();
 }
+
+bool TestEventLoopFinisher::setTerminateSignal(QObject *sender, const char* signal)
+{
+  return QObject::connect(sender, signal, this, SLOT(terminateLoop()));
+}

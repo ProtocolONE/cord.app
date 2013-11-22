@@ -37,14 +37,21 @@ QHash<QString, GGS::Core::Service *>& ServiceLoader::serviceMap()
   return this->_serviceMap;
 }
 
-void ServiceLoader::init(GGS::Core::Service::Area gameArea)
+void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::Area applicationArea)
 {
   this->_gameArea = gameArea;
+  this->_applicationArea = applicationArea;
 
   QString thettaDirectory = QString("%1/Thetta").arg(QCoreApplication::applicationDirPath());
   this->_driver = new Thetta::Driver(this);
   this->_driver->setPath(thettaDirectory);
   this->_driver->setName(QString("Thetta"));
+
+  this->_installer = new Features::Thetta::ThettaInstaller(this);
+  this->_installer->setDriver(this->_driver);
+  this->_installer->setApplicationVersion(this->_applicationVersion);
+  if (this->_applicationArea == GGS::Core::Service::Tst)
+    this->_installer->connectToDriver();
 
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
@@ -52,12 +59,14 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea)
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
   this->initService("300006010000000000", "http://fs0.gamenet.ru/update/mw2/", "MW2");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
+  this->initService("300004010000000000", "http://fs0.gamenet.ru/update/rot/", "RageofTitans");
   this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
   this->initService("100003010000000000", "http://gnlupdate.tst.local/update/bs/", "BSTest");
 
   this->initGAService();
   this->initFJService();
 
+  this->_gameDownloader->registerHook("300004010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300006010000000000", 0, 10, &this->_installDependencyHook);
 }
@@ -78,7 +87,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setIsDownloadable(true);
   service->setName(name);
 
-  bool hasDownloadPath = (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000");
+  bool hasDownloadPath = (id == "300004010000000000" || id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000");
   service->setHashDownloadPath(hasDownloadPath);
 
   QString root = QCoreApplication::applicationDirPath();
@@ -103,7 +112,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setInstallPath(currentInstallPath);
   service->setTorrentFilePath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
 
-  if (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000" )
+  if (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000" || id == "300004010000000000")
     service->setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
   else
     service->setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
@@ -277,6 +286,14 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     url.setQuery(query);
     service->setGameId("92");
+  } else if (id == "300004010000000000") {
+    url.setScheme("exe");
+    url.setPath(QString("%1/%2//bin/tyj.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("args", "-sa UserId=%userId%%appKey% -sa Token=%token%");
+    url.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
+
+    service->setGameId("72");
   } else if (id == "100009010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/sample.exe").arg(currentInstallPath, service->areaString()));
@@ -313,7 +330,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
 
     Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-    thettaMonitor->setApplicationVersion(this->_applicationVersion);
+    thettaMonitor->setDriverInstaller(this->_installer);
     this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
 
@@ -348,8 +365,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
 
     Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-	  thettaMonitor->setDriver(this->_driver);
-    thettaMonitor->setApplicationVersion(this->_applicationVersion);
+	  thettaMonitor->setDriverInstaller(this->_installer);
     this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 
     DWORD verion = GetVersion();
@@ -364,7 +380,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     //  this->_gameExecutorService->addHook(*service, new GGS::GameExecutor::Hook::DisableAeroHook(service));
   }
 
-  if (id == "300005010000000000")
+  if (id == "300004010000000000" || id == "300005010000000000" )
     service->setExternalDependencyList("dxwebsetup.exe,/Q");
 }
 

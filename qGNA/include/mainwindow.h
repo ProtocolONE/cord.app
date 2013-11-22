@@ -327,6 +327,8 @@ private:
   QString _installUpdateGnaPath;
   QString _updateArea;
   QString _updateUrl;
+  GGS::Core::Service::Area _applicationArea;
+
   GGS::UpdateSystem::CheckUpdateHelper _checkUpdateHelper;
 
   RememberGameDownloading _rembrGameFeature;

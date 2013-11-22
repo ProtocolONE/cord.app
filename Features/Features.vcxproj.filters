@@ -128,6 +128,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaInstaller.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaInstaller.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\ThettaInstaller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h">
@@ -158,6 +167,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\Thetta\ThettaMonitor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

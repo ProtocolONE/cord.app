@@ -410,12 +410,9 @@ void MainWindow::logout()
 
 void MainWindow::initServices()
 {
-  // QGNA-183 выпиливание всех следов RoT в qGNA
-  this->_gameSettingsViewModel->removeShortCutByName("RageofTitans");
-
   this->_serviceLoader.setGameDownloader(&this->_gameDownloader);
   this->_serviceLoader.setExecutor(&this->_gameExecutorService);
-  this->_serviceLoader.init(this->_gameArea);
+  this->_serviceLoader.init(this->_gameArea, this->_applicationArea);
   
   this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300006010000000000"),
@@ -423,6 +420,10 @@ void MainWindow::initServices()
   
   this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300005010000000000"), 
+    this->_enterNickViewModel, 0);
+
+  this->_gameExecutorService.addHook(
+    *this->_serviceLoader.getService("300004010000000000"), 
     this->_enterNickViewModel, 0);
 
   this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
@@ -653,6 +654,7 @@ void MainWindow::executeService(QString id) {
 
 	if (id == "300002010000000000" || 
 		id == "300003010000000000" || 
+    id == "300004010000000000" || 
 		id == "300005010000000000" || 
 		id == "300006010000000000" || 
 		id == "300009010000000000" || 
@@ -745,12 +747,15 @@ void MainWindow::initializeUpdateSettings()
   {
   case 1:
     this->_updateArea = QString("pts");
+    this->_applicationArea = GGS::Core::Service::Pts;
     break;
   case 2:
     this->_updateArea = QString("tst");
+    this->_applicationArea = GGS::Core::Service::Tst;
     break;
   default:
     this->_updateArea = QString("live");  
+    this->_applicationArea = GGS::Core::Service::Live;
   }
 
 #ifdef QGNA_NO_UPDATE
