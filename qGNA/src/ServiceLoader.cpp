@@ -53,6 +53,14 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   if (this->_applicationArea == GGS::Core::Service::Tst)
     this->_installer->connectToDriver();
 
+  this->_gameExecutorService->setAuthSalt([this]() -> QString {
+    return this->_installer->driver()->getServiceSalt();
+  });
+
+  this->_gameExecutorService->setAuthToken([this](const QString& salt, const QString& token) -> QString {
+    return this->_installer->driver()->getServiceToken(salt, token);
+  });
+
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
   this->initService("300012010000000000", "http://fs0.gamenet.ru/update/reborn/", "Reborn");
