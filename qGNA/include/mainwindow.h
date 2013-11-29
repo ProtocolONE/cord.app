@@ -140,7 +140,7 @@ public slots:
   void commandRecieved(QString name, QStringList arguments);       
   void updateFinishedSlot();
   void activateWindow();
-  void executeService(QString id);
+  bool executeService(QString id);
 
   void setTechName(QString& techName);
   void setNickName(QString& nickName);

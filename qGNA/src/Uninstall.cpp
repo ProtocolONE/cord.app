@@ -53,7 +53,7 @@ void Uninstall::run(const QStringList& arguments)
 void Uninstall::uninstallDriver()
 {
   QString thettaDirectory = QString("%1/Thetta").arg(QCoreApplication::applicationDirPath());
-  Thetta::Driver driver;
+  Thetta::Driver driver(0);
   driver.setPath(thettaDirectory);
   driver.setName(QString("Thetta"));
   driver.unload();
