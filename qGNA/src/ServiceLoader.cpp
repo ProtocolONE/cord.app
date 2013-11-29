@@ -53,11 +53,11 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   if (this->_applicationArea == GGS::Core::Service::Tst)
     this->_installer->connectToDriver();
 
-  this->_gameExecutorService->setAuthSalt([this]() -> QString {
+  this->_gameExecutorService->setAuthSaltCallback([this]() -> QString {
     return this->_installer->driver()->getServiceSalt();
   });
 
-  this->_gameExecutorService->setAuthToken([this](const QString& salt, const QString& token) -> QString {
+  this->_gameExecutorService->setAuthTokenTransformCallback([this](const QString& salt, const QString& token) -> QString {
     return this->_installer->driver()->getServiceToken(salt, token);
   });
 
