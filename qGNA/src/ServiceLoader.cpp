@@ -5,6 +5,10 @@
 
 #include <Features/Thetta/ThettaMonitor.h>
 
+#ifdef VERSION_CHECK_DRIVER  
+#include <GameExecutor/Extension.h>
+#endif
+
 #include <GameExecutor/Hook/RestoreResolution>
 #include <GameExecutor/Hook/DisableIEDefalutProxy>
 #include <GameExecutor/Hook/DisableDEP>
@@ -50,16 +54,14 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->_installer = new Features::Thetta::ThettaInstaller(this);
   this->_installer->setDriver(this->_driver);
   this->_installer->setApplicationVersion(this->_applicationVersion);
+  this->_installer->setApplicationArea(applicationArea);
+
   if (this->_applicationArea == GGS::Core::Service::Tst)
     this->_installer->connectToDriver();
 
-  //this->_gameExecutorService->setAuthSaltCallback([this]() -> QString {
-  //  return this->_installer->driver()->getServiceSalt();
-  //});
-
-  //this->_gameExecutorService->setAuthTokenTransformCallback([this](const QString& salt, const QString& token) -> QString {
-  //  return this->_installer->driver()->getServiceToken(salt, token);
-  //});
+#ifdef VERSION_CHECK_DRIVER
+  this->initGameExecutorExtensions();
+#endif
 
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
@@ -546,4 +548,25 @@ QString ServiceLoader::applicationVersion() const
 void ServiceLoader::setApplicationVersion(const QString& value)
 {
   this->_applicationVersion = value;
+}
+
+void ServiceLoader::initGameExecutorExtensions()
+{
+  this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::GetSalt, 
+    new GGS::GameExecutor::GetSaltExtension([this]() -> QString {
+      return this->_installer->driver()->getServiceSalt();
+  })
+    );
+
+  this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::GetToken, 
+    new GGS::GameExecutor::GetTokenExtension([this](const QString& salt, const QString& token) -> QString {
+      return this->_installer->driver()->getServiceToken(salt, token);
+  })
+    );
+
+  this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::OpenBrowser, 
+    new GGS::GameExecutor::OpenBrowserExtension([this](const QString& url) {
+      this->_installer->driver()->openBrowser(url);
+  })
+    );
 }

@@ -50,6 +50,9 @@ public:
   QString applicationVersion() const;
   void setApplicationVersion(const QString& value);
 
+signals:
+  void startGameRequest(QString);
+
 private:
   QHash<QString, GGS::Core::Service *> _serviceMap;
   GGS::GameExecutor::GameExecutorService *_gameExecutorService;
@@ -59,6 +62,9 @@ private:
   GGS::Core::Service::Area _gameArea;
   GGS::Core::Service::Area _applicationArea;
   QString _applicationVersion;
+
+  Thetta::Driver* _driver;
+  Features::Thetta::ThettaInstaller *_installer;
 
   void initService(const QString& id, const QString& torrentUrl, const QString& name);
   void initHooks(const QString& id, GGS::Core::Service* service);
@@ -71,10 +77,7 @@ private:
   int getDiskFreeSpaceInMb(LPCWSTR drive);
   bool hasEnoughSpace(const QString& serviceId, int free);
 
-  Thetta::Driver* _driver;
-  Features::Thetta::ThettaInstaller *_installer;
-
-signals:
-  void startGameRequest(QString);
+  void initGameExecutorExtensions();
+  
 };
 
