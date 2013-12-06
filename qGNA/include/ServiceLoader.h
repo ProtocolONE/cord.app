@@ -69,6 +69,8 @@ private:
   void initService(const QString& id, const QString& torrentUrl, const QString& name);
   void initHooks(const QString& id, GGS::Core::Service* service);
 
+  void installThettaHook(GGS::Core::Service* service);
+
   void initGAService();
   void initFJService();
   void migrateInstallDate(const QString& serviceId);

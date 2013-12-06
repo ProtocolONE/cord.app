@@ -70,8 +70,8 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initService("300006010000000000", "http://fs0.gamenet.ru/update/mw2/", "MW2");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
   this->initService("300004010000000000", "http://fs0.gamenet.ru/update/rot/", "RageofTitans");
-  this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
-  this->initService("100003010000000000", "http://gnlupdate.tst.local/update/bs/", "BSTest");
+  //this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
+  //this->initService("100003010000000000", "http://gnlupdate.tst.local/update/bs/", "BSTest");
 
   this->initGAService();
   this->initFJService();
@@ -117,7 +117,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   QString currentDownloadPath = settings.value("DownloadPath").toString();
   if (currentDownloadPath.isEmpty()) 
     currentDownloadPath = QString("%1/Downloads/%2/").arg(root, name);
-  
+
   service->setDownloadPath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
   service->setInstallPath(currentInstallPath);
   service->setTorrentFilePath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
@@ -130,6 +130,8 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setTorrentUrl(torrentUrl);
 
   this->initHooks(id, service);
+  this->installThettaHook(service);
+
   this->_serviceMap[id] = service;
 
   this->setExecuteUrl(id, currentInstallPath);
@@ -189,29 +191,29 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.setPath(QString("%1/%2/aikaru.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%login% %token% 300002010000000000 login");
-	
+
     url.addQueryItem("downloadCustomFile", "UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
 
     service->setGameId("631");
 
     // 26.08.2031 HACK Выключено из-за проблемы на XP
-    
-//    GGS::Settings::Settings settings;
-//    settings.beginGroup("gameExecutor");
-//    settings.beginGroup("serviceInfo");
-//    settings.beginGroup(id);
-//
-//    bool ok;
-//    int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
-//    if (overlayEnabled != 0 || !ok) {
-//#ifdef _DEBUG
-//      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-//#else
-//      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-//#endif
-//
-//      url.addQueryItem("injectDll", injectedDll);
-//    }
+
+    //    GGS::Settings::Settings settings;
+    //    settings.beginGroup("gameExecutor");
+    //    settings.beginGroup("serviceInfo");
+    //    settings.beginGroup(id);
+    //
+    //    bool ok;
+    //    int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
+    //    if (overlayEnabled != 0 || !ok) {
+    //#ifdef _DEBUG
+    //      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+    //#else
+    //      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+    //#endif
+    //
+    //      url.addQueryItem("injectDll", injectedDll);
+    //    }
 
   } else if (id == "300003010000000000") {
     url.setScheme("exe");
@@ -229,17 +231,17 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     settings.beginGroup("gameExecutor");
     settings.beginGroup("serviceInfo");
     settings.beginGroup(id);
-    
+
     bool ok;
     int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
     if (overlayEnabled != 0 || !ok) {
       // Выключили 01.03.2013
-      #ifdef _DEBUG
-          QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-      #else
-          QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-      #endif
-      
+#ifdef _DEBUG
+      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+#else
+      QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+#endif
+
       url.addQueryItem("injectDll", injectedDll);
     }
 
@@ -281,18 +283,13 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
     url.addQueryItem("downloadCustomFile", "Profiles/player.txt,http://files.gamenet.ru/update/ca/,0");
 
-    QUrlQuery query;
-    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    query.addQueryItem("args", "-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 -pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%");
-    query.addQueryItem("downloadCustomFile", "Profiles/player.txt,http://files.gamenet.ru/update/ca/,0");
-    
-//#ifdef _DEBUG
-//    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-//#else
-//    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-//#endif
-//
-//    url.addQueryItem("injectDll", injectedDll);
+    //#ifdef _DEBUG
+    //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+    //#else
+    //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+    //#endif
+    //
+    //    url.addQueryItem("injectDll", injectedDll);
 
     url.setQuery(query);
     service->setGameId("92");
@@ -330,28 +327,24 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
   //if (id != "300007010000000000")
   //  this->_gameDownloaderBuilder->gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
 
-  if (id == "300012010000000000") {
+  if (id == "300012010000000000") { // reborn
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);   
   }
 
-  if (id == "300003010000000000") {
+  if (id == "300003010000000000") { // bs
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
-
-    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-    thettaMonitor->setDriverInstaller(this->_installer);
-    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
   }
 
-  if (id == "300002010000000000") {
+  if (id == "300002010000000000") { // aika2
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new RestoreResolution(service), 0);
     this->_gameExecutorService->addHook(*service, new DefaultAikaSettings(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
   }
 
-  if (id == "300006010000000000") {
+  if (id == "300006010000000000") { // mw2
     GGS::GameExecutor::Hook::ExternalDependency* executeInstallDependencyHook = new GGS::GameExecutor::Hook::ExternalDependency(service);
     executeInstallDependencyHook->setExternalDepencyList("vcredist_x86.exe,/Q");
     QObject::connect(executeInstallDependencyHook, SIGNAL(externalDependencyInstalled(QString)), this, SIGNAL(startGameRequest(QString)));
@@ -362,7 +355,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     service->setExternalDependencyList("vcredist_x86.exe,/Q");
   }
 
-  if (id == "300009010000000000") {
+  if (id == "300009010000000000") { // ca
     Features::CASettingsFix *hook = new Features::CASettingsFix(service);
     hook->setResolution(QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen()));
     SIGNAL_CONNECT_CHECK(QObject::connect(
@@ -373,10 +366,6 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
     this->_gameExecutorService->addHook(*service, new BannerDownload(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
-
-    Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-	  thettaMonitor->setDriverInstaller(this->_installer);
-    this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 
     DWORD verion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));
@@ -448,7 +437,7 @@ bool ServiceLoader::hasEnoughSpace(const QString& serviceId, int free)
 
   if (serviceId == "300009010000000000")
     return free > 4800;
-  
+
   if (serviceId == "300012010000000000")
     return free > 3300;
 
@@ -552,21 +541,30 @@ void ServiceLoader::setApplicationVersion(const QString& value)
 
 void ServiceLoader::initGameExecutorExtensions()
 {
+#ifdef VERSION_CHECK_DRIVER
   this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::GetSalt, 
-    new GGS::GameExecutor::GetSaltExtension([this]() -> QString {
-      return this->_installer->driver()->getServiceSalt();
-  })
-    );
+      new GGS::GameExecutor::GetSaltExtension([this]() -> QString {
+        return this->_installer->driver()->getServiceSalt();
+    })
+  );
 
   this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::GetToken, 
     new GGS::GameExecutor::GetTokenExtension([this](const QString& salt, const QString& token) -> QString {
       return this->_installer->driver()->getServiceToken(salt, token);
-  })
-    );
+    })
+  );
 
   this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::OpenBrowser, 
     new GGS::GameExecutor::OpenBrowserExtension([this](const QString& url) {
       this->_installer->driver()->openBrowser(url);
-  })
-    );
+    })
+  );
+#endif
+}
+
+void ServiceLoader::installThettaHook(GGS::Core::Service* service)
+{
+  Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
+  thettaMonitor->setDriverInstaller(this->_installer);
+  this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
 }
