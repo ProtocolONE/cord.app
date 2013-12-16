@@ -50,6 +50,8 @@ public:
   QString applicationVersion() const;
   void setApplicationVersion(const QString& value);
 
+  Thetta::Driver* getDriver();
+
 signals:
   void startGameRequest(QString);
 

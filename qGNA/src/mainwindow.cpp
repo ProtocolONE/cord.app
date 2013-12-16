@@ -378,7 +378,7 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
   WARNING_LOG << "Can't restart qGNA";
 }
 
-void MainWindow::openExternalBrowser(const QString& url)
+void MainWindow::openExternalUrlWithAuth(const QString& url)
 {
   QString authUrl;
   if(this->_credential.appKey().isEmpty())
@@ -392,7 +392,13 @@ void MainWindow::openExternalBrowser(const QString& url)
   }
 
   authUrl.append('\0');
-  ShellExecuteW(0, 0, reinterpret_cast<const WCHAR*>(authUrl.utf16()), 0, 0, SW_NORMAL);
+  
+  this->openExternalUrl(authUrl);
+}
+
+void MainWindow::openExternalUrl(const QString& url)
+{
+  this->_serviceLoader.getDriver()->openBrowser(url);
 }
 
 void MainWindow::logout()
@@ -946,17 +952,17 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
   if (name == "gogamenethelper" && arguments.size() > 0) {
     QString gameId = arguments.at(0);
     QString url = QString("http://www.gamenet.ru/games/%1/helper").arg(gameId);
-    this->openExternalBrowser(url);
+    this->openExternalUrlWithAuth(url);
 	  return;
   } 
 
   if (name == "gogamenetmoney") {
-    this->openExternalBrowser("http://www.gamenet.ru/money");
+    this->openExternalUrlWithAuth("http://www.gamenet.ru/money");
 	  return;
   }
   
   if (name == "gocombatarmsrating") {
-	  this->openExternalBrowser("http://www.combatarms.ru/ratings/user/");
+	  this->openExternalUrlWithAuth("http://www.combatarms.ru/ratings/user/");
 	  return;
   } 
 }

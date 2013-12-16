@@ -539,6 +539,11 @@ void ServiceLoader::setApplicationVersion(const QString& value)
   this->_applicationVersion = value;
 }
 
+Thetta::Driver* ServiceLoader::getDriver()
+{
+  return _driver;
+}
+
 void ServiceLoader::initGameExecutorExtensions()
 {
 #ifdef VERSION_CHECK_DRIVER

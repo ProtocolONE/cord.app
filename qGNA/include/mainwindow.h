@@ -122,7 +122,8 @@ public slots:
   void userMainInfoResult(GGS::RestApi::CommandBase::CommandResults);
   void licenseResult(GGS::RestApi::CommandBase::CommandResults);
 
-  void openExternalBrowser(const QString& url);
+  void openExternalUrlWithAuth(const QString& url);
+  void openExternalUrl(const QString& url);
   void logout();
 
   void downloadButtonStart(QString serviceId);
@@ -341,4 +342,5 @@ protected:
 	void closeEvent(QCloseEvent* event);
   bool event(QEvent* event);
   bool winEvent(MSG* message, long* result);
+
 };
