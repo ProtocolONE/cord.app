@@ -51,6 +51,7 @@ public:
   void setApplicationVersion(const QString& value);
 
   Thetta::Driver* getDriver();
+  Features::Thetta::ThettaInstaller* thettaInstaller();
 
 signals:
   void startGameRequest(QString);

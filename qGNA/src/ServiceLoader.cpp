@@ -28,7 +28,10 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 
-ServiceLoader::ServiceLoader(QObject *parent) : QObject(parent)
+ServiceLoader::ServiceLoader(QObject *parent) 
+  : QObject(parent)
+  , _driver(nullptr)
+  , _installer(nullptr)
 {
 }
 
@@ -572,4 +575,9 @@ void ServiceLoader::installThettaHook(GGS::Core::Service* service)
   Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
   thettaMonitor->setDriverInstaller(this->_installer);
   this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
+}
+
+Features::Thetta::ThettaInstaller* ServiceLoader::thettaInstaller()
+{
+  return this->_installer;
 }

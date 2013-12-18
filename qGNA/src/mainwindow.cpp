@@ -27,7 +27,6 @@
 
 #include <HookEngine/HookEngine.h>
 
-// TODO сделать место поточнее и вывод ошибки с фразой вроде "Couldn't connect to"
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
 MainWindow::MainWindow(QWidget *parent) 
@@ -336,7 +335,31 @@ void MainWindow::userMainInfoResult(GGS::RestApi::CommandBase::CommandResults co
   this->setMediumAvatarUrl(getUserMainInfo->response()->mediumAvatarUrl());
 }
 
+void MainWindow::restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result result)
+{
+  if (result == Features::Thetta::ThettaInstaller::Running) // походу 2ой дисконнект
+    return;
+
+  this->internalRestartApplication(this->_restartArguments);
+}
+
 void MainWindow::restartApplication(bool shouldStartWithSameArguments)
+{
+  if (!this->_serviceLoader.thettaInstaller()) {
+    this->internalRestartApplication(shouldStartWithSameArguments);
+    return;
+  }
+
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), 
+    SIGNAL(disconnected(Features::Thetta::ThettaInstaller::Result)),
+    this, 
+    SLOT(restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result))));
+
+  this->_restartArguments = shouldStartWithSameArguments;
+  this->_serviceLoader.thettaInstaller()->disconnectFromDriver();
+}
+
+void MainWindow::internalRestartApplication(bool shouldStartWithSameArguments)
 {
   emit this->secondInstanceExecuteRequest();
   QString dir = QCoreApplication::applicationDirPath();
@@ -419,7 +442,7 @@ void MainWindow::initServices()
   this->_serviceLoader.setGameDownloader(&this->_gameDownloader);
   this->_serviceLoader.setExecutor(&this->_gameExecutorService);
   this->_serviceLoader.init(this->_gameArea, this->_applicationArea);
-  
+
   this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300006010000000000"),
     this->_selectMw2ServerViewModel);

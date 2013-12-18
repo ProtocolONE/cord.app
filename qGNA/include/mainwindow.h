@@ -305,6 +305,8 @@ private slots:
 
   void restApiGenericError(GGS::RestApi::CommandBase::Error, QString message);
   void applicationAreaChanged();
+  void internalRestartApplication(bool shouldStartWithSameArguments = true);
+  void restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result result);
 
 private:
   void initServices();
@@ -337,6 +339,8 @@ private:
   Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
   Features::Jabber _jabber;
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
+
+  bool _restartArguments;
 
 protected:
 	void closeEvent(QCloseEvent* event);
