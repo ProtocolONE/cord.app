@@ -564,7 +564,7 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(torrentListenPortChangedSlot(unsigned short)))); 
 
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
-  //gameExecutorByLauncher->setWorkingDirectory(QCoreApplication::applicationDirPath());
+  gameExecutorByLauncher->setRestApiManager(&this->_restapiManager);
   this->_gameExecutorService.registerExecutor(gameExecutorByLauncher);
 
   GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);

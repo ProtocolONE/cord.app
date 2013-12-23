@@ -142,7 +142,6 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperAre
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\Launcher%D%.exe" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
 
@@ -292,7 +291,6 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperAre
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\Launcher%D%.exe" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
 
