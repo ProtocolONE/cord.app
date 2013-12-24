@@ -12,6 +12,7 @@
 #include <Features/RememberGameDownloading.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Jabber.h>
+#include <Features/PremiumExecutor.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 
 #include <Marketing/MarketingTarget.h>
@@ -142,6 +143,7 @@ public slots:
   void updateFinishedSlot();
   void activateWindow();
   bool executeService(QString id);
+  bool executeSecondService(QString id, QString userId, QString appKey);
 
   void setTechName(QString& techName);
   void setNickName(QString& nickName);
@@ -265,12 +267,18 @@ signals:
   void serviceFinished(QString service, int serviceState);
   void serviceInstalled(QString serviceId);
 
+  void secondServiceStarted(QString service);
+  void secondServiceFinished(QString service, int serviceState);
+
   void authBeforeStartGameRequest(QString serviceId);
   void authGuestConfirmRequest(QString serviceId);
 
 private slots:
   void onServiceStarted(const GGS::Core::Service &service);
   void onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+
+  void onSecondServiceStarted(const GGS::Core::Service &service);
+  void onSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
 
   void onSystemBarPressed(int MouseX, int MouseY);
   void onSystemBarReleased(int MouseX, int MouseY);
@@ -339,7 +347,7 @@ private:
   Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
   Features::Jabber _jabber;
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
-
+  Features::PremiumExecutor _premiumExecutor;
   bool _restartArguments;
 
 protected:

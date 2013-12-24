@@ -63,7 +63,7 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
     this->_installer->connectToDriver();
 
 #ifdef VERSION_CHECK_DRIVER
-  this->initGameExecutorExtensions();
+  this->initGameExecutorExtensions(this->_gameExecutorService);
 #endif
 
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
@@ -547,22 +547,22 @@ Thetta::Driver* ServiceLoader::getDriver()
   return _driver;
 }
 
-void ServiceLoader::initGameExecutorExtensions()
+void ServiceLoader::initGameExecutorExtensions(GGS::GameExecutor::GameExecutorService* executor)
 {
 #ifdef VERSION_CHECK_DRIVER
-  this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::GetSalt, 
+  executor->setExtension(GGS::GameExecutor::ExtensionTypes::GetSalt, 
       new GGS::GameExecutor::GetSaltExtension([this]() -> QString {
         return this->_installer->driver()->getServiceSalt();
     })
   );
 
-  this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::GetToken, 
+  executor->setExtension(GGS::GameExecutor::ExtensionTypes::GetToken, 
     new GGS::GameExecutor::GetTokenExtension([this](const QString& salt, const QString& token) -> QString {
       return this->_installer->driver()->getServiceToken(salt, token);
     })
   );
 
-  this->_gameExecutorService->setExtension(GGS::GameExecutor::ExtensionTypes::OpenBrowser, 
+  executor->setExtension(GGS::GameExecutor::ExtensionTypes::OpenBrowser, 
     new GGS::GameExecutor::OpenBrowserExtension([this](const QString& url) {
       this->_installer->driver()->openBrowser(url);
     })

@@ -53,6 +53,8 @@ public:
   Thetta::Driver* getDriver();
   Features::Thetta::ThettaInstaller* thettaInstaller();
 
+  void initGameExecutorExtensions(GGS::GameExecutor::GameExecutorService* executor);
+
 signals:
   void startGameRequest(QString);
 
@@ -82,7 +84,7 @@ private:
   int getDiskFreeSpaceInMb(LPCWSTR drive);
   bool hasEnoughSpace(const QString& serviceId, int free);
 
-  void initGameExecutorExtensions();
+  
   
 };
 

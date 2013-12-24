@@ -161,7 +161,6 @@ void MainWindow::initialize()
   QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
 
   this->_keyboardLayoutHelper.update();
-                                              
 }
 
 bool MainWindow::winEvent(MSG* message, long* result)
@@ -456,6 +455,14 @@ void MainWindow::initServices()
     this->_enterNickViewModel, 0);
 
   this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
+
+  //this->_premiumExecutor.secondExecutor()->addHook(
+  //  *this->_serviceLoader.getService("300006010000000000"),
+  //  this->_selectMw2ServerViewModel);
+
+  //this->_premiumExecutor.simpleMainExecutor()->addHook(
+  //  *this->_serviceLoader.getService("300006010000000000"),
+  //  this->_selectMw2ServerViewModel);
 }
 
 void MainWindow::release()
@@ -557,7 +564,7 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(torrentListenPortChangedSlot(unsigned short)))); 
 
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
-  gameExecutorByLauncher->setWorkingDirectory(QCoreApplication::applicationDirPath());
+  //gameExecutorByLauncher->setWorkingDirectory(QCoreApplication::applicationDirPath());
   this->_gameExecutorService.registerExecutor(gameExecutorByLauncher);
 
   GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
@@ -667,9 +674,8 @@ void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service)
 bool MainWindow::executeService(QString id) {
 	GGS::Core::Service *service = this->_serviceLoader.getService(id);
 
-	if (!service || this->_gameExecutorService.isGameStarted(service->id())) {
-		return false;
-	}
+  if (!service || this->_premiumExecutor.isGameStarted(service->id()))
+    return false;
 
 	if (!this->isWindowVisible()) {
 		emit this->selectService(id);
@@ -690,7 +696,7 @@ bool MainWindow::executeService(QString id) {
     id == "100009010000000000" ||
     id == "100003010000000000" ||
     id == "300012010000000000") {
-			this->_gameExecutorService.execute(*service);
+      this->_premiumExecutor.executeMain(service);
 	}
 
   return true;
@@ -718,7 +724,7 @@ void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
 
 void MainWindow::shutdownCompleted()
 {
-  this->_gameExecutorService.shutdown();
+  this->_premiumExecutor.shutdown();
   DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
 }
@@ -750,7 +756,7 @@ void MainWindow::downloadButtonStart(QString serviceId)
   if (service->isDownloadable())
     this->checkLicense(serviceId);
   else
-    this->_gameExecutorService.execute(*service);
+    this->_premiumExecutor.executeMain(service);
 }
 
 void MainWindow::downloadButtonPause(QString serviceId)
@@ -762,7 +768,7 @@ void MainWindow::downloadButtonPause(QString serviceId)
   if (service->isDownloadable())
     this->_gameDownloader.stop(service);
   else
-    this->_gameExecutorService.execute(*service);
+    this->_premiumExecutor.executeMain(service);
 }
 
 void MainWindow::initializeUpdateSettings()
@@ -890,7 +896,7 @@ void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
 void MainWindow::startGame(const QString& serviceId)
 {
   GGS::Core::Service *service = this->getService(serviceId);
-  if (!service || this->_gameExecutorService.isGameStarted(serviceId))
+  if (!service || this->_premiumExecutor.isGameStarted(serviceId))
     return;
 
   if (service->isDownloadable()) {
@@ -909,7 +915,7 @@ void MainWindow::startGame(const QString& serviceId)
       return;
     }
 
-    this->_gameExecutorService.execute(*service);
+    this->_premiumExecutor.executeMain(service);
   }
 }
 
@@ -1021,6 +1027,39 @@ void MainWindow::onServiceFinished(const GGS::Core::Service &service, GGS::GameE
   }
 }
 
+void MainWindow::onSecondServiceStarted(const GGS::Core::Service &service)
+{
+  emit this->secondServiceStarted(service.id());
+}
+
+void MainWindow::onSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state) 
+{
+  emit this->secondServiceFinished(service.id(), state);
+
+  // UNDONE !!!!!!!! понять что тут делать
+  // 
+  //switch(state) {
+  //case GGS::GameExecutor::AuthorizationError:
+  //  emit this->needAuth();
+  //  break;
+  //case GGS::GameExecutor::ServiceAccountBlockedError:
+  //  GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
+  //  break;
+  //case GGS::GameExecutor::ServiceAuthorizationImpossible:
+  //  //INFO Handled in qml 
+  //  break;
+  //case GGS::GameExecutor::PakkanenPermissionDenied:
+  //  GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_CBT_PERMISSION_INFO").arg(service.name()));
+  //  break;
+  //case GGS::GameExecutor::PakkanenPhoneVerification:
+  //  emit this->needPakkanenVerification(service.id());
+  //  break;
+  //case GGS::GameExecutor::GuestAccountExpired:
+  //  emit this->authGuestConfirmRequest(service.id());
+  //  break;
+  //}
+}
+
 void MainWindow::closeEvent(QCloseEvent* event)
 {
   this->hide();
@@ -1059,7 +1098,7 @@ void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper:
   case GGS::UpdateSystem::CheckUpdateHelper::FoundUpdate: {
       DEBUG_LOG << "New update found. Restart required.";
 
-      if (!this->_gameExecutorService.isAnyGameStarted() 
+      if (!this->_premiumExecutor.isAnyGameStarted() 
         && !this->_gameDownloader.isAnyServiceInProgress()) {
 
         if (this->isVisible())
@@ -1184,11 +1223,22 @@ void MainWindow::postUpdateInit()
 {
   this->prepairGameDownloader();
 
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(started(const GGS::Core::Service &)),
+  this->_premiumExecutor.setMainExecutor(&this->_gameExecutorService);
+  this->_premiumExecutor.init();
+  this->_serviceLoader.initGameExecutorExtensions(this->_premiumExecutor.secondExecutor());
+  this->_serviceLoader.initGameExecutorExtensions(this->_premiumExecutor.simpleMainExecutor());
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_premiumExecutor, SIGNAL(serviceStarted(const GGS::Core::Service &)),
     this, SLOT(onServiceStarted(const GGS::Core::Service &))));
 
-  SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
+  SIGNAL_CONNECT_CHECK(connect(&this->_premiumExecutor, SIGNAL(serviceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
     this, SLOT(onServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_premiumExecutor, SIGNAL(secondServiceStarted(const GGS::Core::Service &)),
+    this, SLOT(onSecondServiceStarted(const GGS::Core::Service &))));
+
+  SIGNAL_CONNECT_CHECK(connect(&this->_premiumExecutor, SIGNAL(secondServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
+    this, SLOT(onSecondServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
 
   SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(started(const GGS::Core::Service &)),
     &this->_gameExecutorServiceInfoCounter, SLOT(started(const GGS::Core::Service &))));
@@ -1315,6 +1365,33 @@ void MainWindow::initMarketing()
 
   int installerKey = midSettings.value("InstKey").toInt();
   this->_marketingTargetFeatures.setInstallerKey(installerKey);
+}
+
+bool MainWindow::executeSecondService(QString id, QString userId, QString appKey)
+{
+  GGS::Core::Service *service = this->_serviceLoader.getService(id);
+
+  if (!service || !this->_premiumExecutor.canExecuteSecond(id))
+    return false;
+
+  GGS::RestApi::GameNetCredential credential;
+  credential.setUserId(userId);
+  credential.setAppKey(appKey);
+  // set cookie if needed 
+
+  if (id == "300002010000000000" || 
+    id == "300003010000000000" || 
+    id == "300004010000000000" || 
+    id == "300005010000000000" || 
+    id == "300006010000000000" || 
+    id == "300009010000000000" || 
+    id == "100009010000000000" ||
+    id == "100003010000000000" ||
+    id == "300012010000000000") {
+      this->_premiumExecutor.executeSecond(service, credential);
+  }
+
+  return true;
 }
 
 void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
