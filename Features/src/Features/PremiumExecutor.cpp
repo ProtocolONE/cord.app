@@ -1,9 +1,21 @@
+/****************************************************************************
+** This file is a part of Syncopate Limited GameNet Application or it parts.
+**
+** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** All rights reserved.
+**
+** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+****************************************************************************/
 #include <Features/PremiumExecutor.h>
 
 #include <GameExecutor/Executor/ExecutableFile.h>
 #include <GameExecutor/Executor/WebLink.h>
 
+#include <RestApi/RestApiManager.h>
+
 #include <QtCore/QCoreApplication>
+#include <QtCore/QMutexLocker>
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -18,20 +30,6 @@ namespace Features {
   {
   }
 
-  void PremiumExecutor::executeMain(GGS::Core::Service* service)
-  {
-    if (this->isSecondStarted(service->id()))
-      this->_simpleMainExecutor.execute(*service);
-    else
-      this->_mainExecutor->execute(*service);
-  }
-
-  void PremiumExecutor::executeSecond(GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial)
-  {
-    if (this->canExecuteSecond(service->id()))
-      this->_secondExecutor.execute(*service, credetial);
-  }
-  
   void PremiumExecutor::init()
   {
     SIGNAL_CONNECT_CHECK(connect(&this->_simpleMainExecutor, SIGNAL(started(const GGS::Core::Service &)),
@@ -54,61 +52,41 @@ namespace Features {
 
     this->registerExecutors(&this->_simpleMainExecutor);
     this->registerExecutors(&this->_secondExecutor);
-    // UNDONE register hook for MW2
   }
 
-  void PremiumExecutor::internalSecondServiceStarted(const GGS::Core::Service &service)
+  void PremiumExecutor::executeMain(GGS::Core::Service* service)
   {
-    this->_secondGameStarted.insert(service.id());
-    emit this->secondServiceStarted(service);
+    QMutexLocker locker(&this->_mutex);
+
+    if (this->isSecondStarted(service->id()))
+      this->_simpleMainExecutor.execute(*service);
+    else
+      this->_mainExecutor->execute(*service);
+
+    this->_mainGameStarted.insert(service->id());
   }
 
-  void PremiumExecutor::internalSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
+  void PremiumExecutor::executeSecond(GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial)
   {
-    this->_secondGameStarted.remove(service.id());
-    emit this->secondServiceFinished(service, state);
-  }
+    QMutexLocker locker(&this->_mutex);
 
-  void PremiumExecutor::internalServiceStarted(const GGS::Core::Service &service)
-  {
-    this->_mainGameStarted.insert(service.id());
-    emit this->serviceStarted(service);
+    if (!this->isMainStarted(service->id()))
+      return;
+    
+    this->_secondExecutor.execute(*service, credetial);
+    this->_secondGameStarted.insert(service->id());
   }
-
-  void PremiumExecutor::internalServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
-  {
-    this->_mainGameStarted.remove(service.id());
-    emit this->serviceFinished(service, state);
-  }
-
-  bool PremiumExecutor::isSecondStarted(const QString& id)
-  {
-    return this->_secondGameStarted.contains(id);
-  }
-
-  bool PremiumExecutor::isMainStarted(const QString& id)
-  {
-    return this->_mainGameStarted.contains(id);
-  }
-
+  
   bool PremiumExecutor::canSimpleExecuteMain(const QString& id)
   {
+    QMutexLocker locker(&this->_mutex);
     return this->isSecondStarted(id);
   }
 
   bool PremiumExecutor::canExecuteSecond(const QString& id)
   {
+    QMutexLocker locker(&this->_mutex);
     return this->isMainStarted(id);
-  }
-
-  void PremiumExecutor::registerExecutors(GGS::GameExecutor::GameExecutorService *executor)
-  {
-    GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
-    //gameExecutorByLauncher->setWorkingDirectory(QCoreApplication::applicationDirPath());
-    executor->registerExecutor(gameExecutorByLauncher);
-
-    GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
-    executor->registerExecutor(webLinkExecutor);
   }
 
   void PremiumExecutor::shutdown()
@@ -143,6 +121,57 @@ namespace Features {
   GGS::GameExecutor::GameExecutorService* PremiumExecutor::simpleMainExecutor()
   {
     return &this->_simpleMainExecutor;
+  }
+
+  void PremiumExecutor::setMainExecutor(GGS::GameExecutor::GameExecutorService * value)
+  {
+    this->_mainExecutor = value;
+  }
+
+  void PremiumExecutor::internalSecondServiceStarted(const GGS::Core::Service &service)
+  {
+    QMutexLocker locker(&this->_mutex);
+    this->_secondGameStarted.insert(service.id());
+    emit this->secondServiceStarted(service);
+  }
+
+  void PremiumExecutor::internalSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
+  {
+    QMutexLocker locker(&this->_mutex);
+    this->_secondGameStarted.remove(service.id());
+    emit this->secondServiceFinished(service, state);
+  }
+
+  void PremiumExecutor::internalServiceStarted(const GGS::Core::Service &service)
+  {
+    this->_mainGameStarted.insert(service.id());
+    emit this->serviceStarted(service);
+  }
+
+  void PremiumExecutor::internalServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
+  {
+    QMutexLocker locker(&this->_mutex);
+    this->_mainGameStarted.remove(service.id());
+    emit this->serviceFinished(service, state);
+  }
+
+  bool PremiumExecutor::isSecondStarted(const QString& id)
+  {
+    return this->_secondGameStarted.contains(id);
+  }
+
+  bool PremiumExecutor::isMainStarted(const QString& id)
+  {
+    return this->_mainGameStarted.contains(id);
+  }
+
+  void PremiumExecutor::registerExecutors(GGS::GameExecutor::GameExecutorService *executor)
+  {
+    GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
+    executor->registerExecutor(gameExecutorByLauncher);
+
+    GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
+    executor->registerExecutor(webLinkExecutor);
   }
 
 }

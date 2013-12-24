@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 
   if (app.containsCommand("uninstall")) {
     Uninstall::run(app.arguments());
-    LogManager::qtLogger()->removeAllAppenders(); 
+    LogManager::qtLogger()->removeAllAppenders();
     return 0;
   }
 

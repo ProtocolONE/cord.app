@@ -1,3 +1,12 @@
+/****************************************************************************
+** This file is a part of Syncopate Limited GameNet Application or it parts.
+**
+** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** All rights reserved.
+**
+** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+****************************************************************************/
 #pragma once
 
 #include <GameExecutor/GameExecutorService.h>
@@ -8,7 +17,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSet>
-
+#include <QtCore/QMutex>
 
 namespace Features {
 
@@ -20,7 +29,7 @@ namespace Features {
     ~PremiumExecutor();
 
     void init();
-    void setMainExecutor(GGS::GameExecutor::GameExecutorService * value) { this->_mainExecutor = value; }
+    void setMainExecutor(GGS::GameExecutor::GameExecutorService * value);
     bool canSimpleExecuteMain(const QString& id);
     bool canExecuteSecond(const QString& id);
 
@@ -57,6 +66,7 @@ namespace Features {
     
     QSet<QString> _mainGameStarted;
     QSet<QString> _secondGameStarted;
+    QMutex _mutex;
 
     bool isMainStarted(const QString& id);
     bool isSecondStarted(const QString& id);

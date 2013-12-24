@@ -27,6 +27,8 @@
 
 #include <HookEngine/HookEngine.h>
 
+#include <Features/GameExecutor/MW2GetServerHook.h>
+
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
 MainWindow::MainWindow(QWidget *parent) 
@@ -78,7 +80,7 @@ void MainWindow::initialize()
 
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
- 
+
   this->initMarketing();
 
   //next 2 lines QGNA-60
@@ -91,7 +93,6 @@ void MainWindow::initialize()
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
   this->licenseModel = new LicenseViewModel(this);
-  this->_selectMw2ServerViewModel = new SelectMw2ServerViewModel(this);
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
 
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(incomingPortChanged()), this, SLOT(settingsIncomingPortChangedSlot())));
@@ -123,7 +124,6 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
   nQMLContainer->rootContext()->setContextProperty("licenseModel", licenseModel);
   nQMLContainer->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
-  nQMLContainer->rootContext()->setContextProperty("selectMw2ServerModel", this->_selectMw2ServerViewModel);
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
@@ -134,7 +134,7 @@ void MainWindow::initialize()
 
   QObject *item = nQMLContainer->rootObject();
   QDeclarativeItem *rootItem = qobject_cast<QDeclarativeItem*>(item);
-  
+
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
@@ -308,7 +308,7 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
   using GGS::RestApi::Commands::User::GetUserMainInfo;
   GetUserMainInfo *getUserMainInfo = new GetUserMainInfo(this);
   SIGNAL_CONNECT_CHECK(QObject::connect(getUserMainInfo, SIGNAL(result(GGS::RestApi::CommandBase::CommandResults)), 
-      this, SLOT(userMainInfoResult(GGS::RestApi::CommandBase::CommandResults)))); 
+    this, SLOT(userMainInfoResult(GGS::RestApi::CommandBase::CommandResults)))); 
   getUserMainInfo->execute();
 
   this->_jabber.authSuccess(userId, appKey);
@@ -323,10 +323,10 @@ void MainWindow::userMainInfoResult(GGS::RestApi::CommandBase::CommandResults co
     return;
 
   getUserMainInfo->deleteLater();
-  
+
   if (code != GGS::RestApi::CommandBase::NoError) {
-      qDebug() << "GetUserMainInfo execute command error " << code;
-      return;
+    qDebug() << "GetUserMainInfo execute command error " << code;
+    return;
   }
 
   this->setNickName(getUserMainInfo->response()->nickname());
@@ -368,13 +368,13 @@ void MainWindow::internalRestartApplication(bool shouldStartWithSameArguments)
   if (shouldStartWithSameArguments) {
     QStringList args = QCoreApplication::arguments();
     args.removeFirst();
-    
+
     if (args.size() > 0) {
       commandLineArgs = args.join("\" \"");
       commandLineArgs.prepend(L'"');
       commandLineArgs.append(L'"');
     }
-    
+
   } else {
     if (!this->isVisible())
       commandLineArgs = "/minimized";
@@ -396,7 +396,7 @@ void MainWindow::internalRestartApplication(bool shouldStartWithSameArguments)
     this->onWindowClose();
     return;
   }
-  
+
   WARNING_LOG << "Can't restart qGNA";
 }
 
@@ -414,7 +414,7 @@ void MainWindow::openExternalUrlWithAuth(const QString& url)
   }
 
   authUrl.append('\0');
-  
+
   this->openExternalUrl(authUrl);
 }
 
@@ -444,8 +444,16 @@ void MainWindow::initServices()
 
   this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300006010000000000"),
-    this->_selectMw2ServerViewModel);
-  
+    new Features::GameExecutor::MW2GetServerHook(this));
+
+  this->_premiumExecutor.simpleMainExecutor()->addHook(
+    *this->_serviceLoader.getService("300006010000000000"),
+    new Features::GameExecutor::MW2GetServerHook(this));
+
+  this->_premiumExecutor.secondExecutor()->addHook(
+    *this->_serviceLoader.getService("300006010000000000"),
+    new Features::GameExecutor::MW2GetServerHook(this));
+
   this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300005010000000000"), 
     this->_enterNickViewModel, 0);
@@ -455,14 +463,6 @@ void MainWindow::initServices()
     this->_enterNickViewModel, 0);
 
   this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
-
-  //this->_premiumExecutor.secondExecutor()->addHook(
-  //  *this->_serviceLoader.getService("300006010000000000"),
-  //  this->_selectMw2ServerViewModel);
-
-  //this->_premiumExecutor.simpleMainExecutor()->addHook(
-  //  *this->_serviceLoader.getService("300006010000000000"),
-  //  this->_selectMw2ServerViewModel);
 }
 
 void MainWindow::release()
@@ -532,9 +532,9 @@ void MainWindow::prepairGameDownloader()
   this->settingsDownloadSpeedChangedSlot();
   this->settingsUploadSpeedChangedSlot();
   this->settingsNumConnectionsChangedSlot();
-  
+
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressChanged(QString, qint8)), 
-      this, SLOT(progressChanged(QString, qint8))));
+    this, SLOT(progressChanged(QString, qint8))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
     this, SLOT(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressExtractionChanged(QString, qint8, qint64, qint64)), 
@@ -545,7 +545,7 @@ void MainWindow::prepairGameDownloader()
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(downloadProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
     this, SLOT(downloadGameProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
-  
+
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     this, SLOT(gameDownloaderStarted(const GGS::Core::Service *, GGS::GameDownloader::StartType))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(finished(const GGS::Core::Service *)), 
@@ -564,7 +564,6 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(torrentListenPortChangedSlot(unsigned short)))); 
 
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
-  gameExecutorByLauncher->setRestApiManager(&this->_restapiManager);
   this->_gameExecutorService.registerExecutor(gameExecutorByLauncher);
 
   GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
@@ -572,7 +571,7 @@ void MainWindow::prepairGameDownloader()
 
   // HACK Для того чтобы работало закрытие приложений и не менять QProcess хукнем CreateProcess и добавим недостающий флаг
   // ВНИМАНИЕ любое вызов CreateProcess из приложения qGNA попадет сюда. Надо это учесть.
-  
+
   // HACK отключено 03.10.2013. Чтобы можно было запустить процесс с флагом CREATE_BREAKAWAY_FROM_JOB у текущего джоба процесса
   // должен в лимит флагах стоять соотвествующий флаг JOB_OBJECT_LIMIT_BREAKAWAY_OK 
   //auto hook = HookEngine::createHook<HookEngine::Stdcall, BOOL, LPCWSTR, LPWSTR, void*, void*, BOOL, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFO, LPPROCESS_INFORMATION>("Kernel32.dll", "CreateProcessW");
@@ -589,7 +588,7 @@ void MainWindow::prepairGameDownloader()
     &this->_rembrGameFeature, SLOT(finished(const GGS::Core::Service *))));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(
-    &this->_rembrGameFeature, SIGNAL(startGameRequest(QString)), 
+    &this->_rembrGameFeature, SIGNAL(startGameRequest(QString)),
     this, SLOT(downloadButtonStart(QString))));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(
@@ -641,17 +640,17 @@ void MainWindow::progressChanged(QString serviceId, qint8 progress)
 void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
 {
   emit this->progressbarChange(serviceId, 
-	  progress, 
-	  args.totalWantedDone(), 
-	  args.totalWanted(), 
-	  args.directTotalDownload(), 
-	  args.peerTotalDownload(), 
-	  args.payloadTotalDownload(), 
-	  args.peerPayloadDownloadRate(), 
-	  args.payloadDownloadRate(), 
-	  args.directPayloadDownloadRate(), 
-	  args.payloadUploadRate(), 
-	  args.totalPayloadUpload());
+    progress, 
+    args.totalWantedDone(), 
+    args.totalWanted(), 
+    args.directTotalDownload(), 
+    args.peerTotalDownload(), 
+    args.payloadTotalDownload(), 
+    args.peerPayloadDownloadRate(), 
+    args.payloadDownloadRate(), 
+    args.directPayloadDownloadRate(), 
+    args.payloadUploadRate(), 
+    args.totalPayloadUpload());
 }
 
 void MainWindow::progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total)
@@ -672,32 +671,32 @@ void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service)
 }
 
 bool MainWindow::executeService(QString id) {
-	GGS::Core::Service *service = this->_serviceLoader.getService(id);
+  GGS::Core::Service *service = this->_serviceLoader.getService(id);
 
   if (!service || this->_premiumExecutor.isGameStarted(service->id()))
     return false;
 
-	if (!this->isWindowVisible()) {
-		emit this->selectService(id);
-		return false;
-	}
+  if (!this->isWindowVisible()) {
+    emit this->selectService(id);
+    return false;
+  }
 
-	if (this->_restapiManager.credential().userId().isEmpty()) {
-		emit this->authBeforeStartGameRequest(id);
-		return false;
-	}
+  if (this->_restapiManager.credential().userId().isEmpty()) {
+    emit this->authBeforeStartGameRequest(id);
+    return false;
+  }
 
-	if (id == "300002010000000000" || 
-		id == "300003010000000000" || 
+  if (id == "300002010000000000" || 
+    id == "300003010000000000" || 
     id == "300004010000000000" || 
-		id == "300005010000000000" || 
-		id == "300006010000000000" || 
-		id == "300009010000000000" || 
+    id == "300005010000000000" || 
+    id == "300006010000000000" || 
+    id == "300009010000000000" || 
     id == "100009010000000000" ||
     id == "100003010000000000" ||
     id == "300012010000000000") {
       this->_premiumExecutor.executeMain(service);
-	}
+  }
 
   return true;
 }
@@ -730,17 +729,17 @@ void MainWindow::shutdownCompleted()
 }
 
 void MainWindow::removeStartGame(QString serviceId) {
-	GGS::Settings::Settings settings;
-	settings.beginGroup("gameExecutor/serviceInfo/" + serviceId + "/");
-	int successCount = settings.value("successCount", 0).toInt();
-	int failedCount = settings.value("failedCount", 0).toInt();
+  GGS::Settings::Settings settings;
+  settings.beginGroup("gameExecutor/serviceInfo/" + serviceId + "/");
+  int successCount = settings.value("successCount", 0).toInt();
+  int failedCount = settings.value("failedCount", 0).toInt();
 
-	if (failedCount + successCount > 0) {
-		this->selectService(serviceId);
-		return;
-	}
+  if (failedCount + successCount > 0) {
+    this->selectService(serviceId);
+    return;
+  }
 
-	this->downloadButtonStart(serviceId);
+  this->downloadButtonStart(serviceId);
 }
 
 void MainWindow::downloadButtonStart(QString serviceId) 
@@ -812,7 +811,7 @@ void MainWindow::initializeUpdateSettings()
 void MainWindow::licenseOkPressed()
 {
   QString serviceId = this->licenseModel->serviceId();
-  
+
   bool licenseAcceppted = this->licenseModel->licenseAccepted(); 
   if (!licenseAcceppted)
     return;
@@ -869,7 +868,7 @@ void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
   GGS::RestApi::Commands::Service::GetLicense *cmd = qobject_cast<GGS::RestApi::Commands::Service::GetLicense *>(QObject::sender());
   if (!cmd)
     return;
-   
+
   cmd->deleteLater();
 
   if (result != GGS::RestApi::CommandBase::NoError) {
@@ -975,24 +974,24 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
 
   if (name == "activate") {
     this->activateWindow();
-	  return;
+    return;
   } 
 
   if (name == "gogamenethelper" && arguments.size() > 0) {
     QString gameId = arguments.at(0);
     QString url = QString("http://www.gamenet.ru/games/%1/helper").arg(gameId);
     this->openExternalUrlWithAuth(url);
-	  return;
+    return;
   } 
 
   if (name == "gogamenetmoney") {
     this->openExternalUrlWithAuth("http://www.gamenet.ru/money");
-	  return;
+    return;
   }
-  
+
   if (name == "gocombatarmsrating") {
-	  this->openExternalUrlWithAuth("http://www.combatarms.ru/ratings/user/");
-	  return;
+    this->openExternalUrlWithAuth("http://www.combatarms.ru/ratings/user/");
+    return;
   } 
 }
 
@@ -1036,28 +1035,19 @@ void MainWindow::onSecondServiceFinished(const GGS::Core::Service &service, GGS:
 {
   emit this->secondServiceFinished(service.id(), state);
 
-  // UNDONE !!!!!!!! понять что тут делать
-  // 
-  //switch(state) {
-  //case GGS::GameExecutor::AuthorizationError:
-  //  emit this->needAuth();
-  //  break;
-  //case GGS::GameExecutor::ServiceAccountBlockedError:
-  //  GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
-  //  break;
-  //case GGS::GameExecutor::ServiceAuthorizationImpossible:
-  //  //INFO Handled in qml 
-  //  break;
-  //case GGS::GameExecutor::PakkanenPermissionDenied:
-  //  GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_CBT_PERMISSION_INFO").arg(service.name()));
-  //  break;
-  //case GGS::GameExecutor::PakkanenPhoneVerification:
-  //  emit this->needPakkanenVerification(service.id());
-  //  break;
-  //case GGS::GameExecutor::GuestAccountExpired:
-  //  emit this->authGuestConfirmRequest(service.id());
-  //  break;
-  //}
+  DEBUG_LOG << "Finish state" << state;
+
+  switch(state) {
+  case GGS::GameExecutor::AuthorizationError:
+    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SECOND_SERVICE_AUTH_ERROR")); 
+    break;
+  case GGS::GameExecutor::ServiceAccountBlockedError:
+    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
+    break;
+  case GGS::GameExecutor::ServiceAuthorizationImpossible:
+    //INFO Handled in qml 
+    break;
+  }
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -1096,21 +1086,21 @@ void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper:
     QTimer::singleShot(300000, &this->_checkUpdateHelper, SLOT(checkUpdate()));
     break;
   case GGS::UpdateSystem::CheckUpdateHelper::FoundUpdate: {
-      DEBUG_LOG << "New update found. Restart required.";
+    DEBUG_LOG << "New update found. Restart required.";
 
-      if (!this->_premiumExecutor.isAnyGameStarted() 
-        && !this->_gameDownloader.isAnyServiceInProgress()) {
+    if (!this->_premiumExecutor.isAnyGameStarted() 
+      && !this->_gameDownloader.isAnyServiceInProgress()) {
 
         if (this->isVisible())
           GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
-        
+
         this->restartApplication(false);
         return;
-      }
-
-      QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
     }
-    break;
+
+    QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
+                                                          }
+                                                          break;
   case GGS::UpdateSystem::CheckUpdateHelper::NotFound:
     QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
     break;
@@ -1127,8 +1117,8 @@ void MainWindow::restApiGenericError(GGS::RestApi::CommandBase::Error error, QSt
   case RestApi::CommandBase::AccountNotExists:
   case RestApi::CommandBase::AuthorizationLimitExceed:
   case RestApi::CommandBase::UnknownAccountStatus:
-      emit this->needAuth();
-  break;
+    emit this->needAuth();
+    break;
   }
 }
 
@@ -1265,7 +1255,7 @@ QString MainWindow::startingService()
 
   return "0";
 }
- 
+
 QString MainWindow::getExpectedInstallPath(const QString& serviceId)
 {
   return this->_serviceLoader.getExpectedInstallPath(serviceId);
@@ -1341,20 +1331,20 @@ void MainWindow::applicationAreaChanged()
 
 void MainWindow::seedEnabledChanged()
 {
-    this->_gameDownloader.setSeedEnabled(this->settingsViewModel->seedEnabled());
+  this->_gameDownloader.setSeedEnabled(this->settingsViewModel->seedEnabled());
 }
 
 bool MainWindow::event(QEvent* event) {
-    switch(event->type()) {
-        case QEvent::WindowActivate:
-            emit this->windowActivate();
-            break;
-        case QEvent::WindowDeactivate:
-            emit this->windowDeactivate();
-            break;
-    }
+  switch(event->type()) {
+  case QEvent::WindowActivate:
+    emit this->windowActivate();
+    break;
+  case QEvent::WindowDeactivate:
+    emit this->windowDeactivate();
+    break;
+  }
 
-    return QMainWindow::event(event);
+  return QMainWindow::event(event);
 }
 
 void MainWindow::initMarketing()
@@ -1379,24 +1369,14 @@ bool MainWindow::executeSecondService(QString id, QString userId, QString appKey
   credential.setAppKey(appKey);
   // set cookie if needed 
 
-  if (id == "300002010000000000" || 
-    id == "300003010000000000" || 
-    id == "300004010000000000" || 
-    id == "300005010000000000" || 
-    id == "300006010000000000" || 
-    id == "300009010000000000" || 
-    id == "100009010000000000" ||
-    id == "100003010000000000" ||
-    id == "300012010000000000") {
-      this->_premiumExecutor.executeSecond(service, credential);
-  }
+  this->_premiumExecutor.executeSecond(service, credential);
 
   return true;
 }
 
 void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
-    if (event->buttons() & Qt::LeftButton)
-        emit this->leftMouseClick(event->x(), event->y()); 
+  if (event->buttons() & Qt::LeftButton)
+    emit this->leftMouseClick(event->x(), event->y()); 
 
-    QDeclarativeView::mousePressEvent(event);
+  QDeclarativeView::mousePressEvent(event);
 }

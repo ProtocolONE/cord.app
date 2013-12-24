@@ -182,7 +182,6 @@ private:
   QmlMessageAdapter* messageAdapter;
   LicenseViewModel* licenseModel;
   SettingsViewModel* settingsViewModel;
-  SelectMw2ServerViewModel *_selectMw2ServerViewModel;
   EnterNickNameViewModel *_enterNickViewModel;
   GameSettingsViewModel *_gameSettingsViewModel;
 
