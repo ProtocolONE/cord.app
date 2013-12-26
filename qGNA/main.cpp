@@ -160,6 +160,7 @@ int main(int argc, char *argv[])
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
   MainWindow w;
+
   QTimer::singleShot(0, &w, SLOT(initialize()));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onForceWindowClose()), Qt::DirectConnection)); 
@@ -179,10 +180,13 @@ int main(int argc, char *argv[])
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &app, SLOT(initializeFinished())));
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &installer, SLOT(downloadAndInstall())));
 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), &app, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(taskBarButtonCreated()), &w, SLOT(onTaskbarButtonCreated())));
+
   int result = app.exec();
   w.release();
 
   LogManager::qtLogger()->removeAllAppenders(); 
 
   return result;
-} 
+}

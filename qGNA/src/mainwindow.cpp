@@ -1124,6 +1124,9 @@ void MainWindow::restApiGenericError(GGS::RestApi::CommandBase::Error error, QSt
 
 void MainWindow::showEvent(QShowEvent* event)
 {
+  this->_taskBarHelper.prepare(this->effectiveWinId());
+  emit this->taskBarButtonMsgRegistered(this->_taskBarHelper.getTaskbarCreatedMessageId());
+  
   this->repaint();
 }
 
@@ -1384,4 +1387,24 @@ void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
     emit this->leftMouseClick(event->x(), event->y()); 
 
   QDeclarativeView::mousePressEvent(event);
+}
+
+void MainWindow::onTaskbarButtonCreated()
+{
+  this->_taskBarHelper.init();
+}
+
+void MainWindow::onProgressUpdated(int progressValue, const QString &status)
+{
+  TaskBarHelper::Status newStatus = TaskBarHelper::StatusUnknown;
+  if (status == "Normal") {
+    newStatus = TaskBarHelper::StatusNormal;
+  } else if (status == "Paused") {
+    newStatus = TaskBarHelper::StatusPaused;
+  } else if (status == "Error") {
+    newStatus = TaskBarHelper::StatusError;
+  }
+
+  this->_taskBarHelper.setProgress(progressValue);
+  this->_taskBarHelper.setStatus(newStatus);
 }

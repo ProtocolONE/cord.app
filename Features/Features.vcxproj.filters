@@ -146,23 +146,14 @@
     <ClCompile Include="GeneratedFiles\Release\moc_PremiumExecutor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\GameExecutor\MW2GetServerHook.cpp">
+    <ClCompile Include="src\Features\TaskBarProgressHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MW2GetServerHook.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_taskbarprogresshelper.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MW2GetServerHook.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Protector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ProtectorHooks.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +193,7 @@
     <CustomBuild Include="include\Features\PremiumExecutor.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Features\GameExecutor\MW2GetServerHook.h">
+    <CustomBuild Include="include\features\taskbarprogresshelper.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

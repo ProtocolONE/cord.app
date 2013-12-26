@@ -14,6 +14,7 @@
 #include <Features/Jabber.h>
 #include <Features/PremiumExecutor.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
+#include <Features/TaskBarProgressHelper.h>
 
 #include <Marketing/MarketingTarget.h>
 
@@ -159,6 +160,9 @@ public slots:
   void initFinished();
   void initialize();
 
+  void onTaskbarButtonCreated();
+  void onProgressUpdated(int progressValue, const QString &status);
+
 private:
   const QString getEmptyString() { return ""; }
   void loadPlugin(QString pluginName);
@@ -272,6 +276,7 @@ signals:
   void authBeforeStartGameRequest(QString serviceId);
   void authGuestConfirmRequest(QString serviceId);
 
+  void taskBarButtonMsgRegistered(unsigned int msgId);
 private slots:
   void onServiceStarted(const GGS::Core::Service &service);
   void onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
@@ -347,6 +352,7 @@ private:
   Features::Jabber _jabber;
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
   Features::PremiumExecutor _premiumExecutor;
+  Features::TaskBarHelper _taskBarHelper;
   bool _restartArguments;
 
 protected:
