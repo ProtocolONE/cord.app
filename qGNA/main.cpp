@@ -21,6 +21,7 @@
 #include <Application/SingleApplication.h>
 
 #include <QtCore/QDebug>
+#include <QtCore/QThreadPool>
 
 #include <QtWidgets/QApplication>
 #include <QResource>
@@ -30,7 +31,7 @@
 #include <Log4Qt/RollingFileAppender>
 #include <Log4Qt/TTCCLayout>
 
-#include <BugTrap\BugTrap.h>
+#include <BugTrap/BugTrap.h>
 
 using namespace Log4Qt;
 
@@ -94,6 +95,13 @@ int main(int argc, char *argv[])
   loader.load(path + "/qGNA.rcc"); 
 
   QThread::currentThread()->setObjectName("Main thread");
+  
+  // HACK В приложении активно используются QtConcurrent и другие сущности использующие QThreadPool
+  // Так как некоторые задачи критичны для запуска, а в случаи переполнение пула они будут положены в очередь,
+  // увеличим пул по умолчанию, чтобы пока проблемы не наблюдалось. В будущем надо для критичных
+  // задачь избегать QThreadPool и возможно переписать некоторые компоненты, например, GameExecutor, которые не должен
+  // использовать по одному потоку на игру.
+  QThreadPool::globalInstance()->setMaxThreadCount(50); 
 
   TTCCLayout layout(TTCCLayout::ISO8601);
   layout.retain();

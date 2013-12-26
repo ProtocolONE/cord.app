@@ -71,6 +71,8 @@ namespace Features {
     bool isMainStarted(const QString& id);
     bool isSecondStarted(const QString& id);
     void registerExecutors(GGS::GameExecutor::GameExecutorService *executor);
+    void setNoInjectItem(GGS::Core::Service* service, const QString& value);
+
   };
 
 }

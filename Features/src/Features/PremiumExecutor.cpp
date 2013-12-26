@@ -33,22 +33,22 @@ namespace Features {
   void PremiumExecutor::init()
   {
     SIGNAL_CONNECT_CHECK(connect(&this->_simpleMainExecutor, SIGNAL(started(const GGS::Core::Service &)),
-      this, SLOT(internalServiceStarted(const GGS::Core::Service &))));
+      this, SLOT(internalServiceStarted(const GGS::Core::Service &)), Qt::QueuedConnection));
 
     SIGNAL_CONNECT_CHECK(connect(&this->_simpleMainExecutor, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-      this, SLOT(internalServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
+      this, SLOT(internalServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), Qt::QueuedConnection));
 
     SIGNAL_CONNECT_CHECK(connect(this->_mainExecutor, SIGNAL(started(const GGS::Core::Service &)),
-      this, SLOT(internalServiceStarted(const GGS::Core::Service &))));
+      this, SLOT(internalServiceStarted(const GGS::Core::Service &)), Qt::QueuedConnection));
 
     SIGNAL_CONNECT_CHECK(connect(this->_mainExecutor, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-      this, SLOT(internalServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
+      this, SLOT(internalServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), Qt::QueuedConnection));
 
     SIGNAL_CONNECT_CHECK(connect(&this->_secondExecutor, SIGNAL(started(const GGS::Core::Service &)),
-      this, SLOT(internalSecondServiceStarted(const GGS::Core::Service &))));
+      this, SLOT(internalSecondServiceStarted(const GGS::Core::Service &)), Qt::QueuedConnection));
 
     SIGNAL_CONNECT_CHECK(connect(&this->_secondExecutor, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-      this, SLOT(internalSecondServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
+      this, SLOT(internalSecondServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), Qt::QueuedConnection));
 
     this->registerExecutors(&this->_simpleMainExecutor);
     this->registerExecutors(&this->_secondExecutor);
@@ -57,7 +57,8 @@ namespace Features {
   void PremiumExecutor::executeMain(GGS::Core::Service* service)
   {
     QMutexLocker locker(&this->_mutex);
-
+    
+    this->setNoInjectItem(service, "0");
     if (this->isSecondStarted(service->id()))
       this->_simpleMainExecutor.execute(*service);
     else
@@ -73,6 +74,8 @@ namespace Features {
     if (!this->isMainStarted(service->id()))
       return;
     
+    this->setNoInjectItem(service, "1");
+
     this->_secondExecutor.execute(*service, credetial);
     this->_secondGameStarted.insert(service->id());
   }
@@ -172,6 +175,14 @@ namespace Features {
 
     GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
     executor->registerExecutor(webLinkExecutor);
+  }
+
+  void PremiumExecutor::setNoInjectItem(GGS::Core::Service* service, const QString& value)
+  {
+    QUrl url(service->url());
+    url.removeAllQueryItems("noinject");
+    url.addQueryItem("noinject", value);
+    service->setUrl(url);
   }
 
 }
