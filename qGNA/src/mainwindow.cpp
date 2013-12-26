@@ -1147,6 +1147,11 @@ void MainWindow::loadPlugin(QString pluginName)
 
 void MainWindow::initializeStopDownloadServiceOnExecuteGameFeature()
 {
+  Q_FOREACH(const GGS::Core::Service* service, this->_serviceLoader.serviceMap()) {
+    if (!service->isDownloadable())
+      this->_stopDownloadServiceOnExecuteGame.ignoreService(service->id());
+  }
+
   SIGNAL_CONNECT_CHECK(connect(&this->_stopDownloadServiceOnExecuteGame, 
     SIGNAL(downloadStopRequest(const GGS::Core::Service *)),
     &this->_gameDownloader, 
@@ -1168,10 +1173,10 @@ void MainWindow::initializeStopDownloadServiceOnExecuteGameFeature()
     SLOT(resumeSession()), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(this, SIGNAL(serviceStarted(QString)), 
-    &this->_stopDownloadServiceOnExecuteGame, SLOT(onGameExecuted()), Qt::QueuedConnection));
+    &this->_stopDownloadServiceOnExecuteGame, SLOT(onGameExecuted(const QString&)), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(this, SIGNAL(serviceFinished(QString, int)), 
-    &this->_stopDownloadServiceOnExecuteGame, SLOT(onGameFinished()), Qt::QueuedConnection));
+    &this->_stopDownloadServiceOnExecuteGame, SLOT(onGameFinished(const QString&)), Qt::QueuedConnection));
 
   SIGNAL_CONNECT_CHECK(connect(&this->_gameDownloader,
     SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)),

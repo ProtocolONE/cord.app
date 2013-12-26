@@ -41,32 +41,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1015"/>
-        <location filename="../src/mainwindow.cpp" line="1021"/>
-        <location filename="../src/mainwindow.cpp" line="1045"/>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
-        <location filename="../src/mainwindow.cpp" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1013"/>
+        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
+        <location filename="../src/mainwindow.cpp" line="1046"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1015"/>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
+        <location filename="../src/mainwindow.cpp" line="1013"/>
+        <location filename="../src/mainwindow.cpp" line="1046"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1021"/>
+        <location filename="../src/mainwindow.cpp" line="1019"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1045"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>

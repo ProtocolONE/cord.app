@@ -40,7 +40,7 @@ TEST_F(StopDownloadServiceWhileExecuteAnyGameTest, simple)
 
   _feature.onServiceStartDownload(&service1, GGS::GameDownloader::Normal);
   _feature.onServiceStartDownload(&service2, GGS::GameDownloader::Force);
-  _feature.onGameExecuted();
+  _feature.onGameExecuted("fake");
 
   loop.exec();
 
@@ -57,7 +57,7 @@ TEST_F(StopDownloadServiceWhileExecuteAnyGameTest, simple)
   QEventLoop loop1;
   TestEventLoopFinisher killer1(&loop1, 5000);
   QObject::connect(&_feature, SIGNAL(torrentSessionResumeRequest()), &killer1, SLOT(terminateLoop()));
-  _feature.onGameFinished();
+  _feature.onGameFinished("fake");
 
   loop1.exec();
 

@@ -36,9 +36,12 @@ namespace Features {
     this->_downloadingServices.remove(service);
   }
 
-  void StopDownloadServiceWhileExecuteAnyGame::onGameExecuted()
+  void StopDownloadServiceWhileExecuteAnyGame::onGameExecuted(const QString& id)
   {
     QMutexLocker locker(&this->_mutex);
+    if (this->_ignoreList.contains(id))
+      return;
+
     Q_FOREACH(const GGS::Core::Service* service, this->_downloadingServices.keys()) {
       emit this->downloadStopRequest(service);
       this->_stoppedServices[service] = this->_downloadingServices[service];
@@ -47,14 +50,22 @@ namespace Features {
     emit this->torrentSessionPauseRequest();
   }
 
-  void StopDownloadServiceWhileExecuteAnyGame::onGameFinished()
+  void StopDownloadServiceWhileExecuteAnyGame::onGameFinished(const QString& id)
   {
     QMutexLocker locker(&this->_mutex);
+    if (this->_ignoreList.contains(id))
+      return;
+
     Q_FOREACH(const GGS::Core::Service* service, this->_stoppedServices.keys())
       emit this->downloadStartRequest(service, this->_stoppedServices[service]);
 
     this->_stoppedServices.clear();
     emit this->torrentSessionResumeRequest();
+  }
+
+  void StopDownloadServiceWhileExecuteAnyGame::ignoreService(const QString& id)
+  {
+    this->_ignoreList.insert(id);
   }
 
 }
