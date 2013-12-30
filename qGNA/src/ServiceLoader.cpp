@@ -218,6 +218,14 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     //      url.addQueryItem("injectDll", injectedDll);
     //    }
 
+#ifdef _DEBUG
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
+#else
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
+#endif
+
+    url.addQueryItem("executorHelper", injectedDll2);
+
   } else if (id == "300003010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/client/client.exe").arg(currentInstallPath, service->areaString()));
@@ -244,9 +252,16 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 #else
       QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
 #endif
-
       url.addQueryItem("injectDll", injectedDll);
     }
+
+#ifdef _DEBUG
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
+#else
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
+#endif
+
+    url.addQueryItem("executorHelper", injectedDll2);
 
   } else if (id == "300005010000000000") {
     url.setScheme("exe");
@@ -266,6 +281,14 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     url.addQueryItem("downloadCustomFile", 
       "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/reborn/,1,config/lastlogin.xml,http://files.gamenet.ru/update/reborn/,0");
+
+#ifdef _DEBUG
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
+#else
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
+#endif
+
+    url.addQueryItem("executorHelper", injectedDll2);
 
     service->setGameId("760");
   } else if (id == "300006010000000000") {

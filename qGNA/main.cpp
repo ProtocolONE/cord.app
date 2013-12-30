@@ -180,4 +180,4 @@ int main(int argc, char *argv[])
   LogManager::qtLogger()->removeAllAppenders(); 
 
   return result;
-}
+} 

@@ -145,6 +145,10 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\Gam
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
 
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
+
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
@@ -293,6 +297,10 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
 
