@@ -1073,7 +1073,7 @@ int MainWindow::checkUpdateInterval()
   now = now.addSecs(14400); // Moscow time UTC+4
   int hour = now.time().hour();
   if (hour >= 14)
-    return 7200000;
+    return 10800000;
 
   return 1800000;
 }
