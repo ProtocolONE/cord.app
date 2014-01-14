@@ -16,7 +16,7 @@
 
 namespace Features {
 
-  typedef BOOL (__cdecl *CHANGEWINDOWMESSAGEFILTEREX)(HWND, UINT, DWORD, PCHANGEFILTERSTRUCT); 
+  typedef BOOL (WINAPI *CHANGEWINDOWMESSAGEFILTEREX)(HWND, UINT, DWORD, PCHANGEFILTERSTRUCT); 
 
   TaskBarHelper::TaskBarHelper(QObject *parent)
     : QObject(parent)
@@ -45,6 +45,7 @@ namespace Features {
       }
     }
   }
+
 
   unsigned int TaskBarHelper::getTaskbarCreatedMessageId() const
   {
