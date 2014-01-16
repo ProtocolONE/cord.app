@@ -4,6 +4,7 @@
 #include <Features/CASettingsFix.h>
 
 #include <Features/Thetta/ThettaMonitor.h>
+#include <Features/Thetta/Protector.h>
 
 #ifdef VERSION_CHECK_DRIVER  
 #include <GameExecutor/Extension.h>
@@ -66,6 +67,8 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initGameExecutorExtensions(this->_gameExecutorService);
 #endif
 
+  MemoryProtector_CheckFunction2(4788, 28426, 26374, 35950);
+
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
   this->initService("300012010000000000", "http://fs0.gamenet.ru/update/reborn/", "Reborn");
@@ -124,6 +127,8 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setDownloadPath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
   service->setInstallPath(currentInstallPath);
   service->setTorrentFilePath(hasDownloadPath ? currentDownloadPath : currentInstallPath);
+
+  MemoryProtector_CheckFunction3(0x0A08C78A, 0x171DD8F4, 0x0DD60760, 0x37e12d6a);
 
   if (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000" || id == "300004010000000000")
     service->setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
@@ -340,6 +345,8 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     service->setGameId("71");
   }
+
+  MemoryProtector_CheckFunction3(0x0A18C78A, 0x171D48F4, 0x0D860760, 0x37a14d6a);
 
   service->setUrl(url);
 }
@@ -581,7 +588,7 @@ void ServiceLoader::initGameExecutorExtensions(GGS::GameExecutor::GameExecutorSe
 
   executor->setExtension(GGS::GameExecutor::ExtensionTypes::GetToken, 
     new GGS::GameExecutor::GetTokenExtension([this](const QString& salt, const QString& token) -> QString {
-      return this->_installer->driver()->getServiceToken(salt, token);
+      return this->getDriverToken(salt, token);
     })
   );
 
@@ -603,4 +610,10 @@ void ServiceLoader::installThettaHook(GGS::Core::Service* service)
 Features::Thetta::ThettaInstaller* ServiceLoader::thettaInstaller()
 {
   return this->_installer;
+}
+
+QString ServiceLoader::getDriverToken(const QString& salt, const QString& token)
+{
+  MemoryProtector_CheckFunction4(0x4FEE102, 0x588FFDB0, 0x6CC7D53, 0x57d01d20);
+  return this->_installer->driver()->getServiceToken(salt, token);
 }

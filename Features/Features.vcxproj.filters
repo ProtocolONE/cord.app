@@ -155,6 +155,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_MW2GetServerHook.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Protector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\ProtectorHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h">
@@ -199,6 +208,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\Thetta\Json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Thetta\TlsInitializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Thetta\Protector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Thetta\ProtectorHooks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

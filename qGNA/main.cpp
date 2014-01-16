@@ -8,6 +8,9 @@
 #include <Features/RememberGameDownloading.h>
 #include <Features/ThronInstaller.h>
 
+#include <Features/Thetta/TlsInitializer.h>
+#include <Features/Thetta/Protector.h>
+
 #include <Core/System/Shell/UrlProtocolHelper.h>
 #include <Core/Marketing.h>
 
@@ -71,6 +74,8 @@ void initBugTrap(const QString &path)
 int main(int argc, char *argv[]) 
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+
+  MemoryProtector_CheckFunction;
 
   QString path = QCoreApplication::applicationDirPath();
 

@@ -64,6 +64,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SingleShotFunctor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\Thetta\ProtectorTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\TestEventLoopFinisher.h">
