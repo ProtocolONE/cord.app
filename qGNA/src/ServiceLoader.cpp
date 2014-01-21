@@ -615,5 +615,7 @@ Features::Thetta::ThettaInstaller* ServiceLoader::thettaInstaller()
 QString ServiceLoader::getDriverToken(const QString& salt, const QString& token)
 {
   MemoryProtector_CheckFunction4(0x4FEE102, 0x588FFDB0, 0x6CC7D53, 0x57d01d20);
-  return this->_installer->driver()->getServiceToken(salt, token);
+  QString result = this->_installer->driver()->getServiceToken(salt, token);
+  MemoryProtector_CheckCreateProcess;
+  return result;
 }
