@@ -604,6 +604,9 @@ void MainWindow::prepairGameDownloader()
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
 
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(compromised()), 
+    this, SLOT(onWindowClose())));
+
   this->_downloadStatistics.init(&this->_gameDownloader);
   this->_gameDownloadInitialized = true;
 }

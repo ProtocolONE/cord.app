@@ -36,7 +36,7 @@ class ServiceLoader : public QObject
 {
   Q_OBJECT
 public:
-  ServiceLoader(QObject *parent = 0);
+  explicit ServiceLoader(QObject *parent = 0);
   ~ServiceLoader();
 
   void init(GGS::Core::Service::Area gameArea = GGS::Core::Service::Live,
@@ -94,7 +94,7 @@ private:
   bool hasEnoughSpace(const QString& serviceId, int free);
 
   QString getDriverToken(const QString& salt, const QString& token);
-  
+  bool processHandlerExtension(DWORD pid, HANDLE handle);
   
 };
 

@@ -597,6 +597,12 @@ void ServiceLoader::initGameExecutorExtensions(GGS::GameExecutor::GameExecutorSe
       this->_installer->driver()->openBrowser(url);
     })
   );
+
+  executor->setExtension(GGS::GameExecutor::ExtensionTypes::ProcessHandleCheck,
+    new GGS::GameExecutor::ProcessHandleCheckExtension(
+      std::bind(&ServiceLoader::processHandlerExtension, this, std::placeholders::_1, std::placeholders::_2)
+    )
+  );
 #endif
 }
 
@@ -618,4 +624,14 @@ QString ServiceLoader::getDriverToken(const QString& salt, const QString& token)
   QString result = this->_installer->driver()->getServiceToken(salt, token);
   MemoryProtector_CheckCreateProcess;
   return result;
+}
+
+bool ServiceLoader::processHandlerExtension(DWORD pid, HANDLE handle)
+{
+  DWORD handlePid = GetProcessId(handle);
+  if (handlePid != pid)
+    return false;
+  // INFO Необходимо проверить 2 раза. 
+  // Если колбеки сняли перед запуском, то первая проверка сработает, а вторая сфейлиться.
+  return this->_driver->isProtectedProcess(handlePid) && this->_driver->isProtectedProcess(handlePid);
 }
