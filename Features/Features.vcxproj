@@ -330,7 +330,7 @@
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\Qxmpp\$(QxmppArea)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qxmppx86d0.lib;CASettingsX86d.lib;ThettaX86d.lib;HookEngined.lib</AdditionalDependencies>
+      <AdditionalDependencies>qxmppx86d0.lib;CASettingsX86d.lib;ThettaX86d.lib;HookEngined.lib;crypt32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"

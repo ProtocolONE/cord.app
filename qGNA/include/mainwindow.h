@@ -290,6 +290,8 @@ private slots:
   void onSystemBarPositionChanged(int MouseX, int MouseY);
   void onWindowClose();
   void onForceWindowClose();
+  
+  void windowCloseInfo();
 
   void progressChanged(QString serviceId, qint8 progress);
   void progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args); 

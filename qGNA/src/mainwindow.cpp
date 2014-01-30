@@ -613,7 +613,7 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(compromised()), 
-    this, SLOT(onWindowClose())));
+    this, SLOT(windowCloseInfo())));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(connected(Features::Thetta::ThettaInstaller::Result)), 
     this, SLOT(thettaConnected(Features::Thetta::ThettaInstaller::Result))));
@@ -1446,4 +1446,10 @@ void MainWindow::thettaConnected(Features::Thetta::ThettaInstaller::Result resul
 
   this->_hwid = this->_serviceLoader.getDriver()->getHwid();
   this->sendHwidFromDriver();
+}
+
+void MainWindow::windowCloseInfo()
+{
+  this->_serviceLoader.thettaInstaller()->showFailPage();
+  this->onWindowClose();
 }
