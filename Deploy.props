@@ -24,7 +24,7 @@
     <CASettingsArea>trunk</CASettingsArea>
     <OverlayArea>trunk</OverlayArea>
     <HookEngineArea>1.0</HookEngineArea>
-    <ThettaArea>1.0.158</ThettaArea>
+    <ThettaArea>trunk</ThettaArea>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />

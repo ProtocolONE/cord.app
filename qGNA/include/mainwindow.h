@@ -15,6 +15,7 @@
 #include <Features/PremiumExecutor.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/TaskBarProgressHelper.h>
+#include <Features/Thetta/ThettaInstaller.h>
 
 #include <Marketing/MarketingTarget.h>
 
@@ -277,6 +278,7 @@ signals:
   void authGuestConfirmRequest(QString serviceId);
 
   void taskBarButtonMsgRegistered(unsigned int msgId);
+
 private slots:
   void onServiceStarted(const GGS::Core::Service &service);
   void onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
@@ -320,6 +322,8 @@ private slots:
   void internalRestartApplication(bool shouldStartWithSameArguments = true);
   void restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result result);
 
+  void thettaConnected(Features::Thetta::ThettaInstaller::Result result);
+
 private:
   void initServices();
 
@@ -329,6 +333,7 @@ private:
   void prepairGameDownloader();
   void initializeStopDownloadServiceOnExecuteGameFeature();
   void postUpdateInit();
+  void sendHwidFromDriver();
 
   GGS::Core::Service* getService(const QString& id);
 
@@ -354,6 +359,7 @@ private:
   Features::PremiumExecutor _premiumExecutor;
   Features::TaskBarHelper _taskBarHelper;
   bool _restartArguments;
+  QString _hwid;
 
 protected:
 	void closeEvent(QCloseEvent* event);

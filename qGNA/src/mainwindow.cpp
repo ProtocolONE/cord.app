@@ -10,6 +10,7 @@
 #include <GameExecutor/Executor/WebLink>
 
 #include <RestApi/Commands/Service/GetLicense.h>
+#include <RestApi/Commands/Service/GetServices.h>
 #include <RestApi/Commands/User/GetUserMainInfo>
 #include <RestApi/RequestFactory.h>
 
@@ -312,6 +313,7 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
   getUserMainInfo->execute();
 
   this->_jabber.authSuccess(userId, appKey);
+  this->sendHwidFromDriver();
 }
 
 void MainWindow::userMainInfoResult(GGS::RestApi::CommandBase::CommandResults code)
@@ -556,7 +558,7 @@ void MainWindow::prepairGameDownloader()
     this, SLOT(gameDownloaderStopping(const GGS::Core::Service *))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(failed(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderFailed(const GGS::Core::Service *))));
-
+  
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(shutdownCompleted()),
     this, SLOT(shutdownCompleted())));
 
@@ -606,6 +608,9 @@ void MainWindow::prepairGameDownloader()
 
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(compromised()), 
     this, SLOT(onWindowClose())));
+
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(connected(Features::Thetta::ThettaInstaller::Result)), 
+    this, SLOT(thettaConnected(Features::Thetta::ThettaInstaller::Result))));
 
   this->_downloadStatistics.init(&this->_gameDownloader);
   this->_gameDownloadInitialized = true;
@@ -1410,4 +1415,29 @@ void MainWindow::onProgressUpdated(int progressValue, const QString &status)
 
   this->_taskBarHelper.setProgress(progressValue);
   this->_taskBarHelper.setStatus(newStatus);
+}
+
+void MainWindow::sendHwidFromDriver()
+{
+  if (this->_hwid.isEmpty())
+    return;
+
+  if (this->_credential.userId().isEmpty() || this->_credential.appKey().isEmpty())
+    return;
+
+  using GGS::RestApi::Commands::Service::GetServices;
+  GetServices *cmd = new GetServices();
+  cmd->setSessionId(this->_hwid);
+  SIGNAL_CONNECT_CHECK(QObject::connect(cmd, SIGNAL(result(GGS::RestApi::CommandBase::CommandResults)),
+    cmd, SLOT(deleteLater())));
+  cmd->execute();
+}
+
+void MainWindow::thettaConnected(Features::Thetta::ThettaInstaller::Result result)
+{
+  if (result == Features::Thetta::ThettaInstaller::Fatal || result == Features::Thetta::ThettaInstaller::Running)
+    return;
+
+  this->_hwid = this->_serviceLoader.getDriver()->getHwid();
+  this->sendHwidFromDriver();
 }
