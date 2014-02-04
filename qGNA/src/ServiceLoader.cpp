@@ -6,10 +6,7 @@
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/Protector.h>
 
-#ifdef VERSION_CHECK_DRIVER  
 #include <GameExecutor/Extension.h>
-#endif
-
 #include <GameExecutor/Hook/RestoreResolution>
 #include <GameExecutor/Hook/DisableIEDefalutProxy>
 #include <GameExecutor/Hook/DisableDEP>
@@ -63,9 +60,7 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   if (this->_applicationArea == GGS::Core::Service::Tst)
     this->_installer->connectToDriver();
 
-#ifdef VERSION_CHECK_DRIVER
   this->initGameExecutorExtensions(this->_gameExecutorService);
-#endif
 
   MemoryProtector_CheckFunction2(4788, 28426, 26374, 35950);
 
@@ -194,8 +189,8 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   // HACK !!!!!!!!!!!!!
   //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Release\\OverlayX86.dll");
 
-  if (id == "300002010000000000") {
-    url.setScheme("exe"); 
+  if (id == "300002010000000000") { // aika
+    url.setScheme("exe");
     url.setPath(QString("%1/%2/aikaru.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%login% %token% 300002010000000000 login");
@@ -231,7 +226,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     url.addQueryItem("executorHelper", injectedDll2);
 
-  } else if (id == "300003010000000000") {
+  } else if (id == "300003010000000000") { // bs
     url.setScheme("exe");
     url.setPath(QString("%1/%2/client/client.exe").arg(currentInstallPath, service->areaString()));
 
@@ -247,7 +242,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     settings.beginGroup("gameExecutor");
     settings.beginGroup("serviceInfo");
     settings.beginGroup(id);
-
+    
     bool ok;
     int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
     if (overlayEnabled != 0 || !ok) {
@@ -268,7 +263,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     url.addQueryItem("executorHelper", injectedDll2);
 
-  } else if (id == "300005010000000000") {
+  } else if (id == "300005010000000000") { // warinc
     url.setScheme("exe");
     url.setPath(QString("%1/%2/WarInc.exe").arg(currentInstallPath, service->areaString()));
 
@@ -278,7 +273,16 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.setQuery(query);
 
     service->setGameId("70");
-  } else if (id == "300012010000000000") { // TODO
+
+#ifdef _DEBUG
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
+#else
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
+#endif
+
+    url.addQueryItem("executorHelper", injectedDll2);
+
+  } else if (id == "300012010000000000") { // reborn
     url.setScheme("exe");
     url.setPath(QString("%1/%2/client/Client.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -296,7 +300,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("executorHelper", injectedDll2);
 
     service->setGameId("760");
-  } else if (id == "300006010000000000") {
+  } else if (id == "300006010000000000") { // mw2
     url.setScheme("exe");
     url.setPath(QString("%1/%2/mw2_bin/mw2.exe").arg(currentInstallPath, service->areaString()));
 
@@ -307,7 +311,10 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.setQuery(query);
 
     service->setGameId("84");
-  } else if (id == "300009010000000000") {
+
+    // INFO инжект хелпера не работает лдя мв2
+
+  } else if (id == "300009010000000000") { // CA
     url.setScheme("exe");
     url.setPath(QString("%1/%2/engine.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -324,7 +331,16 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     url.setQuery(query);
     service->setGameId("92");
-  } else if (id == "300004010000000000") {
+
+#ifdef _DEBUG
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
+#else
+    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
+#endif
+
+    url.addQueryItem("executorHelper", injectedDll2);
+
+  } else if (id == "300004010000000000") { // RoT
     url.setScheme("exe");
     url.setPath(QString("%1/%2//bin/tyj.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
@@ -579,7 +595,6 @@ Thetta::Driver* ServiceLoader::getDriver()
 
 void ServiceLoader::initGameExecutorExtensions(GGS::GameExecutor::GameExecutorService* executor)
 {
-#ifdef VERSION_CHECK_DRIVER
   executor->setExtension(GGS::GameExecutor::ExtensionTypes::GetSalt, 
       new GGS::GameExecutor::GetSaltExtension([this]() -> QString {
         return this->_installer->driver()->getServiceSalt();
@@ -603,7 +618,6 @@ void ServiceLoader::initGameExecutorExtensions(GGS::GameExecutor::GameExecutorSe
       std::bind(&ServiceLoader::processHandlerExtension, this, std::placeholders::_1, std::placeholders::_2)
     )
   );
-#endif
 }
 
 void ServiceLoader::installThettaHook(GGS::Core::Service* service)
