@@ -156,7 +156,15 @@ void MainWindow::initialize()
     SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
   }
 
-  GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna);
+  DWORD verion = GetVersion();
+  int dwMajorVersion = (int)(LOBYTE(LOWORD(verion)));
+  int dwMinorVersion = (int)(HIBYTE(LOWORD(verion)));
+
+  QVariantMap params;
+  params["windowsMajorVersion"] = dwMajorVersion;
+  params["windowsMinorVersion"] = dwMinorVersion;
+
+  GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna, params);
   GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
 
   QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
