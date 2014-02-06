@@ -11,7 +11,6 @@
 #include <QmlMessageAdapter.h>
 #include <Features/RememberGameDownloading.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
-#include <Features/Jabber.h>
 #include <Features/PremiumExecutor.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/TaskBarProgressHelper.h>
@@ -354,7 +353,6 @@ private:
   RememberGameDownloading _rembrGameFeature;
   GGS::Marketing::MarketingTarget _marketingTargetFeatures;
   Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
-  Features::Jabber _jabber;
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
   Features::PremiumExecutor _premiumExecutor;
   Features::TaskBarHelper _taskBarHelper;

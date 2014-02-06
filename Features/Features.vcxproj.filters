@@ -62,15 +62,6 @@
     <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Jabber.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Jabber.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Jabber.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Features\CASettingsFix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -155,6 +146,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\Features\GameExecutor\MW2GetServerHook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_taskbarprogresshelper.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h">
@@ -164,9 +164,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Jabber.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\CASettingsFix.h">
@@ -194,6 +191,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\features\taskbarprogresshelper.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\GameExecutor\MW2GetServerHook.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

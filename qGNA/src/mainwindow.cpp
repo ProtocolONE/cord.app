@@ -320,7 +320,6 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
     this, SLOT(userMainInfoResult(GGS::RestApi::CommandBase::CommandResults)))); 
   getUserMainInfo->execute();
 
-  this->_jabber.authSuccess(userId, appKey);
   this->sendHwidFromDriver();
 }
 
@@ -443,7 +442,6 @@ void MainWindow::logout()
   this->setNickName(QString(""));
 
   this->_restapiManager.setCridential(this->_credential);
-  this->_jabber.logout();
 }
 
 void MainWindow::initServices()
