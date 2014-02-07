@@ -246,7 +246,6 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     bool ok;
     int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
     if (overlayEnabled != 0 || !ok) {
-      // Выключили 01.03.2013
 #ifdef _DEBUG
       QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
 #else
@@ -274,13 +273,14 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
     service->setGameId("70");
 
-#ifdef _DEBUG
-    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
-#else
-    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
-#endif
-
-    url.addQueryItem("executorHelper", injectedDll2);
+    // INFO 07.02.2014 вроде работает но надо уточнить
+//#ifdef _DEBUG
+//    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
+//#else
+//    QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
+//#endif
+//
+//    url.addQueryItem("executorHelper", injectedDll2);
 
   } else if (id == "300012010000000000") { // reborn
     url.setScheme("exe");
