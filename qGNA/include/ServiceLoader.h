@@ -21,6 +21,7 @@
 #include <GameExecutor/GameExecutorService.h>
 
 #include <Features/Thetta/ThettaInstaller.h>
+#include <Features/Thetta/ThettaMonitorApp.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QMap>
@@ -79,6 +80,7 @@ private:
 
   Thetta::Driver* _driver;
   Features::Thetta::ThettaInstaller *_installer;
+  Features::Thetta::ThettaMonitorApp _thettaMonitorApp;
 
   void initService(const QString& id, const QString& torrentUrl, const QString& name);
   void initHooks(const QString& id, GGS::Core::Service* service);

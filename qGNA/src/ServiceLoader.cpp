@@ -57,6 +57,8 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->_installer->setApplicationVersion(this->_applicationVersion);
   this->_installer->setApplicationArea(applicationArea);
 
+  this->_thettaMonitorApp.setThettaInstaller(this->_installer);
+
   if (this->_applicationArea == GGS::Core::Service::Tst)
     this->_installer->connectToDriver();
 
