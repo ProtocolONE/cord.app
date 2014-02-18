@@ -12,6 +12,7 @@
 #include <Features/RememberGameDownloading.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/PremiumExecutor.h>
+#include <Features/SilentMode.h>
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/TaskBarProgressHelper.h>
 #include <Features/Thetta/ThettaInstaller.h>
@@ -162,6 +163,8 @@ public slots:
 
   void onTaskbarButtonCreated();
   void onProgressUpdated(int progressValue, const QString &status);
+
+  bool silent();
 
 private:
   const QString getEmptyString() { return ""; }
@@ -358,6 +361,8 @@ private:
   Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
   Features::PremiumExecutor _premiumExecutor;
   Features::TaskBarHelper _taskBarHelper;
+  Features::SilentMode _silentMode;
+
   bool _restartArguments;
   QString _hwid;
 

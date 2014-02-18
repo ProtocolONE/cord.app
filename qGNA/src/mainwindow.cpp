@@ -1258,6 +1258,9 @@ void MainWindow::postUpdateInit()
   SIGNAL_CONNECT_CHECK(connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
     &this->_gameExecutorServiceInfoCounter, SLOT(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState))));
 
+  SIGNAL_CONNECT_CHECK(connect(&this->_premiumExecutor, SIGNAL(serviceStarted(const GGS::Core::Service &)),
+    &this->_silentMode, SLOT(gameStarted())));
+
   this->initializeStopDownloadServiceOnExecuteGameFeature();
 }
 
@@ -1453,3 +1456,9 @@ void MainWindow::windowCloseInfo()
   this->_serviceLoader.thettaInstaller()->showFailPage();
   this->onWindowClose();
 }
+
+bool MainWindow::silent()
+{
+  return this->_silentMode.isEnabled();
+}
+

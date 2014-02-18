@@ -7,6 +7,7 @@
 #include <Features/RemouteStartGame.h>
 #include <Features/RememberGameDownloading.h>
 #include <Features/ThronInstaller.h>
+#include <Features/SilentMode.h>
 
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
@@ -75,9 +76,12 @@ int main(int argc, char *argv[])
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   
-  //MemoryProtector_CheckFunction;
   MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 
+  if (app.containsCommand("silent")) {
+    Features::SilentMode mode;
+    mode.activate();
+  }
 
   QString path = QCoreApplication::applicationDirPath();
 
