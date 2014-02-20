@@ -1380,6 +1380,7 @@ void MainWindow::initMarketing()
 
   int installerKey = midSettings.value("InstKey").toInt();
   this->_marketingTargetFeatures.setInstallerKey(installerKey);
+  this->_marketingTargetFeatures.setRequestInterval(1000);
 }
 
 bool MainWindow::executeSecondService(QString id, QString userId, QString appKey)
