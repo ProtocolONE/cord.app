@@ -2,7 +2,6 @@
 
 #include "viewmodel/LicenseViewModel.h"
 #include "viewmodel/SettingsViewModel.h"
-#include "viewmodel/SelectMw2Server/SelectMw2ServerViewModel.h"
 #include "viewmodel/EnterNickNameViewModel.h"
 #include "viewmodel/GameSettingsViewModel.h"
 
@@ -205,7 +204,7 @@ private:
   bool _gameDownloadInitialized;
   GGS::Application::ArgumentParser _commandLineArguments;
   GGS::Core::Service::Area _gameArea;
-  KeyboardLayoutHelper _keyboardLayoutHelper;
+  GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
 
 signals:
   void nickNameChanged();

@@ -146,15 +146,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\GameExecutor\MW2GetServerHook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_taskbarprogresshelper.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -230,9 +221,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\features\taskbarprogresshelper.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\GameExecutor\MW2GetServerHook.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\Thetta\ThettaSender.h">

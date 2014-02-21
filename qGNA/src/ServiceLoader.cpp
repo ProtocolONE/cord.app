@@ -70,7 +70,6 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
   this->initService("300012010000000000", "http://fs0.gamenet.ru/update/reborn/", "Reborn");
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
-  this->initService("300006010000000000", "http://fs0.gamenet.ru/update/mw2/", "MW2");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
   this->initService("300004010000000000", "http://fs0.gamenet.ru/update/rot/", "RageofTitans");
   //this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
@@ -81,7 +80,6 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
 
   this->_gameDownloader->registerHook("300004010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
-  this->_gameDownloader->registerHook("300006010000000000", 0, 10, &this->_installDependencyHook);
 }
 
 GGS::Core::Service* ServiceLoader::getService(const QString& id)
@@ -302,20 +300,6 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("executorHelper", injectedDll2);
 
     service->setGameId("760");
-  } else if (id == "300006010000000000") { // mw2
-    url.setScheme("exe");
-    url.setPath(QString("%1/%2/mw2_bin/mw2.exe").arg(currentInstallPath, service->areaString()));
-
-    QUrlQuery query;
-    query.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
-    query.addQueryItem("args", "%serverinfo% %userId% %token% %appKey%");
-    query.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
-    url.setQuery(query);
-
-    service->setGameId("84");
-
-    // INFO инжект хелпера не работает лдя мв2
-
   } else if (id == "300009010000000000") { // CA
     url.setScheme("exe");
     url.setPath(QString("%1/%2/engine.exe").arg(currentInstallPath, service->areaString()));
@@ -395,17 +379,6 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
   }
 
-  if (id == "300006010000000000") { // mw2
-    GGS::GameExecutor::Hook::ExternalDependency* executeInstallDependencyHook = new GGS::GameExecutor::Hook::ExternalDependency(service);
-    executeInstallDependencyHook->setExternalDepencyList("vcredist_x86.exe,/Q");
-    QObject::connect(executeInstallDependencyHook, SIGNAL(externalDependencyInstalled(QString)), this, SIGNAL(startGameRequest(QString)));
-
-    this->_gameExecutorService->addHook(*service, new Mw2DownloadAndCheckXmlConfig(service), 100);
-    this->_gameExecutorService->addHook(*service, new RestoreFileModification(service), 0);
-    this->_gameExecutorService->addHook(*service, executeInstallDependencyHook, 0);
-    service->setExternalDependencyList("vcredist_x86.exe,/Q");
-  }
-
   if (id == "300009010000000000") { // ca
     Features::CASettingsFix *hook = new Features::CASettingsFix(service);
     hook->setResolution(QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen()));
@@ -483,9 +456,6 @@ bool ServiceLoader::hasEnoughSpace(const QString& serviceId, int free)
   if (serviceId == "300005010000000000")
     return free > 2500;
 
-  if (serviceId == "300006010000000000")
-    return free > 4400;
-
   if (serviceId == "300009010000000000")
     return free > 4800;
 
@@ -560,7 +530,6 @@ bool ServiceLoader::anyLicenseAccepted()
     << "300003010000000000"
     << "300004010000000000"
     << "300005010000000000"
-    << "300006010000000000"
     << "300009010000000000";
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);

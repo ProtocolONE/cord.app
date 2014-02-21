@@ -1,6 +1,5 @@
-﻿#include <viewmodel/SelectMw2Server/SelectMw2ServerListModel.h>
-
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
+#include "Player.h"
 
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
@@ -27,8 +26,6 @@
 #include <Core/System/HardwareId.h>
 
 #include <HookEngine/HookEngine.h>
-
-#include <Features/GameExecutor/MW2GetServerHook.h>
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -75,7 +72,6 @@ void MainWindow::initialize()
   this->initAutorun();
 
   qmlRegisterType<GGS::UpdateSystem::UpdateManagerViewModel>("qGNA.Library", 1, 0, "UpdateManagerViewModel");             
-  qmlRegisterType<SelectMw2ServerListModel>("qGNA.Library", 1, 0, "SelectMw2ServerListModel"); 
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");             
   qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
 
@@ -451,18 +447,6 @@ void MainWindow::initServices()
   this->_serviceLoader.init(this->_gameArea, this->_applicationArea);
 
   this->_gameExecutorService.addHook(
-    *this->_serviceLoader.getService("300006010000000000"),
-    new Features::GameExecutor::MW2GetServerHook(this));
-
-  this->_premiumExecutor.simpleMainExecutor()->addHook(
-    *this->_serviceLoader.getService("300006010000000000"),
-    new Features::GameExecutor::MW2GetServerHook(this));
-
-  this->_premiumExecutor.secondExecutor()->addHook(
-    *this->_serviceLoader.getService("300006010000000000"),
-    new Features::GameExecutor::MW2GetServerHook(this));
-
-  this->_gameExecutorService.addHook(
     *this->_serviceLoader.getService("300005010000000000"), 
     this->_enterNickViewModel, 0);
 
@@ -694,7 +678,7 @@ bool MainWindow::executeService(QString id) {
     emit this->selectService(id);
     return false;
   }
-
+  
   if (this->_restapiManager.credential().userId().isEmpty()) {
     emit this->authBeforeStartGameRequest(id);
     return false;
@@ -704,7 +688,6 @@ bool MainWindow::executeService(QString id) {
     id == "300003010000000000" || 
     id == "300004010000000000" || 
     id == "300005010000000000" || 
-    id == "300006010000000000" || 
     id == "300009010000000000" || 
     id == "100009010000000000" ||
     id == "100003010000000000" ||
