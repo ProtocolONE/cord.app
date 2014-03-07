@@ -328,11 +328,9 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 
   } else if (id == "300004010000000000") { // RoT
     url.setScheme("exe");
-    url.setPath(QString("%1/%2//bin/tyj.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
+    url.setPath(QString("%1/%2/bin/tyj.exe").arg(currentInstallPath, service->areaString()));
+    url.addQueryItem("workingDir", QString("%1/%2/bin/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "-sa UserId=%userId%%appKey% -sa Token=%token%");
-    url.addQueryItem("downloadCustomFile", "mw2_bin/cfg_engine.xml,http://files.gamenet.ru/update/mw2/,0");
-
     service->setGameId("72");
   } else if (id == "100009010000000000") {
     url.setScheme("exe");
