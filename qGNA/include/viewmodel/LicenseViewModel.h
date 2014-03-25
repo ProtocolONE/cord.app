@@ -16,9 +16,10 @@ public:
     LicenseViewModel(QObject *parent); 
     ~LicenseViewModel();
 
-    const QString& serviceId() const { return this->_serviceId; }
     const QString& hash() const { return this->_hash; }
+
 public slots:
+    QString serviceId() const { return this->_serviceId; }
     const bool shurtCutInDesktop() const { return this->_isShurtCutInDesktop; }
     const bool licenseAccepted() const { return this->_isLicenseAccepted; }
     const bool shurtCutInStart() const { return this->_isShurtCutInStart; }  
