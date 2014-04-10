@@ -87,7 +87,7 @@ void Player::setAutoPlay(bool value)
 {
   this->_autoPlay = value;
 }
-
+  
 qreal Player::volume() const
 {
 #ifdef DISABLE_PHONONE

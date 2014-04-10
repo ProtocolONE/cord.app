@@ -52,8 +52,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_DLL;QT_XML_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB;QT_HAVE_MMX;QT_HAVE_3DNOW;QT_HAVE_SSE;QT_HAVE_MMXEXT;QT_HAVE_SSE2;QT_THREAD_SUPPORT;QT_DECLARATIVE_LIB;QGNA_NO_UPDATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtDeclarative;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\phonon;.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include\UpdateSystem;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystemViewModel\$(UpdateSystemViewModelArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QGNA_NO_UPDATE;_WINDOWS;UNICODE;WIN32;NOMINMAX;QT_DLL;QT_HAVE_MMX;QT_HAVE_3DNOW;QT_HAVE_SSE;QT_HAVE_MMXEXT;QT_HAVE_SSE2;QT_THREAD_SUPPORT;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_DECLARATIVE_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtDeclarative;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtWebkitWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -96,7 +96,7 @@ xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
 
-SET D=""
+SET D=
 IF "$(Configuration)"=="Debug" (
      SET D=d
 )
@@ -166,8 +166,8 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64d.exe" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32d.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
 
 @REM QT binaries
 
@@ -193,6 +193,16 @@ xcopy /Y /I /R /E "$(QTDIR)\pluginsphonon_backend\phonon_ds9%D%4.dll" "$(TargetD
 
 xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)QtWebKit\"
 echo plugin qmlwebkitplugind &gt; "$(TargetDir)QtWebKit\qmldir"
+
+xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
+xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
+xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+
+xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
+xcopy /Y /I /R /E "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
+
+xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
+echo plugin qmlwebkitplugin%D% &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
 
 del "$(TargetDir)\*.ilk"</Command>
       <Message>Copy binary and QML files. </Message>
@@ -249,7 +259,7 @@ xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
 
-SET D=""
+SET D=
 IF "$(Configuration)"=="Debug" (
      SET D=d
 )
@@ -319,8 +329,8 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64.exe" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
 
 @REM QT binaries
 
@@ -346,6 +356,16 @@ xcopy /Y /I /R /E "$(QTDIR)\pluginsphonon_backend\phonon_ds9%D%4.dll" "$(TargetD
 
 xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)QtWebKit\"
 echo plugin qmlwebkitplugin &gt; "$(TargetDir)QtWebKit\qmldir"
+
+xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
+xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
+xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+
+xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
+xcopy /Y /I /R /E "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
+
+xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
+echo plugin qmlwebkitplugin%D% &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
 
 del "$(TargetDir)\*.ilk"</Command>
       <Message>Copy binary and QML files. </Message>
