@@ -221,7 +221,7 @@ signals:
 
   void navigate(QString page);
 
-  void totalProgressChanged(QString serviceId, qint8 progress);
+  void totalProgressChanged(QString serviceId, int progress);
   void downloadProgressChanged(QString serviceId, int progress, qint64 totalWantedDone, qint64 totalWanted,
     qint64 directTotalDownload,
     qint64 peerTotalDownload,
