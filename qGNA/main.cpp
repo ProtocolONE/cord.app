@@ -12,6 +12,8 @@
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
 
+#include <Features/TaskBarEventFilter.h>
+
 #include <Core/System/Shell/UrlProtocolHelper.h>
 #include <Core/Marketing.h>
 
@@ -102,6 +104,9 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
+  GGS::Application::TaskBarEventFilter *taskBarFilter = new GGS::Application::TaskBarEventFilter(&app);
+  app.installNativeEventFilter(taskBarFilter);
+
   GGS::ResourceHelper::ResourceLoader loader;
   loader.load(path + "/qGNA.rcc"); 
 
@@ -186,8 +191,8 @@ int main(int argc, char *argv[])
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &app, SLOT(initializeFinished())));
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &installer, SLOT(downloadAndInstall())));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), &app, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(taskBarButtonCreated()), &w, SLOT(onTaskbarButtonCreated())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), taskBarFilter, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(taskBarFilter, SIGNAL(taskBarButtonCreated()), &w, SLOT(onTaskbarButtonCreated())));
 
   int result = app.exec();
   w.release();
