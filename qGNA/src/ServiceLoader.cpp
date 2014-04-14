@@ -288,8 +288,8 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("args", "%userId% %token%");
 
-    url.addQueryItem("downloadCustomFile", 
-      "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/reborn/,1,config/lastlogin.xml,http://files.gamenet.ru/update/reborn/,0");
+    query.addQueryItem("downloadCustomFile", 
+      "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/reborn/,1");
 
 #ifdef _DEBUG
     QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
