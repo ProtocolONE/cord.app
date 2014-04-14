@@ -57,17 +57,17 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
-        <location filename="../src/mainwindow.cpp" line="1017"/>
-        <location filename="../src/mainwindow.cpp" line="1041"/>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
+        <location filename="../src/mainwindow.cpp" line="1009"/>
+        <location filename="../src/mainwindow.cpp" line="1015"/>
+        <location filename="../src/mainwindow.cpp" line="1039"/>
+        <location filename="../src/mainwindow.cpp" line="1042"/>
         <location filename="../src/mainwindow.cpp" line="1094"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
+        <location filename="../src/mainwindow.cpp" line="1009"/>
+        <location filename="../src/mainwindow.cpp" line="1042"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;http://support.gamenet.ru&lt;/font&gt;&lt;/a&gt;  </translation>
     </message>
@@ -76,12 +76,12 @@
         <translation type="obsolete">Вход в игру доступен только для участников тестирования. О завершении тестирования и об открытии доступа в игру будет сообщено в новостях.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1017"/>
+        <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1041"/>
+        <location filename="../src/mainwindow.cpp" line="1039"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
