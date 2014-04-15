@@ -1066,19 +1066,13 @@ void MainWindow::startBackgroundCheckUpdate()
 
 int MainWindow::checkUpdateInterval()
 {
-  //QDateTime now = QDateTime::currentDateTimeUtc();
-  //now = now.addSecs(14400); // Moscow time UTC+4
-  //int hour = now.time().hour();
-  //if (hour >= 14)
-  //  return 10800000;
+  QDateTime now = QDateTime::currentDateTimeUtc();
+  now = now.addSecs(14400); // Moscow time UTC+4
+  int hour = now.time().hour();
+  if (hour >= 14)
+    return 10800000;
 
-  //return 1800000;
-  
-
-  // INFO Время поменяно на 12 часов для большой миграции на Qt 5.x
-  // После перехода вернуть предыдущий код.
-  // https://jira.gamenet.ru:8443/browse/QGNA-647
-  return 43200000;
+  return 1800000;
 }
 
 void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result)
