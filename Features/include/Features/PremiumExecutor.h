@@ -35,6 +35,7 @@ namespace Features {
 
     void executeMain(GGS::Core::Service* service);
     void executeSecond(GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial);
+    void shutdownSecond();
 
     void shutdown();
 

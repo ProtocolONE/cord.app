@@ -1383,6 +1383,12 @@ bool MainWindow::executeSecondService(QString id, QString userId, QString appKey
   return true;
 }
 
+bool MainWindow::terminateSecondService()
+{
+  this->_premiumExecutor.shutdownSecond();
+  return true;
+}
+
 void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
   if (event->buttons() & Qt::LeftButton)
     emit this->leftMouseClick(event->x(), event->y()); 

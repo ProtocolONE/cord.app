@@ -145,6 +145,7 @@ public slots:
   void activateWindow();
   bool executeService(QString id);
   bool executeSecondService(QString id, QString userId, QString appKey);
+  bool terminateSecondService();
 
   void setTechName(QString& techName);
   void setNickName(QString& nickName);

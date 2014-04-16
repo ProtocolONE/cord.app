@@ -79,7 +79,16 @@ namespace Features {
     this->_secondExecutor.execute(*service, credetial);
     this->_secondGameStarted.insert(service->id());
   }
-  
+
+  void PremiumExecutor::shutdownSecond()
+  {
+    QMutexLocker locker(&this->_mutex);
+
+    if (this->_secondExecutor.isAnyGameStarted()) {
+      this->_secondExecutor.terminateAll();
+    }
+  }
+
   bool PremiumExecutor::canSimpleExecuteMain(const QString& id)
   {
     QMutexLocker locker(&this->_mutex);
