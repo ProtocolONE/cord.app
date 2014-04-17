@@ -996,7 +996,8 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
   } 
 
   if (name == "gogamenetmoney") {
-    this->openExternalUrlWithAuth("http://www.gamenet.ru/money");
+      this->navigate("gogamenetmoney");
+
     return;
   }
 

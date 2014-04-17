@@ -96,9 +96,12 @@ int main(int argc, char *argv[])
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
     QStringList arguments;
-    arguments << "-activate";
-    app.sendArguments(arguments);
-    QTimer::singleShot(50000, &app, SLOT(quit()));
+	if (!app.containsCommand("gogamenetmoney")) {
+		arguments << "-activate"; 
+    }
+
+    app.sendArguments(arguments);    
+    QTimer::singleShot(50000, &app, SLOT(quit()));      
     return app.exec();
   } else {
     app.startListen();
@@ -199,5 +202,5 @@ int main(int argc, char *argv[])
 
   LogManager::qtLogger()->removeAllAppenders(); 
 
-  return result; 
+  return result;
 }
