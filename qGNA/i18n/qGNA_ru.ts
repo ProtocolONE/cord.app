@@ -61,7 +61,7 @@
         <location filename="../src/mainwindow.cpp" line="1022"/>
         <location filename="../src/mainwindow.cpp" line="1046"/>
         <location filename="../src/mainwindow.cpp" line="1049"/>
-        <location filename="../src/mainwindow.cpp" line="1105"/>
+        <location filename="../src/mainwindow.cpp" line="1102"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
@@ -86,7 +86,7 @@
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1105"/>
+        <location filename="../src/mainwindow.cpp" line="1102"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>Доступно новое обновление. Необходимо перезапустить приложение.</translation>
     </message>

@@ -171,17 +171,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$
 
 @REM QT binaries
 
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtCore%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtGui%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtXml%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtSql%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtNetwork%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtScript%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtWebKit%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtXmlPatterns%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtDeclarative%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtOpenGL%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\phonon%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"
@@ -334,17 +326,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$
 
 @REM QT binaries
 
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtCore%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtGui%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtXml%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtSql%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtNetwork%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtScript%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtWebKit%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtXmlPatterns%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtDeclarative%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\QtOpenGL%D%4.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\phonon%D%4.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"

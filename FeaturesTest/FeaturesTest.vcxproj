@@ -106,7 +106,26 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"</Command>
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Test%D%.dll" "$(TargetDir)"
+
+
+xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\bin\D3DCompiler_43.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)\platforms\"
+xcopy /Y /I /R "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)\sqldrivers\"
+
+@REM vs_redist
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -162,7 +181,25 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"</Command>
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Test%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\bin\D3DCompiler_43.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)\platforms\"
+xcopy /Y /I /R "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)\sqldrivers\"
+
+@REM vs_redist
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

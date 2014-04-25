@@ -45,7 +45,7 @@
         <location filename="../src/mainwindow.cpp" line="1022"/>
         <location filename="../src/mainwindow.cpp" line="1046"/>
         <location filename="../src/mainwindow.cpp" line="1049"/>
-        <location filename="../src/mainwindow.cpp" line="1105"/>
+        <location filename="../src/mainwindow.cpp" line="1102"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1105"/>
+        <location filename="../src/mainwindow.cpp" line="1102"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>
