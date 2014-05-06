@@ -172,9 +172,12 @@ void MainWindow::initialize()
 void MainWindow::checkDesktopDepth() {
   QDesktopWidget widget;
   if (widget.depth() == 16) {
+      QString info = QObject::tr("SCREEN_DEPTH_LOVER_THAN_16_INFO");
+      QString caption = QObject::tr("SCREEN_DEPTH_LOVER_THAN_16_CAPTION");
+
       MessageBoxW(0, 
-          QObject::tr("SCREEN_DEPTH_LOVER_THAN_16_INFO").toStdWString().c_str(), 
-          QObject::tr("SCREEN_DEPTH_LOVER_THAN_16_CAPTION").toStdWString().c_str(),
+          info.toStdWString().c_str(), 
+          caption.toStdWString().c_str(),
           MB_OK | MB_ICONINFORMATION); 
   }
 }
