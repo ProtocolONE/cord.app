@@ -67,6 +67,7 @@ void MainWindow::initialize()
 
   GGS::Settings::Settings settings;
   this->selectLanguage(settings.value("qGNA/language").toString());                                                             
+  this->checkDesktopDepth();
 
   this->settingsViewModel = new SettingsViewModel(this);
   this->initAutorun();
@@ -168,7 +169,17 @@ void MainWindow::initialize()
   this->_keyboardLayoutHelper.update();
 }
 
-bool MainWindow::winEvent(MSG* message, long* result)
+void MainWindow::checkDesktopDepth() {
+  QDesktopWidget widget;
+  if (widget.depth() == 16) {
+      MessageBoxW(0, 
+          QObject::tr("SCREEN_DEPTH_LOVER_THAN_16_INFO").toStdWString().c_str(), 
+          QObject::tr("SCREEN_DEPTH_LOVER_THAN_16_CAPTION").toStdWString().c_str(),
+          MB_OK | MB_ICONINFORMATION); 
+  }
+}
+
+bool MainWindow::nativeEvent(const QByteArray & eventType, void * message, long * result)
 {
   if (message->message == WM_KEYUP) 
     this->_keyboardLayoutHelper.update();

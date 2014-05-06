@@ -39,7 +39,7 @@
 
 #include <BugTrap/BugTrap.h>
 
-using namespace Log4Qt;
+using namespace Log4Qt; 
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 
   QTimer::singleShot(0, &w, SLOT(initialize()));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onForceWindowClose()), Qt::DirectConnection)); 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onForceWindowClose()), Qt::DirectConnection));  
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(secondInstanceExecuteRequest()), &app, SLOT(allowSecondInstance()), Qt::DirectConnection)); 
 
@@ -199,5 +199,5 @@ int main(int argc, char *argv[])
 
   LogManager::qtLogger()->removeAllAppenders(); 
 
-  return result;
+  return result; 
 }

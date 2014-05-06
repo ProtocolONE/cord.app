@@ -330,6 +330,7 @@ private slots:
 
 private:
   void initServices();
+  void checkDesktopDepth();
 
   void checkLicense(const QString& serviceId);
   void startGame(const QString& serviceId);
