@@ -75,7 +75,7 @@ void LicenseViewModel::okPressed() {
 
 void LicenseViewModel::searchPressed()
 {
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(this->_service, this->_service->installPath());
+  QString newDirectory = GameSettingsViewModel::getGameDirectory(0, this->_service, this->_service->installPath());
   if (newDirectory.isEmpty())
     return;
 

@@ -54,7 +54,7 @@ public slots:
   const QString& downloadPath();
   void setDownloadPath(const QString& downloadPath);
 
-  static QString getGameDirectory(GGS::Core::Service *service, const QString& defaultDir);
+  static QString getGameDirectory(QWidget* parent, GGS::Core::Service *service, const QString& defaultDir);
 
   QString browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir);
 

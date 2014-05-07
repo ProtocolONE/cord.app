@@ -247,16 +247,14 @@ QString GetFolderName(int type) {
 
 QString GameSettingsViewModel::browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir)
 {
-  GGS::Core::Service *service = new GGS::Core::Service(this);
-  service->setName(name);
-  QString dir = this->getGameDirectory(service, defaultDir);
-  service->deleteLater();
-  return dir;
+  GGS::Core::Service service;
+  service.setName(name);
+  return this->getGameDirectory(0, &service, defaultDir);
 }
 
-QString GameSettingsViewModel::getGameDirectory(GGS::Core::Service *service, const QString& defaultDir)
+QString GameSettingsViewModel::getGameDirectory(QWidget* parent, GGS::Core::Service *service, const QString& defaultDir)
 {
-  QString newDirectory = QFileDialog::getExistingDirectory(0, tr("CAPTION_OPEN_DIR"), defaultDir,
+  QString newDirectory = QFileDialog::getExistingDirectory(parent, tr("CAPTION_OPEN_DIR"), defaultDir,
     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
   if (newDirectory.isEmpty())
@@ -334,7 +332,7 @@ void GameSettingsViewModel::browseInstallPath()
   GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
   Q_CHECK_PTR(service);
 
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(service, service->installPath());
+  QString newDirectory = GameSettingsViewModel::getGameDirectory(qobject_cast<QWidget*>(parent()), service, service->installPath());
   if (newDirectory.isEmpty()) {
     return;
   }
@@ -355,7 +353,7 @@ void GameSettingsViewModel::browseDownloadPath()
   if (!service->hashDownloadPath())
     return;
 
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(service, service->downloadPath());
+  QString newDirectory = GameSettingsViewModel::getGameDirectory(qobject_cast<QWidget*>(parent()), service, service->downloadPath());
   if (newDirectory.isEmpty())
     return;
 
