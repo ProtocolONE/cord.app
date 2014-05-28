@@ -72,9 +72,7 @@
       <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(QTDIR)\bin\rcc.exe -compress 3 -threshold 4 -binary  "$(QGNAQMLDIR)\$(ProjectName).qrc" -o "$(TargetDir)\_$(ProjectName).rcc"
-$(QTDIR)\bin\ert e "$(TargetDir)\_$(ProjectName).rcc" "$(TargetDir)\$(ProjectName).rcc"
-del /F /Q "$(TargetDir)\_$(ProjectName).rcc"
+      <Command>"$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 
 IF "$(QGNACOMMONDIR)"=="" (
 ECHO QGNACOMMONDIR not defined!
@@ -228,9 +226,7 @@ del "$(TargetDir)\*.ilk"</Command>
       <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(QTDIR)\bin\rcc.exe -compress 3 -threshold 4 -binary  "$(QGNAQMLDIR)\$(ProjectName).qrc" -o "$(TargetDir)\_$(ProjectName).rcc"
-$(QTDIR)\bin\ert e "$(TargetDir)\_$(ProjectName).rcc" "$(TargetDir)\$(ProjectName).rcc"
-del /F /Q "$(TargetDir)\_$(ProjectName).rcc"
+      <Command>"$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 
 IF "$(QGNACOMMONDIR)"=="" (
 ECHO QGNACOMMONDIR not defined!

@@ -80,19 +80,24 @@ void MainWindow::initialize()
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
 
   this->initMarketing();
-
+  
   //next 2 lines QGNA-60
   this->nQMLContainer = new MQDeclarativeView(this);
   SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
 
   this->loadPlugin("QmlExtensionX86");
   this->loadPlugin("QmlOverlayX86");
-
+  this->loadPlugin("qxmpp-declarative");
+  
+  QStringList importPaths;
+  importPaths << ":/";
+  this->nQMLContainer->engine()->setImportPathList(importPaths);
+  
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-
+  
   this->licenseModel = new LicenseViewModel(this);
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
-
+  
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(incomingPortChanged()), this, SLOT(settingsIncomingPortChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(numConnectionsChanged()), this, SLOT(settingsNumConnectionsChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(downloadSpeedChanged()), this, SLOT(settingsDownloadSpeedChangedSlot())));
@@ -106,17 +111,17 @@ void MainWindow::initialize()
     this, SLOT(restApiGenericError(GGS::RestApi::CommandBase::Error, QString))));
 
   messageAdapter = new QmlMessageAdapter(this);
-
+  
   this->_gameSettingsViewModel = new GameSettingsViewModel(this);
   this->_gameSettingsViewModel->setGameDownloader(&this->_gameDownloader);
-
+  
   // HACK - уточнить что это полезно и зачем это
   //nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
   //nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
   //nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
   //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
   // END of HACK
-
+  
   nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
   nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
@@ -126,7 +131,13 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
 
-  nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
+  //nQMLContainer->engine()->addImportPath(":/");
+  
+  //nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
+  //nQMLContainer->engine()->addImportPath(":/");   
+  //nQMLContainer->setSource(QUrl("qrc:/TestBug.qml"));
+  nQMLContainer->setSource(QUrl("qrc:/Tests/Application/Widgets/MessengerSample.qml"));
+  
   nQMLContainer->setAlignment(Qt::AlignCenter);
   nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
@@ -152,7 +163,7 @@ void MainWindow::initialize()
   if (!this->_commandLineArguments.contains("startservice")) {
     SIGNAL_CONNECT_CHECK(QObject::connect(this, SIGNAL(updateFinished()), &this->_rembrGameFeature, SLOT(update())));
   }
-
+  
   DWORD verion = GetVersion();
   int dwMajorVersion = (int)(LOBYTE(LOWORD(verion)));
   int dwMinorVersion = (int)(HIBYTE(LOWORD(verion)));
