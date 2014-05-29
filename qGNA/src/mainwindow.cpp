@@ -85,14 +85,21 @@ void MainWindow::initialize()
   this->nQMLContainer = new MQDeclarativeView(this);
   SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
 
+
+  QStringList importPaths;
+  importPaths << ":/";
+  importPaths << (QCoreApplication::applicationDirPath() + "/plugins/");
+  this->nQMLContainer->engine()->setImportPathList(importPaths);
+
+  QStringList pluginsPath;
+  pluginsPath << (QCoreApplication::applicationDirPath() + "/plugins/");
+  pluginsPath << "./plugins";
+  this->nQMLContainer->engine()->setPluginPathList(pluginsPath);
+
   this->loadPlugin("QmlExtensionX86");
   this->loadPlugin("QmlOverlayX86");
   this->loadPlugin("qxmpp-declarative");
-  
-  QStringList importPaths;
-  importPaths << ":/";
-  this->nQMLContainer->engine()->setImportPathList(importPaths);
-  
+
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   
   this->licenseModel = new LicenseViewModel(this);
@@ -116,10 +123,10 @@ void MainWindow::initialize()
   this->_gameSettingsViewModel->setGameDownloader(&this->_gameDownloader);
   
   // HACK - уточнить что это полезно и зачем это
-  //nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
-  //nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
-  //nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
-  //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
+  nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
+  nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
+  nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+  nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
   // END of HACK
   
   nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
@@ -131,23 +138,19 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
 
-  //nQMLContainer->engine()->addImportPath(":/");
-  
-  //nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
-  //nQMLContainer->engine()->addImportPath(":/");   
-  //nQMLContainer->setSource(QUrl("qrc:/TestBug.qml"));
   nQMLContainer->setSource(QUrl("qrc:/Main.qml"));
-  
   nQMLContainer->setAlignment(Qt::AlignCenter);
   nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
   QObject *item = nQMLContainer->rootObject();
   QDeclarativeItem *rootItem = qobject_cast<QDeclarativeItem*>(item);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(onWindowClose()), this, SLOT(onWindowClose())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(windowClose()), this, SLOT(onWindowClose())));
+
+
 
   this->setCentralWidget(nQMLContainer);
   this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 

@@ -72,7 +72,8 @@
       <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <PreBuildEvent>
-      <Command>"$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+      <Command>echo "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+"$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 
 IF "$(QGNACOMMONDIR)"=="" (
 ECHO QGNACOMMONDIR not defined!
@@ -91,6 +92,7 @@ EXIT /B 1
       <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ttf" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.png" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.jpg" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
 
@@ -244,6 +246,7 @@ EXIT /B 1
       <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ttf" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.png" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.jpg" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
 
