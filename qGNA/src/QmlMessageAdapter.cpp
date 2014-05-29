@@ -1,6 +1,7 @@
-﻿#include <QDeclarativeContext>
-#include <QDebug>
-#include "QmlMessageAdapter.h"
+﻿#include <QtCore/QTimer>
+#include <QtDeclarative/QDeclarativeContext>
+#include <QtCore/QDebug>
+#include <QmlMessageAdapter.h>
 
 #define SIGNAL_CONNECT_CHECK(X){ bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -26,13 +27,8 @@ void QmlMessageAdapter::buttonClicked(int messageId, int id)
   this->_returnButtons[messageId] = static_cast<GGS::Core::UI::Message::StandardButton>(id);   
 }
 
-void QmlMessageAdapter::bindSlot(QObject* sender, int messageId)
-{ 
-  if (!this->_bindSlots.contains(messageId)){
-    WARNING_LOG << "QMap container, not contains reciever object.";    
-    return;
-  }
-
-  SIGNAL_CONNECT_CHECK(connect(sender, SIGNAL(clicked(int)), this->_bindSlots[messageId].first, this->_bindSlots[messageId].second));   
-  SIGNAL_CONNECT_CHECK(connect(sender, SIGNAL(buttonClicked(int, int)), this, SLOT(buttonClicked(int, int))));        
+void QmlMessageAdapter::callback(int messageId, int buttonId)
+{
+    this->buttonClicked(messageId, buttonId);
+    QTimer::singleShot(0, this->_bindSlots[messageId].first, this->_bindSlots[messageId].second);
 }
