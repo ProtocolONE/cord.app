@@ -136,7 +136,7 @@ void MainWindow::initialize()
   //nQMLContainer->setSource(QUrl("qrc:/qGNA_Main.qml"));
   //nQMLContainer->engine()->addImportPath(":/");   
   //nQMLContainer->setSource(QUrl("qrc:/TestBug.qml"));
-  nQMLContainer->setSource(QUrl("qrc:/Tests/Application/Widgets/MessengerSample.qml"));
+  nQMLContainer->setSource(QUrl("qrc:/Main.qml"));
   
   nQMLContainer->setAlignment(Qt::AlignCenter);
   nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
@@ -153,7 +153,7 @@ void MainWindow::initialize()
   this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
   this->setStyleSheet("background:transparent;");
   this->setFixedSize(rootItem->width(), rootItem->height()); 
-  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "images/avatar.png"); 
+  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "Assets/Images/avatar.png"); 
 
   Message::setAdapter(messageAdapter);
 

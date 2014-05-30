@@ -119,7 +119,7 @@ void GameSettingsViewModel::createShortcut(const QString& path, GGS::Core::Servi
   // UNDONE: ��������� ��� ��� ������� ������� - � ��� � ����������� ���� ����� ��� ����� ���������� ����� �������������.
   object.setPath(QCoreApplication::applicationFilePath());
 
-  QString iconPath = QString("%1/images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), service->id());
+  QString iconPath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), service->id());
   iconPath = QFile::exists(iconPath) ? iconPath : QCoreApplication::applicationFilePath();
   object.setIconLocation(iconPath);
   object.setIconIndex(0);

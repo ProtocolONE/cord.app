@@ -88,8 +88,7 @@ int main(int argc, char *argv[])
   QString path = QCoreApplication::applicationDirPath();
 
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
-  app.setWindowIcon(QIcon(path + "/images/qgna.ico"));
-  app.addLibraryPath(path + "/plugins");
+  app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
   initBugTrap(path);
 
