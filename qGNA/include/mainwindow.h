@@ -164,6 +164,8 @@ public slots:
   void onTaskbarButtonCreated();
   void onProgressUpdated(int progressValue, const QString &status);
 
+  void onLanguageChanged();
+
   bool silent();
 
 private:

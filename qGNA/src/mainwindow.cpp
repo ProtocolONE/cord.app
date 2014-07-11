@@ -1445,6 +1445,11 @@ void MainWindow::onProgressUpdated(int progressValue, const QString &status)
   this->_taskBarHelper.setStatus(newStatus);
 }
 
+void MainWindow::onLanguageChanged()
+{
+  this->_keyboardLayoutHelper.update();
+}
+
 void MainWindow::sendHwidFromDriver()
 {
   if (this->_hwid.isEmpty())

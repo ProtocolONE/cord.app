@@ -13,6 +13,7 @@
 #include <Features/Thetta/Protector.h>
 
 #include <Features/TaskBarEventFilter.h>
+#include <Features/LanguageChangeEventFilter.h>
 
 #include <Core/System/Shell/UrlProtocolHelper.h>
 #include <Core/Marketing.h>
@@ -109,6 +110,9 @@ int main(int argc, char *argv[])
   GGS::Application::TaskBarEventFilter *taskBarFilter = new GGS::Application::TaskBarEventFilter(&app);
   app.installNativeEventFilter(taskBarFilter);
 
+  GGS::Application::LanguageChangeEventFilter *languageChangeEventFilter = new GGS::Application::LanguageChangeEventFilter(&app);
+  app.installNativeEventFilter(languageChangeEventFilter);
+  
   GGS::ResourceHelper::ResourceLoader loader;
   loader.load(path + "/qGNA.rcc"); 
 
@@ -195,6 +199,7 @@ int main(int argc, char *argv[])
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), taskBarFilter, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(taskBarFilter, SIGNAL(taskBarButtonCreated()), &w, SLOT(onTaskbarButtonCreated())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(languageChangeEventFilter, SIGNAL(languageChanged()), &w, SLOT(onLanguageChanged())));
 
   int result = app.exec();
   w.release();
@@ -203,3 +208,5 @@ int main(int argc, char *argv[])
 
   return result;
 }
+
+
