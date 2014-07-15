@@ -137,7 +137,7 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
-
+  
   nQMLContainer->setSource(QUrl("qrc:/Main.qml"));
   nQMLContainer->setAlignment(Qt::AlignCenter);
   nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
@@ -748,6 +748,10 @@ void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
 
 void MainWindow::shutdownCompleted()
 {
+  // INFO Этот способ обойти проблему с падением на удалении GameExecutorService
+  // Там куча потоков ждет заверешния процессов игры, и падает при удалении.
+  // Этим мы закрываем игры до того как начнем удалять запусктор.
+  this->_serviceLoader.thettaInstaller()->disconnectFromDriver();
   this->_premiumExecutor.shutdown();
   DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
