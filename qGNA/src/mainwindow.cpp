@@ -644,8 +644,13 @@ void MainWindow::downloadGameProgressChanged(
   qint8 progress, 
   GGS::Libtorrent::EventArgs::ProgressEventArgs args)
 {
-  emit this->downloadProgressChanged(service->id(), 
-    progress, 
+  if (args.status() == GGS::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles) {
+      emit this->rehashProgressChanged(service->id(), progress, args.progress() * 100);
+      return;
+  }
+
+  emit this->downloadProgressChanged(service->id(),
+    progress,
     args.totalWantedDone(), 
     args.totalWanted(), 
     args.directTotalDownload(), 
@@ -660,7 +665,7 @@ void MainWindow::downloadGameProgressChanged(
 
 void MainWindow::progressChanged(QString serviceId, qint8 progress)
 {
-  emit this->progressbarChange(serviceId, progress, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0); 
+  emit this->progressbarChange(serviceId, progress, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0);
 }
 
 void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
