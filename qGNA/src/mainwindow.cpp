@@ -448,23 +448,28 @@ void MainWindow::downloadGameProgressChanged(
   int progress, 
   GameNet::Host::Bridge::DownloadProgressArgs args)
 {
-  if (args.status == static_cast<int>(GGS::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles)) {
-      emit this->rehashProgressChanged(serviceId, progress, args.progress * 100);
+  if (args.status() == GGS::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles) {
+      emit this->rehashProgressChanged(service->id(), progress, args.progress() * 100);
       return;
   }
 
-  emit this->downloadProgressChanged(serviceId,
-    progress,
-    args.totalWantedDone, 
-    args.totalWanted, 
-    args.directTotalDownload, 
-    args.peerTotalDownload, 
-    args.payloadTotalDownload, 
-    args.peerPayloadDownloadRate, 
-    args.payloadDownloadRate, 
-    args.directPayloadDownloadRate, 
-    args.payloadUploadRate, 
-    args.totalPayloadUpload);
+  emit this->downloadProgressChanged(service->id(), 
+    progress, 
+    args.totalWantedDone(), 
+    args.totalWanted(), 
+    args.directTotalDownload(), 
+    args.peerTotalDownload(), 
+    args.payloadTotalDownload(), 
+    args.peerPayloadDownloadRate(), 
+    args.payloadDownloadRate(), 
+    args.directPayloadDownloadRate(), 
+    args.payloadUploadRate(), 
+    args.totalPayloadUpload());
+}
+
+void MainWindow::progressChanged(QString serviceId, qint8 progress)
+{
+  emit this->progressbarChange(serviceId, progress, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0);
 }
 
 void MainWindow::gameDownloaderStarted(const QString& serviceId, int startType)
