@@ -94,6 +94,7 @@ void MainWindow::initialize()
   QStringList pluginsPath;
   pluginsPath << (QCoreApplication::applicationDirPath() + "/plugins/");
   pluginsPath << "./plugins";
+  pluginsPath << QCoreApplication::applicationDirPath() + "/plugins/QtWebKit";
   this->nQMLContainer->engine()->setPluginPathList(pluginsPath);
 
   this->loadPlugin("QmlExtensionX86");
