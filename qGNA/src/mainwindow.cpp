@@ -1002,7 +1002,7 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
   } 
 
   if (name == "settings") {
-    emit this->navigate("SettingsPage");
+    emit this->navigate("ApplicationSettings");
     return;
   } 
 
