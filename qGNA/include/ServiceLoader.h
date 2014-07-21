@@ -89,6 +89,7 @@ private:
 
   void initGAService();
   void initFJService();
+  void initBDService();
   void migrateInstallDate(const QString& serviceId);
 
   QString getBestDrive(const QString& serviceId);

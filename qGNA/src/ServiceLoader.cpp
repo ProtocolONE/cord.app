@@ -77,6 +77,7 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
 
   this->initGAService();
   this->initFJService();
+  this->initBDService();
 
   this->_gameDownloader->registerHook("300004010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
@@ -139,6 +140,21 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
 
   this->setExecuteUrl(id, currentInstallPath);
   this->migrateInstallDate(id);
+}
+
+void ServiceLoader::initBDService()
+{
+    using namespace GGS::Core;
+    QString id("30000000000");
+    Service *service = new Service();
+    service->setArea(Service::Live);
+    service->setIsDownloadable(false);
+    service->setName(id);
+    service->setId(id);
+    service->setGameId("1021");
+    service->setUrl(QUrl("http://blackdesert.ru/"));
+
+    this->_serviceMap[id] = service;
 }
 
 void ServiceLoader::initGAService()
