@@ -34,13 +34,13 @@ public:
   void createShortcut(const QString& path, GGS::Core::Service *service);
   void removeShortCutByName(const QString& name);
 
-public slots:
+public slots: 
   void createShortcutOnDesktop();
   void createShortcutInMainMenu();
 
-  void browseInstallPath();
+  void browseInstallPath(const QString &preferedPath = QString());
   void browseDownloadPath();
-
+  
   void submitSettings();
   void restoreClient();
   void switchGame(const QString& serviceId);
@@ -54,18 +54,15 @@ public slots:
   const QString& downloadPath();
   void setDownloadPath(const QString& downloadPath);
 
-  static QString getGameDirectory(QWidget* parent, GGS::Core::Service *service, const QString& defaultDir);
-
-  QString browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir);
-
+  static QStringList deserialize(QByteArray serialized);
+  static QByteArray serialize(QStringList stringList);
+  
 signals:
   void installPathChanged();
   void downloadPathChanged();
   void hasDownloadPathChanged();
 
 private:
-  QString getFolderName(int type);
-
   QHash<QString, GGS::Core::Service *> *_serviceList;
   GGS::GameDownloader::GameDownloadService *_gameDownloader;
 

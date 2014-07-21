@@ -1,10 +1,9 @@
 #include "viewmodel/LicenseViewModel.h"
-#include "viewmodel/GameSettingsViewModel.h"
+#include "Helper/GetDirectoryDialog.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
-#include <QtGui/QFileDialog>
-
+#include <QtWidgets/QFileDialog>
   
 LicenseViewModel::LicenseViewModel(QObject *parent)
   : QObject(parent)
@@ -75,11 +74,15 @@ void LicenseViewModel::okPressed() {
 
 void LicenseViewModel::searchPressed()
 {
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(0, this->_service, this->_service->installPath());
-  if (newDirectory.isEmpty())
-    return;
+  GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
+  dialog->getDirectory(this->_service->name(), this->_service->installPath());
 
-  this->setPathToInstall(newDirectory);
+  QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
+    dialog->deleteLater();
+
+    if (!newDirectory.isEmpty()) 
+      this->setPathToInstall(newDirectory);
+  });
 }
 
 void LicenseViewModel::setLicense(const QString& license)

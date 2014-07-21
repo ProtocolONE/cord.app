@@ -1,4 +1,5 @@
 #include <ViewModel/GameSettingsViewModel.h>
+#include <Helper/GetDirectoryDialog.h>
 
 #include <Core/Service>
 #include <Core/System/Shell/ShortCut.h>
@@ -237,107 +238,30 @@ void GameSettingsViewModel::setHasDownloadPath(bool hasDownloadPath)
   }
 }
 
-QString GetFolderName(int type) {
-  wchar_t tmp[MAX_PATH];
-  if (SHGetSpecialFolderPath(0, tmp, type, false))
-    return QString::fromWCharArray(tmp);
-
-  return QString();
-}
-
-QString GameSettingsViewModel::browseDirectory(const QString& serviceId, const QString& name, const QString& defaultDir)
-{
-  GGS::Core::Service service;
-  service.setName(name);
-  return this->getGameDirectory(0, &service, defaultDir);
-}
-
-QString GameSettingsViewModel::getGameDirectory(QWidget* parent, GGS::Core::Service *service, const QString& defaultDir)
-{
-  QString newDirectory = QFileDialog::getExistingDirectory(parent, tr("CAPTION_OPEN_DIR"), defaultDir,
-    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-  if (newDirectory.isEmpty())
-    return QString();
-
-  newDirectory = QDir::toNativeSeparators(newDirectory);
-
-  int deniedFolders[] = { CSIDL_PROGRAM_FILES,
-    CSIDL_PROGRAM_FILES_COMMON,
-    CSIDL_SYSTEM,
-    CSIDL_WINDOWS,
-    -1 };
-
-  for (int i = 0; i < sizeof(deniedFolders) / sizeof(int); ++i) {
-    QString folderName;
-
-    if (deniedFolders[i] == -1) {
-      WCHAR szNativeProgramFilesFolder[MAX_PATH];
-      ExpandEnvironmentStrings(L"%ProgramW6432%", 
-        szNativeProgramFilesFolder, 
-        ARRAYSIZE(szNativeProgramFilesFolder));
-      folderName = QString::fromWCharArray(szNativeProgramFilesFolder);
-    } else {
-      folderName = QDir::toNativeSeparators(GetFolderName(deniedFolders[i]));
-    }
-
-    if (newDirectory.compare(folderName, Qt::CaseInsensitive) == 0) {
-      GGS::Core::UI::Message::information(tr("DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO"),
-        tr("DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION").arg(folderName));
-
-      return QString();
-    }
-  }
-
-  QString winDir = QDir::toNativeSeparators(GetFolderName(CSIDL_WINDOWS));
-
-  if (newDirectory.startsWith(winDir, Qt::CaseInsensitive)) {
-    GGS::Core::UI::Message::information(tr("DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO"), 
-      tr("DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION").arg(winDir));
-
-    return QString();
-  }
-
-  QDir dir(newDirectory);
-  dir.setFilter(QDir::NoDotAndDotDot);
-
-  if (dir.isRoot()) {
-    return newDirectory + service->name();
-  } 
-  
-  QDirIterator it(newDirectory, QDirIterator::Subdirectories);
-  for (int count = 0; it.hasNext(); ++count, it.next()) {
-    if (count > 2) {
-      if (GGS::Core::UI::Message::question(tr("DIRECTORY_NOT_EMPTY_INFO"), 
-          tr("DIRECTORY_NOT_EMPTY_QUESTION"), 
-          static_cast<GGS::Core::UI::Message::StandardButton>(GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Cancel)) == GGS::Core::UI::Message::Cancel) {
-            return QString();
-        }
-
-      break;
-    }
-  }
-
-  return newDirectory;
-}
-
-void GameSettingsViewModel::browseInstallPath()
+void GameSettingsViewModel::browseInstallPath(const QString &preferedPath)
 {
   Q_CHECK_PTR(this->_serviceList);
   if (!this->_serviceList->contains(this->_currentServiceId)) {
     CRITICAL_LOG << "Unknown service";
-    return;
+    return; 
   }
 
   GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
   Q_CHECK_PTR(service);
 
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(qobject_cast<QWidget*>(parent()), service, service->installPath());
-  if (newDirectory.isEmpty()) {
-    return;
-  }
+  QString defaultPath = !preferedPath.isEmpty()
+      ? preferedPath
+      : service->installPath();
 
-  this->setInstallPath(newDirectory);
+  GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
+  dialog->getDirectory(service->name(), defaultPath);
+
+  QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
+    dialog->deleteLater();
+
+    if (!newDirectory.isEmpty()) 
+      this->setInstallPath(newDirectory);
+  });
 }
 
 void GameSettingsViewModel::browseDownloadPath()
@@ -353,11 +277,15 @@ void GameSettingsViewModel::browseDownloadPath()
   if (!service->hashDownloadPath())
     return;
 
-  QString newDirectory = GameSettingsViewModel::getGameDirectory(qobject_cast<QWidget*>(parent()), service, service->downloadPath());
-  if (newDirectory.isEmpty())
-    return;
+  GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
+  dialog->getDirectory(service->name(), service->downloadPath());
 
-  this->setDownloadPath(newDirectory);
+  QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
+    dialog->deleteLater();
+
+    if (!newDirectory.isEmpty()) 
+      this->setDownloadPath(newDirectory);
+  });
 }
 
 void GameSettingsViewModel::removeShortCutByName(const QString& name)
@@ -386,5 +314,3 @@ void GameSettingsViewModel::removeShortCutByName(const QString& name)
       QFile::remove(lnkroot);
   }
 }
-
-

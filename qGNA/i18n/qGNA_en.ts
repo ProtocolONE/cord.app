@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.0" language="en_US">
 <context>
     <name>GameSettingsViewModel</name>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="257"/>
         <source>CAPTION_OPEN_DIR</source>
         <translation>Open directory</translation>
     </message>
+</context>
+<context>
+    <name>GetDirectoryDialog</name>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="285"/>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="295"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="27"/>
+        <source>CAPTION_OPEN_DIR</source>
+        <translation type="unfinished">Open directory</translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="50"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="59"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="286"/>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="296"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="51"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="60"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="311"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="73"/>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/GameSettingsViewModel.cpp" line="312"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="74"/>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -41,32 +48,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1042"/>
         <location filename="../src/mainwindow.cpp" line="1048"/>
-        <location filename="../src/mainwindow.cpp" line="1072"/>
-        <location filename="../src/mainwindow.cpp" line="1075"/>
-        <location filename="../src/mainwindow.cpp" line="1125"/>
+        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1081"/>
+        <location filename="../src/mainwindow.cpp" line="1131"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1042"/>
-        <location filename="../src/mainwindow.cpp" line="1075"/>
+        <location filename="../src/mainwindow.cpp" line="1048"/>
+        <location filename="../src/mainwindow.cpp" line="1081"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
+        <location filename="../src/mainwindow.cpp" line="1054"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1072"/>
+        <location filename="../src/mainwindow.cpp" line="1078"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1125"/>
+        <location filename="../src/mainwindow.cpp" line="1131"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>
