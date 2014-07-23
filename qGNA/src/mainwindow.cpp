@@ -79,6 +79,8 @@ void MainWindow::initialize()
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
 
+  qRegisterMetaType<Features::Thetta::ThettaInstaller::Result>("Features::Thetta::ThettaInstaller::Result");
+
   this->initMarketing();
   
   //next 2 lines QGNA-60
@@ -386,7 +388,7 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), 
     SIGNAL(disconnected(Features::Thetta::ThettaInstaller::Result)),
     this, 
-    SLOT(restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result))));
+    SLOT(restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result)), Qt::QueuedConnection));
 
   this->_restartArguments = shouldStartWithSameArguments;
   this->_serviceLoader.thettaInstaller()->disconnectFromDriver();
