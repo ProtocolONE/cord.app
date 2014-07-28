@@ -151,7 +151,8 @@ void MainWindow::initialize()
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(windowClose()), this, SLOT(onWindowClose())));
+
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->nQMLContainer->engine(), SIGNAL(quit()), this, SLOT(onWindowClose())));
 
 
 
@@ -306,7 +307,7 @@ void MainWindow::onSystemBarReleased(int MouseX, int MouseY)
 
 void MainWindow::onSystemBarPositionChanged(int MouseX, int MouseY) 
 {
-  move(pos() + (QPoint(MouseX,MouseY) - mLastMousePosition));   
+  move(pos() + (QPoint(MouseX,MouseY) - mLastMousePosition));
 }
 
 void MainWindow::onWindowClose()
@@ -330,7 +331,7 @@ void MainWindow::onForceWindowClose()
   this->onWindowClose();
 }
 
-void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie) 
+void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie)
 {
   qDebug() << "Auth success with userId " << userId;
 
