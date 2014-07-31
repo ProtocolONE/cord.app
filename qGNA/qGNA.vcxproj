@@ -95,6 +95,7 @@ xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.jpg" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.style" "$(TargetDir)"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -159,9 +160,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Qxmpp\$(QxmppArea)\bin\qxmpp_d%D%0.dll" "$(TargetDir)"
 
 IF "$(Configuration)"=="Debug" (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\QXmpp\0.8.0\bin\qxmpp_d0.dll" "$(TargetDir)"
+     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\1.0\bin\qxmpp_d0.dll" "$(TargetDir)"
 )  ELSE (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\QXmpp\0.8.0\bin\qxmpp0.dll" "$(TargetDir)"
+     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\1.0\bin\qxmpp0.dll" "$(TargetDir)"
 )
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\1.0\bin\qxmpp-declarative%D%.dll" "$(TargetDir)"
 
@@ -256,6 +257,7 @@ xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.jpg" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
 xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.style" "$(TargetDir)"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -320,9 +322,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Qxmpp\$(QxmppArea)\bin\qxmppx86%D%0.dll" "$(TargetDir)"
 
 IF "$(Configuration)"=="Debug" (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\QXmpp\0.8.0\bin\qxmpp_d0.dll" "$(TargetDir)"
+     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\1.0\bin\qxmpp_d0.dll" "$(TargetDir)"
 )  ELSE (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\QXmpp\0.8.0\bin\qxmpp0.dll" "$(TargetDir)"
+     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\1.0\bin\qxmpp0.dll" "$(TargetDir)"
 )
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\1.0\bin\qxmpp-declarative%D%.dll" "$(TargetDir)"
 
