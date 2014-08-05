@@ -30,10 +30,10 @@ GameSettingsViewModel::~GameSettingsViewModel()
 {
 }
 
-void GameSettingsViewModel::createShortcutOnDesktop()
+void GameSettingsViewModel::createShortcutOnDesktop(const QString& serviceId)
 {
   Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(this->_currentServiceId)) {
+  if (!this->_serviceList->contains(serviceId)) {
     CRITICAL_LOG << "Unknown service";
     return;
   }
@@ -54,10 +54,10 @@ void GameSettingsViewModel::createShortcutOnDesktop(GGS::Core::Service *service)
   }
 }
 
-void GameSettingsViewModel::createShortcutInMainMenu()
+void GameSettingsViewModel::createShortcutInMainMenu(const QString& serviceId)
 {
   Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(this->_currentServiceId)) {
+  if (!this->_serviceList->contains(serviceId)) {
     CRITICAL_LOG << "Unknown service";
     return;
   }

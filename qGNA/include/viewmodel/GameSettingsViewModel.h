@@ -35,8 +35,8 @@ public:
   void removeShortCutByName(const QString& name);
 
 public slots: 
-  void createShortcutOnDesktop();
-  void createShortcutInMainMenu();
+  void createShortcutOnDesktop(const QString& serviceId);
+  void createShortcutInMainMenu(const QString& serviceId);
 
   void browseInstallPath(const QString &preferedPath = QString());
   void browseDownloadPath();

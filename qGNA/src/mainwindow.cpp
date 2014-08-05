@@ -105,7 +105,6 @@ void MainWindow::initialize()
 
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   
-  this->licenseModel = new LicenseViewModel(this);
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
   
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(incomingPortChanged()), this, SLOT(settingsIncomingPortChangedSlot())));
@@ -114,8 +113,6 @@ void MainWindow::initialize()
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(uploadSpeedChanged()), this, SLOT(settingsUploadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(applicationAreaChanged()), this, SLOT(applicationAreaChanged())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(seedEnabledChanged()), this, SLOT(seedEnabledChanged())));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(licenseModel, SIGNAL(result()), this, SLOT(licenseOkPressed())));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_restapiManager, SIGNAL(genericError(GGS::RestApi::CommandBase::Error, QString)), 
     this, SLOT(restApiGenericError(GGS::RestApi::CommandBase::Error, QString))));
@@ -135,7 +132,6 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
   nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
-  nQMLContainer->rootContext()->setContextProperty("licenseModel", licenseModel);
   nQMLContainer->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
@@ -790,10 +786,18 @@ void MainWindow::downloadButtonStart(QString serviceId)
 
   emit this->downloadButtonStartSignal(serviceId); 
 
-  if (service->isDownloadable())
-    this->checkLicense(serviceId);
-  else
+  if (!service->isDownloadable()) {
     this->_premiumExecutor.executeMain(service);
+    return;
+  }
+
+  if (this->isLicenseAccepted(serviceId)) {
+    this->startGame(serviceId);
+    return;
+  }
+
+  this->activateWindow();
+  emit showLicense(serviceId);
 }
 
 void MainWindow::downloadButtonPause(QString serviceId)
@@ -846,39 +850,7 @@ void MainWindow::initializeUpdateSettings()
     this, SLOT(checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results))));
 }
 
-void MainWindow::licenseOkPressed()
-{
-  QString serviceId = this->licenseModel->serviceId();
-
-  bool licenseAcceppted = this->licenseModel->licenseAccepted(); 
-  if (!licenseAcceppted)
-    return;
-
-  GGS::Core::Service *service = this->getService(serviceId);  
-
-  // UNDONE: перенести код в GameSettingsViewModel
-  bool shurtCutInDesktop = this->licenseModel->shurtCutInDesktop();
-  if (shurtCutInDesktop)
-    this->_gameSettingsViewModel->createShortcutOnDesktop(service);
-
-  bool shurtCutInStart = this->licenseModel->shurtCutInStart();  
-  if (shurtCutInStart)
-    this->_gameSettingsViewModel->createShortcutInMainMenu(service);
-
-  // UNDONE: тут поменять пути до инсталяторов
-  QString hash = this->licenseModel->hash();
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);         
-  settings.beginGroup(serviceId);
-  settings.setValue("LicenseHash", hash);
-
-  QString pathToInstall = licenseModel->pathToInstall();
-  this->setServiceInstallPath(serviceId, pathToInstall, false);
-
-  this->licenseModel->closeLicense();
-  this->startGame(serviceId);
-}
-
-void MainWindow::checkLicense(const QString& serviceId)
+bool MainWindow::isLicenseAccepted(const QString& serviceId)
 {
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.beginGroup(serviceId);
@@ -888,46 +860,15 @@ void MainWindow::checkLicense(const QString& serviceId)
     hash = "fake_hash";
 
   if (!hash.isEmpty()) {
-    this->startGame(serviceId);
-    return;
+    return true;
   }
 
-  GGS::RestApi::Commands::Service::GetLicense *cmd = new GGS::RestApi::Commands::Service::GetLicense(serviceId);
-  SIGNAL_CONNECT_CHECK(connect(
-    cmd, SIGNAL(result(GGS::RestApi::CommandBase::CommandResults)), 
-    this, SLOT(licenseResult(GGS::RestApi::CommandBase::CommandResults))));
-
-  cmd->setHash(hash);
-  cmd->execute();
+  return false;
 }
 
-void MainWindow::licenseResult(GGS::RestApi::CommandBase::CommandResults result)
+void MainWindow::checkLicense(const QString& serviceId)
 {
-  GGS::RestApi::Commands::Service::GetLicense *cmd = qobject_cast<GGS::RestApi::Commands::Service::GetLicense *>(QObject::sender());
-  if (!cmd)
-    return;
-
-  cmd->deleteLater();
-
-  if (result != GGS::RestApi::CommandBase::NoError) {
-    // UNDONE: set error state or retry
-    return;
-  }
-
-  QString serviceId = cmd->serviceId();
-  if (!cmd->isLicenseNew()) {
-    this->startGame(serviceId);
-    return;
-  }
-
-  this->activateWindow();
-  GGS::Core::Service *service = this->getService(serviceId);
-  QString hash = cmd->responseHash();
-  QString license = cmd->licenseText();
-
-  this->licenseModel->setPathToInstall(this->_serviceLoader.getExpectedInstallPath(serviceId));
-  this->licenseModel->setLicense(license);
-  this->licenseModel->openLicense(service, hash);
+  
 }
 
 void MainWindow::startGame(const QString& serviceId)
@@ -1311,7 +1252,7 @@ QString MainWindow::getExpectedInstallPath(const QString& serviceId)
   return this->_serviceLoader.getExpectedInstallPath(serviceId);
 }
 
-void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& path, bool createShortcuts)
+void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& path)
 {
   GGS::Core::Service *service = this->getService(serviceId);
   if (!service)
@@ -1330,11 +1271,6 @@ void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& 
   } else {
     service->setDownloadPath(path);
     service->setTorrentFilePath(path); 
-  }
-
-  if (createShortcuts) {
-    this->_gameSettingsViewModel->createShortcutOnDesktop(service);
-    this->_gameSettingsViewModel->createShortcutInMainMenu(service);
   }
 }
 

@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "viewmodel/LicenseViewModel.h"
 #include "viewmodel/SettingsViewModel.h"
 #include "viewmodel/EnterNickNameViewModel.h"
 #include "viewmodel/GameSettingsViewModel.h"
@@ -122,7 +121,6 @@ public slots:
   void restartApplication(bool shouldStartWithSameArguments = true);
   void authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie);
   void userMainInfoResult(GGS::RestApi::CommandBase::CommandResults);
-  void licenseResult(GGS::RestApi::CommandBase::CommandResults);
 
   void openExternalUrlWithAuth(const QString& url);
   void openExternalUrl(const QString& url);
@@ -130,8 +128,6 @@ public slots:
 
   void downloadButtonStart(QString serviceId);
   void downloadButtonPause(QString serviceId);
-
-  void licenseOkPressed();
 
   void settingsIncomingPortChangedSlot();
   void settingsNumConnectionsChangedSlot();
@@ -154,9 +150,10 @@ public slots:
   bool isWindowVisible();
 
   bool anyLicenseAccepted();
+  bool isLicenseAccepted(const QString& serviceId);
   QString startingService();
   QString getExpectedInstallPath(const QString& serviceId);
-  void setServiceInstallPath(const QString& serviceId, const QString& path, bool createShortcuts);
+  void setServiceInstallPath(const QString& serviceId, const QString& path);
   void acceptFirstLicense(const QString& serviceId);
   void initFinished();
   void initialize();
@@ -189,7 +186,6 @@ private:
   GGS::RestApi::RestApiManager _restapiManager;
 
   QmlMessageAdapter* messageAdapter;
-  LicenseViewModel* licenseModel;
   SettingsViewModel* settingsViewModel;
   EnterNickNameViewModel *_enterNickViewModel;
   GameSettingsViewModel *_gameSettingsViewModel;
@@ -283,6 +279,8 @@ signals:
   void authGuestConfirmRequest(QString serviceId);
 
   void taskBarButtonMsgRegistered(unsigned int msgId);
+
+  void showLicense(QString serviceId);
 
 private slots:
   void onServiceStarted(const GGS::Core::Service &service);
