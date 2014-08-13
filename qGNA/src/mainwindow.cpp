@@ -757,6 +757,9 @@ void MainWindow::shutdownCompleted()
   // Там куча потоков ждет заверешния процессов игры, и падает при удалении.
   // Этим мы закрываем игры до того как начнем удалять запусктор.
   this->_serviceLoader.thettaInstaller()->disconnectFromDriver();
+  // INFO Это пока относительно легкий способ побороть проблему падения qGNA после его закрытия, если запущена игра
+  // Убрать после переписывания запускатора
+  Sleep(500);
   this->_premiumExecutor.shutdown();
   DEBUG_LOG << "shutdownCompleted";
   QCoreApplication::quit();
