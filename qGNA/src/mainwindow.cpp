@@ -60,7 +60,6 @@ void MainWindow::initialize()
   this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
-    | Qt::WindowMaximizeButtonHint 
     | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы       
 
   this->translatorsParse();
