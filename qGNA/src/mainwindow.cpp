@@ -833,6 +833,10 @@ void MainWindow::initializeUpdateSettings()
     this->_updateArea = QString("tst");
     this->_applicationArea = GGS::Core::Service::Tst;
     break;
+  case 3:
+    this->_updateArea = QString("2live");
+    this->_applicationArea = GGS::Core::Service::Live;
+    break;
   default:
     this->_updateArea = QString("live");  
     this->_applicationArea = GGS::Core::Service::Live;
