@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.1" language="en_US">
 <context>
     <name>GameSettingsViewModel</name>
     <message>
         <source>CAPTION_OPEN_DIR</source>
-        <translation>Open directory</translation>
+        <translation type="vanished">Open directory</translation>
     </message>
 </context>
 <context>
@@ -48,32 +48,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
-        <location filename="../src/mainwindow.cpp" line="1078"/>
-        <location filename="../src/mainwindow.cpp" line="1081"/>
-        <location filename="../src/mainwindow.cpp" line="1131"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
+        <location filename="../src/mainwindow.cpp" line="1058"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
-        <location filename="../src/mainwindow.cpp" line="1081"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1131"/>
+        <location filename="../src/mainwindow.cpp" line="1058"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>
@@ -81,12 +81,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="189"/>
+        <location filename="../src/mainwindow.cpp" line="190"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="190"/>
+        <location filename="../src/mainwindow.cpp" line="191"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation type="unfinished"></translation>
     </message>

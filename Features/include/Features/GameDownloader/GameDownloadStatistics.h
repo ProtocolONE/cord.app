@@ -32,7 +32,10 @@ namespace Features {
       void init(GGS::GameDownloader::GameDownloadService* downloader);
 
     private slots:
-      void progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args); 
+      void progressDownloadChanged(
+        const GGS::Core::Service *service, 
+        qint8 progress, 
+        GGS::Libtorrent::EventArgs::ProgressEventArgs args); 
 
       void started(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
       void finished(const GGS::Core::Service *service);

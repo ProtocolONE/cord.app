@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>GameSettingsViewModel</name>
     <message>
         <source>CAPTION_OPEN_DIR</source>
-        <translation>Выберите папку</translation>
+        <translation type="vanished">Выберите папку</translation>
     </message>
     <message>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
-        <translation>Внимание</translation>
+        <translation type="vanished">Внимание</translation>
     </message>
     <message>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
-        <translation>Установка игры в папку (%1) не возможна.</translation>
+        <translation type="vanished">Установка игры в папку (%1) не возможна.</translation>
     </message>
     <message>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
-        <translation>Внимание</translation>
+        <translation type="vanished">Внимание</translation>
     </message>
     <message>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
-        <translation>Вы устанавливаете игру в директорию, которая уже содержит файлы. При деинсталляции все содержимое данной директории будет удалено. Вы уверены?</translation>
+        <translation type="vanished">Вы устанавливаете игру в директорию, которая уже содержит файлы. При деинсталляции все содержимое данной директории будет удалено. Вы уверены?</translation>
     </message>
 </context>
 <context>
@@ -80,17 +80,17 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
-        <location filename="../src/mainwindow.cpp" line="1078"/>
-        <location filename="../src/mainwindow.cpp" line="1081"/>
-        <location filename="../src/mainwindow.cpp" line="1131"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
+        <location filename="../src/mainwindow.cpp" line="1058"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1048"/>
-        <location filename="../src/mainwindow.cpp" line="1081"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;http://support.gamenet.ru&lt;/font&gt;&lt;/a&gt;  </translation>
     </message>
@@ -99,17 +99,17 @@
         <translation type="obsolete">Вход в игру доступен только для участников тестирования. О завершении тестирования и об открытии доступа в игру будет сообщено в новостях.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1131"/>
+        <location filename="../src/mainwindow.cpp" line="1058"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>Доступно новое обновление. Необходимо перезапустить приложение.</translation>
     </message>
@@ -125,12 +125,12 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="189"/>
+        <location filename="../src/mainwindow.cpp" line="190"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation>Упс! У нас иногда не получается нормально запускаться в режиме цветопередачи 16-бит. Простите, если это произошло в этот раз. Мы исправимся, а пока измените настроки цветопередачи на 32-бита.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="190"/>
+        <location filename="../src/mainwindow.cpp" line="191"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation>Информация</translation>
     </message>

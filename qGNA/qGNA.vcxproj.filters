@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseViewModel.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_settingsviewmodel.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseViewModel.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_settingsviewmodel.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp" />
@@ -84,6 +82,15 @@
     <ClCompile Include="src\Helper\GetDirectoryDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeProxy.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dbus\DownloaderBridgeProxy.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -117,6 +124,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Helper\GetDirectoryDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Dbus\DownloaderBridgeProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

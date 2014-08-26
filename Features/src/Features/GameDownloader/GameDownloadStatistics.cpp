@@ -17,6 +17,8 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/QDebug>
 
+using GGS::GameDownloader::GameDownloadService;
+
 namespace Features {
   namespace GameDownloader {
 
@@ -30,39 +32,40 @@ namespace Features {
 
     void GameDownloadStatistics::init(GGS::GameDownloader::GameDownloadService* downloader)
     {
-      SIGNAL_CONNECT_CHECK(QObject::connect(downloader, 
-        SIGNAL(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
-        this, 
-        SLOT(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
+      QObject::connect(downloader, &GameDownloadService::downloadProgressChanged,
+        this, &GameDownloadStatistics::progressDownloadChanged);
 
-      SIGNAL_CONNECT_CHECK(QObject::connect(
-        downloader, SIGNAL(started(const GGS::Core::Service*, GGS::GameDownloader::StartType)), 
-        this, SLOT(started(const GGS::Core::Service *, GGS::GameDownloader::StartType))));
-      SIGNAL_CONNECT_CHECK(QObject::connect(downloader, SIGNAL(finished(const GGS::Core::Service *)), 
-        this, SLOT(finished(const GGS::Core::Service *))));
-      SIGNAL_CONNECT_CHECK(QObject::connect(downloader, SIGNAL(stopped(const GGS::Core::Service *)), 
-        this, SLOT(stopped(const GGS::Core::Service *))));
-      SIGNAL_CONNECT_CHECK(QObject::connect(downloader, SIGNAL(failed(const GGS::Core::Service *)), 
-        this, SLOT(failed(const GGS::Core::Service *))));
+      QObject::connect(downloader, &GameDownloadService::started,
+        this, &GameDownloadStatistics::started);
 
-      this->_timer.setInterval(30000);
-      SIGNAL_CONNECT_CHECK(QObject::connect(&this->_timer, SIGNAL(timeout()), this, SLOT(saveTimer())));
-      this->_timer.start();
+      QObject::connect(downloader, &GameDownloadService::finished,
+        this, &GameDownloadStatistics::finished);
+
+      QObject::connect(downloader, &GameDownloadService::stopped,
+        this, &GameDownloadStatistics::stopped);
+
+      QObject::connect(downloader, &GameDownloadService::failed,
+        this, &GameDownloadStatistics::failed);
+
+      QObject::connect(&this->_timer, &QTimer::timeout, this, &GameDownloadStatistics::saveTimer);
+      this->_timer.start(30000);
 
       ExternalIpAddress *externalIp = new ExternalIpAddress(this);
-      SIGNAL_CONNECT_CHECK(QObject::connect(externalIp, SIGNAL(result(QString)), 
-        this, SLOT(externalIpResult(QString))));
+      QObject::connect(externalIp, &ExternalIpAddress::result, 
+        this, &GameDownloadStatistics::externalIpResult);
+
       externalIp->execute();
     }
 
     void GameDownloadStatistics::progressDownloadChanged(
-      QString serviceId,
+      const GGS::Core::Service *service,
       qint8 progress,
       GGS::Libtorrent::EventArgs::ProgressEventArgs args)
     {
       if (!this->_mutex.tryLock())
         return;
 
+      QString serviceId(service->id());
       if (this->_statisticMap.contains(serviceId)) {
         DownloadStats *stats = this->_statisticMap[serviceId];
         stats->update(args.downloadRate(), args.uploadRate(), args.totalWanted());

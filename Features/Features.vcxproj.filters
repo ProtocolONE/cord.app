@@ -1,280 +1,137 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;cxx;c;def</Extensions>
-    </Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ExternalIpAddress.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_LanguageChangeEventFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_PremiumExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_SilentMode.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_TaskBarEventFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_taskbarprogresshelper.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaHashSender.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaInstaller.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitorApp.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaSender.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ExternalIpAddress.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_LanguageChangeEventFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_PremiumExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_SilentMode.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_TaskBarEventFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaHashSender.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaInstaller.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitorApp.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaSender.cpp" />
+    <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp" />
+    <ClCompile Include="src\Features\SilentMode.cpp" />
+    <ClCompile Include="src\Features\TaskBarEventFilter.cpp" />
+    <ClCompile Include="src\Features\Thetta\ForbiddenCertificateTester.cpp" />
+    <ClCompile Include="src\Features\Thetta\Protector.cpp" />
+    <ClCompile Include="src\Features\PremiumExecutor.cpp" />
+    <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadStats.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadStatistics.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_RememberGameDownloading.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_RemouteStartGame.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThronInstaller.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_CASettingsFix.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloadStats.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadStatistics.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_RememberGameDownloading.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_RemouteStartGame.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ThronInstaller.cpp" />
+    <ClCompile Include="src\Features\CASettingsFix.cpp" />
+    <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
+    <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
+    <ClCompile Include="src\Features\RememberGameDownloading.cpp" />
+    <ClCompile Include="src\Features\RemouteStartGame.cpp" />
+    <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp" />
+    <ClCompile Include="src\Features\TaskBarProgressHelper.cpp" />
+    <ClCompile Include="src\Features\Thetta\Json.cpp" />
+    <ClCompile Include="src\Features\Thetta\ProtectorHooks.cpp" />
+    <ClCompile Include="src\Features\Thetta\ThettaInstaller.cpp" />
+    <ClCompile Include="src\Features\Thetta\ThettaMonitor.cpp" />
+    <ClCompile Include="src\Features\Thetta\ThettaSender.cpp" />
+    <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp" />
+    <ClCompile Include="src\Features\ThronInstaller.cpp" />
+    <ClCompile Include="src\Features\Thetta\ThettaMonitorApp.cpp" />
+    <ClCompile Include="src\Features\Thetta\ThettaHashSender.cpp" />
+    <ClCompile Include="src\Features\Thetta\DistrIntegrity.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\DistrIntegrityExecutorHook.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DistrIntegrity.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrity.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DistrIntegrityExecutorHook.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrityExecutorHook.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
+    <ClInclude Include="include\Features\Thetta\ProtectorHooks.h" />
+    <ClInclude Include="include\Features\Thetta\TlsInitializer.h" />
+    <ClInclude Include="include\Features\Thetta\Json.h" />
+    <ClInclude Include="include\Features\Thetta\Protector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="include\Features\RemouteStartGame.h" />
+    <CustomBuild Include="include\Features\RememberGameDownloading.h" />
+    <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h" />
+    <CustomBuild Include="include\Features\CASettingsFix.h" />
+    <CustomBuild Include="include\Features\ThronInstaller.h" />
+    <CustomBuild Include="include\Features\GameDownloader\DownloadStats.h" />
+    <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
+    <CustomBuild Include="include\Features\GameDownloader\ExternalIpAddress.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaMonitor.h" />
+    <CustomBuild Include="include\Features\TaskBarEventFilter.h" />
+    <CustomBuild Include="include\Features\LanguageChangeEventFilter.h" />
+    <CustomBuild Include="include\Features\SilentMode.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaHashSender.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaMonitorApp.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaSender.h" />
+    <CustomBuild Include="include\features\taskbarprogresshelper.h" />
+    <CustomBuild Include="include\Features\PremiumExecutor.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h" />
+    <CustomBuild Include="include\features\thetta\DistrIntegrity.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\features\thetta\DistrIntegrityExecutorHook.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h</Extensions>
-    </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
+      <ParseFiles>true</ParseFiles>
     </Filter>
     <Filter Include="Generated Files">
       <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
       <Extensions>moc;h;cpp</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
+      <ParseFiles>true</ParseFiles>
     </Filter>
     <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{d38a8c52-c89c-4c72-b3c3-2983bbae1755}</UniqueIdentifier>
+      <UniqueIdentifier>{e52ffd06-2faf-4661-89a6-b99e57c1b1df}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{2612fd52-7aca-4397-9c3d-447ef990b564}</UniqueIdentifier>
+      <UniqueIdentifier>{d35226f7-7d15-4bb6-83e1-ad5234f091f0}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Features\RemouteStartGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\RememberGameDownloading.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_RemouteStartGame.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_RemouteStartGame.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_RememberGameDownloading.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_RememberGameDownloading.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_StopDownloadServiceWhileExecuteAnyGame.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_StopDownloadServiceWhileExecuteAnyGame.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\CASettingsFix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CASettingsFix.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThronInstaller.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThronInstaller.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\ThronInstaller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadStats.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadStats.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadStatistics.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadStatistics.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExternalIpAddress.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ExternalIpAddress.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ThettaMonitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Json.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaInstaller.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThettaInstaller.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ThettaInstaller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\PremiumExecutor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_PremiumExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_PremiumExecutor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\TaskBarProgressHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_taskbarprogresshelper.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Protector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ProtectorHooks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ForbiddenCertificateTester.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ThettaMonitorApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitorApp.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitorApp.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaHashSender.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThettaHashSender.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ThettaHashSender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\SilentMode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SilentMode.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SilentMode.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_TaskBarEventFilter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_TaskBarEventFilter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\TaskBarEventFilter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_LanguageChangeEventFilter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_LanguageChangeEventFilter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="include\Features\RemouteStartGame.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\RememberGameDownloading.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\CASettingsFix.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\ThronInstaller.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\GameDownloader\DownloadStats.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\GameDownloader\ExternalIpAddress.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ThettaMonitor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\PremiumExecutor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\features\taskbarprogresshelper.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ThettaSender.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ThettaMonitorApp.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ThettaHashSender.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\SilentMode.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\TaskBarEventFilter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\LanguageChangeEventFilter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Features\Thetta\Json.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Features\Thetta\TlsInitializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Features\Thetta\Protector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Features\Thetta\ProtectorHooks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Features\Thetta\ForbiddenCertificateTester.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

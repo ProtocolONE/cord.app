@@ -5,6 +5,7 @@
 
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/Protector.h>
+#include <Features/Thetta/DistrIntegrityExecutorHook.h>
 
 #include <GameExecutor/Extension.h>
 #include <GameExecutor/Hook/RestoreResolution>
@@ -81,6 +82,9 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
 
   this->_gameDownloader->registerHook("300004010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
+
+  this->_gameDownloader->registerHook("300009010000000000", -1, -1, &this->_caDistIntegrity);
+
 }
 
 GGS::Core::Service* ServiceLoader::getService(const QString& id)
@@ -105,7 +109,6 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   QString root = QCoreApplication::applicationDirPath();
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-
   settings.beginGroup(id);
 
   QString currentInstallPath = settings.value("InstallPath").toString();
@@ -411,6 +414,11 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     if (dwMajorVersion == 6 && dwMinorVersion >=0 && dwMinorVersion <= 2)
       this->_gameExecutorService->addHook(*service, new GGS::GameExecutor::Hook::DisableAeroHook(service));
 
+    Features::Thetta::DistrIntegrityExecutorHook *distrCheck = new Features::Thetta::DistrIntegrityExecutorHook(service);
+    distrCheck->setDistrIntegrity(&this->_caDistIntegrity);
+    distrCheck->setGameExecutor(this->_gameExecutorService);
+    this->_gameExecutorService->addHook(*service, distrCheck, -1);
+
     // TODO change to next code after switch to 4.8.3 or grater
     //QSysInfo::WinVersion version = QSysInfo::windowsVersion();
     //if (version == QSysInfo::WV_VISTA || version == QSysInfo::WV_WINDOWS7 || version == QSysInfo::WV_WINDOWS8)
@@ -621,6 +629,7 @@ Features::Thetta::ThettaInstaller* ServiceLoader::thettaInstaller()
 QString ServiceLoader::getDriverToken(const QString& salt, const QString& token)
 {
   MemoryProtector_CheckFunction4(0x4FEE102, 0x588FFDB0, 0x6CC7D53, 0x57d01d20);
+  MemoryProtector_CheckProtectedMemory;
   QString result = this->_installer->driver()->getServiceToken(salt, token);
   MemoryProtector_CheckCreateProcess;
   return result;

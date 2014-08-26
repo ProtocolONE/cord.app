@@ -27,6 +27,8 @@
 
 #include <HookEngine/HookEngine.h>
 
+#include <Dbus/DownloaderBridgeProxy.h>
+
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
 MainWindow::MainWindow(QWidget *parent) 
@@ -381,10 +383,10 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
     return;
   }
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), 
-    SIGNAL(disconnected(Features::Thetta::ThettaInstaller::Result)),
-    this, 
-    SLOT(restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result)), Qt::QueuedConnection));
+  using Features::Thetta::ThettaInstaller;
+
+  QObject::connect(this->_serviceLoader.thettaInstaller(), &ThettaInstaller::disconnected,
+    this, &MainWindow::restartApplicationAfterDriverDisconnect, Qt::QueuedConnection);
 
   this->_restartArguments = shouldStartWithSameArguments;
   this->_serviceLoader.thettaInstaller()->disconnectFromDriver();
@@ -533,6 +535,8 @@ GGS::Core::Service* MainWindow::getService(const QString& id)
 
 void MainWindow::prepairGameDownloader()
 {
+  this->_downloader = new DownloaderBridgeProxy("GameNet.GameDownloader", "/downloader", QDBusConnection::sessionBus(), this);
+
   QString root = QCoreApplication::applicationDirPath();
   this->initServices();
 
@@ -552,36 +556,35 @@ void MainWindow::prepairGameDownloader()
   this->settingsUploadSpeedChangedSlot();
   this->settingsNumConnectionsChangedSlot();
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressChanged(QString, qint8)), 
-    this, SLOT(progressChanged(QString, qint8))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
-    this, SLOT(progressDownloadChanged(QString, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(progressExtractionChanged(QString, qint8, qint64, qint64)), 
-    this, SLOT(progressExtractionChanged(QString, qint8, qint64, qint64))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(totalProgressChanged(const GGS::Core::Service *, qint8)), 
-    this, SLOT(downloadGameTotalProgressChanged(const GGS::Core::Service *, qint8))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(downloadProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs)), 
-    this, SLOT(downloadGameProgressChanged(const GGS::Core::Service *, qint8, GGS::Libtorrent::EventArgs::ProgressEventArgs))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
-    this, SLOT(gameDownloaderStarted(const GGS::Core::Service *, GGS::GameDownloader::StartType))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(finished(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderFinished(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(stopped(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderStopped(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(stopping(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderStopping(const GGS::Core::Service *))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(failed(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderFailed(const GGS::Core::Service *))));
+  using GGS::GameDownloader::GameDownloadService;
   
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(shutdownCompleted()),
-    this, SLOT(shutdownCompleted())));
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::totalProgressChanged, 
+    this, &MainWindow::downloadGameTotalProgressChanged);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(listeningPortChanged(unsigned short)),
-    this, SLOT(torrentListenPortChangedSlot(unsigned short)))); 
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::downloadProgressChanged, 
+    this, &MainWindow::downloadGameProgressChanged);
 
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::started, 
+    this, &MainWindow::gameDownloaderStarted);
+
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::finished, 
+    this, &MainWindow::gameDownloaderFinished);
+
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::stopped, 
+    this, &MainWindow::gameDownloaderStopped);
+
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::stopping, 
+    this, &MainWindow::gameDownloaderStopping);
+
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::failed, 
+    this, &MainWindow::gameDownloaderFailed);
+
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::shutdownCompleted, 
+    this, &MainWindow::shutdownCompleted);
+  
+  QObject::connect(&this->_gameDownloader, &GameDownloadService::listeningPortChanged, 
+    this, &MainWindow::torrentListenPortChangedSlot);
+  
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
   this->_gameExecutorService.registerExecutor(gameExecutorByLauncher);
 
@@ -600,7 +603,7 @@ void MainWindow::prepairGameDownloader()
   //  else
   //    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags, a6, a7, a8, a9);
   //});
-
+  
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
     &this->_rembrGameFeature, SLOT(started(const GGS::Core::Service *))));
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(finished(const GGS::Core::Service *)),  
@@ -623,12 +626,13 @@ void MainWindow::prepairGameDownloader()
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
     this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(compromised()), 
-    this, SLOT(windowCloseInfo())));
+  QObject::connect(this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::compromised,
+    this, &MainWindow::windowCloseInfo);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->_serviceLoader.thettaInstaller(), SIGNAL(connected(Features::Thetta::ThettaInstaller::Result)), 
-    this, SLOT(thettaConnected(Features::Thetta::ThettaInstaller::Result))));
-
+  QObject::connect(
+    this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::connected, 
+    this, &MainWindow::thettaConnected);
+  
   this->_downloadStatistics.init(&this->_gameDownloader);
   this->_gameDownloadInitialized = true;
 }
@@ -662,32 +666,6 @@ void MainWindow::downloadGameProgressChanged(
     args.totalPayloadUpload());
 }
 
-void MainWindow::progressChanged(QString serviceId, qint8 progress)
-{
-  emit this->progressbarChange(serviceId, progress, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0);
-}
-
-void MainWindow::progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args)
-{
-  emit this->progressbarChange(serviceId, 
-    progress, 
-    args.totalWantedDone(), 
-    args.totalWanted(), 
-    args.directTotalDownload(), 
-    args.peerTotalDownload(), 
-    args.payloadTotalDownload(), 
-    args.peerPayloadDownloadRate(), 
-    args.payloadDownloadRate(), 
-    args.directPayloadDownloadRate(), 
-    args.payloadUploadRate(), 
-    args.totalPayloadUpload());
-}
-
-void MainWindow::progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total)
-{
-  emit this->progressbarExtractionChange(serviceId, progress, current, total);
-}
-
 void MainWindow::gameDownloaderStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType)
 {
   emit this->downloaderStarted(service->id());
@@ -697,7 +675,6 @@ void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service)
 {
   QString id = service->id();
   emit this->downloaderFinished(id);
-  emit this->progressbarChange(id, 100, -1, -1, 0, 0, 0 ,0, 0, 0, 0, 0);     
 }
 
 bool MainWindow::executeService(QString id) {

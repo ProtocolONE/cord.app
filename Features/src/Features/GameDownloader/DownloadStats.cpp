@@ -46,6 +46,7 @@ namespace Features {
       this->_maxUploadSpeed = obj._maxUploadSpeed;
       this->_id = obj._id;
       this->_totalSize = obj._totalSize;
+      return *this;
     }
 
     DownloadStats::~DownloadStats()

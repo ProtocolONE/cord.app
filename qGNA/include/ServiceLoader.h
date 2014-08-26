@@ -22,6 +22,7 @@
 
 #include <Features/Thetta/ThettaInstaller.h>
 #include <Features/Thetta/ThettaMonitorApp.h>
+#include <Features/Thetta/DistrIntegrity.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QMap>
@@ -81,6 +82,7 @@ private:
   Thetta::Driver* _driver;
   Features::Thetta::ThettaInstaller *_installer;
   Features::Thetta::ThettaMonitorApp _thettaMonitorApp;
+  Features::Thetta::DistrIntegrity _caDistIntegrity;
 
   void initService(const QString& id, const QString& torrentUrl, const QString& name);
   void initHooks(const QString& id, GGS::Core::Service* service);

@@ -81,6 +81,7 @@ signals:
   void leftMouseClick(int globalX, int globalY); 
 };
 
+class DownloaderBridgeProxy;
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
@@ -232,18 +233,6 @@ signals:
     int payloadUploadRate,
     qint64 totalPayloadUpload);
 
-  void progressbarChange(QString serviceId, int progress, qint64 totalWantedDone, qint64 totalWanted, // @DEPRECATED
-    qint64 directTotalDownload,
-    qint64 peerTotalDownload,
-    qint64 payloadTotalDownload,
-    int peerPayloadDownloadRate,
-    int payloadDownloadRate,
-    int directPayloadDownloadRate,
-    int payloadUploadRate,
-    qint64 totalPayloadUpload);
-
-  void progressbarExtractionChange(QString serviceId, int progress, qint64 totalWantedDone, qint64 totalWanted);// @DEPRECATED
-
   void secondInstanceExecuteRequest();
 
   void selectService(QString serviceId);
@@ -296,10 +285,6 @@ private slots:
   void onForceWindowClose();
   
   void windowCloseInfo();
-
-  void progressChanged(QString serviceId, qint8 progress);
-  void progressDownloadChanged(QString serviceId, qint8 progress, GGS::Libtorrent::EventArgs::ProgressEventArgs args); 
-  void progressExtractionChanged(QString serviceId, qint8 progress, qint64 current, qint64 total);
 
   void downloadGameTotalProgressChanged(const GGS::Core::Service *service, qint8 progress);
   void downloadGameProgressChanged(
@@ -367,6 +352,8 @@ private:
 
   bool _restartArguments;
   QString _hwid;
+
+  DownloaderBridgeProxy *_downloader;
 
 protected:
 	void closeEvent(QCloseEvent* event);
