@@ -354,7 +354,17 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
 
 void MainWindow::restartApplication(bool shouldStartWithSameArguments)
 {
-  this->_applicationProxy->restartApplication(shouldStartWithSameArguments);
+  if (!this->_serviceLoader.thettaInstaller()) {
+    this->internalRestartApplication(shouldStartWithSameArguments);
+    return;
+  }
+
+  QObject::connect(
+    this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::disconnected,
+    this, &MainWindow::restartApplicationAfterDriverDisconnect);
+
+  this->_restartArguments = shouldStartWithSameArguments;
+  this->_serviceLoader.thettaInstaller()->disconnectFromDriver();
 }
 
 void MainWindow::openExternalUrlWithAuth(const QString& url)
@@ -412,11 +422,20 @@ void MainWindow::prepairGameDownloader()
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::stopped, 
     this, &MainWindow::gameDownloaderStopped);
 
-  QObject::connect(this->_downloader, &DownloaderBridgeProxy::stopping, 
-    this, &MainWindow::gameDownloaderStopping);
-
-  QObject::connect(this->_downloader, &DownloaderBridgeProxy::failed, 
-    this, &MainWindow::gameDownloaderFailed);
+  // HACK отключено 03.10.2013. Чтобы можно было запустить процесс с флагом CREATE_BREAKAWAY_FROM_JOB у текущего джоба процесса
+  // должен в лимит флагах стоять соотвествующий флаг JOB_OBJECT_LIMIT_BREAKAWAY_OK 
+  //auto hook = HookEngine::createHook<HookEngine::Stdcall, BOOL, LPCWSTR, LPWSTR, void*, void*, BOOL, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFO, LPPROCESS_INFORMATION>("Kernel32.dll", "CreateProcessW");
+  //hook->assignHook([hook] (LPCWSTR a1, LPWSTR a2, void* a3, void* a4, BOOL a5, DWORD dwCreationFlags, LPVOID a6, LPCWSTR a7, LPSTARTUPINFO a8, LPPROCESS_INFORMATION a9) -> BOOL {
+  //  if (isBreakAwayAvailable()) 
+  //    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags | CREATE_BREAKAWAY_FROM_JOB, a6, a7, a8, a9);
+  //  else
+  //    return hook->original(a1, a2, a3, a4, a5, dwCreationFlags, a6, a7, a8, a9);
+  //});
+  
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(started(const GGS::Core::Service *, GGS::GameDownloader::StartType)), 
+    &this->_rembrGameFeature, SLOT(started(const GGS::Core::Service *))));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(finished(const GGS::Core::Service *)),  
+    &this->_rembrGameFeature, SLOT(finished(const GGS::Core::Service *))));
 
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::statusMessageChanged, 
     this, &MainWindow::gameDownloaderStatusMessageChanged);
@@ -433,9 +452,18 @@ void MainWindow::prepairGameDownloader()
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::finished,
     &this->_rememberGameFeature, &RememberGameDownloading::finished);
 
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
+    this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
+
+  QObject::connect(this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::compromised,
+    this, &MainWindow::windowCloseInfo);
+
   QObject::connect(
-    &this->_rememberGameFeature, &RememberGameDownloading::startGameRequest,
-    this, &MainWindow::downloadButtonStart);
+    this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::connected, 
+    this, &MainWindow::thettaConnected);
+  
+  this->_downloadStatistics.init(&this->_gameDownloader);
+  this->_gameDownloadInitialized = true;
 }
 
 void MainWindow::downloadGameTotalProgressChanged(const QString& serviceId, int progress)

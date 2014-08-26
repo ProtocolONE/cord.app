@@ -13,6 +13,17 @@
     </message>
 </context>
 <context>
+    <name>Features::Thetta::DistrIntegrityExecutorHook</name>
+    <message>
+        <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
+        <translation>Неизвестная ошибка</translation>
+    </message>
+    <message>
+        <source>INVALID_CA_GAME_DISTRIBUTIVE_TEXT</source>
+        <translation>Произошла неизвестная ошибка в клиенте игры. Попробуйте запустить игру ещё раз или воспользуйтесь опцией восстановления клиента в настройках игры.</translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::ThettaMonitor</name>
     <message>
         <source>DRIVER_INSTALL_ERROR_TITLE</source>
