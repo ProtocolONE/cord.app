@@ -49,6 +49,8 @@ namespace GameNet {
       class DownloaderBridge : public QObject
       {
         Q_OBJECT
+        Q_CLASSINFO("Version", "1.0.0.0")
+        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Downloader")
       public:
         explicit DownloaderBridge(QObject *parent = 0);
         virtual ~DownloaderBridge();
@@ -57,26 +59,12 @@ namespace GameNet {
         void setServiceLoader(ServiceLoader *serviceLoader);
 
       public slots:
-        // есть ощущение что эти парамтры должны быть у настроек
-        // Управление настройками торрента теперь осуществялется через GameDownloadService
-        // void setListeningPort(unsigned short port);
-        // void setTorrentConfigDirectoryPath(const QString& path);
-        // void changeListeningPort(unsigned short port);
-        // void setUploadRateLimit(int bytesPerSecond);
-        // void setDownloadRateLimit(int bytesPerSecond);
-        // void setMaxConnection(int maxConnection);
-        // void setSeedEnabled(bool value);
-
-        bool isInProgress(const QString& serviceId);
-        bool isAnyServiceInProgress();
-        bool isInstalled(const QString& serviceId);
+        bool isInProgress(const QString& serviceId) const;
+        bool isAnyServiceInProgress() const;
+        bool isInstalled(const QString& serviceId) const;
 
         void start(const QString& serviceId, int startType);
         void stop(const QString& serviceId);
-        
-        // может как то не так - а например setDirectory(id, path)
-        // хотя папок можно быть несколько - обсудить
-        void directoryChanged(const QString& serviceId);
 
         void pauseSession();
         void resumeSession();
@@ -93,25 +81,25 @@ namespace GameNet {
           
         void statusMessageChanged(const QString& serviceId, const QString& message);
 
-        void totalProgress(QString serviceId, int progress);
+        void totalProgress(const QString& serviceId, int progress);
 
-        /* INFO вот примерно такой элемент надо добавлять в xml для этого сигнала
-           Тип a(sii) по факту не соответствует действительности. Понять надо ли это править.
-           Вероятно стоит написать батничек для вставки из коментариев сигналов с кастомными параметрами.
+        /* INFO РІРѕС‚ РїСЂРёРјРµСЂРЅРѕ С‚Р°РєРѕР№ СЌР»РµРјРµРЅС‚ РЅР°РґРѕ РґРѕР±Р°РІР»СЏС‚СЊ РІ xml РґР»СЏ СЌС‚РѕРіРѕ СЃРёРіРЅР°Р»Р°
+           РўРёРї a(sii) РїРѕ С„Р°РєС‚Сѓ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕСЃС‚Рё. РџРѕРЅСЏС‚СЊ РЅР°РґРѕ Р»Рё СЌС‚Рѕ РїСЂР°РІРёС‚СЊ.
+           Р’РµСЂРѕСЏС‚РЅРѕ СЃС‚РѕРёС‚ РЅР°РїРёСЃР°С‚СЊ Р±Р°С‚РЅРёС‡РµРє РґР»СЏ РІСЃС‚Р°РІРєРё РёР· РєРѕРјРµРЅС‚Р°СЂРёРµРІ СЃРёРіРЅР°Р»РѕРІ СЃ РєР°СЃС‚РѕРјРЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё.
 
         <signal name="downloadProgress">
         <arg name="serviceId" type="s" direction="out"/>
         <arg name="progress" type="i" direction="out"/>
         <arg name="args" type="a(sii)" direction="out"/>
-        <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="DownloadProgressArgs"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="GameNet::Host::Bridge::DownloadProgressArgs"/>
         </signal>
 
         */
-        void downloadProgress(QString serviceId, int progress, DownloadProgressArgs& args);
-
-      //
-      //    void listeningPortChanged(unsigned short port);
-
+        void downloadProgress(
+          const QString& serviceId,
+          int progress, 
+          const GameNet::Host::Bridge::DownloadProgressArgs& args);
+      
       private:
         GGS::GameDownloader::GameDownloadService *_downloader;
         ServiceLoader *_serviceLoader;
@@ -130,13 +118,12 @@ namespace GameNet {
         void onDownloadProgress(
           const GGS::Core::Service *service, 
           qint8 progress, 
-          GGS::Libtorrent::EventArgs::ProgressEventArgs args);
+          const GGS::Libtorrent::EventArgs::ProgressEventArgs& args);
       };
 
     }
   }
 }
-
 
 static QDBusArgument& operator <<(QDBusArgument &argument, const GameNet::Host::Bridge::DownloadProgressArgs arg)
 {

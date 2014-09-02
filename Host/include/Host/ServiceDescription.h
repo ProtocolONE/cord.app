@@ -17,16 +17,16 @@ namespace GameNet {
       virtual ~ServiceDescription();
 
       QString id() const;
-      void setId(QString val);
+      void setId(const QString& val);
       
       QString gameId() const;
-      void setGameId(QString val);
+      void setGameId(const QString& val);
 
       QString name() const;
-      void setName(QString val);
+      void setName(const QString& val);
 
       QString torrentUrl() const;
-      void setTorrentUrl(QString val);
+      void setTorrentUrl(const QString& val);
 
       bool hasDownloadPath() const;
       void setHasDownloadPath(bool val);
@@ -35,19 +35,19 @@ namespace GameNet {
       void setIsDownloadable(bool val);
 
       QString extractorType() const;
-      void setExtractorType(QString val);
+      void setExtractorType(const QString& val);
 
       QString executeUrl() const;
-      void setExecuteUrl(QString val);
+      void setExecuteUrl(const QString& val);
 
       QString dependencyList() const;
-      void setDependencyList(QString val);
+      void setDependencyList(const QString& val);
 
       int gameSize() const;
       void setGameSize(int val);
 
       QList<DownloadHookDescription> downloadHooks() const;
-      void setDownloadHooks(QList<DownloadHookDescription> val);
+      void setDownloadHooks(const QList<DownloadHookDescription>& val);
 
     private:
       QString _id;

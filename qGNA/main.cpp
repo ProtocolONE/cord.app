@@ -79,6 +79,10 @@ int main(int argc, char *argv[])
 {
   GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   
+  QStringList plugins;
+  plugins << path + "/plugins";
+  app.setLibraryPaths(plugins);
+  
   MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 
   if (app.containsCommand("silent")) {

@@ -4,8 +4,8 @@ namespace GameNet {
   namespace Host {
 
     ServiceDescription::ServiceDescription(QObject *parent /*= 0*/)
+      : QObject(parent)
     {
-
     }
 
     ServiceDescription::~ServiceDescription(void)
@@ -17,7 +17,7 @@ namespace GameNet {
       return this->_id;
     }
 
-    void ServiceDescription::setId(QString val)
+    void ServiceDescription::setId(const QString& val)
     {
       this->_id = val;
     }
@@ -27,7 +27,7 @@ namespace GameNet {
       return this->_gameId;
     }
 
-    void ServiceDescription::setGameId(QString val)
+    void ServiceDescription::setGameId(const QString& val)
     {
       this->_gameId = val;
     }
@@ -37,7 +37,7 @@ namespace GameNet {
       return this->_name;
     }
 
-    void ServiceDescription::setName(QString val)
+    void ServiceDescription::setName(const QString& val)
     {
       this->_name = val;
     }
@@ -47,7 +47,7 @@ namespace GameNet {
       return this->_torrentUrl;
     }
 
-    void ServiceDescription::setTorrentUrl(QString val)
+    void ServiceDescription::setTorrentUrl(const QString& val)
     {
       this->_torrentUrl = val;
     }
@@ -77,7 +77,7 @@ namespace GameNet {
       return this->_extractorType;
     }
 
-    void ServiceDescription::setExtractorType(QString val)
+    void ServiceDescription::setExtractorType(const QString& val)
     {
       this->_extractorType = val;
     }
@@ -87,7 +87,7 @@ namespace GameNet {
       return this->_executeUrl;
     }
 
-    void ServiceDescription::setExecuteUrl(QString val)
+    void ServiceDescription::setExecuteUrl(const QString& val)
     {
       this->_executeUrl = val;
     }
@@ -97,7 +97,7 @@ namespace GameNet {
       return this->_dependencyList;
     }
 
-    void ServiceDescription::setDependencyList(QString val)
+    void ServiceDescription::setDependencyList(const QString& val)
     {
       this->_dependencyList = val;
     }
@@ -117,7 +117,7 @@ namespace GameNet {
       return this->_downloadHooks;
     }
 
-    void ServiceDescription::setDownloadHooks(QList<DownloadHookDescription> val)
+    void ServiceDescription::setDownloadHooks(const QList<DownloadHookDescription>& val)
     {
       this->_downloadHooks = val;
     }

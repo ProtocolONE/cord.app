@@ -34,6 +34,8 @@ namespace Thetta {
 	class Driver;
 }
 
+class ServiceSettingsBridgeProxy;
+
 class ServiceLoader : public QObject
 {
   Q_OBJECT
@@ -48,6 +50,8 @@ public:
   void setGameDownloader(GGS::GameDownloader::GameDownloadService *gameDownloader);
 
   void setExecuteUrl(const QString& id, QString currentInstallPath);
+
+  void setServiceSettings(ServiceSettingsBridgeProxy *value);
 
   bool hasDefaultDownloadPath(const QString& id);
   bool hasDefaultInstallPath(const QString& id);
@@ -66,10 +70,8 @@ public:
 
   void initGameExecutorExtensions(GGS::GameExecutor::GameExecutorService* executor);
 
-signals:
-  void startGameRequest(QString);
-
 private:
+  ServiceSettingsBridgeProxy *_serviceSettings;
   QHash<QString, GGS::Core::Service *> _serviceMap;
   GGS::GameExecutor::GameExecutorService *_gameExecutorService;
   GGS::GameDownloader::GameDownloadService *_gameDownloader;
@@ -92,7 +94,6 @@ private:
   void initGAService();
   void initFJService();
   void initBDService();
-  void migrateInstallDate(const QString& serviceId);
 
   QString getBestDrive(const QString& serviceId);
   int getDiskFreeSpaceInMb(LPCWSTR drive);

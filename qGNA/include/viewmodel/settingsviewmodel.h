@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class DownloaderSettingsBridgeProxy;
+
 class SettingsViewModel : public QObject
 {
     Q_OBJECT
@@ -67,8 +69,11 @@ public slots:
     bool seedEnabled();
     void setSeedEnabled(bool value);
 
+    void setDownloaderSettings(DownloaderSettingsBridgeProxy *value);
+
 private:
     bool _instantlySave;
+    DownloaderSettingsBridgeProxy* _downloaderSettings;
 
 signals:
     void autoStartChanged();

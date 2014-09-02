@@ -18,6 +18,8 @@
 #include <GameExecutor/Hook/BannerDownload.h>
 #include <GameExecutor/Hook/RestoreFileModification.h>
 
+#include <Dbus/ServiceSettingsBridgeProxy.h>
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QSettings>
 #include <QtCore/QDateTime>
@@ -31,6 +33,7 @@ ServiceLoader::ServiceLoader(QObject *parent)
   : QObject(parent)
   , _driver(nullptr)
   , _installer(nullptr)
+  , _serviceSettings(nullptr)
 {
 }
 
@@ -79,12 +82,6 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initGAService();
   this->initFJService();
   this->initBDService();
-
-  this->_gameDownloader->registerHook("300004010000000000", 0, 10, &this->_installDependencyHook);
-  this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
-
-  this->_gameDownloader->registerHook("300009010000000000", -1, -1, &this->_caDistIntegrity);
-
 }
 
 GGS::Core::Service* ServiceLoader::getService(const QString& id)
@@ -142,7 +139,6 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   this->_serviceMap[id] = service;
 
   this->setExecuteUrl(id, currentInstallPath);
-  this->migrateInstallDate(id);
 }
 
 void ServiceLoader::initBDService()
@@ -375,10 +371,6 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
   using namespace GGS::GameExecutor::Hook;
   using namespace GGS::GameDownloader::Hooks;
 
-  // 26.06.2013 Так как старых ГНА уже очень мало, и история со всплывашкой в этой хуке мешает гайду, он отключен.
-  //if (id != "300007010000000000")
-  //  this->_gameDownloaderBuilder->gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
-
   if (id == "300012010000000000") { // reborn
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
     this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);   
@@ -429,31 +421,14 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
     service->setExternalDependencyList("dxwebsetup.exe,/Q");
 }
 
-void ServiceLoader::migrateInstallDate(const QString& serviceId)
-{
-  if (!this->_gameDownloader->isInstalled(serviceId))
-    return;
-
-  GGS::Settings::Settings settings;
-  settings.beginGroup("GameDownloader");
-  settings.beginGroup(serviceId);
-
-  if (settings.contains("installDate"))
-    return;
-
-  settings.setValue("installDate", QDateTime::currentDateTime());
-}
-
 QString ServiceLoader::getExpectedInstallPath(const QString& serviceId)
 {
-  GGS::Core::Service *service = this->getService(serviceId);
-  Q_CHECK_PTR(service);
-
-  if (!this->hasDefaultInstallPath(serviceId))
-    return service->installPath();
+  if (!this->_serviceSettings->isDefaultInstallPath(serviceId))
+    return this->_serviceSettings->installPath(serviceId);
 
   QString defaultDownloadPath = QString("%1Games").arg(this->getBestDrive(serviceId));
-  return QDir::cleanPath(QString("%1/%2/").arg(defaultDownloadPath, service->name()));
+  QString name = this->_serviceSettings->name(serviceId);
+  return QDir::cleanPath(QString("%1/%2/").arg(defaultDownloadPath, name));
 }
 
 int ServiceLoader::getDiskFreeSpaceInMb(LPCWSTR drive)
@@ -643,4 +618,10 @@ bool ServiceLoader::processHandlerExtension(DWORD pid, HANDLE handle)
   // INFO Необходимо проверить 2 раза. 
   // Если колбеки сняли перед запуском, то первая проверка сработает, а вторая сфейлиться.
   return this->_driver->isProtectedProcess(handlePid) && this->_driver->isProtectedProcess(handlePid);
+}
+
+void ServiceLoader::setServiceSettings(ServiceSettingsBridgeProxy *value)
+{
+  Q_ASSERT(value);
+  this->_serviceSettings = value;
 }

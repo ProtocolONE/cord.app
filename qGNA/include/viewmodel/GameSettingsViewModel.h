@@ -16,6 +16,8 @@ namespace GGS {
   }
 }
 
+class ServiceSettingsBridgeProxy;
+class DownloaderBridgeProxy;
 class GameSettingsViewModel : public QObject
 {
   Q_OBJECT
@@ -26,8 +28,12 @@ public:
   explicit GameSettingsViewModel(QObject *parent = 0);
   ~GameSettingsViewModel();
 
+  // UNDONE 03.09.2014 нужно отказаться от списка сервисов в этом классе - вполне реально
   void setServiceList(QHash<QString, GGS::Core::Service *> *serviceList);
-  void setGameDownloader(GGS::GameDownloader::GameDownloadService *gameDownloader);
+
+  void setDownloader(DownloaderBridgeProxy *value);
+  void setServiceSettings(ServiceSettingsBridgeProxy *value);
+
 
   void createShortcutOnDesktop(GGS::Core::Service *service);
   void createShortcutInMainMenu(GGS::Core::Service *service);
@@ -64,7 +70,8 @@ signals:
 
 private:
   QHash<QString, GGS::Core::Service *> *_serviceList;
-  GGS::GameDownloader::GameDownloadService *_gameDownloader;
+  ServiceSettingsBridgeProxy* _serviceSettings;
+  DownloaderBridgeProxy * _downloader;
 
   QString _currentServiceId;
   QString _installPath;

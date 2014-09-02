@@ -17,12 +17,16 @@
 #include <Windows.h>
 #include <Shlobj.h>
 
+#include <Dbus/ServiceSettingsBridgeProxy.h>
+#include <Dbus/DownloaderBridgeProxy.h>
+
 using GGS::Core::Service;
 
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
 
 GameSettingsViewModel::GameSettingsViewModel(QObject *parent)
   : QObject(parent)
+  , _serviceSettings(nullptr)
 {
 }
 
@@ -129,44 +133,15 @@ void GameSettingsViewModel::createShortcut(const QString& path, GGS::Core::Servi
 
 void GameSettingsViewModel::submitSettings()
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(this->_currentServiceId)) {
-    CRITICAL_LOG << "Unknown service";
-    return;
-  }
-
-  GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
-  Q_CHECK_PTR(service);
-
-  bool secondPath = service->hashDownloadPath();
-  if (service->installPath() != this->_installPath || 
-    (secondPath && service->downloadPath() != this->_downloadPath)) {
-    service->setInstallPath(this->_installPath);
-    service->setDownloadPath(secondPath ? this->_downloadPath : this->_installPath);
-    service->setTorrentFilePath(secondPath ? this->_downloadPath : this->_installPath);
-
-    QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-    settings.beginGroup(service->id());
-    settings.setValue("DownloadPath", service->downloadPath());
-    settings.setValue("InstallPath", service->installPath());
-    service->setIsDefaultInstallPath(true);
-    settings.endGroup();
-
-    this->_gameDownloader->directoryChanged(service);
-  }
+  bool secondPath = this->_serviceSettings->hasDownloadPath(this->_currentServiceId);
+  QString downloadPath = secondPath ? this->_downloadPath : this->_installPath;
+  this->_serviceSettings->setInstallPath(this->_currentServiceId, this->_installPath);
+  this->_serviceSettings->setDownloadPath(this->_currentServiceId, downloadPath);
 }
 
 void GameSettingsViewModel::restoreClient()
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(this->_currentServiceId)) {
-    CRITICAL_LOG << "Unknown service";
-    return;
-  }
-
-  GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
-  Q_CHECK_PTR(service);
-  this->_gameDownloader->start(service, GGS::GameDownloader::Recheck);
+  this->_downloader->start(this->_currentServiceId, static_cast<int>(GGS::GameDownloader::Recheck));
 }
 
 void GameSettingsViewModel::switchGame(const QString& serviceId)
@@ -180,9 +155,10 @@ void GameSettingsViewModel::switchGame(const QString& serviceId)
   GGS::Core::Service *service = (*this->_serviceList)[serviceId];
   Q_CHECK_PTR(service);
   this->_currentServiceId = serviceId;
-  this->_installPath = service->installPath();
-  this->_downloadPath = service->downloadPath();
-  this->_hasDownloadPath = service->hashDownloadPath();
+  
+  this->_installPath = this->_serviceSettings->installPath(this->_currentServiceId);
+  this->_downloadPath = this->_serviceSettings->downloadPath(this->_currentServiceId);
+  this->_hasDownloadPath = this->_serviceSettings->hasDownloadPath(this->_currentServiceId);
 
   emit this->installPathChanged();
   emit this->downloadPathChanged();
@@ -192,11 +168,6 @@ void GameSettingsViewModel::switchGame(const QString& serviceId)
 void GameSettingsViewModel::setServiceList(QHash<QString, GGS::Core::Service *> *serviceList)
 {
   this->_serviceList = serviceList;
-}
-
-void GameSettingsViewModel::setGameDownloader(GGS::GameDownloader::GameDownloadService *gameDownloader)
-{
-  this->_gameDownloader = gameDownloader;
 }
 
 const QString& GameSettingsViewModel::installPath()
@@ -240,21 +211,12 @@ void GameSettingsViewModel::setHasDownloadPath(bool hasDownloadPath)
 
 void GameSettingsViewModel::browseInstallPath(const QString &preferedPath)
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(this->_currentServiceId)) {
-    CRITICAL_LOG << "Unknown service";
-    return; 
-  }
-
-  GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
-  Q_CHECK_PTR(service);
-
   QString defaultPath = !preferedPath.isEmpty()
-      ? preferedPath
-      : service->installPath();
-
+    ? preferedPath
+    : this->_serviceSettings->installPath(this->_currentServiceId);
+  
   GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
-  dialog->getDirectory(service->name(), defaultPath);
+  dialog->getDirectory(this->_serviceSettings->name(this->_currentServiceId), defaultPath);
 
   QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
     dialog->deleteLater();
@@ -266,19 +228,14 @@ void GameSettingsViewModel::browseInstallPath(const QString &preferedPath)
 
 void GameSettingsViewModel::browseDownloadPath()
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(this->_currentServiceId)) {
-    CRITICAL_LOG << "Unknown service";
+  if (!this->_serviceSettings->hasDownloadPath(this->_currentServiceId))
     return;
-  }
 
-  GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
-  Q_CHECK_PTR(service);
-  if (!service->hashDownloadPath())
-    return;
+  QString name = this->_serviceSettings->name(this->_currentServiceId);
+  QString downloadPath = this->_serviceSettings->downloadPath(this->_currentServiceId);
 
   GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
-  dialog->getDirectory(service->name(), service->downloadPath());
+  dialog->getDirectory(name, downloadPath);
 
   QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
     dialog->deleteLater();
@@ -313,4 +270,16 @@ void GameSettingsViewModel::removeShortCutByName(const QString& name)
     if (QFile::exists(lnkroot))
       QFile::remove(lnkroot);
   }
+}
+
+void GameSettingsViewModel::setServiceSettings(ServiceSettingsBridgeProxy *value)
+{
+  Q_ASSERT(value);
+  this->_serviceSettings = value;
+}
+
+void GameSettingsViewModel::setDownloader(DownloaderBridgeProxy *value)
+{
+  Q_ASSERT(value);
+  this->_downloader = value;
 }

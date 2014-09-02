@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef DOWNLOADERBRIDGEPROXY_H_1409555489
-#define DOWNLOADERBRIDGEPROXY_H_1409555489
+#ifndef DOWNLOADERBRIDGEPROXY_H_1409823367
+#define DOWNLOADERBRIDGEPROXY_H_1409823367
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -19,18 +19,18 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 #include <QtDBus/QtDBus>
+
 #include <Host/Bridge/DownloaderBridge.h>
 
-
 /*
- * Proxy class for interface local.DownloaderBridge
+ * Proxy class for interface com.gamenet.dbus.Downloader
  */
 class DownloaderBridgeProxy: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "local.DownloaderBridge"; }
+    { return "com.gamenet.dbus.Downloader"; }
 
 public:
     DownloaderBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
@@ -38,13 +38,6 @@ public:
     ~DownloaderBridgeProxy();
 
 public Q_SLOTS: // METHODS
-    inline QDBusPendingReply<> directoryChanged(const QString &serviceId)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(serviceId);
-        return asyncCallWithArgumentList(QLatin1String("directoryChanged"), argumentList);
-    }
-
     inline QDBusPendingReply<bool> isAnyServiceInProgress()
     {
         QList<QVariant> argumentList;
@@ -104,7 +97,11 @@ Q_SIGNALS: // SIGNALS
     void totalProgress(const QString &serviceId, int progress);
 };
 
-namespace local {
-  typedef ::DownloaderBridgeProxy DownloaderBridge;
+namespace com {
+  namespace gamenet {
+    namespace dbus {
+      typedef ::DownloaderBridgeProxy Downloader;
+    }
+  }
 }
 #endif

@@ -12,10 +12,17 @@ namespace GGS {
   namespace Core {
     class Service;
   }
+
+  namespace GameDownloader {
+    class GameDownloadService;
+  }
 }
 
 namespace GameNet {
   namespace Host {
+
+    class HookFactory;
+    class ServiceSettings;
 
     class ServiceLoader : public QObject
     {
@@ -25,6 +32,9 @@ namespace GameNet {
       explicit ServiceLoader(QObject *parent = 0);
       ~ServiceLoader();
 
+      void setDownloader(GGS::GameDownloader::GameDownloadService *value);
+      void setServiceSettings(ServiceSettings *value);
+
       GGS::Core::Service::Area gameArea() const;
       void setGameArea(GGS::Core::Service::Area val);
 
@@ -32,7 +42,7 @@ namespace GameNet {
       void setApplicationArea(GGS::Core::Service::Area val);
 
       QString applicationPath() const;
-      void setApplicationPath(QString val);
+      void setApplicationPath(const QString& val);
 
       void registerService(const ServiceDescription& description);
       
@@ -45,8 +55,15 @@ namespace GameNet {
       GGS::Core::Service::Area _applicationArea;
       QHash<QString, GGS::Core::Service *> _serviceMap;
 
+      GGS::GameDownloader::GameDownloadService *_downloader;
+      ServiceSettings *_serviceSettings;
+      HookFactory *_factory;
+
       QString getServiceInstallPath(const QString& id);
       QString getServiceDownloadPath(const QString& id);
+
+      void initDownloaderHooks(const ServiceDescription& description);
+      void migrateInstallDate(const QString& serviceId);
     };
 
   }

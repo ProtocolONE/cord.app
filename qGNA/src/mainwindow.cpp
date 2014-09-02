@@ -28,6 +28,8 @@
 #include <HookEngine/HookEngine.h>
 
 #include <Dbus/DownloaderBridgeProxy.h>
+#include <Dbus/DownloaderSettingsBridgeProxy.h>
+#include <Dbus/ServiceSettingsBridgeProxy.h>
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -45,8 +47,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::initialize()
 {
+  // DBUS...
+  QString dbusService("com.gamenet.dbus");
+  this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", QDBusConnection::sessionBus(), this);
+  this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", QDBusConnection::sessionBus(), this);
+  this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", QDBusConnection::sessionBus(), this);
+
+  qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
+  qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
+
+
   this->initializeUpdateSettings();
   this->initRestApi();
+
 
   this->_commandLineArguments.parse(QCoreApplication::arguments());
 
@@ -59,6 +72,7 @@ void MainWindow::initialize()
   this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
   this->setWindowTitle("qGNA " + this->_fileVersion);
   this->_serviceLoader.setApplicationVersion(this->_fileVersion);
+  this->_serviceLoader.setServiceSettings(this->_serviceSettings);
   this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
@@ -71,6 +85,7 @@ void MainWindow::initialize()
   this->checkDesktopDepth();
 
   this->settingsViewModel = new SettingsViewModel(this);
+  this->settingsViewModel->setDownloaderSettings(this->_downloaderSettings);
   this->initAutorun();
 
   qmlRegisterType<GGS::UpdateSystem::UpdateManagerViewModel>("qGNA.Library", 1, 0, "UpdateManagerViewModel");             
@@ -87,7 +102,6 @@ void MainWindow::initialize()
   //next 2 lines QGNA-60
   this->nQMLContainer = new MQDeclarativeView(this);
   SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
-
 
   QStringList importPaths;
   importPaths << ":/";
@@ -108,20 +122,15 @@ void MainWindow::initialize()
   
   this->_enterNickViewModel = new EnterNickNameViewModel(this);
   
-  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(incomingPortChanged()), this, SLOT(settingsIncomingPortChangedSlot())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(numConnectionsChanged()), this, SLOT(settingsNumConnectionsChangedSlot())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(downloadSpeedChanged()), this, SLOT(settingsDownloadSpeedChangedSlot())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(uploadSpeedChanged()), this, SLOT(settingsUploadSpeedChangedSlot())));
   SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(applicationAreaChanged()), this, SLOT(applicationAreaChanged())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(settingsViewModel, SIGNAL(seedEnabledChanged()), this, SLOT(seedEnabledChanged())));
-
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_restapiManager, SIGNAL(genericError(GGS::RestApi::CommandBase::Error, QString)), 
     this, SLOT(restApiGenericError(GGS::RestApi::CommandBase::Error, QString))));
 
   messageAdapter = new QmlMessageAdapter(this);
   
   this->_gameSettingsViewModel = new GameSettingsViewModel(this);
-  this->_gameSettingsViewModel->setGameDownloader(&this->_gameDownloader);
+  this->_gameSettingsViewModel->setDownloader(this->_downloader);
+  this->_gameSettingsViewModel->setServiceSettings(this->_serviceSettings);
   
   // HACK - уточнить что это полезно и зачем это
   nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -214,7 +223,7 @@ void MainWindow::setTechName(QString& techName){
 }
 
 void MainWindow::setNickName(QString& nickName) {
-  if(this->_nickName != nickName) {
+  if (this->_nickName != nickName) {
     this->_nickName = nickName;
     emit this->nickNameChanged();
     emit this->nickNameValueChanged(this->_nickName);
@@ -222,7 +231,7 @@ void MainWindow::setNickName(QString& nickName) {
 }
 
 void MainWindow::setMediumAvatarUrl(const QString& mediumAvatarUrl) {
-  if(this->_mediumAvatarUrl != mediumAvatarUrl) {
+  if (this->_mediumAvatarUrl != mediumAvatarUrl) {
     this->_mediumAvatarUrl = mediumAvatarUrl;
     emit this->mediumAvatarUrlChanged(); 
   }
@@ -244,11 +253,7 @@ void MainWindow::activateWindow()
 
 bool MainWindow::isDownloading(QString serviceId)
 {
-  GGS::Core::Service *service = this->getService(serviceId);
-  if (!service)
-    return false;
-
-  return this->_gameDownloader.isInProgress(service);
+  return this->_downloader->isInProgress(serviceId);
 }
 
 void MainWindow::translatorsParse()
@@ -268,7 +273,8 @@ void MainWindow::translatorsParse()
 
     if (fileName.size() == 2) {  
       translators[fileName] = new QTranslator(this);
-      translators[fileName]->load(fileInfo.fileName(), QCoreApplication::applicationDirPath() + "/Languages/"); // TODO да да, знаю, сделаю красиво позже.
+      // TODO да да, знаю, сделаю красиво позже.
+      translators[fileName]->load(fileInfo.fileName(), QCoreApplication::applicationDirPath() + "/Languages/"); 
     }
   } 
 }
@@ -315,7 +321,10 @@ void MainWindow::onWindowClose()
   this->hide();
 
   if (this->_gameDownloadInitialized) {
+    
+    // UNDONE поменять схему выключения.
     this->_gameDownloader.shutdown(); 
+
   } else {
     DEBUG_LOG << "fast shutdownCompleted";
     QCoreApplication::quit();
@@ -471,7 +480,9 @@ void MainWindow::logout()
 
 void MainWindow::initServices()
 {
+  // UNDONE поидее убрать отсюда
   this->_serviceLoader.setGameDownloader(&this->_gameDownloader);
+  
   this->_serviceLoader.setExecutor(&this->_gameExecutorService);
   this->_serviceLoader.init(this->_gameArea, this->_applicationArea);
 
@@ -488,6 +499,7 @@ void MainWindow::initServices()
 
 void MainWindow::release()
 {
+  // UNDONE Где-то в хосте должно быть
   this->_gameDownloader.release();
 }
 
@@ -535,56 +547,51 @@ GGS::Core::Service* MainWindow::getService(const QString& id)
 
 void MainWindow::prepairGameDownloader()
 {
-  this->_downloader = new DownloaderBridgeProxy("GameNet.GameDownloader", "/downloader", QDBusConnection::sessionBus(), this);
 
   QString root = QCoreApplication::applicationDirPath();
   this->initServices();
 
-  bool ok = false;
-  unsigned short port = settingsViewModel->incomingPort().toUShort(&ok);
-  if (ok)
-    this->_gameDownloader.setListeningPort(port);
-
-  QString torrentConfigPath = root;
-  torrentConfigPath.append("/torrents");
-  this->_gameDownloader.setTorrentConfigDirectoryPath(torrentConfigPath);
-
-  this->_gameDownloader.init();
-  this->_gameDownloader.setTimeoutForResume(600);
-
-  this->settingsDownloadSpeedChangedSlot();
-  this->settingsUploadSpeedChangedSlot();
-  this->settingsNumConnectionsChangedSlot();
-
   using GGS::GameDownloader::GameDownloadService;
   
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::totalProgressChanged, 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::totalProgress, 
     this, &MainWindow::downloadGameTotalProgressChanged);
 
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::downloadProgressChanged, 
-    this, &MainWindow::downloadGameProgressChanged);
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->_downloader, &DownloaderBridgeProxy::downloadProgress, 
+    this, &MainWindow::downloadGameProgressChanged));
 
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::started, 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::started, 
     this, &MainWindow::gameDownloaderStarted);
 
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::finished, 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::finished, 
     this, &MainWindow::gameDownloaderFinished);
 
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::stopped, 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::stopped, 
     this, &MainWindow::gameDownloaderStopped);
 
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::stopping, 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::stopping, 
     this, &MainWindow::gameDownloaderStopping);
 
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::failed, 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::failed, 
     this, &MainWindow::gameDownloaderFailed);
 
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::statusMessageChanged, 
+    this, &MainWindow::gameDownloaderStatusMessageChanged);
+
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::serviceInstalled, 
+    this, &MainWindow::gameDownloaderServiceInstalled);
+  
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::serviceUpdated, 
+    this, &MainWindow::gameDownloaderServiceUpdated);
+  
+  // UNDONE ///// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // !!!!!!!!!!!!!!!! примерно тут я остановился
   QObject::connect(&this->_gameDownloader, &GameDownloadService::shutdownCompleted, 
     this, &MainWindow::shutdownCompleted);
   
-  QObject::connect(&this->_gameDownloader, &GameDownloadService::listeningPortChanged, 
-    this, &MainWindow::torrentListenPortChangedSlot);
-  
+
+
+
+
   GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
   this->_gameExecutorService.registerExecutor(gameExecutorByLauncher);
 
@@ -613,68 +620,54 @@ void MainWindow::prepairGameDownloader()
     &this->_rembrGameFeature, SIGNAL(startGameRequest(QString)),
     this, SLOT(downloadButtonStart(QString))));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(
-    &this->_serviceLoader, SIGNAL(startGameRequest(QString)), 
-    this, SLOT(downloadButtonStart(QString))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(statusMessageChanged(const GGS::Core::Service *, const QString&)), 
-    this, SLOT(gameDownloaderStatusMessageChanged(const GGS::Core::Service *, const QString&))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderServiceInstalled(const GGS::Core::Service *))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
-
   QObject::connect(this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::compromised,
     this, &MainWindow::windowCloseInfo);
 
   QObject::connect(
     this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::connected, 
     this, &MainWindow::thettaConnected);
-  
-  this->_downloadStatistics.init(&this->_gameDownloader);
+ 
   this->_gameDownloadInitialized = true;
 }
 
-void MainWindow::downloadGameTotalProgressChanged(const GGS::Core::Service *service, qint8 progress)
+void MainWindow::downloadGameTotalProgressChanged(const QString& serviceId, int progress)
 {
-  emit totalProgressChanged(service->id(), progress);
+  emit totalProgressChanged(serviceId, progress);
 }
 
 void MainWindow::downloadGameProgressChanged(
-  const GGS::Core::Service *service, 
-  qint8 progress, 
-  GGS::Libtorrent::EventArgs::ProgressEventArgs args)
+  const QString& serviceId, 
+  int progress, 
+  GameNet::Host::Bridge::DownloadProgressArgs args)
 {
-  if (args.status() == GGS::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles) {
-      emit this->rehashProgressChanged(service->id(), progress, args.progress() * 100);
+  if (args.status == static_cast<int>(GGS::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles)) {
+      emit this->rehashProgressChanged(serviceId, progress, args.progress * 100);
       return;
   }
 
-  emit this->downloadProgressChanged(service->id(),
+  emit this->downloadProgressChanged(serviceId,
     progress,
-    args.totalWantedDone(), 
-    args.totalWanted(), 
-    args.directTotalDownload(), 
-    args.peerTotalDownload(), 
-    args.payloadTotalDownload(), 
-    args.peerPayloadDownloadRate(), 
-    args.payloadDownloadRate(), 
-    args.directPayloadDownloadRate(), 
-    args.payloadUploadRate(), 
-    args.totalPayloadUpload());
+    args.totalWantedDone, 
+    args.totalWanted, 
+    args.directTotalDownload, 
+    args.peerTotalDownload, 
+    args.payloadTotalDownload, 
+    args.peerPayloadDownloadRate, 
+    args.payloadDownloadRate, 
+    args.directPayloadDownloadRate, 
+    args.payloadUploadRate, 
+    args.totalPayloadUpload);
 }
 
-void MainWindow::gameDownloaderStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType)
+void MainWindow::gameDownloaderStarted(const QString& serviceId, int startType)
 {
-  emit this->downloaderStarted(service->id());
+  // GGS::GameDownloader::StartType
+  emit this->downloaderStarted(serviceId);
 }
 
-void MainWindow::gameDownloaderFinished(const GGS::Core::Service *service) 
+void MainWindow::gameDownloaderFinished(const QString& serviceId) 
 {
-  QString id = service->id();
-  emit this->downloaderFinished(id);
+  emit this->downloaderFinished(serviceId);
 }
 
 bool MainWindow::executeService(QString id) {
@@ -707,14 +700,14 @@ bool MainWindow::executeService(QString id) {
   return true;
 }
 
-void MainWindow::gameDownloaderStopped(const GGS::Core::Service *service)
+void MainWindow::gameDownloaderStopped(const QString& serviceId)
 {
-  emit this->downloaderStopped(service->id());
+  emit this->downloaderStopped(serviceId);
 }
 
-void MainWindow::gameDownloaderStopping(const GGS::Core::Service *service)
+void MainWindow::gameDownloaderStopping(const QString& serviceId)
 {
-  emit this->downloaderStopping(service->id());
+  emit this->downloaderStopping(serviceId);
 }
 
 void MainWindow::updateFinishedSlot() 
@@ -722,9 +715,9 @@ void MainWindow::updateFinishedSlot()
   this->postUpdateInit();
 }
 
-void MainWindow::gameDownloaderFailed(const GGS::Core::Service *service)
+void MainWindow::gameDownloaderFailed(const QString& serviceId)
 {
-  emit this->downloaderFailed(service->id());
+  emit this->downloaderFailed(serviceId);
 }
 
 void MainWindow::shutdownCompleted()
@@ -786,7 +779,7 @@ void MainWindow::downloadButtonPause(QString serviceId)
     return;
 
   if (service->isDownloadable())
-    this->_gameDownloader.stop(service);
+    this->_downloader->stop(serviceId);
   else
     this->_premiumExecutor.executeMain(service);
 }
@@ -849,11 +842,6 @@ bool MainWindow::isLicenseAccepted(const QString& serviceId)
   return false;
 }
 
-void MainWindow::checkLicense(const QString& serviceId)
-{
-  
-}
-
 void MainWindow::startGame(const QString& serviceId)
 {
   GGS::Core::Service *service = this->getService(serviceId);
@@ -861,14 +849,12 @@ void MainWindow::startGame(const QString& serviceId)
     return;
 
   if (service->isDownloadable()) {
-    QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-    settings.beginGroup(serviceId);
-    settings.setValue("DownloadPath", service->downloadPath());
-    settings.setValue("InstallPath", service->installPath());
-    service->setIsDefaultInstallPath(true);
-    settings.endGroup();
-    this->_serviceLoader.setExecuteUrl(serviceId, service->installPath());
-    this->_gameDownloader.start(service, GGS::GameDownloader::Normal);
+
+    QString installPath = this->_serviceSettings->installPath(serviceId);
+    this->_serviceLoader.setExecuteUrl(serviceId, installPath);
+    
+    this->_downloader->start(serviceId, static_cast<int>(GGS::GameDownloader::Normal));
+
   } else {
     bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
     if (!isAuthed) {
@@ -878,48 +864,6 @@ void MainWindow::startGame(const QString& serviceId)
 
     this->_premiumExecutor.executeMain(service);
   }
-}
-
-void MainWindow::settingsIncomingPortChangedSlot()
-{
-  QString port = this->settingsViewModel->incomingPort();
-  bool ok;
-  unsigned short tmp = port.toUShort(&ok);
-  if (ok)
-    this->_gameDownloader.changeListeningPort(tmp);
-}
-
-void MainWindow::settingsNumConnectionsChangedSlot()
-{
-  QString numConnection = this->settingsViewModel->numConnections();
-  bool ok;
-  qint32 tmp = numConnection.toInt(&ok);
-  if (ok)
-    this->_gameDownloader.setMaxConnection(tmp);
-}
-
-void MainWindow::settingsDownloadSpeedChangedSlot()
-{
-  QString speed = this->settingsViewModel->downloadSpeed();
-  bool ok;
-  qint32 tmp = speed.toInt(&ok);
-  if (ok)
-    this->_gameDownloader.setDownloadRateLimit(tmp * 1024);
-}
-
-void MainWindow::settingsUploadSpeedChangedSlot()
-{
-  QString speed = this->settingsViewModel->uploadSpeed();
-  bool ok;
-  qint32 tmp = speed.toInt(&ok);
-  if (ok)
-    this->_gameDownloader.setUploadRateLimit(tmp * 1024);
-}
-
-void MainWindow::torrentListenPortChangedSlot(unsigned short port)
-{
-  QString tmp = QString::number(port);
-  this->settingsViewModel->setIncomingPort(tmp);
 }
 
 void MainWindow::commandRecieved(QString name, QStringList arguments)
@@ -1019,10 +963,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
   event->ignore();
 }
 
-void MainWindow::gameDownloaderStatusMessageChanged(const GGS::Core::Service *service, const QString& message)
+void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message)
 {
-  Q_CHECK_PTR(service);
-  emit this->downloaderServiceStatusMessageChanged(service->id(), message);
+  emit this->downloaderServiceStatusMessageChanged(serviceId, message);
 }
 
 void MainWindow::startBackgroundCheckUpdate()
@@ -1052,7 +995,7 @@ void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper:
     DEBUG_LOG << "New update found. Restart required.";
 
     if (!this->_premiumExecutor.isAnyGameStarted() 
-      && !this->_gameDownloader.isAnyServiceInProgress()) {
+      && !this->_downloader->isAnyServiceInProgress()) {
 
         if (this->isVisible())
           GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
@@ -1113,6 +1056,7 @@ void MainWindow::loadPlugin(QString pluginName)
 
 void MainWindow::initializeStopDownloadServiceOnExecuteGameFeature()
 {
+  // UNDONE 04.09.2014 Необходимо после переноса запускатора перенести эту функции как есть.
   Q_FOREACH(const GGS::Core::Service* service, this->_serviceLoader.serviceMap()) {
     if (!service->isDownloadable())
       this->_stopDownloadServiceOnExecuteGame.ignoreService(service->id());
@@ -1161,17 +1105,15 @@ void MainWindow::initializeStopDownloadServiceOnExecuteGameFeature()
     &this->_stopDownloadServiceOnExecuteGame, SLOT(onServiceFinishDownload(const GGS::Core::Service *)), Qt::QueuedConnection));
 }
 
-void MainWindow::gameDownloaderServiceInstalled(const GGS::Core::Service *service)
+void MainWindow::gameDownloaderServiceInstalled(const QString& serviceId)
 {
-  Q_CHECK_PTR(service);
-  emit this->serviceInstalled(service->id());
+  emit this->serviceInstalled(serviceId);
 }
 
-void MainWindow::gameDownloaderServiceUpdated(const GGS::Core::Service *service)
+void MainWindow::gameDownloaderServiceUpdated(const QString& serviceId)
 {
-  Q_CHECK_PTR(service);
   this->activateWindow();
-  emit this->selectService(service->id());
+  emit this->selectService(serviceId);
 }
 
 void MainWindow::initAutorun()
@@ -1237,24 +1179,18 @@ QString MainWindow::getExpectedInstallPath(const QString& serviceId)
 
 void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& path)
 {
-  GGS::Core::Service *service = this->getService(serviceId);
-  if (!service)
+  this->_serviceSettings->setInstallPath(serviceId, path);
+  
+  if (!this->_serviceSettings->hasDownloadPath(serviceId)) {
+    this->_serviceSettings->setDownloadPath(serviceId, path);
     return;
-
-  service->setInstallPath(path);
-  service->setIsDefaultInstallPath(false);
-
-  if (service->hashDownloadPath()) {
-    QString downloadPath = this->_serviceLoader.hasDefaultDownloadPath(serviceId) 
-      ? QString("%1/dist").arg(path) 
-      : service->downloadPath();
-
-    service->setDownloadPath(downloadPath);
-    service->setTorrentFilePath(downloadPath);
-  } else {
-    service->setDownloadPath(path);
-    service->setTorrentFilePath(path); 
   }
+  
+  QString downloadPath = this->_serviceSettings->isDefaultDownloadPath(serviceId)
+    ? QString("%1/dist").arg(path) 
+    : this->_serviceSettings->downloadPath(serviceId);
+
+  this->_serviceSettings->setDownloadPath(serviceId, downloadPath);
 }
 
 void MainWindow::acceptFirstLicense(const QString& serviceId)
@@ -1296,11 +1232,6 @@ void MainWindow::initRestApi()
 void MainWindow::applicationAreaChanged()
 {
   this->restartApplication(false);
-}
-
-void MainWindow::seedEnabledChanged()
-{
-  this->_gameDownloader.setSeedEnabled(this->settingsViewModel->seedEnabled());
 }
 
 bool MainWindow::event(QEvent* event) {

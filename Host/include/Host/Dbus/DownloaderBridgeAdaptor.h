@@ -9,8 +9,8 @@
  * before re-generating it.
  */
 
-#ifndef DOWNLOADERBRIDGEADAPTOR_H_1409555491
-#define DOWNLOADERBRIDGEADAPTOR_H_1409555491
+#ifndef DOWNLOADERBRIDGEADAPTOR_H_1409823369
+#define DOWNLOADERBRIDGEADAPTOR_H_1409823369
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
@@ -26,14 +26,14 @@ QT_END_NAMESPACE
 #include <Host/Bridge/DownloaderBridge.h>
 
 /*
- * Adaptor class for interface local.DownloaderBridge
+ * Adaptor class for interface com.gamenet.dbus.Downloader
  */
 class DownloaderBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "local.DownloaderBridge")
+    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Downloader")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"local.DownloaderBridge\">\n"
+"  <interface name=\"com.gamenet.dbus.Downloader\">\n"
 "    <signal name=\"started\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"out\" type=\"i\" name=\"startType\"/>\n"
@@ -82,16 +82,13 @@ class DownloaderBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"stop\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "    </method>\n"
-"    <method name=\"directoryChanged\">\n"
-"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
-"    </method>\n"
 "    <method name=\"pauseSession\"/>\n"
 "    <method name=\"resumeSession\"/>\n"
 "    <signal name=\"downloadProgress\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"out\" type=\"i\" name=\"progress\"/>\n"
 "      <arg direction=\"out\" type=\"a(sii)\" name=\"args\"/>\n"
-"      <annotation value=\"DownloadProgressArgs\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
+"      <annotation value=\"GameNet::Host::Bridge::DownloadProgressArgs\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
 "    </signal>\n"
 "  </interface>\n"
         "")
@@ -101,7 +98,6 @@ public:
 
 public: // PROPERTIES
 public Q_SLOTS: // METHODS
-    void directoryChanged(const QString &serviceId);
     bool isAnyServiceInProgress();
     bool isInProgress(const QString &serviceId);
     bool isInstalled(const QString &serviceId);

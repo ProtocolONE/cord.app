@@ -1,4 +1,7 @@
 #include "viewmodel\settingsviewmodel.h"
+
+#include <Dbus/DownloaderSettingsBridgeProxy.h>
+
 #include <Settings\Settings.h>
 #include <Core/UI/Message>
 
@@ -56,49 +59,6 @@ int SettingsViewModel::autoStart()
   bool ok;
   int result = settings.value("AutoRun", 0).toInt(&ok);
   return ok ? result : 0;
-}
-
-QString SettingsViewModel::incomingPort()
-{
-  GGS::Settings::Settings settings;
-  QString inport = settings.value("qGNA/inPort").toString();
-  return inport;
-}
-
-void SettingsViewModel::setIncomingPort(const QString& _port)
-{
-  bool ok;
-  int port = _port.toInt(&ok);
-  if (!ok) {
-    emit this->incomingPortChanged();
-    return ;
-  }
-
-  QString tmp = this->incomingPort();
-  if (tmp == _port)
-    return;
-
-  GGS::Settings::Settings settings;
-  settings.setValue("qGNA/inPort", _port, _instantlySave); 
-  emit this->incomingPortChanged();
-}
-
-QString SettingsViewModel::numConnections()
-{
-  GGS::Settings::Settings settings;
-  QString num = settings.value("qGNA/numConnections").toString();
-  return num;
-}
-
-void SettingsViewModel::setNumConnections(const QString& _num)
-{
-  QString tmp = this->numConnections();
-  if (tmp == _num)
-    return;
-
-  GGS::Settings::Settings settings;
-  settings.setValue("qGNA/numConnections", _num, _instantlySave); 
-  emit this->numConnectionsChanged();
 }
 
 bool SettingsViewModel::notifyWhenStartedGameNet()
@@ -186,54 +146,15 @@ void SettingsViewModel::setNotifyNewMessage(bool _notify)
   emit this->notifyNewMessageChanged();
 }
 
-QString SettingsViewModel::downloadSpeed()
-{
-  GGS::Settings::Settings settings;
-  return settings.value("qGNA/downloadSpeed").toString();
-}
-
-void SettingsViewModel::setDownloadSpeed(const QString& _speed)
-{
-  QString tmp = this->downloadSpeed();
-  if (tmp == _speed)
-    return;
-
-  GGS::Settings::Settings settings;
-  settings.setValue("qGNA/downloadSpeed", _speed, _instantlySave); 
-  emit this->downloadSpeedChanged();
-}
-
-QString SettingsViewModel::uploadSpeed()
-{
-  GGS::Settings::Settings settings;
-  return settings.value("qGNA/uploadSpeed").toString();
-}
-
-void SettingsViewModel::setUploadSpeed(const QString& _speed)
-{
-  QString tmp = this->uploadSpeed();
-  if (tmp == _speed)
-    return;
-
-  GGS::Settings::Settings settings;
-  settings.setValue("qGNA/uploadSpeed", _speed, _instantlySave); 
-  emit this->uploadSpeedChanged();
-}
-
 void SettingsViewModel::setDefaultSettings()
 {
   _instantlySave = false;
 
-  setIncomingPort("11888");
-  setNumConnections("10");
   setNotifyWhenStartedGameNet(false);
   setNotifyStartEndGameDownload(true);
   setNotifyDisconnectFriendFromNetwork(true);
   setNotifyDisconnectFriendFromGame(true);
   setNotifyNewMessage(true);
-  setDownloadSpeed("0");
-  setUploadSpeed("0"); 
-  setSeedEnabled(true);
 
   GGS::Settings::Settings settings;
   settings.setValue("qGNA/language", "ru" , true);
@@ -283,17 +204,99 @@ void SettingsViewModel::switchClientVersion()
 
 bool SettingsViewModel::seedEnabled()
 {
-  GGS::Settings::Settings settings;
-  return settings.value("qGNA/seedEnabled", true).toBool();
+  return this->_downloaderSettings->seedEnabled();
 }
 
 void SettingsViewModel::setSeedEnabled(bool value)
 {
-  bool tmp = this->seedEnabled();
-  if (tmp == value)
-    return;
+  this->_downloaderSettings->setSeedEnabled(value);
+}
 
-  GGS::Settings::Settings settings;
-  settings.setValue("qGNA/seedEnabled", value, this->_instantlySave); 
-  emit this->seedEnabledChanged();
+QString SettingsViewModel::incomingPort()
+{
+  return QString::number(this->_downloaderSettings->listeningPort());
+}
+
+void SettingsViewModel::setIncomingPort(const QString& _port)
+{
+  bool ok;
+  int port = _port.toInt(&ok);
+  if (!ok) {
+    emit this->incomingPortChanged();
+    return;
+  }
+
+  this->_downloaderSettings->setListeningPort(port);
+}
+
+QString SettingsViewModel::numConnections()
+{
+  return QString::number(this->_downloaderSettings->maxConnection());
+}
+
+void SettingsViewModel::setNumConnections(const QString& _num)
+{
+  bool ok;
+  int num = _num.toInt(&ok);
+  if (!ok) {
+    emit this->numConnectionsChanged();
+    return;
+  }
+
+  this->_downloaderSettings->setMaxConnection(num);
+}
+
+QString SettingsViewModel::downloadSpeed()
+{
+  return QString::number(this->_downloaderSettings->downloadRate());
+}
+
+void SettingsViewModel::setDownloadSpeed(const QString& _speed)
+{
+  bool ok;
+  int rate = _speed.toInt(&ok);
+  if (!ok) {
+    emit this->downloadSpeedChanged();
+    return;
+  }
+
+  this->_downloaderSettings->setDownloadRate(rate);
+}
+
+QString SettingsViewModel::uploadSpeed()
+{
+  return QString::number(this->_downloaderSettings->uploadRate());
+}
+
+void SettingsViewModel::setUploadSpeed(const QString& _speed)
+{
+  bool ok;
+  int rate = _speed.toInt(&ok);
+  if (!ok) {
+    emit this->uploadSpeedChanged();
+    return;
+  }
+
+  this->_downloaderSettings->setUploadRate(rate);
+}
+
+void SettingsViewModel::setDownloaderSettings(DownloaderSettingsBridgeProxy *value)
+{
+  Q_ASSERT(value);
+  this->_downloaderSettings = value;
+
+  QObject::connect(value, &DownloaderSettingsBridgeProxy::listeningPortChanged,
+    this, &SettingsViewModel::incomingPortChanged);
+
+  QObject::connect(value, &DownloaderSettingsBridgeProxy::maxConnectionChanged,
+    this, &SettingsViewModel::numConnectionsChanged);
+
+  QObject::connect(value, &DownloaderSettingsBridgeProxy::downloadRateChanged,
+    this, &SettingsViewModel::downloadSpeedChanged);
+
+  QObject::connect(value, &DownloaderSettingsBridgeProxy::uploadRateChanged,
+    this, &SettingsViewModel::uploadSpeedChanged);
+
+  QObject::connect(value, &DownloaderSettingsBridgeProxy::seedEnabledChanged,
+    this, &SettingsViewModel::seedEnabledChanged);
 }

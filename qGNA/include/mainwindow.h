@@ -56,6 +56,8 @@
 
 #include "KeyboardLayoutHelper.h"
 
+#include <Host/Bridge/DownloaderBridge.h>
+
 /*!
 \class MQDeclarativeView
 
@@ -82,6 +84,9 @@ signals:
 };
 
 class DownloaderBridgeProxy;
+class DownloaderSettingsBridgeProxy;
+class ServiceSettingsBridgeProxy;
+
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
@@ -129,11 +134,6 @@ public slots:
 
   void downloadButtonStart(QString serviceId);
   void downloadButtonPause(QString serviceId);
-
-  void settingsIncomingPortChangedSlot();
-  void settingsNumConnectionsChangedSlot();
-  void settingsDownloadSpeedChangedSlot();
-  void settingsUploadSpeedChangedSlot();
 
   bool isDownloading(QString serviceId);  
 
@@ -286,23 +286,21 @@ private slots:
   
   void windowCloseInfo();
 
-  void downloadGameTotalProgressChanged(const GGS::Core::Service *service, qint8 progress);
+  void downloadGameTotalProgressChanged(const QString& serviceId, int progress);
   void downloadGameProgressChanged(
-    const GGS::Core::Service *service, 
-    qint8 progress, 
-    GGS::Libtorrent::EventArgs::ProgressEventArgs args);
+    const QString& serviceId, 
+    int progress, 
+    GameNet::Host::Bridge::DownloadProgressArgs args);
 
-  void gameDownloaderStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
-  void gameDownloaderStopped(const GGS::Core::Service *service);
-  void gameDownloaderStopping(const GGS::Core::Service *service);     
-  void gameDownloaderFailed(const GGS::Core::Service *service); 
-  void gameDownloaderFinished(const GGS::Core::Service *service);
-  void gameDownloaderStatusMessageChanged(const GGS::Core::Service *service, const QString& message);
-  void torrentListenPortChangedSlot(unsigned short port);
-  void gameDownloaderServiceInstalled(const GGS::Core::Service *service); 
-  void gameDownloaderServiceUpdated(const GGS::Core::Service *service); 
+  void gameDownloaderStarted(const QString& serviceId, int startType);
+  void gameDownloaderStopped(const QString& serviceId);
+  void gameDownloaderStopping(const QString& serviceId);     
+  void gameDownloaderFailed(const QString& serviceId); 
+  void gameDownloaderFinished(const QString& serviceId);
+  void gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message);
+  void gameDownloaderServiceInstalled(const QString& serviceId); 
+  void gameDownloaderServiceUpdated(const QString& serviceId); 
   void removeStartGame(QString serviceId);
-  void seedEnabledChanged();
 
   void shutdownCompleted();
   void checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result);
@@ -318,7 +316,6 @@ private:
   void initServices();
   void checkDesktopDepth();
 
-  void checkLicense(const QString& serviceId);
   void startGame(const QString& serviceId);
 
   void prepairGameDownloader();
@@ -354,6 +351,8 @@ private:
   QString _hwid;
 
   DownloaderBridgeProxy *_downloader;
+  DownloaderSettingsBridgeProxy *_downloaderSettings;
+  ServiceSettingsBridgeProxy *_serviceSettings;
 
 protected:
 	void closeEvent(QCloseEvent* event);
