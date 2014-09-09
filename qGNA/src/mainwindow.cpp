@@ -592,6 +592,42 @@ void MainWindow::downloadButtonPause(QString serviceId)
   if (this->_serviceSettings->isDownloadable(serviceId)) {
     this->_downloader->stop(serviceId);
     return;
+
+  if (service->isDownloadable())
+    this->_gameDownloader.stop(service);
+  else
+    this->_premiumExecutor.executeMain(service);
+}
+
+void MainWindow::initializeUpdateSettings()
+{
+  this->_updateArea = QString("live");
+  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
+  bool ok = false;
+  int area = settings.value("Repository", 0).toInt(&ok);
+  if (!ok)
+    area = 0;
+
+  switch(area)
+  {
+  case 1:
+    this->_updateArea = QString("pts");
+    this->_applicationArea = GGS::Core::Service::Pts;
+    break;
+  case 2:
+    this->_updateArea = QString("tst");
+    this->_applicationArea = GGS::Core::Service::Tst;
+    break;
+    /*
+  INFO Раскомментируйте этот блок, если вам нужно использовать специальную версию для тестирования на живых людях.
+  case 3:
+    this->_updateArea = QString("2live");
+    this->_applicationArea = GGS::Core::Service::Live;
+    break;
+    */
+  default:
+    this->_updateArea = QString("live");  
+    this->_applicationArea = GGS::Core::Service::Live;
   }
 
   GGS::RestApi::GameNetCredential baseCredential = 
