@@ -93,12 +93,13 @@ EXIT /B 1
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ttf" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.png" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.jpg" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
+      <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -279,12 +280,14 @@ EXIT /B 1
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ttf" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.png" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.gif" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.jpg" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.ico" "$(TargetDir)"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\*.wma" "$(TargetDir)"
+      <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
+xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
+
 SET D=
 IF "$(Configuration)"=="Debug" (
      SET D=d
