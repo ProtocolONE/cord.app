@@ -17,8 +17,9 @@
     <GameDownloaderArea>trunk</GameDownloaderArea>
     <GameExecutorArea>trunk</GameExecutorArea>
     <ApplicationArea>trunk</ApplicationArea>
-    <OpenSSLArea>0.9.8r</OpenSSLArea>
-    <QmlExtensionArea>trunk</QmlExtensionArea>
+    <OpenSSLArea>1.0.1g</OpenSSLArea>
+    <QmlExtensionArea>1.0.170</QmlExtensionArea>
+    <QxmppArea>0.7.6_Qt5.2.1</QxmppArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
     <OverlayArea>trunk</OverlayArea>
