@@ -18,7 +18,6 @@ void EnterNickNameViewModel::CanExecute(GGS::Core::Service &service)
 void EnterNickNameViewModel::success()
 {
   emit this->canExecuteCompleted(this->_service, GGS::GameExecutor::Success);
-
 }
 
 void EnterNickNameViewModel::failed()

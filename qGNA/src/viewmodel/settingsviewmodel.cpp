@@ -1,7 +1,7 @@
 #include "viewmodel/settingsviewmodel.h"
 
-#include <Dbus/DownloaderSettingsBridgeProxy.h>
-#include <DBus/UpdateManagerBridgeProxy.h>
+#include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
+#include <Host/DBus/UpdateManagerBridgeProxy.h>
 
 #include <Settings/Settings.h>
 #include <Core/UI/Message>

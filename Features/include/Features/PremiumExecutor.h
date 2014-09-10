@@ -33,8 +33,15 @@ namespace Features {
     bool canSimpleExecuteMain(const QString& id);
     bool canExecuteSecond(const QString& id);
 
-    void executeMain(GGS::Core::Service* service);
-    void executeSecond(GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial);
+    void executeMain(
+      GGS::Core::Service* service, 
+      const GGS::RestApi::GameNetCredential& credetial);
+
+    void executeSecond(
+      GGS::Core::Service* service, 
+      const GGS::RestApi::GameNetCredential& credetial, 
+      const GGS::RestApi::GameNetCredential& secondCredetial);
+
     void shutdownSecond();
 
     void shutdown();

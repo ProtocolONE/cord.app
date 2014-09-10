@@ -5,8 +5,6 @@
 #include <viewmodel/GameSettingsViewModel.h>
 #include <viewmodel/UpdateViewModel.h>
 
-#include <ServiceLoader.h>
-
 #include <QmlMessageAdapter.h>
 #include <Features/RememberGameDownloading.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
@@ -45,7 +43,7 @@
 #include <QtCore/QScopedPointer>
 #include <QtWidgets/QApplication>
 #include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/qdeclarativeview.h>
+#include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QDesktopServices>
 #include <QMainWindow>
@@ -80,11 +78,12 @@ signals:
   void leftMouseClick(int globalX, int globalY); 
 };
 
+class BestInstallPath;
+
 class DownloaderBridgeProxy;
 class DownloaderSettingsBridgeProxy;
 class ServiceSettingsBridgeProxy;
-class UpdateManagerBridgeProxy;
-class ApplicationBridgeProxy;
+class ExecutorBridgeProxy;
 
 class MainWindow : public QMainWindow
 {
@@ -112,7 +111,6 @@ public:
   Q_INVOKABLE void saveLanguage(const QString& language);
   Q_INVOKABLE void selectLanguage(const QString& language);
   void setFileVersion(const QString& fileVersion) { _fileVersion = fileVersion; }
-  void release();
 
 public slots:
   /*
@@ -140,7 +138,7 @@ public slots:
   void activateWindow();
   bool executeService(QString id);
   bool executeSecondService(QString id, QString userId, QString appKey);
-  bool terminateSecondService();
+  void terminateSecondService();
 
   void setTechName(QString& techName);
   void setNickName(QString& nickName);
@@ -162,6 +160,7 @@ public slots:
   void onLanguageChanged();
 
   bool silent();
+  void onWindowClose();
 
 private:
   void loadPlugin(QString pluginName);
@@ -173,8 +172,6 @@ private:
   void initRestApi();
   void initMarketing();
   bool isUseOpenGLrender();
-
-  void createShortcut(const QString& pathToLnk, const GGS::Core::Service* service);
 
   GGS::RestApi::FakeCache _fakeCache;
   GGS::RestApi::GameNetCredential _credential;
@@ -195,7 +192,6 @@ private:
 
   QPoint mLastMousePosition;
   bool m_WindowState; // false - normal size, true - max size  
-  bool _gameDownloadInitialized;
   GGS::Application::ArgumentParser _commandLineArguments;
   GGS::Core::Service::Area _gameArea;
   GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
@@ -269,21 +265,15 @@ signals:
   void quit();
 
 private slots:
-  void restartUIRequestSlot();
+  void onServiceStarted(const QString &serviceId);
+  void onServiceFinished(const QString &serviceId, int state);
 
-  void onServiceStarted(const GGS::Core::Service &service);
-  void onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
-
-  void onSecondServiceStarted(const GGS::Core::Service &service);
-  void onSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+  void onSecondServiceStarted(const QString &serviceId);
+  void onSecondServiceFinished(const QString &serviceId, int state);
 
   void onSystemBarPressed(int MouseX, int MouseY);
   void onSystemBarReleased(int MouseX, int MouseY);
   void onSystemBarPositionChanged(int MouseX, int MouseY);
-  void onWindowClose();
-  void onForceWindowClose();
-  
-  void windowCloseInfo();
 
   void downloadGameTotalProgressChanged(const QString& serviceId, int progress);
   void downloadGameProgressChanged(
@@ -301,57 +291,38 @@ private slots:
   void gameDownloaderServiceUpdated(const QString& serviceId); 
   void removeStartGame(QString serviceId);
 
-  void shutdownCompleted();
-
   void restApiGenericError(GGS::RestApi::CommandBase::Error, QString message);
-  void applicationAreaChanged();
-  void internalRestartApplication(bool shouldStartWithSameArguments = true);
-  void restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result result);
-
-  void thettaConnected(Features::Thetta::ThettaInstaller::Result result);
 
 private:
-  void initServices();
   void checkDesktopDepth();
 
   void startGame(const QString& serviceId);
 
   void prepairGameDownloader();
-  void initializeStopDownloadServiceOnExecuteGameFeature();
   void postUpdateInit();
-  void sendHwidFromDriver();
-
-  GGS::Core::Service* getService(const QString& id);
-
-  ServiceLoader _serviceLoader;
 
   QMap<QString,QTranslator*> translators;
   GGS::GameDownloader::GameDownloadService _gameDownloader;
 
-  GGS::GameExecutor::GameExecutorService _gameExecutorService;
-  GGS::GameExecutor::ServiceInfoCounter _gameExecutorServiceInfoCounter;
-
   GGS::Core::Service::Area _applicationArea;
 
-  RememberGameDownloading _rembrGameFeature;
+  RememberGameDownloading _rememberGameFeature;
   GGS::Marketing::MarketingTarget _marketingTargetFeatures;
-  Features::StopDownloadServiceWhileExecuteAnyGame _stopDownloadServiceOnExecuteGame;
-  Features::GameDownloader::GameDownloadStatistics _downloadStatistics;
-  Features::PremiumExecutor _premiumExecutor;
+
   Features::TaskBarHelper _taskBarHelper;
   Features::SilentMode _silentMode;
-
-  bool _restartArguments;
+  
   QString _hwid;
 
   DownloaderBridgeProxy *_downloader;
   DownloaderSettingsBridgeProxy *_downloaderSettings;
   ServiceSettingsBridgeProxy *_serviceSettings;
-  ApplicationBridgeProxy* _applicationProxy;
+  ExecutorBridgeProxy *_executor;
+
+  BestInstallPath *_bestInstallPath;
 
 protected:
 	void closeEvent(QCloseEvent* event);
   bool event(QEvent* event);
-  bool winEvent(MSG* message, long* result);
-
+  bool nativeEvent(const QByteArray & eventType, void * message, long * result) override;
 };

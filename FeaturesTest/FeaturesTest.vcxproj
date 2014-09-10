@@ -50,42 +50,100 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;QT_DLL;QT_CORE_LIB;QT_SQL_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;WIN32;NOMINMAX;QT_DLL;QT_CORE_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_TESTLIB_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\include;$(QTDIR)\include\QtCore;$(QGNACOMMONDIR)\Google\gtest\1.6.0\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include\;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtTest;$(QGNACOMMONDIR)\Google\gtest\1.7.0\include;$(QGNACOMMONDIR)\Google\gmock\1.7.0\include;$(ProjectDir);$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtSql;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(SolutionDir)Features\include;.\include\Helper;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\Google\gtest\1.6.0\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\Google\gtest\1.7.0\lib;$(QGNACOMMONDIR)\Google\gmock\1.7.0\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;QtCored4.lib;gtestd.lib;FeaturesX86d.lib;UpdateSystemX86d.lib;RestApiX86d.lib;SettingsX86d.lib;CoreX86d.lib;LibtorrentWrapperX86d.lib;GameDownloaderX86d.lib;ThettaX86d.lib;QtSqld4.lib;QtNetworkd4.lib;HookEngined.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;gtest86-md-d.lib;gmockX86-md-d.lib;ApplicationX86d.lib;FeaturesX86d.lib;UpdateSystemX86d.lib;RestApiX86d.lib;SettingsX86d.lib;CoreX86d.lib;LibtorrentWrapperX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;ThettaX86d.lib;HookEngined.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Testd.lib;Qt5DBusd.lib;Qt5Guid.lib;Qt5Concurrentd.lib;Qt5Scriptd.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>SET D=""
+      <Command>SET D=
 IF "$(Configuration)"=="Debug" (
      SET D=d
 )
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
+@REM Localization
+$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
+$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(SolutionDir)\Features\i18n\*.ts" "$(TargetDir)"
+
+mkdir "$(TargetDir)languages"
+CALL "$(SolutionDir)\Etc\tsmerge.cmd" ru "$(TargetDir)languages\host" "$(TargetDir)."
+CALL "$(SolutionDir)\Etc\tsmerge.cmd" en "$(TargetDir)languages\host" "$(TargetDir)."
+
+del /F /Q "$(TargetDir)*.ts"
+
+@REM vs_redist
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
+
+@REM QT binaries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
 
+xcopy /Y /I /R "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5DBus%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
+
+@REM DBus
+copy /Y /B  "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
+copy /Y /B  "$(QTDIR)\bin\dbus-daemon.exe" "$(TargetDir)"
+copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
+
+@REM Our libraries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
 
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
+
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\Launcher%D%.exe" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
@@ -93,113 +151,119 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64d.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
 
-@REM QT binaries
-
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Test%D%.dll" "$(TargetDir)"
-
-
-xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
-
-xcopy /Y /I /R "$(QTDIR)\bin\D3DCompiler_43.dll" "$(TargetDir)"
-
-xcopy /Y /I /R "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
-
-xcopy /Y /I /R "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)\platforms\"
-xcopy /Y /I /R "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)\sqldrivers\"
-
-@REM vs_redist
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
-</Command>
+xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_SQL_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;WIN32;NOMINMAX;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_TESTLIB_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(ProjectDir)\include;$(QTDIR)\include\QtCore;$(QGNACOMMONDIR)\Google\gtest\1.6.0\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include\;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtNetwork;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtTest;$(QGNACOMMONDIR)\Google\gtest\1.7.0\include;$(QGNACOMMONDIR)\Google\gmock\1.7.0\include;$(ProjectDir);$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtSql;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(SolutionDir)Features\include;.\include\Helper;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\Google\gtest\1.6.0\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\Google\gtest\1.7.0\lib;$(QGNACOMMONDIR)\Google\gmock\1.7.0\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;QtCore4.lib;gtest.lib;FeaturesX86.lib;UpdateSystemX86.lib;RestApiX86.lib;SettingsX86.lib;CoreX86.lib;LibtorrentWrapperX86.lib;GameDownloaderX86.lib;ThettaX86.lib;QtSql4.lib;QtNetwork4.lib;HookEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;gtest86-md.lib;gmockX86-md.lib;ApplicationX86.lib;FeaturesX86.lib;UpdateSystemX86.lib;RestApiX86.lib;SettingsX86.lib;CoreX86.lib;LibtorrentWrapperX86.lib;GameDownloaderX86.lib;ThettaX86.lib;GameExecutorX86.lib;HookEngine.lib;Qt5Core.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Test.lib;Qt5DBus.lib;Qt5Gui.lib;Qt5Concurrent.lib;Qt5Script.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>SET D=""
+      <Command>SET D=
 IF "$(Configuration)"=="Debug" (
      SET D=d
 )
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
+@REM Localization
+$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
+$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(SolutionDir)\Features\i18n\*.ts" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
+mkdir "$(TargetDir)languages"
+CALL "$(SolutionDir)\Etc\tsmerge.cmd" ru "$(TargetDir)languages\host" "$(TargetDir)."
+CALL "$(SolutionDir)\Etc\tsmerge.cmd" en "$(TargetDir)languages\host" "$(TargetDir)."
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
+del /F /Q "$(TargetDir)*.ts"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
-
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\Launcher%D%.exe" "$(TargetDir)"
-
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
+@REM vs_redist
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
 
 @REM QT binaries
-
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Test%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
 
 xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
 xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
 xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
 
-xcopy /Y /I /R "$(QTDIR)\bin\D3DCompiler_43.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
 xcopy /Y /I /R "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)\platforms\"
-xcopy /Y /I /R "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)\sqldrivers\"
+xcopy /Y /I /R "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5DBus%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
 
-@REM vs_redist
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
-</Command>
+@REM DBus
+copy /Y /B  "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
+copy /Y /B  "$(QTDIR)\bin\dbus-daemon.exe" "$(TargetDir)"
+copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
+
+@REM Our libraries
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
+
+xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -216,9 +280,14 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Bridge\ExecutorBridgeTest.cpp" />
+    <ClCompile Include="src\Bridge\ServiceSettingsBridgeTest.cpp" />
+    <ClCompile Include="src\FactoryTest.cpp" />
     <ClCompile Include="src\GameDownloader\DownloadStatsPub.cpp" />
     <ClCompile Include="src\GameDownloader\DownloadStatsTest.cpp" />
     <ClCompile Include="src\GameDownloader\ExternalIpTest.cpp" />
+    <ClCompile Include="src\ServiceDescriptionTest.cpp" />
+    <ClCompile Include="src\ServiceLoaderTest.cpp" />
     <ClCompile Include="src\SingleShotFunctor.cpp" />
     <ClCompile Include="src\StopDownloadServiceWhileExecuteAnyGameTest.cpp" />
     <ClCompile Include="src\TestEventLoopFinisher.cpp" />
@@ -229,11 +298,11 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing TestEventLoopFinisher.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_CORE_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -D_UNICODE  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\include" "-I$(QTDIR)\include\QtCore" "-I$(QGNACOMMONDIR)\Google\gtest\1.6.0\include" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QTDIR)\include\QtSql" "-I$(QTDIR)\include\QtNetwork" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_CORE_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -D_UNICODE  "-I$(QTDIR)\include\QtTest" "-I$(QGNACOMMONDIR)\Google\gtest\1.7.0\include" "-I$(QGNACOMMONDIR)\Google\gmock\1.7.0\include" "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtSql" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I$(QTDIR)\include\QtWidgets"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing TestEventLoopFinisher.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -D_UNICODE  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\include" "-I$(QTDIR)\include\QtCore" "-I$(QGNACOMMONDIR)\Google\gtest\1.6.0\include" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QTDIR)\include\QtSql" "-I$(QTDIR)\include\QtNetwork" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -D_UNICODE  "-I$(QTDIR)\include\QtTest" "-I$(QGNACOMMONDIR)\Google\gtest\1.7.0\include" "-I$(QGNACOMMONDIR)\Google\gmock\1.7.0\include" "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtSql" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -242,11 +311,11 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing SingleShotFunctor.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_CORE_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -D_UNICODE  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\include" "-I$(QTDIR)\include\QtCore" "-I$(QGNACOMMONDIR)\Google\gtest\1.6.0\include" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QTDIR)\include\QtSql" "-I$(QTDIR)\include\QtNetwork" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_CORE_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -D_UNICODE  "-I$(QTDIR)\include\QtTest" "-I$(QGNACOMMONDIR)\Google\gtest\1.7.0\include" "-I$(QGNACOMMONDIR)\Google\gmock\1.7.0\include" "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtSql" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I$(QTDIR)\include\QtWidgets"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing SingleShotFunctor.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -D_UNICODE  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\include" "-I$(QTDIR)\include\QtCore" "-I$(QGNACOMMONDIR)\Google\gtest\1.6.0\include" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QTDIR)\include\QtSql" "-I$(QTDIR)\include\QtNetwork" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -D_UNICODE  "-I$(QTDIR)\include\QtTest" "-I$(QGNACOMMONDIR)\Google\gtest\1.7.0\include" "-I$(QGNACOMMONDIR)\Google\gmock\1.7.0\include" "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtSql" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,10 +1,8 @@
 #pragma once
 
 #include <QDeclarativeItem>
-#include <QtCore/QScopedPointer>
-#include <Phonon>
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
+#include <QtMultimedia/QAudioOutput>
+#include <QtMultimedia/QMediaPlayer>
 
 class Player: public QDeclarativeItem
 {
@@ -30,7 +28,8 @@ public slots:
   void stop();
 
 private slots:
-  void stateChanged(Phonon::State newstate, Phonon::State oldstate);
+  void stateChanged(QMediaPlayer::State state);
+  void mediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 signals:
   void sourceChanged();
@@ -43,8 +42,7 @@ signals:
   void paused();
 
 private:
-  Phonon::MediaObject *_media;
-  Phonon::AudioOutput *_output;
+  QMediaPlayer *_media;
   QString _source;
   bool _autoPlay;
 };

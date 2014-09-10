@@ -8,15 +8,6 @@
 #include <Features/Thetta/DistrIntegrityExecutorHook.h>
 
 #include <GameExecutor/Extension.h>
-#include <GameExecutor/Hook/RestoreResolution>
-#include <GameExecutor/Hook/DisableIEDefalutProxy>
-#include <GameExecutor/Hook/DisableDEP>
-#include <GameExecutor/Hook/DownloadCustomFile>
-#include <GameExecutor/Hook/Mw2DownloadAndCheckXmlConfig.h>
-#include <GameExecutor/Hook/DisableAeroHook.h>
-#include <GameExecutor/Hook/DefaultAikaSettings.h>
-#include <GameExecutor/Hook/BannerDownload.h>
-#include <GameExecutor/Hook/RestoreFileModification.h>
 
 #include <Dbus/ServiceSettingsBridgeProxy.h>
 
@@ -31,8 +22,6 @@
 
 ServiceLoader::ServiceLoader(QObject *parent) 
   : QObject(parent)
-  , _driver(nullptr)
-  , _installer(nullptr)
   , _serviceSettings(nullptr)
 {
 }
@@ -41,34 +30,10 @@ ServiceLoader::~ServiceLoader()
 {
 }
 
-QHash<QString, GGS::Core::Service *>& ServiceLoader::serviceMap()
-{
-  return this->_serviceMap;
-}
-
 void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::Area applicationArea)
 {
   this->_gameArea = gameArea;
   this->_applicationArea = applicationArea;
-
-  QString thettaDirectory = QString("%1/Thetta").arg(QCoreApplication::applicationDirPath());
-  this->_driver = new Thetta::Driver(this);
-  this->_driver->setPath(thettaDirectory);
-  this->_driver->setName(QString("Thetta"));
-
-  this->_installer = new Features::Thetta::ThettaInstaller(this);
-  this->_installer->setDriver(this->_driver);
-  this->_installer->setApplicationVersion(this->_applicationVersion);
-  this->_installer->setApplicationArea(applicationArea);
-
-  this->_thettaMonitorApp.setThettaInstaller(this->_installer);
-
-  if (this->_applicationArea == GGS::Core::Service::Tst)
-    this->_installer->connectToDriver();
-
-  this->initGameExecutorExtensions(this->_gameExecutorService);
-
-  MemoryProtector_CheckFunction2(4788, 28426, 26374, 35950);
 
   this->initService("300002010000000000", "http://fs0.gamenet.ru/update/aika/", "Aika2");
   this->initService("300003010000000000", "http://fs0.gamenet.ru/update/bs/", "BS");
@@ -76,12 +41,6 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
   this->initService("300004010000000000", "http://fs0.gamenet.ru/update/rot/", "RageofTitans");
-  //this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
-  //this->initService("100003010000000000", "http://gnlupdate.tst.local/update/bs/", "BSTest");
-
-  this->initGAService();
-  this->initFJService();
-  this->initBDService();
 }
 
 GGS::Core::Service* ServiceLoader::getService(const QString& id)
@@ -133,62 +92,9 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
 
   service->setTorrentUrl(torrentUrl);
 
-  this->initHooks(id, service);
-  this->installThettaHook(service);
-
   this->_serviceMap[id] = service;
 
   this->setExecuteUrl(id, currentInstallPath);
-}
-
-void ServiceLoader::initBDService()
-{
-    using namespace GGS::Core;
-    QString id("30000000000");
-    Service *service = new Service();
-    service->setArea(Service::Live);
-    service->setIsDownloadable(false);
-    service->setName(id);
-    service->setId(id);
-    service->setGameId("1021");
-    service->setUrl(QUrl("http://blackdesert.ru/"));
-
-    this->_serviceMap[id] = service;
-}
-
-void ServiceLoader::initGAService()
-{
-  using namespace GGS::Core;
-  QString id("300007010000000000");
-  Service *service = new Service();
-  service->setArea(Service::Live);
-  service->setIsDownloadable(false);
-  service->setName(id);
-  service->setId(id);
-  service->setGameId("83");
-  service->setUrl(QUrl("http://www.playga.ru/"));
-
-  this->_serviceMap[id] = service;
-}
-
-void ServiceLoader::initFJService()
-{
-  using namespace GGS::Core;
-  QString id("300011010000000000");
-  Service *service = new Service();
-  service->setArea(Service::Live);
-  service->setIsDownloadable(false);
-  service->setName(id);
-  service->setId(id);
-  service->setGameId("759");
-  service->setUrl(QUrl("http://www.gamenet.ru/games/ferma/play/?fullscreen=1"));
-
-  this->_serviceMap[id] = service;
-}
-
-void ServiceLoader::setExecutor(GGS::GameExecutor::GameExecutorService *executor)
-{
-  this->_gameExecutorService = executor;
 }
 
 void ServiceLoader::setGameDownloader(GGS::GameDownloader::GameDownloadService *gameDownloader)
@@ -364,260 +270,6 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
   MemoryProtector_CheckFunction3(0x0A18C78A, 0x171D48F4, 0x0D860760, 0x37a14d6a);
 
   service->setUrl(url);
-}
-
-void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
-{
-  using namespace GGS::GameExecutor::Hook;
-  using namespace GGS::GameDownloader::Hooks;
-
-  if (id == "300012010000000000") { // reborn
-    this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
-    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);   
-  }
-
-  if (id == "300003010000000000") { // bs
-    this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
-    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);    
-  }
-
-  if (id == "300002010000000000") { // aika2
-    this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
-    this->_gameExecutorService->addHook(*service, new RestoreResolution(service), 0);
-    this->_gameExecutorService->addHook(*service, new DefaultAikaSettings(service), 0);
-    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
-  }
-
-  if (id == "300009010000000000") { // ca
-    Features::CASettingsFix *hook = new Features::CASettingsFix(service);
-    hook->setResolution(QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen()));
-    SIGNAL_CONNECT_CHECK(QObject::connect(
-      this->_gameDownloader, SIGNAL(serviceInstalled(const GGS::Core::Service *)), 
-      hook, SLOT(install(const GGS::Core::Service *))));
-
-    this->_gameExecutorService->addHook(*service, hook, 0);
-    this->_gameExecutorService->addHook(*service, new DisableIEDefalutProxy(service), 0);
-    this->_gameExecutorService->addHook(*service, new BannerDownload(service), 0);
-    this->_gameExecutorService->addHook(*service, new DownloadCustomFile(service), 100);
-
-    DWORD verion = GetVersion();
-    DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));
-    DWORD dwMinorVersion = (DWORD)(HIBYTE(LOWORD(verion)));
-    if (dwMajorVersion == 6 && dwMinorVersion >=0 && dwMinorVersion <= 2)
-      this->_gameExecutorService->addHook(*service, new GGS::GameExecutor::Hook::DisableAeroHook(service));
-
-    Features::Thetta::DistrIntegrityExecutorHook *distrCheck = new Features::Thetta::DistrIntegrityExecutorHook(service);
-    distrCheck->setDistrIntegrity(&this->_caDistIntegrity);
-    distrCheck->setGameExecutor(this->_gameExecutorService);
-    this->_gameExecutorService->addHook(*service, distrCheck, -1);
-
-    // TODO change to next code after switch to 4.8.3 or grater
-    //QSysInfo::WinVersion version = QSysInfo::windowsVersion();
-    //if (version == QSysInfo::WV_VISTA || version == QSysInfo::WV_WINDOWS7 || version == QSysInfo::WV_WINDOWS8)
-    //  this->_gameExecutorService->addHook(*service, new GGS::GameExecutor::Hook::DisableAeroHook(service));
-  }
-
-  if (id == "300004010000000000" || id == "300005010000000000" )
-    service->setExternalDependencyList("dxwebsetup.exe,/Q");
-}
-
-QString ServiceLoader::getExpectedInstallPath(const QString& serviceId)
-{
-  if (!this->_serviceSettings->isDefaultInstallPath(serviceId))
-    return this->_serviceSettings->installPath(serviceId);
-
-  QString defaultDownloadPath = QString("%1Games").arg(this->getBestDrive(serviceId));
-  QString name = this->_serviceSettings->name(serviceId);
-  return QDir::cleanPath(QString("%1/%2/").arg(defaultDownloadPath, name));
-}
-
-int ServiceLoader::getDiskFreeSpaceInMb(LPCWSTR drive)
-{
-  ULARGE_INTEGER freeBytes;
-  freeBytes.QuadPart = 0L;
-
-  if (!GetDiskFreeSpaceEx(drive, &freeBytes, NULL, NULL))
-    return 0;
-
-  return freeBytes.QuadPart / 1048576;
-}
-
-bool ServiceLoader::hasEnoughSpace(const QString& serviceId, int free)
-{
-  if (serviceId == "300002010000000000")
-    return free > 2800;
-
-  if (serviceId == "300003010000000000")
-    return free > 2400;
-
-  if (serviceId == "300005010000000000")
-    return free > 2500;
-
-  if (serviceId == "300009010000000000")
-    return free > 4800;
-
-  if (serviceId == "300012010000000000")
-    return free > 3300;
-
-  return free > 1000;
-}
-
-QString ServiceLoader::getBestDrive(const QString& serviceId)
-{
-  DWORD size = GetLogicalDriveStrings(0, NULL);
-  wchar_t *tmp = new wchar_t[size+1]();
-  DWORD size1 = GetLogicalDriveStringsW(size, tmp);
-
-  QString systemDrive = QDir::toNativeSeparators(QDir::rootPath());
-  QString secondDrive;
-  int systemDriveSize = 0;
-  int secondDriveSize = 0;
-
-  for (int i = 0; i < size; i+=4) {
-    wchar_t *currentDisk = tmp + i;
-    if (GetDriveTypeW(currentDisk) != DRIVE_FIXED)
-      continue;
-
-    int freeSpace = this->getDiskFreeSpaceInMb(currentDisk);
-    QString diskName = QString::fromWCharArray(currentDisk);
-
-    if (diskName == systemDrive) {
-      systemDriveSize = freeSpace;
-      continue;
-    } 
-
-    if (freeSpace > secondDriveSize) {
-      secondDriveSize = freeSpace;
-      secondDrive = diskName;
-    }
-  }
-
-  delete [] tmp;
-
-  if (secondDrive.isEmpty())
-    return systemDrive;
-
-  if (this->hasEnoughSpace(serviceId, secondDriveSize))
-    return secondDrive;
-
-  if (this->hasEnoughSpace(serviceId, systemDriveSize))
-    return systemDrive;
-
-  return secondDrive;
-}
-
-bool ServiceLoader::hasDefaultDownloadPath(const QString& id)
-{
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  settings.beginGroup(id);
-  return settings.value("DownloadPath", "").toString().isEmpty();
-}
-
-bool ServiceLoader::hasDefaultInstallPath(const QString& id)
-{
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  settings.beginGroup(id);
-  return settings.value("InstallPath", "").toString().isEmpty();
-}
-
-bool ServiceLoader::anyLicenseAccepted()
-{
-  QStringList ids;
-  ids << "300002010000000000"
-    << "300003010000000000"
-    << "300004010000000000"
-    << "300005010000000000"
-    << "300009010000000000"
-    << "300012010000000000";
-
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  Q_FOREACH(QString id, ids) {
-    settings.beginGroup(id);
-    QString license = settings.value("LicenseHash").toString();
-    settings.endGroup();
-
-    if (!license.isEmpty()) 
-      return true;
-  }
-
-  QString license = settings.value("LicenseHash").toString();
-  if (!license.isEmpty())
-    return true;
-
-  return false;
-}
-
-QString ServiceLoader::applicationVersion() const
-{
-  return this->_applicationVersion;
-}
-
-void ServiceLoader::setApplicationVersion(const QString& value)
-{
-  this->_applicationVersion = value;
-}
-
-Thetta::Driver* ServiceLoader::getDriver()
-{
-  return _driver;
-}
-
-void ServiceLoader::initGameExecutorExtensions(GGS::GameExecutor::GameExecutorService* executor)
-{
-  executor->setExtension(GGS::GameExecutor::ExtensionTypes::GetSalt, 
-      new GGS::GameExecutor::GetSaltExtension([this]() -> QString {
-        return this->_installer->driver()->getServiceSalt();
-    })
-  );
-
-  executor->setExtension(GGS::GameExecutor::ExtensionTypes::GetToken, 
-    new GGS::GameExecutor::GetTokenExtension([this](const QString& salt, const QString& token) -> QString {
-      return this->getDriverToken(salt, token);
-    })
-  );
-
-  executor->setExtension(GGS::GameExecutor::ExtensionTypes::OpenBrowser, 
-    new GGS::GameExecutor::OpenBrowserExtension([this](const QString& url) {
-      this->_installer->driver()->openBrowser(url);
-    })
-  );
-
-  executor->setExtension(GGS::GameExecutor::ExtensionTypes::ProcessHandleCheck,
-    new GGS::GameExecutor::ProcessHandleCheckExtension(
-      std::bind(&ServiceLoader::processHandlerExtension, this, std::placeholders::_1, std::placeholders::_2)
-    )
-  );
-}
-
-void ServiceLoader::installThettaHook(GGS::Core::Service* service)
-{
-  Features::Thetta::ThettaMonitor* thettaMonitor = new Features::Thetta::ThettaMonitor(service);
-  thettaMonitor->setDriverInstaller(this->_installer);
-  this->_gameExecutorService->addHook(*service, thettaMonitor, 99);
-}
-
-Features::Thetta::ThettaInstaller* ServiceLoader::thettaInstaller()
-{
-  return this->_installer;
-}
-
-QString ServiceLoader::getDriverToken(const QString& salt, const QString& token)
-{
-  MemoryProtector_CheckFunction4(0x4FEE102, 0x588FFDB0, 0x6CC7D53, 0x57d01d20);
-  MemoryProtector_CheckProtectedMemory;
-  QString result = this->_installer->driver()->getServiceToken(salt, token);
-  MemoryProtector_CheckCreateProcess;
-  return result;
-}
-
-bool ServiceLoader::processHandlerExtension(DWORD pid, HANDLE handle)
-{
-  DWORD handlePid = GetProcessId(handle);
-  if (handlePid != pid)
-    return false;
-  // INFO Необходимо проверить 2 раза. 
-  // Если колбеки сняли перед запуском, то первая проверка сработает, а вторая сфейлиться.
-  return this->_driver->isProtectedProcess(handlePid) && this->_driver->isProtectedProcess(handlePid);
 }
 
 void ServiceLoader::setServiceSettings(ServiceSettingsBridgeProxy *value)

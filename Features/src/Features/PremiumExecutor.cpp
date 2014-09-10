@@ -19,6 +19,10 @@
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
+using GGS::GameExecutor::GameExecutorService;
+using GGS::Core::Service;
+using GGS::RestApi::GameNetCredential;
+
 namespace Features {
 
   PremiumExecutor::PremiumExecutor(QObject *parent)
@@ -32,42 +36,46 @@ namespace Features {
 
   void PremiumExecutor::init()
   {
-    SIGNAL_CONNECT_CHECK(connect(&this->_simpleMainExecutor, SIGNAL(started(const GGS::Core::Service &)),
-      this, SLOT(internalServiceStarted(const GGS::Core::Service &)), Qt::QueuedConnection));
+    QObject::connect(&this->_simpleMainExecutor, &GameExecutorService::started,
+      this, &PremiumExecutor::internalServiceStarted, Qt::QueuedConnection);
 
-    SIGNAL_CONNECT_CHECK(connect(&this->_simpleMainExecutor, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-      this, SLOT(internalServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), Qt::QueuedConnection));
+    QObject::connect(&this->_simpleMainExecutor, &GameExecutorService::finished,
+      this, &PremiumExecutor::internalServiceFinished, Qt::QueuedConnection);
 
-    SIGNAL_CONNECT_CHECK(connect(this->_mainExecutor, SIGNAL(started(const GGS::Core::Service &)),
-      this, SLOT(internalServiceStarted(const GGS::Core::Service &)), Qt::QueuedConnection));
+    QObject::connect(this->_mainExecutor, &GameExecutorService::started,
+      this, &PremiumExecutor::internalServiceStarted, Qt::QueuedConnection);
 
-    SIGNAL_CONNECT_CHECK(connect(this->_mainExecutor, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-      this, SLOT(internalServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), Qt::QueuedConnection));
+    QObject::connect(this->_mainExecutor, &GameExecutorService::finished,
+      this, &PremiumExecutor::internalServiceFinished, Qt::QueuedConnection);
+    
+    QObject::connect(&this->_secondExecutor, &GameExecutorService::started,
+      this, &PremiumExecutor::internalSecondServiceStarted, Qt::QueuedConnection);
 
-    SIGNAL_CONNECT_CHECK(connect(&this->_secondExecutor, SIGNAL(started(const GGS::Core::Service &)),
-      this, SLOT(internalSecondServiceStarted(const GGS::Core::Service &)), Qt::QueuedConnection));
-
-    SIGNAL_CONNECT_CHECK(connect(&this->_secondExecutor, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)),
-      this, SLOT(internalSecondServiceFinished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), Qt::QueuedConnection));
-
+    QObject::connect(&this->_secondExecutor, &GameExecutorService::finished,
+      this, &PremiumExecutor::internalSecondServiceFinished, Qt::QueuedConnection);
+    
     this->registerExecutors(&this->_simpleMainExecutor);
     this->registerExecutors(&this->_secondExecutor);
   }
 
-  void PremiumExecutor::executeMain(GGS::Core::Service* service)
+  void PremiumExecutor::executeMain(
+    GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial)
   {
     QMutexLocker locker(&this->_mutex);
     
     this->setNoInjectItem(service, "0");
     if (this->isSecondStarted(service->id()))
-      this->_simpleMainExecutor.execute(*service);
+      this->_simpleMainExecutor.executeEx(*service, credetial);
     else
-      this->_mainExecutor->execute(*service);
+      this->_mainExecutor->executeEx(*service, credetial);
 
     this->_mainGameStarted.insert(service->id());
   }
 
-  void PremiumExecutor::executeSecond(GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial)
+  void PremiumExecutor::executeSecond(
+    GGS::Core::Service* service, 
+    const GGS::RestApi::GameNetCredential& credetial, 
+    const GGS::RestApi::GameNetCredential& secondCredetial)
   {
     QMutexLocker locker(&this->_mutex);
 
@@ -76,7 +84,7 @@ namespace Features {
     
     this->setNoInjectItem(service, "1");
 
-    this->_secondExecutor.execute(*service, credetial);
+    this->_secondExecutor.executeEx(*service, credetial, secondCredetial);
     this->_secondGameStarted.insert(service->id());
   }
 
@@ -125,42 +133,44 @@ namespace Features {
       || this->_secondExecutor.isAnyGameStarted();
   }
 
-  GGS::GameExecutor::GameExecutorService* PremiumExecutor::secondExecutor()
+  GameExecutorService* PremiumExecutor::secondExecutor()
   {
     return &this->_secondExecutor;
   }
 
-  GGS::GameExecutor::GameExecutorService* PremiumExecutor::simpleMainExecutor()
+  GameExecutorService* PremiumExecutor::simpleMainExecutor()
   {
     return &this->_simpleMainExecutor;
   }
 
-  void PremiumExecutor::setMainExecutor(GGS::GameExecutor::GameExecutorService * value)
+  void PremiumExecutor::setMainExecutor(GameExecutorService* value)
   {
+    Q_ASSERT(value);
     this->_mainExecutor = value;
+    this->registerExecutors(value);
   }
 
-  void PremiumExecutor::internalSecondServiceStarted(const GGS::Core::Service &service)
+  void PremiumExecutor::internalSecondServiceStarted(const Service &service)
   {
     QMutexLocker locker(&this->_mutex);
     this->_secondGameStarted.insert(service.id());
     emit this->secondServiceStarted(service);
   }
 
-  void PremiumExecutor::internalSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
+  void PremiumExecutor::internalSecondServiceFinished(const Service &service, GGS::GameExecutor::FinishState state)
   {
     QMutexLocker locker(&this->_mutex);
     this->_secondGameStarted.remove(service.id());
     emit this->secondServiceFinished(service, state);
   }
 
-  void PremiumExecutor::internalServiceStarted(const GGS::Core::Service &service)
+  void PremiumExecutor::internalServiceStarted(const Service &service)
   {
     this->_mainGameStarted.insert(service.id());
     emit this->serviceStarted(service);
   }
 
-  void PremiumExecutor::internalServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state)
+  void PremiumExecutor::internalServiceFinished(const Service &service, GGS::GameExecutor::FinishState state)
   {
     QMutexLocker locker(&this->_mutex);
     this->_mainGameStarted.remove(service.id());
@@ -177,17 +187,22 @@ namespace Features {
     return this->_mainGameStarted.contains(id);
   }
 
-  void PremiumExecutor::registerExecutors(GGS::GameExecutor::GameExecutorService *executor)
+  void PremiumExecutor::registerExecutors(GameExecutorService *executor)
   {
-    GGS::GameExecutor::Executor::ExecutableFile *gameExecutorByLauncher = new GGS::GameExecutor::Executor::ExecutableFile(this);
+    using GGS::GameExecutor::Executor::ExecutableFile;
+    ExecutableFile *gameExecutorByLauncher = new ExecutableFile(this);
     executor->registerExecutor(gameExecutorByLauncher);
 
-    GGS::GameExecutor::Executor::WebLink *webLinkExecutor = new GGS::GameExecutor::Executor::WebLink(this);
+    using GGS::GameExecutor::Executor::WebLink;
+    WebLink *webLinkExecutor = new WebLink(this);
     executor->registerExecutor(webLinkExecutor);
   }
 
-  void PremiumExecutor::setNoInjectItem(GGS::Core::Service* service, const QString& value)
+  void PremiumExecutor::setNoInjectItem(Service* service, const QString& value)
   {
+    if (!service->isDownloadable())
+      return;
+
     QUrl url(service->url());
     url.removeAllQueryItems("noinject");
     url.addQueryItem("noinject", value);

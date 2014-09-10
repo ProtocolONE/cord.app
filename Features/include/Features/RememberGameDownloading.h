@@ -1,11 +1,7 @@
-#ifndef _GGS_FEATURES_REMEMBERGAMEDOWNLOADING_H_
-#define _GGS_FEATURES_REMEMBERGAMEDOWNLOADING_H_
-
-#include <Core/Service>
+#pragma once
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QStringList>
 
 namespace Features {
 
@@ -18,12 +14,11 @@ namespace Features {
     virtual ~RememberGameDownloading();
 
   public slots:
-    void started(const GGS::Core::Service *service);
-    void finished(const GGS::Core::Service *service);
+    void started(const QString &serviceId);
+    void finished(const QString &serviceId);
     void update();       
 
   signals:
     void startGameRequest(QString serviceId);
   };
 }
-#endif // _GGS_FEATURES_REMEMBERGAMEDOWNLOADING_H_

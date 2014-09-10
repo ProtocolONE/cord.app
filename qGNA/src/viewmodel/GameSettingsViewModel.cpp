@@ -17,8 +17,8 @@
 #include <Windows.h>
 #include <Shlobj.h>
 
-#include <Dbus/ServiceSettingsBridgeProxy.h>
-#include <Dbus/DownloaderBridgeProxy.h>
+#include <Host/Dbus/ServiceSettingsBridgeProxy.h>
+#include <Host/Dbus/DownloaderBridgeProxy.h>
 
 using GGS::Core::Service;
 
@@ -36,49 +36,22 @@ GameSettingsViewModel::~GameSettingsViewModel()
 
 void GameSettingsViewModel::createShortcutOnDesktop(const QString& serviceId)
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(serviceId)) {
-    CRITICAL_LOG << "Unknown service";
+  wchar_t tmp[MAX_PATH] = {0};
+  if (!SHGetSpecialFolderPath(0, tmp, CSIDL_DESKTOPDIRECTORY, false))
     return;
-  }
 
-  GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
-  Q_CHECK_PTR(service);
-  this->createShortcutOnDesktop(service);
-}
-
-void GameSettingsViewModel::createShortcutOnDesktop(GGS::Core::Service *service)
-{
-  wchar_t tmp[MAX_PATH];
-  BOOL res = SHGetSpecialFolderPath(0, tmp, CSIDL_DESKTOPDIRECTORY, false);
-
-  if (res) {
-    QString directorypath = QString::fromWCharArray(tmp);
-    this->createShortcut(directorypath, service);
-  }
+  QString directorypath = QString::fromWCharArray(tmp);
+  this->createShortcut(directorypath, serviceId);
 }
 
 void GameSettingsViewModel::createShortcutInMainMenu(const QString& serviceId)
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(serviceId)) {
-    CRITICAL_LOG << "Unknown service";
+  wchar_t tmp[MAX_PATH] = {0};
+  if (!SHGetSpecialFolderPath(0, tmp, CSIDL_STARTMENU, false))
     return;
-  }
 
-  GGS::Core::Service *service = (*this->_serviceList)[this->_currentServiceId];
-  Q_CHECK_PTR(service);
-  this->createShortcutInMainMenu(service);
-}
-
-void GameSettingsViewModel::createShortcutInMainMenu(GGS::Core::Service *service)
-{
-  wchar_t tmp[MAX_PATH];
-  BOOL res = SHGetSpecialFolderPath(0, tmp, CSIDL_STARTMENU, false);
-  if (res) {
-    QString directorypath = QString::fromWCharArray(tmp);
-    this->createShortcut(directorypath, service);
-  }
+  QString directorypath = QString::fromWCharArray(tmp);
+  this->createShortcut(directorypath, serviceId);
 }
 
 QStringList GameSettingsViewModel::deserialize(QByteArray serialized)
@@ -97,16 +70,20 @@ QByteArray GameSettingsViewModel::serialize(QStringList stringList)
   return byteArray;
 }
 
-void GameSettingsViewModel::createShortcut(const QString& path, GGS::Core::Service *service)
+void GameSettingsViewModel::createShortcut(const QString& path, const QString& serviceId)
 {
+  QString name = this->_serviceSettings->name(serviceId);
+  if (name.isEmpty())
+    return;
+
   QString lnkroot = path;
   lnkroot.append("\\");
-  lnkroot.append(service->name());
+  lnkroot.append(name);
   lnkroot.append(".lnk");
 
   GGS::Settings::Settings settings;
   settings.beginGroup("GameInstallInfo");
-  settings.beginGroup(service->id());
+  settings.beginGroup(serviceId);
   QStringList icons = this->deserialize(settings.value("iconPaths", QByteArray()).toByteArray());
   icons << lnkroot;
   settings.setValue("iconPaths", this->serialize(icons));
@@ -117,14 +94,14 @@ void GameSettingsViewModel::createShortcut(const QString& path, GGS::Core::Servi
   settings.setValue("filesToDelete", this->serialize(filesToDelete));
   
   GGS::Core::System::Shell::ShortCut object;
-  object.setArguments(QString("/uri:gamenet://startservice/%1").arg(service->id()));
-  object.setDescription(QString("Short cut for game %1").arg(service->name()));
+  object.setArguments(QString("/uri:gamenet://startservice/%1").arg(serviceId));
+  object.setDescription(QString("Short cut for game %1").arg(name));
   object.setShowCmd(GGS::Core::System::Shell::ShortCut::MinNoActive);
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
-  // UNDONE: ��������� ��� ��� ������� ������� - � ��� � ����������� ���� ����� ��� ����� ���������� ����� �������������.
+  // UNDONE: проверить что эта функция кошерна - у нее в дескрипшене есть фишка про смену дериктории самим аппликейшеном.
   object.setPath(QCoreApplication::applicationFilePath());
 
-  QString iconPath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), service->id());
+  QString iconPath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), serviceId);
   iconPath = QFile::exists(iconPath) ? iconPath : QCoreApplication::applicationFilePath();
   object.setIconLocation(iconPath);
   object.setIconIndex(0);
@@ -146,14 +123,6 @@ void GameSettingsViewModel::restoreClient()
 
 void GameSettingsViewModel::switchGame(const QString& serviceId)
 {
-  Q_CHECK_PTR(this->_serviceList);
-  if (!this->_serviceList->contains(serviceId)) {
-    CRITICAL_LOG << "Unknown service";
-    return;
-  }
-
-  GGS::Core::Service *service = (*this->_serviceList)[serviceId];
-  Q_CHECK_PTR(service);
   this->_currentServiceId = serviceId;
   
   this->_installPath = this->_serviceSettings->installPath(this->_currentServiceId);
@@ -163,11 +132,6 @@ void GameSettingsViewModel::switchGame(const QString& serviceId)
   emit this->installPathChanged();
   emit this->downloadPathChanged();
   emit this->hasDownloadPathChanged();
-}
-
-void GameSettingsViewModel::setServiceList(QHash<QString, GGS::Core::Service *> *serviceList)
-{
-  this->_serviceList = serviceList;
 }
 
 const QString& GameSettingsViewModel::installPath()

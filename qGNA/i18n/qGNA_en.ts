@@ -48,32 +48,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="919"/>
-        <location filename="../src/mainwindow.cpp" line="925"/>
-        <location filename="../src/mainwindow.cpp" line="949"/>
-        <location filename="../src/mainwindow.cpp" line="952"/>
-        <location filename="../src/mainwindow.cpp" line="1001"/>
+        <location filename="../src/mainwindow.cpp" line="230"/>
+        <location filename="../src/mainwindow.cpp" line="719"/>
+        <location filename="../src/mainwindow.cpp" line="726"/>
+        <location filename="../src/mainwindow.cpp" line="751"/>
+        <location filename="../src/mainwindow.cpp" line="754"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="919"/>
-        <location filename="../src/mainwindow.cpp" line="952"/>
+        <location filename="../src/mainwindow.cpp" line="719"/>
+        <location filename="../src/mainwindow.cpp" line="754"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="925"/>
+        <location filename="../src/mainwindow.cpp" line="727"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="949"/>
+        <location filename="../src/mainwindow.cpp" line="751"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1001"/>
+        <location filename="../src/mainwindow.cpp" line="230"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>
@@ -81,12 +81,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="199"/>
+        <location filename="../src/mainwindow.cpp" line="246"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="200"/>
+        <location filename="../src/mainwindow.cpp" line="247"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -94,19 +94,13 @@
 <context>
     <name>SettingsViewModel</name>
     <message>
-        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="35"/>
+        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="36"/>
         <source>AUTORUN_TASK_DESCRIPTION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="186"/>
         <source>INFO_CAPTION</source>
-        <translation type="unfinished">Information</translation>
-    </message>
-    <message>
-        <location filename="../src/viewmodel/settingsviewmodel.cpp" line="187"/>
-        <source>CHANGE_APPLICATION_AREA</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Information</translation>
     </message>
 </context>
 </TS>

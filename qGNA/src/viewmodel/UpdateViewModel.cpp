@@ -1,5 +1,7 @@
 #include <viewmodel/UpdateViewModel.h>
 
+#include <Host/DBus/UpdateManagerBridgeProxy.h>
+
 UpdateViewModel::UpdateViewModel(QObject *parent /* = 0 */)
   : QObject(parent)
 {

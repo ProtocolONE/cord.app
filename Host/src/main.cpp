@@ -1,18 +1,22 @@
 #include <Host/Application.h>
 
-#include <QtCore/QThread>
-#include <QtCore/QThreadPool>
-#include <QtCore/QCoreApplication>
-
-#include <QtDBus/QDBusConnection>
-
-#include <QtGui/QIcon>
-
 #include <Application/SingleApplication.h>
+
+#include <Features/Thetta/TlsInitializer.h>
+#include <Features/Thetta/Protector.h>
 
 #include <Helper/BugTrap.hpp>
 #include <Helper/Database.hpp>
 #include <Helper/Logger.hpp>
+#include <Helper/ElevateRights.hpp>
+
+#include <Core/System/Shell/UrlProtocolHelper.h>
+
+#include <QtCore/QThread>
+#include <QtCore/QThreadPool>
+#include <QtCore/QCoreApplication>
+
+#include <QtGui/QIcon>
 
 using namespace GameNet::Host;
 using GGS::Application::SingleApplication;
@@ -26,10 +30,28 @@ int main(int argc, char *argv[])
     plugins << path + "/plugins";
     app.setLibraryPaths(plugins);
 
+    MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
+
     QThread::currentThread()->setObjectName("Main host thread");
     QThreadPool::globalInstance()->setMaxThreadCount(50);
     
+    if (app.isAlreadyRunning()) {
+      QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
+      QStringList arguments;
+      if (!app.containsCommand("gogamenetmoney")) {
+        arguments << "-activate";
+      }
+
+      app.sendArguments(arguments);
+      QTimer::singleShot(50000, &app, SLOT(quit()));
+      return app.exec();
+    } else {
+      app.startListen();
+    }
+    
     LoggerHelper logger(path + "/host.log");
+    if (!requireAdminRights())
+      return -1;
 
     initBugTrap(path);
     if (!initDatabase()) {
@@ -37,8 +59,18 @@ int main(int argc, char *argv[])
       return -1;
     }
     
+    GGS::Settings::SettingsSaver saver; 
+    GGS::Settings::Settings::setSettingsSaver(&saver); 
+
+    GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
+
     Application application;
+    application.setSingleApplication(&app);
     application.init();
 
-    return app.exec();
+    int result = app.exec();
+
+    application.finalize();
+
+    return result;
 }

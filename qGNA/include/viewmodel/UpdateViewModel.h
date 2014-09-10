@@ -1,9 +1,8 @@
 #pragma once
 
-#include <DBus/UpdateManagerBridgeProxy.h>
-#include <DBus/ApplicationBridgeProxy.h>
-#include <QObject>
+#include <QtCore/QObject>
 
+class UpdateManagerBridgeProxy;
 class UpdateViewModel : public QObject
 {
   Q_OBJECT

@@ -5,25 +5,35 @@
 //#define DISABLE_PHONONE 1
 #endif
 Player::Player(QDeclarativeItem *parent) 
-  : QDeclarativeItem(parent),
-    _autoPlay(true)   
+  : QDeclarativeItem(parent)
+  , _autoPlay(true)   
 {
 #ifndef DISABLE_PHONONE
   this->_media = new Phonon::MediaObject(parent);
   this->_output = new Phonon::AudioOutput(Phonon::MusicCategory, parent);
 
-  Phonon::createPath(this->_media, this->_output);
-  QObject::connect(this->_media, SIGNAL(finished()), this, SIGNAL(finished()));
-  QObject::connect(this->_media, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-    this, SLOT(stateChanged(Phonon::State, Phonon::State)));
-#endif
+  this->_media = new QMediaPlayer(parent);
+
+  QObject::connect(this->_media, &QMediaPlayer::stateChanged,
+    this, &Player::stateChanged);
+
+  QObject::connect(this->_media, SIGNAL(error(QMediaPlayer::Error)), this, SIGNAL(error()));
+
+  QObject::connect(this->_media, &QMediaPlayer::mediaStatusChanged, 
+    this, &Player::mediaStatusChanged);
 }
 
 Player::~Player()
 {
 }
 
-void Player::stateChanged(Phonon::State newstate, Phonon::State oldstate)
+void Player::mediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+  if (status == QMediaPlayer::EndOfMedia)
+    emit this->finished();
+}
+
+void Player::stateChanged(QMediaPlayer::State state)
 { 
   switch(newstate) {
   case Phonon::PlayingState:

@@ -28,16 +28,10 @@ public:
   explicit GameSettingsViewModel(QObject *parent = 0);
   ~GameSettingsViewModel();
 
-  // UNDONE 03.09.2014 нужно отказаться от списка сервисов в этом классе - вполне реально
-  void setServiceList(QHash<QString, GGS::Core::Service *> *serviceList);
-
   void setDownloader(DownloaderBridgeProxy *value);
   void setServiceSettings(ServiceSettingsBridgeProxy *value);
 
-
-  void createShortcutOnDesktop(GGS::Core::Service *service);
-  void createShortcutInMainMenu(GGS::Core::Service *service);
-  void createShortcut(const QString& path, GGS::Core::Service *service);
+  void createShortcut(const QString& path, const QString& serviceId);
   void removeShortCutByName(const QString& name);
 
 public slots: 
@@ -69,7 +63,6 @@ signals:
   void hasDownloadPathChanged();
 
 private:
-  QHash<QString, GGS::Core::Service *> *_serviceList;
   ServiceSettingsBridgeProxy* _serviceSettings;
   DownloaderBridgeProxy * _downloader;
 

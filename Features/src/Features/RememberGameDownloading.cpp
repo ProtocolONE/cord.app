@@ -15,17 +15,14 @@ namespace Features {
   {
   }
 
-  void RememberGameDownloading::started(const GGS::Core::Service *service)
+  void RememberGameDownloading::started(const QString &serviceId)
   {
-    if (!service->isDownloadable())
-      return;
-    
     GGS::Settings::Settings settings;
     settings.beginGroup("RememberGameDownloading");
-    settings.setValue("service", service->id());
+    settings.setValue("service", serviceId);
   }
 
-  void RememberGameDownloading::finished(const GGS::Core::Service *service)
+  void RememberGameDownloading::finished(const QString &serviceId)
   {
     GGS::Settings::Settings settings;
     settings.beginGroup("RememberGameDownloading");

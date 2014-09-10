@@ -37,15 +37,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ServiceLoader.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceLoader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceLoader.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_Player.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -82,31 +73,31 @@
     <ClCompile Include="src\Helper\GetDirectoryDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Dbus\DownloaderBridgeProxy.cpp">
+    <ClCompile Include="src\BestInstallPath.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dbus\DownloaderSettingsBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeProxy.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_BestInstallPath.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeProxy.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_BestInstallPath.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeProxy.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_DBusConnectionCheck.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeProxy.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_DBusConnectionCheck.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Helper\DBusConnectionCheck.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateViewModel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_UpdateViewModel.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dbus\ServiceSettingsBridgeProxy.cpp">
+    <ClCompile Include="src\viewmodel\UpdateViewModel.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,9 +117,6 @@
     <CustomBuild Include="include\viewmodel\EnterNickNameViewModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\ServiceLoader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\Player.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -144,13 +132,13 @@
     <CustomBuild Include="include\Helper\GetDirectoryDialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Dbus\DownloaderBridgeProxy.h">
+    <CustomBuild Include="include\BestInstallPath.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Dbus\DownloaderSettingsBridgeProxy.h">
+    <CustomBuild Include="include\Helper\DBusConnectionCheck.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Dbus\ServiceSettingsBridgeProxy.h">
+    <CustomBuild Include="include\viewmodel\UpdateViewModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

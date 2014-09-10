@@ -80,7 +80,9 @@ void initBugTrap(const QString &path)
 
 int main(int argc, char *argv[]) 
 {
-  GGS::Application::SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+  using GGS::Application::SingleApplication;
+  SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+  QString path = QCoreApplication::applicationDirPath();
   
   QStringList plugins;
   plugins << path + "/plugins";
@@ -107,9 +109,11 @@ int main(int argc, char *argv[])
 
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
+    
     QStringList arguments;
-	if (!app.containsCommand("gogamenetmoney")) {
-		arguments << "-activate"; 
+    
+	  if (!app.containsCommand("gogamenetmoney")) {
+		  arguments << "-activate"; 
     }
 
     app.sendArguments(arguments);    
@@ -153,11 +157,6 @@ int main(int argc, char *argv[])
   LogManager::setHandleQtMessages(true);
 #endif
 
-  qDebug() << "Application started";
-  qDebug() << "UAC enabled: " << GGS::AutoRunHelper::UACHelper::isUacEnabled();
-  qDebug() << "Admin Group: " << GGS::AutoRunHelper::UACHelper::isUserAdminByRole(); 
-  qDebug() << "Admin: " << GGS::AutoRunHelper::UACHelper::isUserAdmin();
-
 #ifndef QGNA_NO_ADMIN_REQUIRED
   if(!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
     if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {    
@@ -171,6 +170,7 @@ int main(int argc, char *argv[])
     return 0;
   }
 #endif
+
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));
 
@@ -186,9 +186,6 @@ int main(int argc, char *argv[])
     return 0;
   }
 
-  GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
-
-
   MainWindow w;
   QObject::connect(&dbusConnectionCheck, &DBusConnectionCheck::serviceDisconnected, &w, &MainWindow::quit);
   if (!dbusConnectionCheck.checkConnection()) {
@@ -197,7 +194,8 @@ int main(int argc, char *argv[])
 
   QTimer::singleShot(0, &w, SLOT(initialize()));
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(forceQuit()), &w, SLOT(onForceWindowClose()), Qt::DirectConnection));  
+  QObject::connect(&app, &SingleApplication::forceQuit, 
+    &w, &MainWindow::onWindowClose, Qt::DirectConnection);
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(secondInstanceExecuteRequest()), &app, SLOT(allowSecondInstance()), Qt::DirectConnection)); 
 
@@ -219,7 +217,6 @@ int main(int argc, char *argv[])
   SIGNAL_CONNECT_CHECK(QObject::connect(languageChangeEventFilter, SIGNAL(languageChanged()), &w, SLOT(onLanguageChanged())));
 
   int result = app.exec();
-  w.release();
 
   LogManager::qtLogger()->removeAllAppenders(); 
 

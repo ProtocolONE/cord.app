@@ -90,7 +90,6 @@ signals:
     void uploadSpeedChanged();
     void isPublicTestVersionChanged();
 
-    void applicationAreaChanged();
     void seedEnabledChanged();
     void updateAreaChanged();
 };

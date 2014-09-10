@@ -19,6 +19,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FeaturesTest", "FeaturesTes
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Host", "Host\Host.vcxproj", "{FD2D3608-E77C-46C1-92CC-01A7E9AB2B18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
