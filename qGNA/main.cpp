@@ -40,7 +40,10 @@
 
 #include <BugTrap/BugTrap.h>
 
+#include <Helper/DBusConnectionCheck.h>
+
 using namespace Log4Qt; 
+using namespace GameNet;
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
@@ -96,6 +99,11 @@ int main(int argc, char *argv[])
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
   initBugTrap(path);
+
+  DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
+  if (!dbusConnectionCheck.checkConnection()) {
+    return 0;
+  }
 
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
@@ -180,7 +188,12 @@ int main(int argc, char *argv[])
 
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
+
   MainWindow w;
+  QObject::connect(&dbusConnectionCheck, &DBusConnectionCheck::serviceDisconnected, &w, &MainWindow::quit);
+  if (!dbusConnectionCheck.checkConnection()) {
+    emit w.quit();
+  }
 
   QTimer::singleShot(0, &w, SLOT(initialize()));
 

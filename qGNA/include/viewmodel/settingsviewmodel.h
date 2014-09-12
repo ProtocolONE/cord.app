@@ -4,6 +4,7 @@
 #include <QObject>
 
 class DownloaderSettingsBridgeProxy;
+class UpdateManagerBridgeProxy;
 
 class SettingsViewModel : public QObject
 {
@@ -20,7 +21,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(bool notifyDisconnectFriendFromGame READ notifyDisconnectFriendFromGame WRITE setNotifyDisconnectFriendFromGame NOTIFY notifyDisconnectFriendFromGameChanged)
     Q_PROPERTY(bool notifyNewMessage READ notifyNewMessage WRITE setNotifyNewMessage NOTIFY notifyNewMessageChanged)
 
-    Q_PROPERTY(bool isPublicTestVersion READ isPublicTestVersion NOTIFY isPublicTestVersionChanged)
+    Q_PROPERTY(QString updateArea READ updateArea NOTIFY updateAreaChanged)
     Q_PROPERTY(bool seedEnabled READ seedEnabled WRITE setSeedEnabled NOTIFY seedEnabledChanged)
 
 public:
@@ -63,8 +64,7 @@ public slots:
     void addToAutoStart(bool autostart, bool isMinimized); 
     void loadSettings();
 
-    bool isPublicTestVersion();
-    void switchClientVersion();
+    QString updateArea();
 
     bool seedEnabled();
     void setSeedEnabled(bool value);
@@ -74,6 +74,7 @@ public slots:
 private:
     bool _instantlySave;
     DownloaderSettingsBridgeProxy* _downloaderSettings;
+    UpdateManagerBridgeProxy* _updaterProxy;
 
 signals:
     void autoStartChanged();
@@ -91,6 +92,7 @@ signals:
 
     void applicationAreaChanged();
     void seedEnabledChanged();
+    void updateAreaChanged();
 };
 
 #endif // SETTINGSVIEWMODEL_H

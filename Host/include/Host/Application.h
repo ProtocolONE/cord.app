@@ -14,6 +14,10 @@ namespace GGS {
   namespace GameDownloader {
     class GameDownloadService;
   }
+
+  namespace Application {
+    class ArgumentParser;
+  }
 }
 
 namespace GameNet {
@@ -22,11 +26,17 @@ namespace GameNet {
     class ServiceLoader;
     class DownloaderSettings;
     class ServiceSettings;
+    class UpdateManagerBridge;
+    class Updater;
+    class UIProcess;
+    class ApplicationRestarter;
 
     namespace Bridge {
       class DownloaderBridge;
       class DownloaderSettingsBridge;
       class ServiceSettingsBridge;
+      class UpdateManagerBridge;
+      class ApplicationBridge;
     }
 
     class Application : public QObject
@@ -37,8 +47,28 @@ namespace GameNet {
       ~Application();
 
       void init();
-      
+      void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
+
+    public slots:
+      bool isInitCompleted();
+
+      void setInitFinished();
+      void setUpdateFinished();
+
+      void switchClientVersion();
+
+   private slots:
+      void shutdownCompleted();
+      void updateCompletedSlot(bool needRestart);
+
+    signals:
+      void initCompleted();
+
     private:
+      void registerServices();
+      void initGameDownloader();
+      void initTranslations();
+
       ServiceLoader *_serviceLoader;
       GGS::GameDownloader::GameDownloadService *_gameDownloader;
       DownloaderSettings *_downloaderSettings;
@@ -46,13 +76,20 @@ namespace GameNet {
       Bridge::DownloaderBridge* _downloaderBridge;
       Bridge::DownloaderSettingsBridge *_downloaderSettingsBridge;
       Bridge::ServiceSettingsBridge *_serviceSettingsBridge;
+      Bridge::UpdateManagerBridge* _updateManagerBridge;
+      Bridge::ApplicationBridge* _applicationBridge;
+
       Features::GameDownloader::GameDownloadStatistics *_downloadStatistics;
 
-      QMap<QString, QTranslator*> _translators;
+      bool _initFinished;
+      bool _updateFinished;
 
-      void registerServices();
-      void initGameDownloader();
-      void initTranslations();
+      QMap<QString, QTranslator*> _translators;
+      Updater* _updater;
+      UIProcess* _uiProcess;
+      ApplicationRestarter* _applicationRestarter;
+      
+      GGS::Application::ArgumentParser* _commandLineArguments;
     };
 
   }

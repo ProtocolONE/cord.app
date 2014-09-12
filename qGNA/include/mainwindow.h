@@ -1,8 +1,9 @@
 ﻿#pragma once
 
-#include "viewmodel/SettingsViewModel.h"
-#include "viewmodel/EnterNickNameViewModel.h"
-#include "viewmodel/GameSettingsViewModel.h"
+#include <viewmodel/SettingsViewModel.h>
+#include <viewmodel/EnterNickNameViewModel.h>
+#include <viewmodel/GameSettingsViewModel.h>
+#include <viewmodel/UpdateViewModel.h>
 
 #include <ServiceLoader.h>
 
@@ -26,9 +27,6 @@
 
 #include <AutoRunHelper/UACHelper.h>
 
-#include <UpdateSystem/updatemanagerviewmodel.h>
-#include <UpdateSystem/CheckUpdateHelper.h>
-
 #include <GameDownloader/GameDownloadService.h>
 #include <GameDownloader/StartType.h>
 
@@ -45,8 +43,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
 #include <QtCore/QScopedPointer>
-#include <QtGui/QApplication>
-#include <QtGui/QGraphicsObject>
+#include <QtWidgets/QApplication>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/qdeclarativeview.h>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -86,18 +83,16 @@ signals:
 class DownloaderBridgeProxy;
 class DownloaderSettingsBridgeProxy;
 class ServiceSettingsBridgeProxy;
+class UpdateManagerBridgeProxy;
+class ApplicationBridgeProxy;
 
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
-  Q_PROPERTY(QString installUpdateGnaPath READ installUpdateGnaPath NOTIFY installUpdateGnaPathChanged)
-  Q_PROPERTY(QString updateArea READ updateArea NOTIFY updateAreaChanged) 
-  Q_PROPERTY(QString updateUrl READ updateUrl NOTIFY updateUrlChanged) 
 
-  Q_PROPERTY(QString nickName READ nickName NOTIFY nickNameChanged)
+   Q_PROPERTY(QString nickName READ nickName NOTIFY nickNameChanged)
   Q_PROPERTY(QString techName READ techName NOTIFY techNameChanged)
   Q_PROPERTY(QString mediumAvatarUrl READ mediumAvatarUrl NOTIFY mediumAvatarUrlChanged)
-  Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
   Q_PROPERTY(QString language READ language NOTIFY languageChanged)
   Q_PROPERTY(QString fileVersion READ fileVersion NOTIFY fileVersionChanged) 
 
@@ -108,10 +103,6 @@ protected:
 public:
   MainWindow(QWidget *parent = 0);
   ~MainWindow();
-
-  const QString& installUpdateGnaPath() { return this->_installUpdateGnaPath; }
-  const QString& updateArea() { return this->_updateArea; }
-  const QString& updateUrl() { return this->_updateUrl; }
 
   const QString& nickName() { return this->_nickName; }
   const QString& techName() { return this->_techName; }
@@ -124,6 +115,13 @@ public:
   void release();
 
 public slots:
+  /*
+    Возвращает true если Host приложение проинициализировано, и обновлено
+  */
+  bool isInitCompleted();
+
+  void switchClientVersion();
+
   void restartApplication(bool shouldStartWithSameArguments = true);
   void authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie);
   void userMainInfoResult(GGS::RestApi::CommandBase::CommandResults);
@@ -147,7 +145,6 @@ public slots:
   void setTechName(QString& techName);
   void setNickName(QString& nickName);
 
-  void startBackgroundCheckUpdate();
   bool isWindowVisible();
 
   bool anyLicenseAccepted();
@@ -167,13 +164,10 @@ public slots:
   bool silent();
 
 private:
-  const QString getEmptyString() { return ""; }
   void loadPlugin(QString pluginName);
   void setMediumAvatarUrl(const QString& mediumAvatarUrl);
 
   void translatorsParse();
-  void initializeUpdateSettings();
-  int checkUpdateInterval();
 
   void initAutorun();
   void initRestApi();
@@ -207,6 +201,11 @@ private:
   GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
 
 signals:
+  /*
+    Вызывается когда хост закончил инициализацию и обновление
+  */
+  void initCompleted();
+
   void nickNameChanged();
   void nickNameValueChanged(QString &value);
   void techNameChanged();
@@ -215,9 +214,6 @@ signals:
   void mediumAvatarUrlChanged(); 
   void languageChanged();
   void fileVersionChanged();
-  void installUpdateGnaPathChanged();
-  void updateAreaChanged();
-  void updateUrlChanged();
 
   void navigate(QString page);
 
@@ -270,8 +266,11 @@ signals:
   void taskBarButtonMsgRegistered(unsigned int msgId);
 
   void showLicense(QString serviceId);
+  void quit();
 
 private slots:
+  void restartUIRequestSlot();
+
   void onServiceStarted(const GGS::Core::Service &service);
   void onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
 
@@ -303,7 +302,6 @@ private slots:
   void removeStartGame(QString serviceId);
 
   void shutdownCompleted();
-  void checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result);
 
   void restApiGenericError(GGS::RestApi::CommandBase::Error, QString message);
   void applicationAreaChanged();
@@ -332,12 +330,8 @@ private:
 
   GGS::GameExecutor::GameExecutorService _gameExecutorService;
   GGS::GameExecutor::ServiceInfoCounter _gameExecutorServiceInfoCounter;
-  QString _installUpdateGnaPath;
-  QString _updateArea;
-  QString _updateUrl;
-  GGS::Core::Service::Area _applicationArea;
 
-  GGS::UpdateSystem::CheckUpdateHelper _checkUpdateHelper;
+  GGS::Core::Service::Area _applicationArea;
 
   RememberGameDownloading _rembrGameFeature;
   GGS::Marketing::MarketingTarget _marketingTargetFeatures;
@@ -353,6 +347,7 @@ private:
   DownloaderBridgeProxy *_downloader;
   DownloaderSettingsBridgeProxy *_downloaderSettings;
   ServiceSettingsBridgeProxy *_serviceSettings;
+  ApplicationBridgeProxy* _applicationProxy;
 
 protected:
 	void closeEvent(QCloseEvent* event);

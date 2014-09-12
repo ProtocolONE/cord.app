@@ -1,3 +1,4 @@
+#include <Host/Updater.h>
 #include <Host/Application.h>
 #include <Host/ServiceLoader.h>
 #include <Host/ServiceSettings.h>
@@ -6,17 +7,23 @@
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
 #include <Host/Dbus/DownloaderSettingsBridgeAdaptor.h>
 #include <Host/Dbus/ServiceSettingsBridgeAdaptor.h>
+#include <Host/Dbus/UpdateManagerBridgeAdaptor.h>
+#include <Host/Dbus/ApplicationBridgeAdaptor.h>
 
 #include <Host/Bridge/DownloaderBridge.h>
 #include <Host/Bridge/DownloaderSettingsBridge.h>
 #include <Host/Bridge/ServiceSettingsBridge.h>
+#include <Host/Bridge/UpdateManagerBridge.h>
+#include <Host/Bridge/ApplicationBridge.h>
 
 #include <Host/DownloaderSettings.h>
+#include <Host/UIProcess.h>
+#include <Host/ApplicationRestarter.h>
 
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 
 #include <GameDownloader/GameDownloadService.h>
-
+#include <Application/ArgumentParser.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
@@ -37,11 +44,46 @@ namespace GameNet {
       , _serviceSettings(new ServiceSettings(this))
       , _serviceSettingsBridge(new Bridge::ServiceSettingsBridge(this))
       , _downloadStatistics(new Features::GameDownloader::GameDownloadStatistics(this))
+      , _updater(new Updater(this))
+      , _updateManagerBridge(new Bridge::UpdateManagerBridge(this))
+      , _applicationBridge(new Bridge::ApplicationBridge(this))
+      , _uiProcess(new UIProcess(this))
+      , _commandLineArguments(new GGS::Application::ArgumentParser(this))
+      , _applicationRestarter(new ApplicationRestarter(this))
+      , _initFinished(false)
+      , _updateFinished(false)
+      , QObject(parent)
     {
+      this->_commandLineArguments->parse(QCoreApplication::arguments());
     }
 
     Application::~Application()
     {
+    }
+
+    void Application::setInitFinished() {
+      this->_initFinished = true;
+
+      if (this->_initFinished && this->_updateFinished) {
+        emit this->initCompleted();
+      }
+    }
+
+    void Application::setUpdateFinished() 
+    {
+      if (this->_updateFinished)
+        return;
+
+      this->_updateFinished = true;
+
+      if (this->_initFinished && this->_updateFinished) {
+        emit this->initCompleted();
+      }
+    }
+
+    bool Application::isInitCompleted()
+    {
+      return this->_initFinished && this->_updateFinished;
     }
 
     void Application::init()
@@ -53,9 +95,11 @@ namespace GameNet {
 
       this->initGameDownloader();
 
+      this->_applicationBridge->setApplcation(this);
       this->_downloaderBridge->setServiceLoader(this->_serviceLoader);
       this->_downloaderBridge->setDownloader(this->_gameDownloader);
       this->_downloaderSettingsBridge->setDownloaderSettings(this->_downloaderSettings);
+      this->_updateManagerBridge->setUpdateManager(this->_updater);
 
       qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
       qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
@@ -79,11 +123,46 @@ namespace GameNet {
       new DownloaderBridgeAdaptor(this->_downloaderBridge);
       new DownloaderSettingsBridgeAdaptor(this->_downloaderSettingsBridge);
       new ServiceSettingsBridgeAdaptor(this->_serviceSettingsBridge);
+      new UpdateManagerBridgeAdaptor(this->_updateManagerBridge);
+      new ApplicationBridgeAdaptor(this->_applicationBridge);
 
+      connection.registerObject("/application", this->_applicationBridge);
       connection.registerObject("/downloader", this->_downloaderBridge);
       connection.registerObject("/downloader/settings", this->_downloaderSettingsBridge);
       connection.registerObject("/serviceSettings", this->_serviceSettingsBridge);
+      connection.registerObject("/updater", this->_updateManagerBridge);
       connection.registerService("com.gamenet.dbus");
+
+      /*
+        INFO Если (когда) поменяется схема инициализации, обратить внимание на эту строчку
+             которая должна вызыватся после всего
+      */
+      this->setInitFinished();
+
+      if (!QCoreApplication::arguments().contains("--skip-ui")) {
+        qDebug() << "Starting qGNA UI";
+        QStringList args = QCoreApplication::arguments();
+        args.removeFirst(); // INFO first argument always self execute path
+        this->_uiProcess->start(QCoreApplication::applicationDirPath(), "qGNA.exe", args);
+      }
+
+      QObject::connect(this->_updater, &Updater::allCompleted, this, &Application::updateCompletedSlot);
+      this->_updater->setDownloader(this->_gameDownloader);
+      this->_updater->startCheckUpdate();
+    }
+
+    void Application::updateCompletedSlot(bool needRestart)
+    {
+      if (needRestart) {
+        if (!this->isInitCompleted() || !this->_uiProcess->isRunning()) {
+          this->restartApplication(true, false);
+          return;
+        }
+
+        emit this->_applicationBridge->restartUIRequest();
+      }
+
+      this->setUpdateFinished();
     }
 
     void Application::registerServices()
@@ -220,6 +299,13 @@ namespace GameNet {
       this->_downloaderSettings->init();
       this->_gameDownloader->init();
       this->_downloadStatistics->init(this->_gameDownloader);
+      this->_applicationRestarter->setGameDownloadInitialized();
+
+      QObject::connect(this->_applicationRestarter, &ApplicationRestarter::shutdownRequest,
+        this->_gameDownloader, &GameDownloadService::shutdown);
+
+      QObject::connect(this->_gameDownloader, &GameDownloadService::shutdownCompleted, 
+        this, &Application::shutdownCompleted);
     }
 
     void Application::initTranslations()
@@ -253,6 +339,44 @@ namespace GameNet {
       if (this->_translators.contains(defaultLanguage))
         QCoreApplication::installTranslator(this->_translators[defaultLanguage]);
       
+    }
+
+    void Application::shutdownCompleted()
+    {
+      // UNDONE Когда Илья закончит с запускатором раскоментить ниже
+
+      // INFO Этот способ обойти проблему с падением на удалении GameExecutorService
+      // Там куча потоков ждет заверешния процессов игры, и падает при удалении.
+      // Этим мы закрываем игры до того как начнем удалять запусктор.
+
+/*      this->_serviceLoader.thettaInstaller()->disconnectFromDriver();*/
+
+      // INFO Это пока относительно легкий способ побороть проблему падения qGNA после его закрытия, если запущена игра
+      // Убрать после переписывания запускатора
+
+//       Sleep(500);
+//       this->_premiumExecutor.shutdown();
+      DEBUG_LOG << "shutdownCompleted";
+      QCoreApplication::quit();
+    }
+
+    void Application::switchClientVersion()
+    {
+      QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
+      bool ok = false;
+      int area = settings.value("Repository", 0).toInt(&ok);
+      if (!ok)
+        area = 0;
+
+      area = area == 0 ? 1 : 0;
+
+      settings.setValue("Repository", area);
+      this->restartApplication(true, false);
+    }
+
+    void Application::restartApplication(bool shouldStartWithSameArguments, bool isMinimized)
+    {
+      this->_applicationRestarter->restartApplication(shouldStartWithSameArguments, isMinimized);
     }
 
   }

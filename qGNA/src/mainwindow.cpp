@@ -1,5 +1,5 @@
-﻿#include "mainwindow.h"
-#include "Player.h"
+#include <mainwindow.h>
+#include <Player.h>
 
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
@@ -7,6 +7,8 @@
 
 #include <GameExecutor/Executor/ExecutableFile>
 #include <GameExecutor/Executor/WebLink>
+
+#include <UpdateSystem/UpdateInfoGetterResultInterface.h>
 
 #include <RestApi/Commands/Service/GetLicense.h>
 #include <RestApi/Commands/Service/GetServices.h>
@@ -49,18 +51,23 @@ void MainWindow::initialize()
 {
   // DBUS...
   QString dbusService("com.gamenet.dbus");
+  this->_applicationProxy = new ApplicationBridgeProxy(dbusService, "/application", QDBusConnection::sessionBus(), this);
   this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", QDBusConnection::sessionBus(), this);
   this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", QDBusConnection::sessionBus(), this);
   this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", QDBusConnection::sessionBus(), this);
 
+
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::initCompleted,
+    this, &MainWindow::initCompleted);
+
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::restartUIRequest,
+                    this, &MainWindow::restartUIRequestSlot);
+
   qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
   qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
 
-
-  this->initializeUpdateSettings();
   this->initRestApi();
-
-
+  
   this->_commandLineArguments.parse(QCoreApplication::arguments());
 
   if (this->_commandLineArguments.contains("gamepts"))
@@ -88,7 +95,7 @@ void MainWindow::initialize()
   this->settingsViewModel->setDownloaderSettings(this->_downloaderSettings);
   this->initAutorun();
 
-  qmlRegisterType<GGS::UpdateSystem::UpdateManagerViewModel>("qGNA.Library", 1, 0, "UpdateManagerViewModel");             
+  qmlRegisterType<UpdateViewModel>("qGNA.Library", 1, 0, "UpdateViewModel");
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");             
   qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
 
@@ -159,6 +166,7 @@ void MainWindow::initialize()
   SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
 
   SIGNAL_CONNECT_CHECK(QObject::connect(this->nQMLContainer->engine(), SIGNAL(quit()), this, SLOT(onWindowClose())));
+  connect(this, &MainWindow::quit, this, &MainWindow::onWindowClose);
 
 
 
@@ -191,6 +199,22 @@ void MainWindow::initialize()
   QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
 
   this->_keyboardLayoutHelper.update();
+}
+
+void MainWindow::restartUIRequestSlot() 
+{
+  if (this->isVisible()) {
+    GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
+    this->_applicationProxy->restartApplication(false);
+    return;
+  }
+
+  this->_applicationProxy->restartApplication(true);
+}
+
+bool MainWindow::isInitCompleted()
+{
+  return this->_applicationProxy->isInitCompleted();
 }
 
 void MainWindow::checkDesktopDepth() {
@@ -784,48 +808,6 @@ void MainWindow::downloadButtonPause(QString serviceId)
     this->_premiumExecutor.executeMain(service);
 }
 
-void MainWindow::initializeUpdateSettings()
-{
-  this->_updateArea = QString("live");
-  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-  bool ok = false;
-  int area = settings.value("Repository", 0).toInt(&ok);
-  if (!ok)
-    area = 0;
-
-  switch(area)
-  {
-  case 1:
-    this->_updateArea = QString("pts");
-    this->_applicationArea = GGS::Core::Service::Pts;
-    break;
-  case 2:
-    this->_updateArea = QString("tst");
-    this->_applicationArea = GGS::Core::Service::Tst;
-    break;
-  case 3:
-    this->_updateArea = QString("2live");
-    this->_applicationArea = GGS::Core::Service::Live;
-    break;
-  default:
-    this->_updateArea = QString("live");  
-    this->_applicationArea = GGS::Core::Service::Live;
-  }
-
-#ifdef QGNA_NO_UPDATE
-  this->_installUpdateGnaPath = QString("tst");
-#else
-  this->_installUpdateGnaPath = QString("");
-#endif
-
-  this->_updateUrl = QString("http://fs0.gamenet.ru/update/qgna/%1/").arg(_updateArea);
-  QString updateCrc = QString("%1update.crc.7z").arg(this->_updateUrl);
-  this->_checkUpdateHelper.setUpdateUrl(updateCrc);
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_checkUpdateHelper, SIGNAL(finished(GGS::UpdateSystem::CheckUpdateHelper::Results)),
-    this, SLOT(checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results))));
-}
-
 bool MainWindow::isLicenseAccepted(const QString& serviceId)
 {
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
@@ -966,54 +948,6 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message)
 {
   emit this->downloaderServiceStatusMessageChanged(serviceId, message);
-}
-
-void MainWindow::startBackgroundCheckUpdate()
-{
-  this->_checkUpdateHelper.checkUpdate();
-}
-
-int MainWindow::checkUpdateInterval()
-{
-  QDateTime now = QDateTime::currentDateTimeUtc();
-  now = now.addSecs(14400); // Moscow time UTC+4
-  int hour = now.time().hour();
-  if (hour >= 14)
-    return 10800000;
-
-  return 1800000;
-}
-
-void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result)
-{
-  switch(result)
-  {
-  case GGS::UpdateSystem::CheckUpdateHelper::Error:
-    QTimer::singleShot(300000, &this->_checkUpdateHelper, SLOT(checkUpdate()));
-    break;
-  case GGS::UpdateSystem::CheckUpdateHelper::FoundUpdate: {
-    DEBUG_LOG << "New update found. Restart required.";
-
-    if (!this->_premiumExecutor.isAnyGameStarted() 
-      && !this->_downloader->isAnyServiceInProgress()) {
-
-        if (this->isVisible())
-          GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
-
-        this->restartApplication(false);
-        return;
-    }
-
-    QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
-                                                          }
-                                                          break;
-  case GGS::UpdateSystem::CheckUpdateHelper::NotFound:
-    QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
-    break;
-  default:
-    DEBUG_LOG << "Unknown result " << result;
-    break;
-  }
 }
 
 void MainWindow::restApiGenericError(GGS::RestApi::CommandBase::Error error, QString message)
@@ -1349,3 +1283,7 @@ bool MainWindow::silent()
   return this->_silentMode.isEnabled();
 }
 
+void MainWindow::switchClientVersion()
+{
+  this->_applicationProxy->switchClientVersion();
+}

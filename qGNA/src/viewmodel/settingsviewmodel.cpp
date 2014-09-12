@@ -1,8 +1,9 @@
-#include "viewmodel\settingsviewmodel.h"
+#include "viewmodel/settingsviewmodel.h"
 
 #include <Dbus/DownloaderSettingsBridgeProxy.h>
+#include <DBus/UpdateManagerBridgeProxy.h>
 
-#include <Settings\Settings.h>
+#include <Settings/Settings.h>
 #include <Core/UI/Message>
 
 #include <AutoRunHelper.h>
@@ -167,41 +168,6 @@ void SettingsViewModel::loadSettings()
 
 }
 
-bool SettingsViewModel::isPublicTestVersion()
-{
-  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-  bool ok = false;
-  int area = settings.value("Repository", 0).toInt(&ok);
-  if (!ok)
-    area = 0;
-
-  return area == 1;
-}
-
-void SettingsViewModel::switchClientVersion()
-{
-  using namespace GGS::Core::UI;
-
-  if (Message::question(
-    tr("INFO_CAPTION"), 
-    tr("CHANGE_APPLICATION_AREA"), 
-    (Message::StandardButton)(Message::Yes | Message::Cancel)) != Message::Yes) {
-      emit this->isPublicTestVersionChanged();
-      return;
-  }
-  
-  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-  bool ok = false;
-  int area = settings.value("Repository", 0).toInt(&ok);
-  if (!ok)
-    area = 0;
-
-  area = area == 0 ? 1 : 0;
-
-  settings.setValue("Repository", area);
-  emit this->applicationAreaChanged();
-}
-
 bool SettingsViewModel::seedEnabled()
 {
   return this->_downloaderSettings->seedEnabled();
@@ -299,4 +265,25 @@ void SettingsViewModel::setDownloaderSettings(DownloaderSettingsBridgeProxy *val
 
   QObject::connect(value, &DownloaderSettingsBridgeProxy::seedEnabledChanged,
     this, &SettingsViewModel::seedEnabledChanged);
+}
+
+QString SettingsViewModel::updateArea()
+{
+  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
+  bool ok = false;
+  int area = settings.value("Repository", 0).toInt(&ok);
+  if (!ok)
+    area = 0;
+
+  switch(area)
+  {
+  case 1:
+    return QString("pts");
+  case 2:
+    return QString("tst");
+  case 3:
+    return QString("2live");     
+  }
+
+  return QString("live");
 }
