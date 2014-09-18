@@ -21,7 +21,7 @@
     <QmlExtensionArea>trunk</QmlExtensionArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
-    <OverlayArea>trunk</OverlayArea>
+    <OverlayArea>1.0.270</OverlayArea>
     <HookEngineArea>1.0</HookEngineArea>
     <ThettaArea>1.0.177</ThettaArea>
   </PropertyGroup>
