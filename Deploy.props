@@ -11,11 +11,10 @@
     <AutoRunHelperArea>trunk</AutoRunHelperArea>
     <Log4QtArea>trunk</Log4QtArea>
     <BugTrapArea>1.3.3718.38316</BugTrapArea>
-    <UpdateSystemViewModelArea>trunk</UpdateSystemViewModelArea>
-    <CoreArea>trunk</CoreArea>
+    <CoreArea>1.0.168</CoreArea>
     <LibtorrentWrapperArea>trunk</LibtorrentWrapperArea>
     <GameDownloaderArea>trunk</GameDownloaderArea>
-    <GameExecutorArea>trunk</GameExecutorArea>
+    <GameExecutorArea>1.0.389</GameExecutorArea>
     <ApplicationArea>trunk</ApplicationArea>
     <OpenSSLArea>1.0.1g</OpenSSLArea>
     <QmlExtensionArea>trunk</QmlExtensionArea>
