@@ -405,6 +405,23 @@ void MainWindow::prepairGameDownloader()
 {
   QString root = QCoreApplication::applicationDirPath();
 
+  bool ok = false;
+  unsigned short port = settingsViewModel->incomingPort().toUShort(&ok);
+  if (ok)
+    this->_gameDownloader.setListeningPort(port);
+
+  QString torrentConfigPath = root;
+  torrentConfigPath.append("/torrents");
+  this->_gameDownloader.setTorrentConfigDirectoryPath(torrentConfigPath);
+
+  this->_gameDownloader.setSeedEnabled(this->settingsViewModel->seedEnabled());
+  this->_gameDownloader.init();
+  this->_gameDownloader.setTimeoutForResume(600);
+
+  this->settingsDownloadSpeedChangedSlot();
+  this->settingsUploadSpeedChangedSlot();
+  this->settingsNumConnectionsChangedSlot();
+
   using GGS::GameDownloader::GameDownloadService;
   
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::totalProgress, 

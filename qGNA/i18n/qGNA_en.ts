@@ -48,32 +48,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1036"/>
-        <location filename="../src/mainwindow.cpp" line="1042"/>
-        <location filename="../src/mainwindow.cpp" line="1066"/>
-        <location filename="../src/mainwindow.cpp" line="1069"/>
-        <location filename="../src/mainwindow.cpp" line="1119"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
+        <location filename="../src/mainwindow.cpp" line="1058"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1036"/>
-        <location filename="../src/mainwindow.cpp" line="1069"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1042"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1066"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1119"/>
+        <location filename="../src/mainwindow.cpp" line="1058"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>A new update is available. You must restart the application.</translation>
     </message>
