@@ -6,7 +6,6 @@
 
 #include <Features/RemouteStartGame.h>
 #include <Features/RememberGameDownloading.h>
-#include <Features/ThronInstaller.h>
 #include <Features/SilentMode.h>
 
 #include <Features/Thetta/TlsInitializer.h>
@@ -208,10 +207,7 @@ int main(int argc, char *argv[])
   GGS::Settings::SettingsSaver saver; 
   GGS::Settings::Settings::setSettingsSaver(&saver); 
 
-  Features::ThronInstaller installer;
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &app, SLOT(initializeFinished())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &installer, SLOT(downloadAndInstall())));
-
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), taskBarFilter, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));
   SIGNAL_CONNECT_CHECK(QObject::connect(taskBarFilter, SIGNAL(taskBarButtonCreated()), &w, SLOT(onTaskbarButtonCreated())));
   SIGNAL_CONNECT_CHECK(QObject::connect(languageChangeEventFilter, SIGNAL(languageChanged()), &w, SLOT(onLanguageChanged())));

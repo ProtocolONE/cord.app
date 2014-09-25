@@ -2,6 +2,8 @@
 
 #include <Application/SingleApplication.h>
 
+#include <Features/ThronInstaller.h>
+
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
 
@@ -19,7 +21,21 @@
 #include <QtGui/QIcon>
 
 using namespace GameNet::Host;
+using Features::ThronInstaller;
 using GGS::Application::SingleApplication;
+
+Application *createApplication(SingleApplication *app) 
+{
+  Application *application = new Application(app);
+  application->setSingleApplication(app);
+
+  QObject::connect(application, &Application::initCompleted, [application]() {
+    ThronInstaller *installer = new ThronInstaller(application);
+    installer->downloadAndInstall();
+  });
+    
+  return application;
+}
 
 int main(int argc, char *argv[])
 {
@@ -64,13 +80,13 @@ int main(int argc, char *argv[])
 
     GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
-    Application application;
-    application.setSingleApplication(&app);
-    application.init();
+    Application *application = createApplication(&app);
+    application->init();
 
     int result = app.exec();
-
-    application.finalize();
+    application->finalize();
 
     return result;
 }
+
+
