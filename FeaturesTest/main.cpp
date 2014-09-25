@@ -25,6 +25,12 @@ void checkProtector()
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    QStringList plugins;
+    QString path = QCoreApplication::applicationDirPath();
+
+    plugins << path + "/plugins";
+    a.setLibraryPaths(plugins);
+
     testing::InitGoogleTest(&argc, argv);
 
     checkProtector();

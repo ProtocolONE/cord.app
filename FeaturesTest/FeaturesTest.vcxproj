@@ -280,9 +280,10 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plug
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Bridge\ApplicationBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\ExecutorBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\ServiceSettingsBridgeTest.cpp" />
-    <ClCompile Include="src\FactoryTest.cpp" />
+    <ClCompile Include="src\Bridge\UpdaterTest.cpp" />
     <ClCompile Include="src\GameDownloader\DownloadStatsPub.cpp" />
     <ClCompile Include="src\GameDownloader\DownloadStatsTest.cpp" />
     <ClCompile Include="src\GameDownloader\ExternalIpTest.cpp" />

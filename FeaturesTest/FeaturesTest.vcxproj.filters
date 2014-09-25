@@ -73,13 +73,10 @@
     <ClCompile Include="src\Bridge\ServiceSettingsBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ServiceDescriptionTest.cpp">
+    <ClCompile Include="src\Bridge\UpdaterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ServiceLoaderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FactoryTest.cpp">
+    <ClCompile Include="src\Bridge\ApplicationBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

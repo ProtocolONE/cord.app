@@ -19,16 +19,67 @@ namespace GameNet {
         explicit ApplicationBridge(QObject *parent = 0);
         virtual ~ApplicationBridge();
 
+        /**
+         * \fn  void ApplicationBridge::setApplcation(Application* app);
+         *
+         * \brief Sets an applcation.
+         *
+         * \author Igor Bugaev
+         * \date  26.09.2014
+         *
+         * \param [in,out]  app If non-null, the application.
+         */
+
         void setApplcation(Application* app);
+
+        /**
+         * \fn  void ApplicationBridge::setThetta(Thetta *value);
+         *
+         * \brief Sets a thetta.
+         *
+         * \author Igor Bugaev
+         * \date  26.09.2014
+         *
+         * \param [in,out]  value If non-null, the value.
+         */
+
         void setThetta(Thetta *value);
 
       public slots:
+        /**
+         * \fn  bool ApplicationBridge::isInitCompleted();
+         *
+         * \brief Query if host init and update completed.
+         *
+         * \author Igor Bugaev
+         * \date  26.09.2014
+         *
+         * \return  true if initialise completed, false if not.
+         */
+
         bool isInitCompleted();
 
-        /*
-          Ответ от UI к Host с разрешением перезапуска с нужными параметрами
-        */
+        /**
+         * \fn  void ApplicationBridge::restartApplication(bool isMinimized);
+         *
+         * \brief Restart application.
+         *
+         * \author Igor Bugaev  
+         * \date  26.09.2014
+         *
+         * \param isMinimized true if is minimized.
+         */
+
         void restartApplication(bool isMinimized);
+
+        /**
+         * \fn  void ApplicationBridge::switchClientVersion();
+         *
+         * \brief Switch client version.
+         *
+         * \author  Igor Bugaev
+         * \date  26.09.2014
+         */
 
         void switchClientVersion();
 
@@ -38,18 +89,35 @@ namespace GameNet {
          * \brief Открывает ссылку в дефолтном браузере. Необходимо вызывать из приложений 
          *        находящихся под защитой Thetta.
          *
-         * \author  Ilya Tkachenko
+         * \author Ilya Tkachenko
          * \date  19.09.2014
          *
          * \param url URL of the document.
          */
         void openBrowser(const QString& url);
 
-      signals:
+    signals:
+
+        /**
+         * \fn  void ApplicationBridge::initCompleted();
+         *
+         * \brief emited this init and update is completed.
+         *
+         * \author Igor Bugaev
+         * \date  26.09.2014
+         */
+
         void initCompleted();
-        /*
-          Сигнал от Host к UI с просьбой перезапуска приложения
-        */
+
+        /**
+         * \fn  void ApplicationBridge::restartUIRequest();
+         *
+         * \brief Restart user interface request.
+         *
+         * \author Igor Bugaev
+         * \date  26.09.2014
+         */
+
         void restartUIRequest();      
 
       private:

@@ -64,17 +64,17 @@ namespace GameNet {
       void finalize();
       void setSingleApplication(GGS::Application::SingleApplication *value);
 
-      void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
+      virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
       void unregisterDbusServices();
       void shutdown();
 
     public slots:
-      bool isInitCompleted();
+      virtual bool isInitCompleted();
 
       void setInitFinished();
       void setUpdateFinished();
 
-      void switchClientVersion();
+      virtual void switchClientVersion();
 
     private slots:
       void updateCompletedSlot(bool needRestart);
