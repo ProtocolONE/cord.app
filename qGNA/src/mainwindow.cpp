@@ -26,6 +26,7 @@
 
 #include <BestInstallPath.h>
 
+#include <Host/Dbus/DbusConnection.h>
 #include <Host/Dbus/DownloaderBridgeProxy.h>
 #include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
 #include <Host/Dbus/ServiceSettingsBridgeProxy.h>
@@ -35,6 +36,7 @@
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
 using GameNet::Host::Bridge::Credential;
+using GameNet::Host::DBus::DBusConnection;
 
 Credential createDbusCredential(const GGS::RestApi::GameNetCredential& credential) {
   Credential result;
@@ -68,12 +70,14 @@ void MainWindow::initialize()
   qDBusRegisterMetaType<GameNet::Host::Bridge::Credential>();
 
   // DBUS...
+  QDBusConnection &connection = DBusConnection::bus();
   QString dbusService("com.gamenet.dbus");
-  this->_applicationProxy = new ApplicationBridgeProxy(dbusService, "/application", QDBusConnection::sessionBus(), this);
-  this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", QDBusConnection::sessionBus(), this);
-  this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", QDBusConnection::sessionBus(), this);
-  this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", QDBusConnection::sessionBus(), this);
-  this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", QDBusConnection::sessionBus(), this);
+
+  this->_applicationProxy = new ApplicationBridgeProxy(dbusService, "/application", connection, this);
+  this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", connection, this);
+  this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", connection, this);
+  this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", connection, this);
+  this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", connection, this);
 
   this->_bestInstallPath = new BestInstallPath(this);
   this->_bestInstallPath->setServiceSettings(this->_serviceSettings);

@@ -39,12 +39,13 @@ Application *createApplication(SingleApplication *app)
 
 int main(int argc, char *argv[])
 {
+
     SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
-    QStringList plugins;
     QString path = QCoreApplication::applicationDirPath();
 
-    plugins << path + "/plugins";
-    app.setLibraryPaths(plugins);
+    app.setLibraryPaths(QStringList() << path + "/plugins");
+    app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
+    app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
     MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 

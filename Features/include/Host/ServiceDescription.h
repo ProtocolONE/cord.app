@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtCore/QObject>
+#include <QtCore/QList>
 #include <QtCore/QPair>
 
 namespace GameNet {

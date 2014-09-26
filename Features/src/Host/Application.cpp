@@ -10,6 +10,8 @@
 #include <Host/HookFactory.h>
 #include <Host/ExecutorHookFactory.h>
 
+#include <Host/Dbus/DBusServer.h>
+
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
 #include <Host/Dbus/DownloaderSettingsBridgeAdaptor.h>
 #include <Host/Dbus/ServiceSettingsBridgeAdaptor.h>
@@ -40,12 +42,14 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
 #include <QtCore/QTranslator>
+#include <QtCore/QUrl>
+#include <QtCore/QCoreApplication>
 
 #include <QtDBus/QDBusMetaType>
 
-#include <QtCore/QUrl>
-
+using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
+using GameNet::Host::DBus::DBusServer;
 
 namespace GameNet {
   namespace Host {
@@ -113,10 +117,23 @@ namespace GameNet {
       return this->_initFinished && this->_updateFinished;
     }
 
-    void Application::setSingleApplication(GGS::Application::SingleApplication *value)
+    void Application::commandRecieved(QString name, QStringList arguments)
+    {
+      if (name == "activate") {
+        this->startUi();
+      }
+    }
+
+    void Application::setSingleApplication(SingleApplication *value)
     {
       Q_ASSERT(value);
       this->_singleApplication = value;
+
+      QObject::connect(value, &SingleApplication::commandRecieved, 
+        this, &Application::commandRecieved, Qt::QueuedConnection); 
+
+      QObject::connect(this, &Application::initCompleted, 
+        value, &SingleApplication::initializeFinished);
     }
 
     void Application::init()
@@ -190,19 +207,14 @@ namespace GameNet {
       
       this->_applicationRestarter->setShutdownManager(this->_shutdown);
       
-
       /*
         INFO Если (когда) поменяется схема инициализации, обратить внимание на эту строчку
              которая должна вызыватся после всего.
              Т.е. например после получения списка сервисов.
       */
       this->setInitFinished();
-
-      if (!QCoreApplication::arguments().contains("--skip-ui")) {
-        qDebug() << "Starting qGNA UI";
-        this->_uiProcess->start();
-      }
-
+      this->startUi();
+      
       QObject::connect(this->_updater, &Updater::allCompleted, this, &Application::updateCompletedSlot);
       
       this->_updater->setCanRestart([this] () -> bool {
@@ -229,7 +241,14 @@ namespace GameNet {
 
     void Application::registerDbusServices()
     {
-      QDBusConnection connection = QDBusConnection::sessionBus();
+#ifndef USE_SESSION_DBUS
+      DBusServer *server = new DBusServer(this);
+      if (!server->isConnected()) {
+        MessageBoxW(0, L"Could not create DBusServer.", L"Error", MB_OK);
+        QCoreApplication::quit();
+        return;
+      };
+#endif
 
       new DownloaderBridgeAdaptor(this->_downloaderBridge);
       new DownloaderSettingsBridgeAdaptor(this->_downloaderSettingsBridge);
@@ -237,22 +256,37 @@ namespace GameNet {
       new ExecutorBridgeAdaptor(this->_excutorBridge);
       new UpdateManagerBridgeAdaptor(this->_updateManagerBridge);
       new ApplicationBridgeAdaptor(this->_applicationBridge);
+    
+#ifndef USE_SESSION_DBUS
+      QObject::connect(server, &DBusServer::newConnection, [this](const QDBusConnection &constConnection) {
+        qDebug() << "New IPC connection with name" << constConnection.name() << "accepted";
 
-      connection.registerObject("/application", this->_applicationBridge);
-      connection.registerObject("/downloader", this->_downloaderBridge);
-      connection.registerObject("/downloader/settings", this->_downloaderSettingsBridge);
-      connection.registerObject("/serviceSettings", this->_serviceSettingsBridge);
-      connection.registerObject("/executor", this->_excutorBridge);
-      connection.registerObject("/updater", this->_updateManagerBridge);
-      connection.registerService("com.gamenet.dbus");
+        QDBusConnection connection = constConnection;
+        this->registerDBusObjects(&connection);
+      });
+#else
+      this->registerDBusObjects(&QDBusConnection::sessionBus());
+#endif
+    }
+
+    void Application::registerDBusObjects(QDBusConnection *connection)
+    {
+      connection->registerObject("/application", this->_applicationBridge);
+      connection->registerObject("/downloader", this->_downloaderBridge);
+      connection->registerObject("/downloader/settings", this->_downloaderSettingsBridge);
+      connection->registerObject("/serviceSettings", this->_serviceSettingsBridge);
+      connection->registerObject("/executor", this->_excutorBridge);
+      connection->registerObject("/updater", this->_updateManagerBridge);
+      connection->registerService("com.gamenet.dbus");
     }
 
     void Application::unregisterDbusServices()
     {
-      // UNDONE 19.09.2014 Если будет замечано что дерегистрации сервиса не достаточно
-      // добавить дерегистрацию обьектов
-      QDBusConnection connection = QDBusConnection::sessionBus();
-      connection.unregisterService("com.gamenet.dbus");
+      //INFO При использовании peer-to-peer подключения нет необходимо дерегистрировать сервис. Он должен быть всякий
+      //раз зарегистрирован для каждого нового подключения. Вызовем дерегистрацию, если используется отдельная шина.
+#ifdef USE_SESSION_DBUS
+      QDBusConnection::sessionBus()->unregisterService("com.gamenet.dbus");
+#endif
     }
 
     void Application::registerServices()
@@ -538,6 +572,20 @@ namespace GameNet {
       this->_shutdown->shutdown();
     }
 
+    void Application::startUi()
+    {
+      if (QCoreApplication::arguments().contains("--skip-ui")) {
+        return;
+      }
+
+      if (this->_uiProcess->isRunning()) {
+        return;
+      }
+
+      qDebug() << "Starting qGNA UI";
+      QStringList args = QCoreApplication::arguments();
+      args.removeFirst(); // INFO first argument always self execute path
+      this->_uiProcess->start(QCoreApplication::applicationDirPath(), "qGNA.exe", args);
+    }
   }
 }
-

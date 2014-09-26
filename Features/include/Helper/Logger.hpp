@@ -34,8 +34,6 @@ namespace GameNet {
 #ifndef _DEBUG
         LogManager::setHandleQtMessages(true);
 #endif
-
-        LogManager::setHandleQtMessages(true);
       }
 
       LoggerHelper::~LoggerHelper() 

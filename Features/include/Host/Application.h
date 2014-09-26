@@ -3,8 +3,10 @@
 #include <QtCore/QObject>
 #include <QtCore/QMap>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 class QTranslator;
+class QDBusConnection;
 
 namespace Features {
   namespace GameDownloader {
@@ -78,15 +80,19 @@ namespace GameNet {
 
     private slots:
       void updateCompletedSlot(bool needRestart);
+      void commandRecieved(QString name, QStringList arguments);       
 
     signals:
       void initCompleted();
       
     private:
+      void startUi();
       void registerServices();
       void initGameDownloader();
       void initTranslations();
       void registerDbusServices();
+      void registerDBusObjects(QDBusConnection *connection);
+
       void initRestApi();
 
       GGS::Application::SingleApplication *_singleApplication;
@@ -118,7 +124,6 @@ namespace GameNet {
       ApplicationRestarter* _applicationRestarter;
       
       GGS::Application::ArgumentParser* _commandLineArguments;
-
     };
 
   }

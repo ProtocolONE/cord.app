@@ -1,20 +1,31 @@
 #include <Helper/DBusConnectionCheck.h>
 
+#include <Host/Dbus/DbusConnection.h>
+
+#include <QtCore/QDebug>
+
 #include <QtDBus/QDBusConnectionInterface>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusServiceWatcher>
 
 namespace GameNet {
 
+  using Host::DBus::DBusConnection;
+
   DBusConnectionCheck::DBusConnectionCheck(const QString& dbusService)
-    : _iface(QDBusConnection::sessionBus().interface())
-    , _dbusService(dbusService)
+    : _dbusService(dbusService)
+    , _iface(nullptr)
   {
+#ifdef USE_SESSION_DBUS
+    QDBusConnection &connection = DBusConnection::bus();
+    this->_iface = connection.interface();
+     
     QDBusServiceWatcher* watcher = new QDBusServiceWatcher(this);
-    watcher->setConnection(QDBusConnection::sessionBus());
+    watcher->setConnection(connection);
     watcher->addWatchedService(this->_dbusService);
 
     connect(watcher, &QDBusServiceWatcher::serviceUnregistered, this, &DBusConnectionCheck::serviceUnregistered);
+#endif
   }
 
   DBusConnectionCheck::~DBusConnectionCheck()
@@ -24,8 +35,11 @@ namespace GameNet {
 
   bool DBusConnectionCheck::checkConnection() 
   {
-    QStringList registedServices = this->_iface->registeredServiceNames();
+    if (!this->_iface) {
+      return DBusConnection::bus().isConnected();
+    }
 
+    QStringList registedServices = this->_iface->registeredServiceNames();
     return registedServices.contains(this->_dbusService);
   }
 

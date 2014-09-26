@@ -1,13 +1,16 @@
 #include <viewmodel/UpdateViewModel.h>
 
+#include <Host/DBus/DbusConnection.h>
 #include <Host/DBus/UpdateManagerBridgeProxy.h>
+
+using GameNet::Host::DBus::DBusConnection;
 
 UpdateViewModel::UpdateViewModel(QObject *parent /* = 0 */)
   : QObject(parent)
 {
   QString dbusService("com.gamenet.dbus");
-
-  this->_updaterProxy = new UpdateManagerBridgeProxy(dbusService, "/updater", QDBusConnection::sessionBus(), this);
+    
+  this->_updaterProxy = new UpdateManagerBridgeProxy(dbusService, "/updater", DBusConnection::bus(), this);
 
   connect(this->_updaterProxy, &UpdateManagerBridgeProxy::downloadUpdateProgress, 
           this, &UpdateViewModel::downloadUpdateProgress);
