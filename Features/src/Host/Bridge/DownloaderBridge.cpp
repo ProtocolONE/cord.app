@@ -12,6 +12,25 @@ namespace GameNet {
   namespace Host {
     namespace Bridge {
 
+      bool operator==(const DownloadProgressArgs &lhs, const DownloadProgressArgs &rhs)
+      {
+        return lhs.id == rhs.id &&
+          lhs.status == rhs.status &&
+          lhs.progress == rhs.progress &&
+          lhs.downloadRate == rhs.downloadRate &&
+          lhs.uploadRate == rhs.uploadRate &&
+          lhs.totalWanted == rhs.totalWanted &&
+          lhs.totalWantedDone == rhs.totalWantedDone &&
+          lhs.directTotalDownload == rhs.directTotalDownload &&
+          lhs.peerTotalDownload == rhs.peerTotalDownload &&
+          lhs.payloadTotalDownload == rhs.payloadTotalDownload &&
+          lhs.peerPayloadDownloadRate == rhs.peerPayloadDownloadRate &&
+          lhs.payloadDownloadRate == rhs.payloadDownloadRate &&
+          lhs.directPayloadDownloadRate == rhs.directPayloadDownloadRate &&
+          lhs.payloadUploadRate == rhs.payloadUploadRate &&
+          lhs.totalPayloadUpload == rhs.totalPayloadUpload; 
+      }
+
       DownloaderBridge::DownloaderBridge(QObject *parent /*= 0*/)
         : QObject(parent)
         , _downloader(nullptr)

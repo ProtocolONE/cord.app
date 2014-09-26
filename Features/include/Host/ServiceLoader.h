@@ -53,7 +53,7 @@ namespace GameNet {
 
       void registerService(const ServiceDescription& description);
       
-      GGS::Core::Service *getService(const QString& serviceId);
+      virtual GGS::Core::Service *getService(const QString& serviceId);
       QHash<QString, GGS::Core::Service *>& servicesMap();
 
     private:

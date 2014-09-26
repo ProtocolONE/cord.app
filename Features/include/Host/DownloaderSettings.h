@@ -31,20 +31,20 @@ namespace GameNet {
       void setDownloader(GGS::GameDownloader::GameDownloadService *val);
       void init();
 
-      int listeningPort() const;
-      void setListeningPort(int val);
+      virtual int listeningPort() const;
+      virtual void setListeningPort(int val);
 
-      int uploadRate() const;
-      void setUploadRate(int val);
+      virtual int uploadRate() const;
+      virtual void setUploadRate(int val);
 
-      int downloadRate() const;
-      void setDownloadRate(int val);
+      virtual int downloadRate() const;
+      virtual void setDownloadRate(int val);
 
-      int maxConnection() const;
-      void setMaxConnection(int val);
+      virtual int maxConnection() const;
+      virtual void setMaxConnection(int val);
 
-      bool seedEnabled() const;
-      void setSeedEnabled(bool val);
+      virtual bool seedEnabled() const;
+      virtual void setSeedEnabled(bool val);
 
     signals:
       void listeningPortChanged();

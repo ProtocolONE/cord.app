@@ -1,0 +1,47 @@
+/*!
+ 
+\mainpage Integrating with GameNet Host Application
+
+\section GameNetHost_Downloader Using Downloader in your application
+
+Somewhere in your class define DownloadBridge, DownloaderSettingsBridge, ServiceSettingsBridge proxies:
+
+ClientClass.h
+
+\code
+class ClientClass {
+
+private:
+	void initialize();
+	...
+	DownloaderBridgeProxy *_downloader;
+	DownloaderSettingsBridgeProxy *_downloaderSettings;
+	ServiceSettingsBridgeProxy *_serviceSettings;
+};
+\endcode
+
+ClientClass.cpp
+
+\code
+void ClientClass::initialize()
+{
+
+//	Create instances
+QString dbusService("com.gamenet.dbus");
+this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", QDBusConnection::sessionBus(), this);
+this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", QDBusConnection::sessionBus(), this);
+this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", QDBusConnection::sessionBus(), this);
+
+// Register DownloadProgressArgs type in Qt meta-type system.
+qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
+
+//	Register with the QtDBus type system
+qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
+
+}
+\endcode
+
+From now on you can use all proxies as if they are real DownloaderBridge, DownloaderSettingsBridge, ServiceSettingsBridge
+For more information on each of these classes see: GameNet::Host::Bridge::DownloaderBridge, GameNet::Host::Bridge::DownloaderSettingsBridge, GameNet::Host::Bridge::ServiceSettingsBridge
+
+*/

@@ -73,19 +73,22 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ServiceLoaderFixture.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadServiceFixture.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadServiceFixture.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Fixtures\GameDownloaderServiceFixture.cpp">
+    <ClCompile Include="src\Bridge\ExecutorBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Host\Bridge\DownloadBridgeTest.cpp">
+    <ClCompile Include="src\Bridge\ServiceSettingsBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridgeTest.cpp">
+    <ClCompile Include="src\Bridge\UpdaterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bridge\ApplicationBridgeTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bridge\DownloadBridgeTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bridge\DownloaderSettingsBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,15 +102,9 @@
     <CustomBuild Include="include\Fixtures\ServiceLoaderFixture.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Fixtures\GameDownloadServiceFixture.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GameDownloader\DownloadStatsPub.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Fixtures\DownloaderSettingsFixture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
