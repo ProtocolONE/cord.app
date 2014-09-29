@@ -28,7 +28,7 @@ namespace GameNet {
     private:
       QHash<QString, GGS::GameDownloader::HookBase*> _cache;
       ServiceSettings *_serviceSettings;
-      ServiceLoader *_services;
+      ServiceLoader *_serviceLoader;
     };
 
   }

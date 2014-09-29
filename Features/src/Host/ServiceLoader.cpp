@@ -30,6 +30,7 @@ namespace GameNet {
       , _executor(nullptr)
       , _factory(nullptr)
       , _executorHookFactory(nullptr)
+      , _gameArea(Service::Live)
     {
     }
 

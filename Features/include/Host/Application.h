@@ -116,12 +116,14 @@ namespace GameNet {
       GGS::RestApi::RestApiManager *_restApiManager;
       GGS::RestApi::FakeCache *_restApiCache;
 
-      QMap<QString, QTranslator* > _translators;
-
-      QMap<QString, QTranslator*> _translators;
       Updater* _updater;
       UIProcess* _uiProcess;
       ApplicationRestarter* _applicationRestarter;
+
+      bool _initFinished;
+      bool _updateFinished;
+
+      QMap<QString, QTranslator*> _translators;
       
       GGS::Application::ArgumentParser* _commandLineArguments;
     };

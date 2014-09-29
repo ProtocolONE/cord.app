@@ -17,7 +17,7 @@ namespace GameNet {
     HookFactory::HookFactory(QObject *parent)
       : QObject(parent)
       , _serviceSettings(nullptr)
-      , _services(nullptr)
+      , _serviceLoader(nullptr)
     {
     }
 
@@ -28,7 +28,7 @@ namespace GameNet {
     HookBase* HookFactory::create(const QString& guid)
     {
       Q_ASSERT(this->_serviceSettings);
-      Q_ASSERT(this->_services);
+      Q_ASSERT(this->_serviceLoader);
 
       if (this->_cache.contains(guid))
         return this->_cache[guid];
@@ -42,7 +42,7 @@ namespace GameNet {
       } else if (guid == "D4D358CD-DFF5-4B56-AF30-349CCAE86EED") {
         SaveInstallPath *hook = new SaveInstallPath(this);
         hook->setServiceSettings(this->_serviceSettings);
-        hook->setServiceLoader(this->_services);
+        hook->setServiceLoader(this->_serviceLoader);
         result = hook;
       }
 
@@ -63,7 +63,7 @@ namespace GameNet {
     void HookFactory::setServiceLoader(ServiceLoader *value)
     {
       Q_ASSERT(value);
-      this->_services = value;
+      this->_serviceLoader = value;
     }
 
   }

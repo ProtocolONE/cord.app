@@ -7,20 +7,20 @@
 
 using namespace GameNet::Host;
 
-class MookHookBase
+class MockHookBase
 {
 public:
-  MookHookBase()
+  MockHookBase()
     : value(0)
   {
   }
 
-  virtual ~MookHookBase(){}
+  virtual ~MockHookBase(){}
 
   int value;
 };
 
-class StringHook1 : public MookHookBase
+class StringHook1 : public MockHookBase
 {
 public:
   StringHook1()
@@ -34,7 +34,7 @@ public:
   QString name;
 };
 
-class StringHook2 : public MookHookBase
+class StringHook2 : public MockHookBase
 {
 public:
   StringHook2()
@@ -50,28 +50,28 @@ public:
 
 TEST(FactoryTest, create)
 {
-  Factory<MookHookBase, QString> factory;
+  Factory<MockHookBase, QString> factory;
   factory.reg<StringHook1>();
   factory.reg<StringHook2>();
 
-  MookHookBase *hook1 = factory.create(StringHook1::id());
+  MockHookBase *hook1 = factory.create(StringHook1::id());
   ASSERT_NE(nullptr, hook1);
   ASSERT_NE(nullptr, dynamic_cast<StringHook1*>(hook1));
   delete hook1;
 
-  MookHookBase *hook2 = factory.create(StringHook2::id());
+  MockHookBase *hook2 = factory.create(StringHook2::id());
   ASSERT_NE(nullptr, hook2);
   ASSERT_NE(nullptr, dynamic_cast<StringHook2*>(hook2));
   delete hook2;
 }
 
-TEST(FactoryTest, doubleCreate)
+TEST(FactoryTest, multyRegDoNotBreakNothing)
 {
-  Factory<MookHookBase, QString> factory;
+  Factory<MockHookBase, QString> factory;
   factory.reg<StringHook1>();
   factory.reg<StringHook1>();
 
-  MookHookBase *hook1 = factory.create(StringHook1::id());
+  MockHookBase *hook1 = factory.create(StringHook1::id());
   ASSERT_NE(nullptr, hook1);
   ASSERT_NE(nullptr, dynamic_cast<StringHook1*>(hook1));
   delete hook1;
@@ -79,7 +79,7 @@ TEST(FactoryTest, doubleCreate)
 
 TEST(FactoryTest, initializer)
 {
-  Factory<MookHookBase, QString> factory;
+  Factory<MockHookBase, QString> factory;
   factory.reg<StringHook1>([](StringHook1 *hook) {
     hook->value = 42;
     hook->name = "StringHook1";
@@ -90,7 +90,7 @@ TEST(FactoryTest, initializer)
     hook->temperature = -273;
   });
 
-  MookHookBase *hook1 = factory.create(StringHook1::id());
+  MockHookBase *hook1 = factory.create(StringHook1::id());
   ASSERT_NE(nullptr, hook1);
   ASSERT_EQ(42, hook1->value);
 
@@ -100,7 +100,7 @@ TEST(FactoryTest, initializer)
 
   delete hook1;
 
-  MookHookBase *hook2 = factory.create(StringHook2::id());
+  MockHookBase *hook2 = factory.create(StringHook2::id());
   ASSERT_NE(nullptr, hook2);
   ASSERT_EQ(24, hook2->value);
 
@@ -113,9 +113,9 @@ TEST(FactoryTest, initializer)
 
 TEST(FactoryTest, unknownHook)
 {
-  Factory<MookHookBase, QString> factory;
+  Factory<MockHookBase, QString> factory;
   factory.reg<StringHook1>();
 
-  MookHookBase *hook2 = factory.create(StringHook2::id());
+  MockHookBase *hook2 = factory.create(StringHook2::id());
   ASSERT_EQ(nullptr, hook2);
 }

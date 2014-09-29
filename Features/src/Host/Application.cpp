@@ -77,10 +77,10 @@ namespace GameNet {
       , _uiProcess(new UIProcess(this))
       , _commandLineArguments(new GGS::Application::ArgumentParser(this))
       , _applicationRestarter(new ApplicationRestarter(this))
-      , _initFinished(false)
-      , _updateFinished(false)
       , _downloaderHookFactory(new HookFactory(this))
       , _executorHookFactory(new ExecutorHookFactory(this))
+      , _initFinished(false)
+      , _updateFinished(false)
       , QObject(parent)
     {
       this->_commandLineArguments->parse(QCoreApplication::arguments());

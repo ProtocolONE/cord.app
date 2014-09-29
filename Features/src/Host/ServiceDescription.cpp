@@ -5,6 +5,8 @@ namespace GameNet {
 
     ServiceDescription::ServiceDescription(QObject *parent /*= 0*/)
       : QObject(parent)
+      , _isDownloadable(false)
+      , _hasDownloadPath(false)
     {
     }
 

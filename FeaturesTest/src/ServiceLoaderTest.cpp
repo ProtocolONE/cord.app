@@ -72,12 +72,6 @@ public:
   static QString id() { return "{C789FCAD-5EB9-4B4F-BE88-F82CB698A409}"; }
 };
 
-class ExecutorTestHook2 : public HookInterface
-{
-public:
-  static QString id() { return "{9C0E818B-8302-4295-A86C-E4FCC2C00640}"; }
-};
-
 class ExecutorHookArgs 
 {
 public:
@@ -171,9 +165,6 @@ public:
     executorHookFactory.reg<ThettaMonitorMock>();
     executorHookFactory.reg<SendPlayingInfoMock>();
 
-    loader.setApplicationPath(QCoreApplication::applicationDirPath());
-    loader.setGameArea(GGS::Core::Service::Live);
-
     loader.setExecutor(&executor);
     loader.setDownloader(&downloader);
     loader.setExecuterHookFactory(&executorHookFactory);
@@ -189,29 +180,27 @@ public:
   ServiceLoader loader;
 };
 
+TEST_F(ServiceLoaderTest, hasValidDefaultValue)
+{
+  ASSERT_EQ(Service::Live, loader.gameArea());
+  ASSERT_EQ("", loader.applicationPath());
+}
+
 TEST_F(ServiceLoaderTest, gameArea)
 {
   loader.setGameArea(Service::Pts);
   ASSERT_EQ(Service::Pts, loader.gameArea());
-
-  loader.setGameArea(Service::Live);
-  ASSERT_EQ(Service::Live, loader.gameArea());
 }
 
 TEST_F(ServiceLoaderTest, applicationPath)
 {
-  QString path1 = "C:/qwe/asd/zxc/qwe/asd/zxc/qwe/asd/";
-  loader.setApplicationPath(path1);
-  ASSERT_EQ(path1, loader.applicationPath());
-
-  QString path2 = "D:/123/234/456/678/wer/67/sdf/234/df/wer";
-  loader.setApplicationPath(path2);
-  ASSERT_EQ(path2, loader.applicationPath());
+  QString path = "C:/qwe/asd/zxc/qwe/asd/zxc/qwe/asd/";
+  loader.setApplicationPath(path);
+  ASSERT_EQ(path, loader.applicationPath());
 }
 
 TEST_F(ServiceLoaderTest, unknownService)
 {
-  loader.registerService(description);
   Service *service = loader.getService("UNKNOWND SERVICE ID");
   ASSERT_EQ(nullptr, service);
 }
@@ -300,32 +289,21 @@ TEST_F(ServiceLoaderTest, gameSize)
 TEST_F(ServiceLoaderTest, executorHook)
 {
   executorHookFactory.reg<ExecutorTestHook1>();
-  executorHookFactory.reg<ExecutorTestHook2>();
 
   ExecutorHookDescription hook1;
   hook1.first = ExecutorTestHook1::id();
   hook1.second = 42;
 
-  ExecutorHookDescription hook2;
-  hook2.first = ExecutorTestHook2::id();
-  hook2.second = 65;
-
   QList<ExecutorHookDescription> hooks;
-  hooks << hook1 << hook2;
+  hooks << hook1;
   description.setExecutorHooks(hooks);
 
   loader.registerService(description);
 
-  ASSERT_LE(2, executor.hooks.count());
-  
+  ASSERT_LE(1, executor.hooks.count());
   ASSERT_EQ(description.id(), executor.hooks[0].service.id());
-  ASSERT_EQ(description.id(), executor.hooks[1].service.id());
-
   ASSERT_EQ(hook1.second, executor.hooks[0].priority);
-  ASSERT_EQ(hook2.second, executor.hooks[1].priority);
-
   ASSERT_NE(nullptr, dynamic_cast<ExecutorTestHook1*>(executor.hooks[0].hook));
-  ASSERT_NE(nullptr, dynamic_cast<ExecutorTestHook2*>(executor.hooks[1].hook));
 }
 
 TEST_F(ServiceLoaderTest, downloaderHook)
@@ -336,26 +314,14 @@ TEST_F(ServiceLoaderTest, downloaderHook)
   hook1.second.first = 10;
   hook1.second.second = 42;
 
-  DownloadHookDescription hook2;
-  hook2.first = "36003110-6DC9-4D16-8076-D84FFAFC36B8";
-  hook2.second.first = 100;
-  hook2.second.second = 18;
-
-  hooks << hook1 << hook2;
+  hooks << hook1;
   description.setDownloadHooks(hooks);
   loader.registerService(description);
 
-  ASSERT_LE(2, downloader.hooks.count());
+  ASSERT_LE(1, downloader.hooks.count());
 
   ASSERT_EQ(description.id(), downloader.hooks[0].serviceId);
-  ASSERT_EQ(description.id(), downloader.hooks[1].serviceId);
-
   ASSERT_EQ(hook1.second.first, downloader.hooks[0].preHookPriority);
-  ASSERT_EQ(hook2.second.first, downloader.hooks[1].preHookPriority);
-
   ASSERT_EQ(hook1.second.second, downloader.hooks[0].postHookPriority);
-  ASSERT_EQ(hook2.second.second, downloader.hooks[1].postHookPriority);
-
   ASSERT_NE(nullptr, dynamic_cast<InstallDependency*>(downloader.hooks[0].hook));
-  ASSERT_NE(nullptr, dynamic_cast<DistrIntegrity*>(downloader.hooks[1].hook));
 }
