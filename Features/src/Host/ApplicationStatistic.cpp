@@ -6,7 +6,11 @@
 
 #include <Application/ArgumentParser.h>
 
+#include <QtCore/QDateTime>
+
 using GGS::Settings::Settings;
+using GGS::GameDownloader::GameDownloadService;
+using GGS::Application::ArgumentParser;
 
 namespace GameNet {
   namespace Host {
@@ -21,13 +25,13 @@ namespace GameNet {
     {
     }
 
-    void ApplicationStatistic::setDownloader(GGS::GameDownloader::GameDownloadService *value)
+    void ApplicationStatistic::setDownloader(GameDownloadService *value)
     {
       Q_ASSERT(value);
       this->_downloader = value;
     }
 
-    void ApplicationStatistic::setCommandLineArgs(GGS::Application::ArgumentParser *value)
+    void ApplicationStatistic::setCommandLineArgs(ArgumentParser *value)
     {
       Q_ASSERT(value);
       this->_commandLineArgs = value;

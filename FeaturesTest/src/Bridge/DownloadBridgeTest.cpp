@@ -3,9 +3,8 @@
 
 #include <LibtorrentWrapper/EventArgs/ProgressEventArgs>
 #include <Host/Bridge/DownloaderBridge.h>
-#include <Core\Service.h>
-
-#include <Fixtures/ServiceLoaderFixture.h>
+#include <Host/ServiceLoader.h>
+#include <Core/Service.h>
 
 using namespace GameNet::Host::Bridge;
 using ::testing::Return;
@@ -32,7 +31,7 @@ void constructFakeProgressEventArgs(GGS::Libtorrent::EventArgs::ProgressEventArg
 class ServiceLoaderFixture : public GameNet::Host::ServiceLoader
 {
 public:
-  explicit ServiceLoaderFixture(QObject *parent = 0){};
+  explicit ServiceLoaderFixture() {};
   ~ServiceLoaderFixture(){};
 
   void setService(GGS::Core::Service *service)

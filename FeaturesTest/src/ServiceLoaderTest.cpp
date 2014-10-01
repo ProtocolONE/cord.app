@@ -121,7 +121,7 @@ public:
   int postHookPriority;
 };
 
-class GameDownloadServiceMock : public GameDownloadService
+class ServiceLoaderTestGameDownloadServiceMock : public GameDownloadService
 {
 public:
   virtual void registerHook(const QString& serviceId, int preHookPriority, int postHookPriority, HookBase *hook)
@@ -173,7 +173,7 @@ public:
 
   ServiceDescription description;
   GameExecutorServiceMock executor;
-  GameDownloadServiceMock downloader;
+  ServiceLoaderTestGameDownloadServiceMock downloader;
   HookFactory downloaderHookFactory;
   ExecutorHookFactory executorHookFactory;
   ServiceSettings settigns;

@@ -5,6 +5,7 @@
 #include <Settings/InitializeHelper.h>
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <QtCore/QCoreApplication>
 
@@ -43,7 +44,8 @@ int main(int argc, char *argv[])
     plugins << path + "/plugins";
     a.setLibraryPaths(plugins);
 
-    testing::InitGoogleTest(&argc, argv);
+    ::testing::InitGoogleMock(&argc, argv);
+    ::testing::InitGoogleTest(&argc, argv);
 
     checkProtector();
     initDatabase();
