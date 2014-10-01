@@ -1,7 +1,8 @@
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
 
-#include <Settings/Settings>
+#include <Settings/Settings.h>
+#include <Settings/InitializeHelper.h>
 
 #include <gtest/gtest.h>
 
@@ -22,6 +23,17 @@ void checkProtector()
 
 #pragma optimize("", on)
 
+bool initDatabase()
+{
+  GGS::Settings::InitializeHelper helper;
+  helper.setFileName(QString("%1/featureTest.sql").arg(QCoreApplication::applicationDirPath()));
+  if (!helper.init())
+    return false;
+
+  GGS::Settings::Settings::setCacheEnabled(true);
+  return true;
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -34,6 +46,8 @@ int main(int argc, char *argv[])
     testing::InitGoogleTest(&argc, argv);
 
     checkProtector();
+    initDatabase();
+
 
     int result = RUN_ALL_TESTS();
     return result;

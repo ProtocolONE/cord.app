@@ -1,5 +1,7 @@
-#include <Host/Updater.h>
+#include <Host/ApplicationStatistic.h>
+#include <Host/ApplicationRestarter.h>
 #include <Host/Application.h>
+#include <Host/Updater.h>
 #include <Host/ServiceLoader.h>
 #include <Host/ServiceSettings.h>
 #include <Host/ServiceDescription.h>
@@ -9,28 +11,30 @@
 #include <Host/ShutdownManager.h>
 #include <Host/HookFactory.h>
 #include <Host/ExecutorHookFactory.h>
+#include <Host/DownloaderSettings.h>
+#include <Host/UIProcess.h>
+#include <Host/ApplicationStatistic.h>
 
 #include <Host/Dbus/DBusServer.h>
-
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
 #include <Host/Dbus/DownloaderSettingsBridgeAdaptor.h>
 #include <Host/Dbus/ServiceSettingsBridgeAdaptor.h>
 #include <Host/Dbus/ExecutorBridgeAdaptor.h>
+#include <Host/Dbus/UpdateManagerBridgeAdaptor.h>
+#include <Host/Dbus/ApplicationBridgeAdaptor.h>
+#include <Host/Dbus/ApplicationStatisticBridgeAdaptor.h>
 
 #include <Host/Bridge/DownloaderBridge.h>
 #include <Host/Bridge/DownloaderSettingsBridge.h>
 #include <Host/Bridge/ServiceSettingsBridge.h>
 #include <Host/Bridge/ExecutorBridge.h>
 
-#include <Host/DownloaderSettings.h>
-#include <Host/UIProcess.h>
-#include <Host/ApplicationRestarter.h>
-
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Thetta/ThettaInstaller.h>
 
 #include <GameDownloader/GameDownloadService.h>
+
 #include <Application/ArgumentParser.h>
 #include <Application/SingleApplication.h>
 
@@ -79,6 +83,7 @@ namespace GameNet {
       , _applicationRestarter(new ApplicationRestarter(this))
       , _downloaderHookFactory(new HookFactory(this))
       , _executorHookFactory(new ExecutorHookFactory(this))
+      , _applicationStatistic(new ApplicationStatistic(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -95,9 +100,8 @@ namespace GameNet {
     {
       this->_initFinished = true;
 
-      if (this->_initFinished && this->_updateFinished) {
+      if (this->_initFinished && this->_updateFinished)
         emit this->initCompleted();
-      }
     }
 
     void Application::setUpdateFinished() 
@@ -107,9 +111,8 @@ namespace GameNet {
 
       this->_updateFinished = true;
 
-      if (this->_initFinished && this->_updateFinished) {
+      if (this->_initFinished && this->_updateFinished)
         emit this->initCompleted();
-      }
     }
 
     bool Application::isInitCompleted()
@@ -119,9 +122,8 @@ namespace GameNet {
 
     void Application::commandRecieved(QString name, QStringList arguments)
     {
-      if (name == "activate") {
+      if (name == "activate")
         this->startUi();
-      }
     }
 
     void Application::setSingleApplication(SingleApplication *value)
@@ -142,6 +144,10 @@ namespace GameNet {
       this->initTranslations();
 
       this->initGameDownloader();
+
+      this->_applicationStatistic->setDownloader(this->_gameDownloader);
+      this->_applicationStatistic->setCommandLineArgs(this->_commandLineArguments);
+      this->_applicationStatistic->init();
 
       this->_applicationBridge->setApplcation(this);
       this->_applicationBridge->setThetta(this->_thetta);
@@ -256,6 +262,7 @@ namespace GameNet {
       new ExecutorBridgeAdaptor(this->_excutorBridge);
       new UpdateManagerBridgeAdaptor(this->_updateManagerBridge);
       new ApplicationBridgeAdaptor(this->_applicationBridge);
+      new ApplicationStatisticBridgeAdaptor(this->_applicationStatistic);
     
 #ifndef USE_SESSION_DBUS
       QObject::connect(server, &DBusServer::newConnection, [this](const QDBusConnection &constConnection) {
@@ -277,6 +284,7 @@ namespace GameNet {
       connection->registerObject("/serviceSettings", this->_serviceSettingsBridge);
       connection->registerObject("/executor", this->_excutorBridge);
       connection->registerObject("/updater", this->_updateManagerBridge);
+      connection->registerObject("/applicationStatistic", this->_applicationStatistic);
       connection->registerService("com.gamenet.dbus");
     }
 
@@ -574,13 +582,11 @@ namespace GameNet {
 
     void Application::startUi()
     {
-      if (QCoreApplication::arguments().contains("--skip-ui")) {
+      if (this->_commandLineArguments->contains("skip-ui"))
         return;
-      }
 
-      if (this->_uiProcess->isRunning()) {
+      if (this->_uiProcess->isRunning())
         return;
-      }
 
       qDebug() << "Starting qGNA UI";
       QStringList args = QCoreApplication::arguments();

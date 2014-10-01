@@ -11,7 +11,8 @@ namespace GameNet {
 
     namespace Bridge {
 
-      class ApplicationBridge: public QObject {
+      class ApplicationBridge: public QObject 
+      {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
         Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Application")

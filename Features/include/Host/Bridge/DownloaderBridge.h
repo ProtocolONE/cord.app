@@ -125,58 +125,6 @@ namespace GameNet {
   }
 }
 
-static QDBusArgument& operator <<(QDBusArgument &argument, const GameNet::Host::Bridge::DownloadProgressArgs arg)
-{
-  argument.beginStructure();
-  argument 
-    << arg.id
-    << arg.status
-    << arg.progress
-
-    << arg.downloadRate
-    << arg.uploadRate
-
-    << arg.totalWanted
-    << arg.totalWantedDone
-
-    << arg.directTotalDownload
-    << arg.peerTotalDownload
-
-    << arg.payloadTotalDownload
-    << arg.peerPayloadDownloadRate
-    << arg.payloadDownloadRate
-    << arg.directPayloadDownloadRate
-    << arg.payloadUploadRate
-    << arg.totalPayloadUpload;
-
-  argument.endStructure();
-  return argument;
-}
-
-static const QDBusArgument& operator >>(const QDBusArgument &argument, GameNet::Host::Bridge::DownloadProgressArgs& arg)
-{
-  argument.beginStructure();
-  argument 
-    >> arg.id
-    >> arg.status
-    >> arg.progress
-
-    >> arg.downloadRate
-    >> arg.uploadRate
-
-    >> arg.totalWanted
-    >> arg.totalWantedDone
-
-    >> arg.directTotalDownload
-    >> arg.peerTotalDownload
-
-    >> arg.payloadTotalDownload
-    >> arg.peerPayloadDownloadRate
-    >> arg.payloadDownloadRate
-    >> arg.directPayloadDownloadRate
-    >> arg.payloadUploadRate
-    >> arg.totalPayloadUpload;
-  argument.endStructure();
-  return argument;
-}
+QDBusArgument& operator <<(QDBusArgument &argument, const GameNet::Host::Bridge::DownloadProgressArgs& arg);
+const QDBusArgument& operator >>(const QDBusArgument &argument, GameNet::Host::Bridge::DownloadProgressArgs& arg);
 

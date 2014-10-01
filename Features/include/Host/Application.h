@@ -47,6 +47,7 @@ namespace GameNet {
     class ShutdownManager;
     class HookFactory;
     class ExecutorHookFactory;
+    class ApplicationStatistic;
 
     namespace Bridge {
       class DownloaderBridge;
@@ -116,9 +117,10 @@ namespace GameNet {
       GGS::RestApi::RestApiManager *_restApiManager;
       GGS::RestApi::FakeCache *_restApiCache;
 
-      Updater* _updater;
-      UIProcess* _uiProcess;
-      ApplicationRestarter* _applicationRestarter;
+      Updater *_updater;
+      UIProcess *_uiProcess;
+      ApplicationRestarter *_applicationRestarter;
+      ApplicationStatistic *_applicationStatistic;
 
       bool _initFinished;
       bool _updateFinished;

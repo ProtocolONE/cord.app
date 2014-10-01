@@ -222,10 +222,6 @@ namespace GameNet {
     {
       Q_ASSERT(this->_downloader);
 
-      // UNDONE 04.09.2014 Должна куда-то мигрировать.
-      // Эта информация сейчас на пряму считывается с QML
-      // Должно сохранение переехать в хост, а методы уже у бриджа спрашивать когда там инстал дейт был
-
       if (!this->_downloader->isInstalled(serviceId))
         return;
 

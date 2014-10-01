@@ -119,8 +119,8 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
 
 @REM DBus
 copy /Y /B  "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
-copy /Y /B  "$(QTDIR)\bin\dbus-daemon.exe" "$(TargetDir)"
-copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
+@rem copy /Y /B  "$(QTDIR)\bin\dbus-daemon.exe" "$(TargetDir)"
+@rem copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
 
 @REM Our libraries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
@@ -228,8 +228,8 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
 
 @REM DBus
 copy /Y /B  "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
-copy /Y /B  "$(QTDIR)\bin\dbus-daemon.exe" "$(TargetDir)"
-copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
+@rem copy /Y /B  "$(QTDIR)\bin\dbus-daemon.exe" "$(TargetDir)"
+@rem copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
 
 @REM Our libraries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
@@ -281,6 +281,7 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plug
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Bridge\ApplicationBridgeTest.cpp" />
+    <ClCompile Include="src\Bridge\ApplicationStatisticBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\ExecutorBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\ServiceSettingsBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\UpdaterTest.cpp" />

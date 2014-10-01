@@ -3,7 +3,6 @@
 #include <viewmodel/SettingsViewModel.h>
 #include <viewmodel/EnterNickNameViewModel.h>
 #include <viewmodel/GameSettingsViewModel.h>
-#include <viewmodel/UpdateViewModel.h>
 
 #include <QmlMessageAdapter.h>
 #include <Features/RememberGameDownloading.h>
@@ -84,6 +83,9 @@ class DownloaderBridgeProxy;
 class DownloaderSettingsBridgeProxy;
 class ServiceSettingsBridgeProxy;
 class ExecutorBridgeProxy;
+class UpdateManagerBridgeProxy;
+class ApplicationBridgeProxy;
+class ApplicationStatisticBridgeProxy;
 
 class MainWindow : public QMainWindow
 {
@@ -318,6 +320,8 @@ private:
   DownloaderSettingsBridgeProxy *_downloaderSettings;
   ServiceSettingsBridgeProxy *_serviceSettings;
   ExecutorBridgeProxy *_executor;
+  ApplicationBridgeProxy* _applicationProxy;
+  ApplicationStatisticBridgeProxy* _applicationStatistic;
 
   BestInstallPath *_bestInstallPath;
 

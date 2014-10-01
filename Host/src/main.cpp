@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
       return -1;
 
     initBugTrap(path);
+
     if (!initDatabase()) {
       MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
       return -1;

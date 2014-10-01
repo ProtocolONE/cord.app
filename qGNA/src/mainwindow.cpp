@@ -1,9 +1,22 @@
 #include <mainwindow.h>
 #include <Player.h>
+#include <BestInstallPath.h>
+
+#include <viewmodel/UpdateViewModel.h>
+#include <viewmodel/ApplicationStatisticViewModel.h>
+
+#include <Host/Dbus/DbusConnection.h>
+#include <Host/Dbus/DownloaderBridgeProxy.h>
+#include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
+#include <Host/Dbus/ServiceSettingsBridgeProxy.h>
+#include <Host/Dbus/ExecutorBridgeProxy.h>
+#include <Host/Dbus/ApplicationBridgeProxy.h>
+#include <Host/Dbus/ApplicationStatisticBridgeProxy.h>
 
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
 #include <Core/System/FileInfo.h>
+#include <Core/System/HardwareId.h>
 
 #include <RestApi/Commands/Service/GetLicense.h>
 #include <RestApi/Commands/Service/GetServices.h>
@@ -14,31 +27,22 @@
 
 #include <Settings/settings.h>
 
+#include <HookEngine/HookEngine.h>
+
 #include <QtCore/QTranslator>
 #include <QtCore/QSysInfo>
 #include <QtCore/QFlags>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QDesktopWidget>
 #include <QtDeclarative/QDeclarativeProperty>
-#include <Core/System/HardwareId.h>
-
-#include <HookEngine/HookEngine.h>
-
-#include <BestInstallPath.h>
-
-#include <Host/Dbus/DbusConnection.h>
-#include <Host/Dbus/DownloaderBridgeProxy.h>
-#include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
-#include <Host/Dbus/ServiceSettingsBridgeProxy.h>
-#include <Host/Dbus/ExecutorBridgeProxy.h>
-#include <Host/Dbus/ApplicationBridgeProxy.h>
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
 using GameNet::Host::Bridge::Credential;
 using GameNet::Host::DBus::DBusConnection;
 
-Credential createDbusCredential(const GGS::RestApi::GameNetCredential& credential) {
+Credential createDbusCredential(const GGS::RestApi::GameNetCredential& credential) 
+{
   Credential result;
   result.userId = credential.userId();
   result.appKey = credential.appKey();
@@ -78,6 +82,8 @@ void MainWindow::initialize()
   this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", connection, this);
   this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", connection, this);
   this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", connection, this);
+  this->_applicationStatistic = new ApplicationStatisticBridgeProxy(dbusService, "/applicationStatistic", connection, this);
+
 
   this->_bestInstallPath = new BestInstallPath(this);
   this->_bestInstallPath->setServiceSettings(this->_serviceSettings);
@@ -99,12 +105,12 @@ void MainWindow::initialize()
   this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
-    | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы       
+    | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы
 
   this->translatorsParse();
 
   GGS::Settings::Settings settings;
-  this->selectLanguage(settings.value("qGNA/language").toString());                                                             
+  this->selectLanguage(settings.value("qGNA/language").toString());
   this->checkDesktopDepth();
 
   this->settingsViewModel = new SettingsViewModel(this);
@@ -113,8 +119,9 @@ void MainWindow::initialize()
   this->initAutorun();
 
   qmlRegisterType<UpdateViewModel>("qGNA.Library", 1, 0, "UpdateViewModel");
-  qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");             
-  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");     
+  qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");
+  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");
+  qmlRegisterType<ApplicationStatisticViewModel>("qGNA.Library", 1, 0, "ApplicationStatistic");
 
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
@@ -571,13 +578,10 @@ void MainWindow::gameDownloaderFailed(const QString& serviceId)
   emit this->downloaderFailed(serviceId);
 }
 
-void MainWindow::removeStartGame(QString serviceId) {
-  GGS::Settings::Settings settings;
-  settings.beginGroup("gameExecutor/serviceInfo/" + serviceId + "/");
-  int successCount = settings.value("successCount", 0).toInt();
-  int failedCount = settings.value("failedCount", 0).toInt();
-
-  if (failedCount + successCount > 0) {
+void MainWindow::removeStartGame(QString serviceId) 
+{
+  int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
+  if (totalCount > 0) {
     this->selectService(serviceId);
     return;
   }

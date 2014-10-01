@@ -31,7 +31,6 @@ public:
   MOCK_METHOD1(openBrowser, void(const QString&));
 };
 
-
 class ApplicationBridgeTest : public ::testing::Test 
 {
 public:
