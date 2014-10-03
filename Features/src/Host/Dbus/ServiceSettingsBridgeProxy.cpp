@@ -9,7 +9,7 @@
  * before re-generating it.
  */
 
-#include <Host/Dbus/ServiceSettingsBridgeProxy.h>
+#include <Host/DBus/ServiceSettingsBridgeProxy.h>
 
 /*
  * Implementation of interface class ServiceSettingsBridgeProxy

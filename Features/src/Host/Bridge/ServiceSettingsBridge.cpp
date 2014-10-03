@@ -81,6 +81,18 @@ namespace GameNet {
         return this->_settings->isDownloadable(serviceId);
       }
 
+      bool ServiceSettingsBridge::isOverlayEnabled(const QString& serviceId) const
+      {
+        Q_ASSERT(this->_settings);
+        return this->_settings->isOverlayEnabled(serviceId);
+      }
+
+      void ServiceSettingsBridge::setOverlayEnabled(const QString& serviceId, bool enabled)
+      {
+        Q_ASSERT(this->_settings);
+        this->_settings->setOverlayEnabled(serviceId, enabled);
+      }
+
     }
   }
 }

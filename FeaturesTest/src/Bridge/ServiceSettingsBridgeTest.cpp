@@ -25,6 +25,9 @@ public:
 
   MOCK_CONST_METHOD1(gameSize, quint64(const QString&));
   MOCK_CONST_METHOD1(name, QString(const QString&));
+
+  MOCK_CONST_METHOD1(isOverlayEnabled, bool(const QString&));
+  MOCK_METHOD2(setOverlayEnabled, void(const QString&, bool));
 };
 
 class ServiceSettingsBridgeTest : public ::testing::Test 
@@ -140,4 +143,33 @@ TEST_F(ServiceSettingsBridgeTest, name)
 
   ASSERT_EQ(name1, bridge.name(serviceId));
   ASSERT_EQ(name2, bridge.name(serviceId));
+}
+
+TEST_F(ServiceSettingsBridgeTest, isOverlayEnabled)
+{
+  EXPECT_CALL(settings, isOverlayEnabled(serviceId))
+    .WillOnce(Return(true))
+    .WillOnce(Return(false));
+
+  ASSERT_TRUE(bridge.isOverlayEnabled(serviceId));
+  ASSERT_FALSE(bridge.isOverlayEnabled(serviceId));
+}
+
+TEST_F(ServiceSettingsBridgeTest, setOverlayEnabled)
+{
+  bool value = true;
+  bool value2 = false;
+
+  EXPECT_CALL(settings, setOverlayEnabled(serviceId, value)).Times(1);
+  EXPECT_CALL(settings, setOverlayEnabled(serviceId, value2)).Times(1);
+
+  EXPECT_CALL(settings, isOverlayEnabled(serviceId))
+    .WillOnce(Return(value))
+    .WillOnce(Return(value2));
+
+  bridge.setOverlayEnabled(serviceId, value);
+  ASSERT_EQ(value, bridge.isOverlayEnabled(serviceId));
+
+  bridge.setOverlayEnabled(serviceId, value2);
+  ASSERT_EQ(value2, bridge.isOverlayEnabled(serviceId));
 }

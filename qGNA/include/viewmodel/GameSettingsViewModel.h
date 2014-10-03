@@ -56,6 +56,9 @@ public slots:
 
   static QStringList deserialize(QByteArray serialized);
   static QByteArray serialize(QStringList stringList);
+
+  bool isOverlayEnabled(const QString& serviceId);
+  void setOverlayEnabled(const QString& serviceId, bool enabled);
   
 signals:
   void installPathChanged();

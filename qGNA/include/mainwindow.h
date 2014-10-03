@@ -91,7 +91,7 @@ class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
-   Q_PROPERTY(QString nickName READ nickName NOTIFY nickNameChanged)
+  Q_PROPERTY(QString nickName READ nickName NOTIFY nickNameChanged)
   Q_PROPERTY(QString techName READ techName NOTIFY techNameChanged)
   Q_PROPERTY(QString mediumAvatarUrl READ mediumAvatarUrl NOTIFY mediumAvatarUrlChanged)
   Q_PROPERTY(QString language READ language NOTIFY languageChanged)

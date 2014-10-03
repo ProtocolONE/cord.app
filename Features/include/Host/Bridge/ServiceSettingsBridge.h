@@ -116,6 +116,29 @@ namespace GameNet {
         */
         QString name(const QString& serviceId) const;
 
+        /**
+         * \fn  bool ServiceSettingsBridge::overlayEnabled(const QString& serviceId) const;
+         *
+         * \brief Query settings, and return is overlay for serviceId is enabled.
+         *
+         * \param serviceId Identifier for the service.
+         *
+         * \return  true if overlay enabled, false if not.
+         */
+
+        bool isOverlayEnabled(const QString& serviceId) const;
+
+        /**
+         * \fn  void ServiceSettingsBridge::setOverlayEnabled(const QString& serviceId, bool enabled);
+         *
+         * \brief Sets an overlay enabled.
+         *
+         * \param serviceId Identifier for the service.
+         * \param enabled   true to enable, false to disable.
+         */
+
+        void setOverlayEnabled(const QString& serviceId, bool enabled);
+
       private:
         ServiceSettings *_settings;
       };

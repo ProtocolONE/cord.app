@@ -167,6 +167,7 @@ namespace GameNet {
       this->_thetta->init();
 
       this->_executor->setServices(this->_serviceLoader);
+      this->_executor->setServiceSettings(this->_serviceSettings);
       this->_executor->setThetta(this->_thetta);
       this->_executor->init();
       this->_excutorBridge->setExecutor(this->_executor);

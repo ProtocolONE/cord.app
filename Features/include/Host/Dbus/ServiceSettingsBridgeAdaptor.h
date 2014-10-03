@@ -9,8 +9,8 @@
  * before re-generating it.
  */
 
-#ifndef SERVICESETTINGSBRIDGEADAPTOR_H_1411020666
-#define SERVICESETTINGSBRIDGEADAPTOR_H_1411020666
+#ifndef SERVICESETTINGSBRIDGEADAPTOR_H_1412329845
+#define SERVICESETTINGSBRIDGEADAPTOR_H_1412329845
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
@@ -72,6 +72,14 @@ class ServiceSettingsBridgeAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"out\" type=\"s\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "    </method>\n"
+"    <method name=\"isOverlayEnabled\">\n"
+"      <arg direction=\"out\" type=\"b\"/>\n"
+"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
+"    </method>\n"
+"    <method name=\"setOverlayEnabled\">\n"
+"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
+"      <arg direction=\"in\" type=\"b\" name=\"enabled\"/>\n"
+"    </method>\n"
 "  </interface>\n"
         "")
 public:
@@ -87,9 +95,11 @@ public Q_SLOTS: // METHODS
     bool isDefaultDownloadPath(const QString &serviceId);
     bool isDefaultInstallPath(const QString &serviceId);
     bool isDownloadable(const QString &serviceId);
+    bool isOverlayEnabled(const QString &serviceId);
     QString name(const QString &serviceId);
     void setDownloadPath(const QString &serviceId, const QString &path);
     void setInstallPath(const QString &serviceId, const QString &path);
+    void setOverlayEnabled(const QString &serviceId, bool enabled);
 Q_SIGNALS: // SIGNALS
 };
 

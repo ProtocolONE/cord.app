@@ -247,3 +247,13 @@ void GameSettingsViewModel::setDownloader(DownloaderBridgeProxy *value)
   Q_ASSERT(value);
   this->_downloader = value;
 }
+
+bool GameSettingsViewModel::isOverlayEnabled(const QString& serviceId)
+{
+  return this->_serviceSettings->isOverlayEnabled(serviceId);
+}
+
+void GameSettingsViewModel::setOverlayEnabled(const QString& serviceId, bool enabled)
+{
+  this->_serviceSettings->setOverlayEnabled(serviceId, enabled);
+}

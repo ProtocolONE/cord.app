@@ -2,12 +2,14 @@
 #include <Host/ServiceLoader.h>
 
 #include <Core/Service.h>
+#include <Settings/Settings.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
 #include <QtCore/QSettings>
 
 using GGS::Core::Service;
+using GGS::Settings::Settings;
 
 namespace GameNet {
   namespace Host {
@@ -144,6 +146,24 @@ namespace GameNet {
         return false;
 
       return service->isDownloadable();
+    }
+
+    bool ServiceSettings::isOverlayEnabled(const QString& serviceId) const
+    {
+      Settings settings;
+      settings.beginGroup("gameExecutor");
+      settings.beginGroup("serviceInfo");
+      settings.beginGroup(serviceId);
+      return settings.value("overlayEnabled", 1).toInt() == 1;
+    }
+
+    void ServiceSettings::setOverlayEnabled(const QString& serviceId, bool enabled)
+    {
+      Settings settings;
+      settings.beginGroup("gameExecutor");
+      settings.beginGroup("serviceInfo");
+      settings.beginGroup(serviceId);
+      settings.setValue("overlayEnabled", enabled ? 1 : 0);
     }
 
   }

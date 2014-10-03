@@ -8,8 +8,7 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#include <Host/Dbus/ServiceSettingsBridgeAdaptor.h>
-
+#include <Host/DBus/ServiceSettingsBridgeAdaptor.h>
 #include <QtCore/QMetaObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>
@@ -90,6 +89,14 @@ bool ServiceSettingsBridgeAdaptor::isDownloadable(const QString &serviceId)
     return out0;
 }
 
+bool ServiceSettingsBridgeAdaptor::isOverlayEnabled(const QString &serviceId)
+{
+    // handle method call com.gamenet.dbus.ServiceSettings.isOverlayEnabled
+    bool out0;
+    QMetaObject::invokeMethod(parent(), "isOverlayEnabled", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
+    return out0;
+}
+
 QString ServiceSettingsBridgeAdaptor::name(const QString &serviceId)
 {
     // handle method call com.gamenet.dbus.ServiceSettings.name
@@ -108,5 +115,11 @@ void ServiceSettingsBridgeAdaptor::setInstallPath(const QString &serviceId, cons
 {
     // handle method call com.gamenet.dbus.ServiceSettings.setInstallPath
     QMetaObject::invokeMethod(parent(), "setInstallPath", Q_ARG(QString, serviceId), Q_ARG(QString, path));
+}
+
+void ServiceSettingsBridgeAdaptor::setOverlayEnabled(const QString &serviceId, bool enabled)
+{
+    // handle method call com.gamenet.dbus.ServiceSettings.setOverlayEnabled
+    QMetaObject::invokeMethod(parent(), "setOverlayEnabled", Q_ARG(QString, serviceId), Q_ARG(bool, enabled));
 }
 

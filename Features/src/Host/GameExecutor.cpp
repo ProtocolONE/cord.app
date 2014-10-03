@@ -1,6 +1,7 @@
 #include <Host/GameExecutor.h>
 #include <Host/Thetta.h>
 #include <Host/ServiceLoader.h>
+#include <Host/ServiceSettings.h>
 
 #include <Features/PremiumExecutor.h>
 
@@ -29,6 +30,7 @@ namespace GameNet {
       , _gameExecutorServiceInfoCounter(new ServiceInfoCounter(this))
       , _services(nullptr)
       , _thetta(nullptr)
+      , _serviceSettings(nullptr)
     {
     }
 
@@ -48,10 +50,17 @@ namespace GameNet {
       this->_thetta = value;
     }
 
+    void GameExecutor::setServiceSettings(ServiceSettings* value)
+    {
+      Q_ASSERT(value);
+      this->_serviceSettings = value;
+    }
+
     void GameExecutor::init()
     {
       Q_ASSERT(this->_mainExecutor);
       Q_ASSERT(this->_thetta);
+      Q_ASSERT(this->_serviceSettings);
 
       this->_premiumExecutor->setMainExecutor(this->_mainExecutor);
       this->_premiumExecutor->init();
@@ -89,6 +98,7 @@ namespace GameNet {
     {
       Q_ASSERT(this->_services);
       Q_ASSERT(this->_premiumExecutor);
+
       Service *service = this->_services->getService(serviceId);
       if (!service)
         return;
@@ -154,6 +164,8 @@ namespace GameNet {
 
     void GameExecutor::prepairExecuteUrl(GGS::Core::Service *service)
     {
+      Q_ASSERT(this->_serviceSettings);
+
       if (!service->isDownloadable()) {
         service->setUrl(service->urlTemplate());
         return;
@@ -185,9 +197,7 @@ namespace GameNet {
       if (urlQuery.hasQueryItem("injectOverlay")) {
         urlQuery.removeAllQueryItems("injectOverlay");
 
-        // UNDONE 16.09.2014 Спросить у ServiceSettings доступен ли оверлей
-        // https://jira.gamenet.ru:8443/browse/QGNA-963
-        bool overlayEnabled = true;
+        bool overlayEnabled = this->_serviceSettings->isOverlayEnabled(service->id());
         if (overlayEnabled) {
 #ifdef _DEBUG
           QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
@@ -206,8 +216,6 @@ namespace GameNet {
     {
       this->_premiumExecutor->shutdownSecond();
     }
-
-    
 
   }
 }

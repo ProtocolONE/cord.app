@@ -28,6 +28,7 @@ namespace GameNet {
 
     class ServiceLoader;
     class Thetta;
+    class ServiceSettings;
 
     class GameExecutor : public QObject
     {
@@ -38,6 +39,7 @@ namespace GameNet {
 
       void setServices(ServiceLoader *value);
       void setThetta(Thetta *value);
+      void setServiceSettings(ServiceSettings* value);
 
       void init();
       void shutdown();
@@ -77,6 +79,7 @@ namespace GameNet {
       Features::PremiumExecutor *_premiumExecutor;
       GGS::GameExecutor::ServiceInfoCounter *_gameExecutorServiceInfoCounter;
       ServiceLoader *_services;
+      ServiceSettings* _serviceSettings;
       Thetta *_thetta;
     };
 

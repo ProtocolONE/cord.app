@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef SERVICESETTINGSBRIDGEPROXY_H_1411020665
-#define SERVICESETTINGSBRIDGEPROXY_H_1411020665
+#ifndef SERVICESETTINGSBRIDGEPROXY_H_1412329844
+#define SERVICESETTINGSBRIDGEPROXY_H_1412329844
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -85,6 +85,13 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("isDownloadable"), argumentList);
     }
 
+    inline QDBusPendingReply<bool> isOverlayEnabled(const QString &serviceId)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(serviceId);
+        return asyncCallWithArgumentList(QLatin1String("isOverlayEnabled"), argumentList);
+    }
+
     inline QDBusPendingReply<QString> name(const QString &serviceId)
     {
         QList<QVariant> argumentList;
@@ -104,6 +111,13 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(path);
         return asyncCallWithArgumentList(QLatin1String("setInstallPath"), argumentList);
+    }
+
+    inline QDBusPendingReply<> setOverlayEnabled(const QString &serviceId, bool enabled)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(enabled);
+        return asyncCallWithArgumentList(QLatin1String("setOverlayEnabled"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS

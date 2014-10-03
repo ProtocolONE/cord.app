@@ -41,6 +41,9 @@ namespace GameNet {
       virtual quint64 gameSize(const QString& serviceId) const;
       virtual QString name(const QString& serviceId) const;
 
+      virtual bool isOverlayEnabled(const QString& serviceId) const;
+      virtual void setOverlayEnabled(const QString& serviceId, bool enabled);
+
     private:
       ServiceLoader *_services;
       GGS::GameDownloader::GameDownloadService *_downloader;
