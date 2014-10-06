@@ -1,5 +1,6 @@
 #include <Host/Bridge/ExecutorBridge.h>
 #include <Host/GameExecutor.h>
+#include <Host/CredentialConverter.h>
 
 #include <RestApi/GameNetCredential.h>
 
@@ -8,15 +9,6 @@ using GGS::RestApi::GameNetCredential;
 namespace GameNet {
   namespace Host {
     namespace Bridge {
-
-      GameNetCredential makeCredential(const Credential& in) 
-      {
-        GameNetCredential result;
-        result.setUserId(in.userId);
-        result.setAppKey(in.appKey);
-        result.setCookie(in.cookie);
-        return result;
-      }
 
       ExecutorBridge::ExecutorBridge(QObject *parent /*= 0*/)
         : QObject(parent)
@@ -44,22 +36,23 @@ namespace GameNet {
 
         QObject::connect(value, &GameExecutor::secondServiceFinished,
           this, &ExecutorBridge::secondServiceFinished);
-
       }
 
       void ExecutorBridge::execute(const QString& serviceId, const Credential& credential)
       {
         Q_ASSERT(this->_executor);
-        GameNetCredential base = makeCredential(credential);
-          
+        GameNetCredential base = createGameNetCredential(credential);
         this->_executor->execute(serviceId, base);
       }
 
-      void ExecutorBridge::executeSecond(const QString& serviceId, const Credential& credential, const Credential& secondCredential)
+      void ExecutorBridge::executeSecond(
+        const QString& serviceId, 
+        const Credential& credential, 
+        const Credential& secondCredential)
       {
         Q_ASSERT(this->_executor);
-        GameNetCredential base = makeCredential(credential);
-        GameNetCredential second = makeCredential(secondCredential);
+        GameNetCredential base = createGameNetCredential(credential);
+        GameNetCredential second = createGameNetCredential(secondCredential);
 
         this->_executor->executeSecond(serviceId, base, second);
       }

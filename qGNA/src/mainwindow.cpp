@@ -5,6 +5,8 @@
 #include <viewmodel/UpdateViewModel.h>
 #include <viewmodel/ApplicationStatisticViewModel.h>
 
+#include <Host/CredentialConverter.h>
+
 #include <Host/Dbus/DbusConnection.h>
 #include <Host/Dbus/DownloaderBridgeProxy.h>
 #include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
@@ -40,15 +42,8 @@
 
 using GameNet::Host::Bridge::Credential;
 using GameNet::Host::DBus::DBusConnection;
-
-Credential createDbusCredential(const GGS::RestApi::GameNetCredential& credential) 
-{
-  Credential result;
-  result.userId = credential.userId();
-  result.appKey = credential.appKey();
-  result.cookie = credential.cookie();
-  return result;
-}
+using GameNet::Host::Bridge::createDbusCredential;
+using GameNet::Host::Bridge::createGameNetCredential;
 
 MainWindow::MainWindow(QWidget *parent) 
   : QMainWindow(parent)
@@ -381,6 +376,9 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
 
   this->_credential = credential;
   this->_restapiManager.setCridential(credential);
+  
+  this->_applicationProxy->setCredential("QGNA", createDbusCredential(credential));
+
   using GGS::RestApi::Commands::User::GetUserMainInfo;
   GetUserMainInfo *getUserMainInfo = new GetUserMainInfo(this);
 

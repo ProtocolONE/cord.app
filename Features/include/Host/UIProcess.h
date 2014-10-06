@@ -9,7 +9,8 @@
 namespace GameNet {
   namespace Host {
 
-    class UIProcess: public QObject {
+    class UIProcess: public QObject 
+    {
       Q_OBJECT
     public:
       explicit UIProcess::UIProcess(QObject* parent = 0);

@@ -1,4 +1,5 @@
 #include <Host/GameExecutor.h>
+#include <Host/CredentialConverter.h>
 #include <Host/Bridge/ExecutorBridge.h>
 
 #include <RestApi/GameNetCredential.h>
@@ -11,7 +12,9 @@
 using GameNet::Host::GameExecutor;
 using GameNet::Host::Bridge::ExecutorBridge;
 using GameNet::Host::Bridge::Credential;
+using GameNet::Host::Bridge::createGameNetCredential;
 using GGS::RestApi::GameNetCredential;
+
 using ::testing::Return;
 
 class GameExecutorMock : public GameExecutor
@@ -55,8 +58,8 @@ public:
     secondCredential.appKey = "secondAppKey";
     secondCredential.cookie = "secondcookie";
 
-    setGameNetCredential(expectedCredential, credential);
-    setGameNetCredential(expectedSecondCredential, secondCredential);
+    expectedCredential = createGameNetCredential(credential);
+    expectedSecondCredential = createGameNetCredential(secondCredential);
 
     bridge.setExecutor(&executor);
     
@@ -71,13 +74,6 @@ public:
 
     QObject::connect(&bridge, &ExecutorBridge::secondServiceFinished,
       &executor, &GameExecutorMock::onSecondServiceFinished);
-  }
-
-  void setGameNetCredential(GameNetCredential& to, Credential& from) 
-  {
-    to.setUserId(from.userId);
-    to.setAppKey(from.appKey);
-    to.setCookie(from.cookie);
   }
 
   QString serviceId;

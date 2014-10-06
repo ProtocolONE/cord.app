@@ -32,6 +32,8 @@ namespace Features {
 
     void GameDownloadStatistics::init(GGS::GameDownloader::GameDownloadService* downloader)
     {
+      this->_downloader = downloader;
+
       QObject::connect(downloader, &GameDownloadService::downloadProgressChanged,
         this, &GameDownloadStatistics::progressDownloadChanged);
 

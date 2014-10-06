@@ -1,12 +1,18 @@
+// INFO windows.h can't be include before QDbusConnection
+#include <QtDBus/QDBusConnection>
+
 #include <Host/Bridge/DownloaderBridge.h>
 
 #include <Host/ServiceLoader.h>
+
+#include <Host/Proxy/DownloaderProxy.h>
 
 #include <Core/Service.h>
 
 using GGS::GameDownloader::GameDownloadService;
 using GGS::Core::Service;
 using GGS::Libtorrent::EventArgs::ProgressEventArgs;
+using GameNet::Host::Proxy::DownloaderProxy;
 
 namespace GameNet {
   namespace Host {
@@ -42,7 +48,7 @@ namespace GameNet {
       {
       }
 
-      void DownloaderBridge::setDownloader(GameDownloadService *downloader)
+      void DownloaderBridge::setDownloader(DownloaderProxy *downloader)
       {
         Q_ASSERT(downloader);
         this->_downloader = downloader;
@@ -96,7 +102,12 @@ namespace GameNet {
         if (!service)
           return;
 
-        this->_downloader->start(service, static_cast<GGS::GameDownloader::StartType>(startType));
+        QString name;
+
+        if (this->calledFromDBus())
+          name = this->connection().name();
+
+        this->_downloader->startWithName(name, service, static_cast<GGS::GameDownloader::StartType>(startType));
       }
 
       void DownloaderBridge::stop(const QString& serviceId)

@@ -80,17 +80,17 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="241"/>
-        <location filename="../src/mainwindow.cpp" line="727"/>
-        <location filename="../src/mainwindow.cpp" line="734"/>
-        <location filename="../src/mainwindow.cpp" line="759"/>
-        <location filename="../src/mainwindow.cpp" line="762"/>
+        <location filename="../src/mainwindow.cpp" line="236"/>
+        <location filename="../src/mainwindow.cpp" line="725"/>
+        <location filename="../src/mainwindow.cpp" line="732"/>
+        <location filename="../src/mainwindow.cpp" line="757"/>
+        <location filename="../src/mainwindow.cpp" line="760"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="727"/>
-        <location filename="../src/mainwindow.cpp" line="762"/>
+        <location filename="../src/mainwindow.cpp" line="725"/>
+        <location filename="../src/mainwindow.cpp" line="760"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;http://support.gamenet.ru&lt;/font&gt;&lt;/a&gt;  </translation>
     </message>
@@ -99,17 +99,17 @@
         <translation type="obsolete">Вход в игру доступен только для участников тестирования. О завершении тестирования и об открытии доступа в игру будет сообщено в новостях.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="735"/>
+        <location filename="../src/mainwindow.cpp" line="733"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="759"/>
+        <location filename="../src/mainwindow.cpp" line="757"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="241"/>
+        <location filename="../src/mainwindow.cpp" line="236"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>Доступно новое обновление. Необходимо перезапустить приложение.</translation>
     </message>
@@ -125,12 +125,12 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="257"/>
+        <location filename="../src/mainwindow.cpp" line="252"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation>Упс! У нас иногда не получается нормально запускаться в режиме цветопередачи 16-бит. Простите, если это произошло в этот раз. Мы исправимся, а пока измените настроки цветопередачи на 32-бита.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="258"/>
+        <location filename="../src/mainwindow.cpp" line="253"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation>Информация</translation>
     </message>

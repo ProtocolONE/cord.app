@@ -14,6 +14,7 @@
 #include <Host/DownloaderSettings.h>
 #include <Host/UIProcess.h>
 #include <Host/ApplicationStatistic.h>
+#include <Host/MarketingStatistic.h>
 
 #include <Host/Dbus/DBusServer.h>
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
@@ -29,6 +30,9 @@
 #include <Host/Bridge/ServiceSettingsBridge.h>
 #include <Host/Bridge/ExecutorBridge.h>
 
+#include <Host/Proxy/GameExecutorProxy.h>
+#include <Host/Proxy/DownloaderProxy.h>
+
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Thetta/ThettaInstaller.h>
@@ -42,6 +46,8 @@
 #include <RestApi/FakeCache.h>
 
 #include <Settings/Settings.h>
+
+#include <Marketing/MarketingTarget.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
@@ -62,14 +68,14 @@ namespace GameNet {
       : _singleApplication(nullptr)
       , _shutdown(new ShutdownManager(this))
       , _serviceLoader(new ServiceLoader(this))
-      , _gameDownloader(new GameDownloadService(this))
+      , _gameDownloader(new Proxy::DownloaderProxy)
       , _downloaderBridge(new Bridge::DownloaderBridge(this))
       , _downloaderSettings(new DownloaderSettings(this))
       , _downloaderSettingsBridge(new Bridge::DownloaderSettingsBridge(this))
       , _serviceSettings(new ServiceSettings(this))
       , _serviceSettingsBridge(new Bridge::ServiceSettingsBridge(this))
       , _downloadStatistics(new Features::GameDownloader::GameDownloadStatistics(this))
-      , _executor(new GameExecutor(this))
+      , _executor(new Proxy::GameExecutorProxy(this))
       , _excutorBridge(new Bridge::ExecutorBridge(this))
       , _thetta(new Thetta(this))
       , _stopDownloadServiceOnExecuteGame(new Features::StopDownloadServiceWhileExecuteAnyGame(this))
@@ -84,6 +90,8 @@ namespace GameNet {
       , _downloaderHookFactory(new HookFactory(this))
       , _executorHookFactory(new ExecutorHookFactory(this))
       , _applicationStatistic(new ApplicationStatistic(this))
+      , _marketingStatistic(new MarketingStatistic(this))
+      , _marketingTarget(new GGS::Marketing::MarketingTarget(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -191,6 +199,8 @@ namespace GameNet {
       this->_serviceSettings->setServices(this->_serviceLoader);
       this->_serviceSettings->setDownloader(this->_gameDownloader);
       this->_serviceSettingsBridge->setSettings(this->_serviceSettings);
+
+      this->initMarketing();
 
       this->registerServices();
 
@@ -492,7 +502,10 @@ namespace GameNet {
     {
       this->_downloaderSettings->setDownloader(this->_gameDownloader);
       this->_downloaderSettings->init();
+
+      this->_gameDownloader->setApplication(this);
       this->_gameDownloader->init();
+
       this->_downloadStatistics->init(this->_gameDownloader);
       this->_shutdown->setGameDownloadInitialized();
     }
@@ -594,5 +607,49 @@ namespace GameNet {
       args.removeFirst(); // INFO first argument always self execute path
       this->_uiProcess->start(QCoreApplication::applicationDirPath(), "qGNA.exe", args);
     }
+
+    void Application::setCredential(
+      const QString& connectionName,
+      const QString& applicationName,
+      const GGS::RestApi::GameNetCredential& credential)
+    {
+      // INFO 06.10.2014 На текущий момент нет возможности узнать, что подключение к Dbus было утерено.
+      // Потенциально тут есть утечка памяти, так как мы не чистим авторизацию при дисконнекте UI.
+      QString removeKey;
+      Q_FOREACH(const QString& key, this->_connectionCredential.keys()) {
+        if (this->_connectionCredential[key].first == applicationName) {
+          removeKey = key;
+          break;
+        }
+      }
+      
+      this->_connectionCredential.remove(removeKey);
+      this->_connectionCredential[connectionName].first = applicationName; 
+      this->_connectionCredential[connectionName].second = credential;
+    }
+
+    GGS::RestApi::GameNetCredential Application::credential(const QString& connectionName)
+    {
+      if (!this->_connectionCredential.contains(connectionName))
+        return GGS::RestApi::GameNetCredential();
+        
+      return this->_connectionCredential[connectionName].second;
+    }
+
+    void Application::initMarketing()
+    {
+      QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QString mid = midSettings.value("MID", "").toString();
+      this->_marketingTarget->init("qGNA", mid);
+
+      int installerKey = midSettings.value("InstKey").toInt();
+      this->_marketingTarget->setInstallerKey(installerKey);
+      this->_marketingTarget->setRequestInterval(1000);
+      
+      this->_marketingStatistic->setDownloader(this->_gameDownloader);
+      this->_marketingStatistic->setExecutor(this->_executor);
+      this->_marketingStatistic->init();
+    }
+
   }
 }

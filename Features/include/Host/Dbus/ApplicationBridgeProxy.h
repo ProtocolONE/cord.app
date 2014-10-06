@@ -8,8 +8,10 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef APPLICATIONBRIDGEPROXY_H_1411104602
-#define APPLICATIONBRIDGEPROXY_H_1411104602
+#ifndef APPLICATIONBRIDGEPROXY_H_1412580547
+#define APPLICATIONBRIDGEPROXY_H_1412580547
+
+#include <Host/Bridge/Credential.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -54,6 +56,13 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(isMinimized);
         return asyncCallWithArgumentList(QLatin1String("restartApplication"), argumentList);
+    }
+
+    inline QDBusPendingReply<> setCredential(const QString &applicationName, GameNet::Host::Bridge::Credential credential)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(applicationName) << QVariant::fromValue(credential);
+        return asyncCallWithArgumentList(QLatin1String("setCredential"), argumentList);
     }
 
     inline QDBusPendingReply<> switchClientVersion()

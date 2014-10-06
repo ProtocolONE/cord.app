@@ -4,6 +4,10 @@
 #include <QtCore/QMap>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include <QtCore/QHash>
+#include <QtCore/QPair>
+
+#include <RestApi/GameNetCredential.h>
 
 class QTranslator;
 class QDBusConnection;
@@ -30,6 +34,10 @@ namespace GGS {
     class RestApiManager;
     class FakeCache;
   }
+
+  namespace Marketing {
+    class MarketingTarget;
+  }
 }
 
 namespace GameNet {
@@ -48,12 +56,18 @@ namespace GameNet {
     class HookFactory;
     class ExecutorHookFactory;
     class ApplicationStatistic;
+    class MarketingStatistic;
 
     namespace Bridge {
       class DownloaderBridge;
       class DownloaderSettingsBridge;
       class ServiceSettingsBridge;
       class ExecutorBridge;
+    }
+
+    namespace Proxy {
+      class GameExecutorProxy;
+      class DownloaderProxy;
     }
 
     class Application : public QObject
@@ -70,6 +84,13 @@ namespace GameNet {
       virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
       void unregisterDbusServices();
       void shutdown();
+
+      virtual void setCredential(
+        const QString& connectionName,
+        const QString& applicationName,
+        const GGS::RestApi::GameNetCredential& credential);
+
+      virtual GGS::RestApi::GameNetCredential credential(const QString& connectionName);
 
     public slots:
       virtual bool isInitCompleted();
@@ -95,13 +116,15 @@ namespace GameNet {
       void registerDBusObjects(QDBusConnection *connection);
 
       void initRestApi();
+      void initMarketing();
 
       GGS::Application::SingleApplication *_singleApplication;
       ServiceLoader *_serviceLoader;
-      GGS::GameDownloader::GameDownloadService *_gameDownloader;
+      Proxy::DownloaderProxy *_gameDownloader;
+
       DownloaderSettings *_downloaderSettings;
       ServiceSettings *_serviceSettings;
-      GameExecutor *_executor;
+      Proxy::GameExecutorProxy *_executor;
       ShutdownManager *_shutdown;
       HookFactory *_downloaderHookFactory;
       ExecutorHookFactory *_executorHookFactory;
@@ -110,6 +133,8 @@ namespace GameNet {
       Bridge::DownloaderSettingsBridge *_downloaderSettingsBridge;
       Bridge::ServiceSettingsBridge *_serviceSettingsBridge;
       Bridge::ExecutorBridge *_excutorBridge;
+      Bridge::UpdateManagerBridge* _updateManagerBridge;
+      Bridge::ApplicationBridge* _applicationBridge;
 
       Features::GameDownloader::GameDownloadStatistics *_downloadStatistics;
       Features::StopDownloadServiceWhileExecuteAnyGame *_stopDownloadServiceOnExecuteGame;
@@ -121,6 +146,8 @@ namespace GameNet {
       UIProcess *_uiProcess;
       ApplicationRestarter *_applicationRestarter;
       ApplicationStatistic *_applicationStatistic;
+      MarketingStatistic *_marketingStatistic;
+      GGS::Marketing::MarketingTarget *_marketingTarget;
 
       bool _initFinished;
       bool _updateFinished;
@@ -128,6 +155,8 @@ namespace GameNet {
       QMap<QString, QTranslator*> _translators;
       
       GGS::Application::ArgumentParser* _commandLineArguments;
+
+      QHash<QString, QPair<QString, GGS::RestApi::GameNetCredential> > _connectionCredential;
     };
 
   }

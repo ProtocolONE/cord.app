@@ -3,10 +3,15 @@
 
 #include <LibtorrentWrapper/EventArgs/ProgressEventArgs>
 #include <Host/Bridge/DownloaderBridge.h>
+#include <Host/Proxy/DownloaderProxy.h>
 #include <Host/ServiceLoader.h>
+#include <Host/Application.h>
 #include <Core/Service.h>
 
 using namespace GameNet::Host::Bridge;
+using GameNet::Host::Proxy::DownloaderProxy;
+using GameNet::Host::Application;
+
 using ::testing::Return;
 
 void constructFakeProgressEventArgs(GGS::Libtorrent::EventArgs::ProgressEventArgs &args)
@@ -48,9 +53,23 @@ public:
   GGS::Core::Service *_service;
 };
 
-class GameDownloadServiceMock : public GGS::GameDownloader::GameDownloadService
+class DownloadBridgeTestApplicationMock : public Application
 {
 public:
+  MOCK_METHOD1(credential, GGS::RestApi::GameNetCredential(const QString&));
+};
+
+class GameDownloadServiceMock : public DownloaderProxy
+{
+public:
+  MOCK_METHOD1(isInProgress, bool(const GGS::Core::Service *));
+  MOCK_METHOD0(isAnyServiceInProgress, bool());
+  MOCK_METHOD1(isInstalled, bool(const QString&));
+  MOCK_METHOD2(start, void(const GGS::Core::Service *, GGS::GameDownloader::StartType));
+  MOCK_METHOD1(stop, void(const GGS::Core::Service *));
+  MOCK_METHOD0(pauseSession, void());
+  MOCK_METHOD0(resumeSession, void());
+
   //  fake slots 
   MOCK_METHOD2(onStarted, void(const QString&, int));
   MOCK_METHOD1(onFinished, void(const QString&));
@@ -78,24 +97,45 @@ public:
     this->_downloadBridge.setDownloader(&this->_downloadServiceFixture);
     this->_downloadBridge.setServiceLoader(&this->_serviceLoaderFixture);
 
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::started, &this->_downloadServiceFixture, &GameDownloadServiceMock::onStarted);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::finished, &this->_downloadServiceFixture, &GameDownloadServiceMock::onFinished);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::stopped, &this->_downloadServiceFixture, &GameDownloadServiceMock::onStopped);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::stopping, &this->_downloadServiceFixture, &GameDownloadServiceMock::onStopping);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::failed, &this->_downloadServiceFixture, &GameDownloadServiceMock::onFailed);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceInstalled, &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceInstalled);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceUpdated, &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceUpdated);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::statusMessageChanged, &this->_downloadServiceFixture, &GameDownloadServiceMock::onStatusMessageChanged);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::totalProgress, &this->_downloadServiceFixture, &GameDownloadServiceMock::onTotalProgressChanged);
-    QObject::connect(&this->_downloadBridge, &DownloaderBridge::downloadProgress, &this->_downloadServiceFixture, &GameDownloadServiceMock::onDownloadProgressChanged);
+    this->_downloadServiceFixture.setApplication(&this->_application);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::started, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onStarted);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::finished, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onFinished);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::stopped, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onStopped);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::stopping, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onStopping);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::failed, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onFailed);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceInstalled, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceInstalled);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceUpdated, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceUpdated);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::statusMessageChanged, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onStatusMessageChanged);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::totalProgress, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onTotalProgressChanged);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::downloadProgress, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onDownloadProgressChanged);
   }
     
   GGS::Core::Service _service;
   DownloaderBridge _downloadBridge;
   GameDownloadServiceMock _downloadServiceFixture;
   ServiceLoaderFixture _serviceLoaderFixture;
+  DownloadBridgeTestApplicationMock _application;
 };
-
 
 TEST_F(DownloadBridgeTest, EmitStartedSignal)
 {
@@ -187,4 +227,62 @@ TEST_F(DownloadBridgeTest, EmitDownloadProgressSignal)
 
   EXPECT_CALL(_downloadServiceFixture, onDownloadProgressChanged(_service.id(), progress, downloadArgs)).Times(1);
   _downloadServiceFixture.downloadProgressChanged(&_service, progress, libtorrentArgs);
+}
+
+TEST_F(DownloadBridgeTest, isInProgress)
+{
+  EXPECT_CALL(_downloadServiceFixture, isInProgress(&_service))
+    .WillOnce(Return(true));
+
+  ASSERT_TRUE(_downloadBridge.isInProgress(_service.id()));
+}
+
+TEST_F(DownloadBridgeTest, isAnyServiceInProgress)
+{
+  EXPECT_CALL(_downloadServiceFixture, isAnyServiceInProgress())
+    .WillOnce(Return(true));
+
+  ASSERT_TRUE(_downloadBridge.isAnyServiceInProgress());
+}
+
+TEST_F(DownloadBridgeTest, isInstalled)
+{
+  EXPECT_CALL(_downloadServiceFixture, isInstalled(_service.id()))
+    .WillOnce(Return(true));
+
+  ASSERT_TRUE(_downloadBridge.isInstalled(_service.id()));
+}
+
+TEST_F(DownloadBridgeTest, start)
+{
+  GGS::GameDownloader::StartType type = GGS::GameDownloader::StartType::Shadow;
+  EXPECT_CALL(_downloadServiceFixture, start(&_service, type)).Times(1);
+
+  QString connectionName;
+  GGS::RestApi::GameNetCredential credential;
+  EXPECT_CALL(_application, credential(connectionName))
+    .WillOnce(Return(credential));
+
+  _downloadBridge.start(_service.id(), static_cast<int>(type));
+}
+
+TEST_F(DownloadBridgeTest, stop)
+{
+  EXPECT_CALL(_downloadServiceFixture, stop(&_service)).Times(1);
+
+  _downloadBridge.stop(_service.id());
+}
+
+TEST_F(DownloadBridgeTest, pauseSession)
+{
+  EXPECT_CALL(_downloadServiceFixture, pauseSession()).Times(1);
+
+  _downloadBridge.pauseSession();
+}
+
+TEST_F(DownloadBridgeTest, resumeSession)
+{
+  EXPECT_CALL(_downloadServiceFixture, resumeSession()).Times(1);
+
+  _downloadBridge.resumeSession();
 }

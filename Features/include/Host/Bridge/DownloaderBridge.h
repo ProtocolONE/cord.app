@@ -5,21 +5,23 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
+
+#include <QtDBus/QDBusContext>
 #include <QtDBus/QDBusArgument>
 
 namespace GGS {
   namespace Core {
     class Service;
   }
-
-  namespace GameDownloader {
-    class GameDownloadService;
-  }
 }
 
 namespace GameNet {
   namespace Host {
     class ServiceLoader;
+
+    namespace Proxy {
+      class DownloaderProxy;
+    }
 
     namespace Bridge {
 
@@ -152,7 +154,7 @@ namespace GameNet {
       DownloaderBridge is a central part of service downloading subsystem. It provides methods for start\stop downloading a particular service.
       
       */ 
-      class DownloaderBridge : public QObject
+      class DownloaderBridge : public QObject, protected QDBusContext
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
@@ -174,7 +176,7 @@ namespace GameNet {
         virtual ~DownloaderBridge();
 
         /// \cond
-        void setDownloader(GGS::GameDownloader::GameDownloadService *downloader);
+        void setDownloader(Proxy::DownloaderProxy *downloader);
         void setServiceLoader(ServiceLoader *serviceLoader);
         /// \endcond
         
@@ -362,7 +364,7 @@ namespace GameNet {
           const GameNet::Host::Bridge::DownloadProgressArgs& args);
       
       private:
-        GGS::GameDownloader::GameDownloadService *_downloader;
+        Proxy::DownloaderProxy *_downloader;
         ServiceLoader *_serviceLoader;
 
         void onStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);

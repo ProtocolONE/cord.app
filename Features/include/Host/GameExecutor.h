@@ -41,7 +41,7 @@ namespace GameNet {
       void setThetta(Thetta *value);
       void setServiceSettings(ServiceSettings* value);
 
-      void init();
+      virtual void init();
       void shutdown();
     
       virtual void execute(

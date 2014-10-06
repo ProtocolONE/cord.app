@@ -9,8 +9,10 @@
  * before re-generating it.
  */
 
-#ifndef APPLICATIONBRIDGEADAPTOR_H_1411104603
-#define APPLICATIONBRIDGEADAPTOR_H_1411104603
+#ifndef APPLICATIONBRIDGEADAPTOR_H_1412580551
+#define APPLICATIONBRIDGEADAPTOR_H_1412580551
+
+#include <Host/Bridge/Credential.h>
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
@@ -44,6 +46,11 @@ class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"openBrowser\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"url\"/>\n"
 "    </method>\n"
+"    <method name=\"setCredential\">\n"
+"      <arg direction=\"in\" type=\"s\" name=\"applicationName\"/>\n"
+"      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
+"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
+"    </method>\n"
 "  </interface>\n"
         "")
 public:
@@ -55,6 +62,7 @@ public Q_SLOTS: // METHODS
     bool isInitCompleted();
     void openBrowser(const QString &url);
     void restartApplication(bool isMinimized);
+    void setCredential(const QString &applicationName, GameNet::Host::Bridge::Credential credential);
     void switchClientVersion();
 Q_SIGNALS: // SIGNALS
     void initCompleted();

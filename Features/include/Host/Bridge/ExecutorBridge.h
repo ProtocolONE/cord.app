@@ -3,7 +3,10 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
+
 #include <QtDBus/QDBusArgument>
+
+#include <Host/Bridge/Credential.h>
 
 namespace GameNet {
   namespace Host {
@@ -11,13 +14,6 @@ namespace GameNet {
     class GameExecutor;
 
     namespace Bridge {
-
-      typedef struct {
-        QString userId;
-        QString appKey;
-        QString cookie;
-      } Credential;
-      Q_DECLARE_METATYPE(Credential)
 
       class ExecutorBridge : public QObject
       {
@@ -71,26 +67,3 @@ namespace GameNet {
     }
   }
 }
-
-static QDBusArgument& operator <<(QDBusArgument &argument, const GameNet::Host::Bridge::Credential arg)
-{
-  argument.beginStructure();
-  argument 
-    << arg.userId
-    << arg.appKey
-    << arg.cookie;
-  argument.endStructure();
-  return argument;
-}
-
-static const QDBusArgument& operator >>(const QDBusArgument &argument, GameNet::Host::Bridge::Credential& arg)
-{
-  argument.beginStructure();
-  argument 
-    >> arg.userId
-    >> arg.appKey
-    >> arg.cookie;
-  argument.endStructure();
-  return argument;
-}
-

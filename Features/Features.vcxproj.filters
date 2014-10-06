@@ -147,12 +147,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ExecutorHookFactory.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_HookFactory.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -232,9 +226,6 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\ExecutorHookFactory.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\GameExecutor.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\HookFactory.cpp">
@@ -426,6 +417,42 @@
     <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeProxy.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Host\MarketingStatistic.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Proxy\GameExecutorProxy.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutorProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutorProxy.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameExecutor.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Proxy\DownloaderProxy.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderProxy.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\Credential.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\CredentialConverter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
@@ -447,6 +474,15 @@
     </ClInclude>
     <ClInclude Include="include\Helper\ElevateRights.hpp" />
     <ClInclude Include="include\Helper\Logger.hpp" />
+    <ClInclude Include="include\Host\MarketingStatistic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\Bridge\Credential.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\CredentialConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -504,9 +540,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\ExecutorHookFactory.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\GameExecutor.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\HookFactory.h">
@@ -585,6 +618,15 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\Proxy\GameExecutorProxy.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\GameExecutor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\Proxy\DownloaderProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
