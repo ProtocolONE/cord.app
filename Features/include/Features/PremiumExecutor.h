@@ -50,6 +50,9 @@ namespace Features {
     bool isSecondGameStarted(const QString& id);
     bool isAnyGameStarted();
 
+    QString firstRunningGame();
+    QString firstRunningSecondGame();
+
     GGS::GameExecutor::GameExecutorService* secondExecutor();
     GGS::GameExecutor::GameExecutorService* simpleMainExecutor();
 

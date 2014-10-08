@@ -209,4 +209,20 @@ namespace Features {
     service->setUrl(url);
   }
 
+  QString PremiumExecutor::firstRunningGame()
+  {
+    if (this->_mainGameStarted.isEmpty())
+      return QString ();
+
+    return *this->_mainGameStarted.begin();
+  }
+
+  QString PremiumExecutor::firstRunningSecondGame()
+  {
+    if (this->_secondGameStarted.isEmpty())
+      return QString();
+
+    return *this->_secondGameStarted.begin();
+  }
+
 }
