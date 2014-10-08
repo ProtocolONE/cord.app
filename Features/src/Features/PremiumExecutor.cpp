@@ -1,7 +1,7 @@
 /****************************************************************************
 ** This file is a part of Syncopate Limited GameNet Application or it parts.
 **
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** Copyright (ï¿½) 2011 - 2012, Syncopate Limited and/or affiliates. 
 ** All rights reserved.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -209,22 +209,6 @@ namespace Features {
     service->setUrl(url);
   }
 
-  QString PremiumExecutor::firstRunningGame()
-  {
-    if (this->_mainGameStarted.isEmpty())
-      return QString ();
-
-    return *this->_mainGameStarted.begin();
-  }
-
-  QString PremiumExecutor::firstRunningSecondGame()
-  {
-    if (this->_secondGameStarted.isEmpty())
-      return QString();
-
-    return *this->_secondGameStarted.begin();
-  }
-
   bool PremiumExecutor::isMainGameStarted()
   {
     return this->_mainGameStarted.count() > 0;
@@ -233,18 +217,6 @@ namespace Features {
   bool PremiumExecutor::isSecondGameStarted()
   {
     return this->_secondGameStarted.count() > 0;
-  }
-
-  void PremiumExecutor::terminateAll()
-  {
-    if (this->_mainExecutor->isAnyGameStarted())
-      this->_mainExecutor->terminateAll();
-
-    if (this->_simpleMainExecutor.isAnyGameStarted())
-      this->_simpleMainExecutor.terminateAll();
-
-    if (this->_secondExecutor.isAnyGameStarted())
-      this->_secondExecutor.terminateAll();
   }
 
 }

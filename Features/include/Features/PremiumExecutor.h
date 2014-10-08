@@ -1,7 +1,7 @@
 /****************************************************************************
 ** This file is a part of Syncopate Limited GameNet Application or it parts.
 **
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** Copyright (ï¿½) 2011 - 2012, Syncopate Limited and/or affiliates. 
 ** All rights reserved.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -50,9 +50,6 @@ namespace Features {
     bool isGameStarted(const QString& id);
     bool isSecondGameStarted(const QString& id);
     bool isAnyGameStarted();
-
-    QString firstRunningGame();
-    QString firstRunningSecondGame();
 
     bool isMainGameStarted();
     bool isSecondGameStarted();
