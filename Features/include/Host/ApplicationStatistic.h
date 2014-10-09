@@ -7,10 +7,6 @@ namespace GGS {
   namespace GameDownloader {
     class GameDownloadService;
   }
-
-  namespace Application {
-    class ArgumentParser;
-  }
 }
 
 namespace GameNet {
@@ -24,7 +20,7 @@ namespace GameNet {
       virtual ~ApplicationStatistic();
 
       void setDownloader(GGS::GameDownloader::GameDownloadService *value);
-      void setCommandLineArgs(GGS::Application::ArgumentParser *value);
+      void setStartingGame(const QString& serviceId);
 
       void init();
 
@@ -148,10 +144,10 @@ namespace GameNet {
       virtual quint64 installDate() const;
 
     private:
-      void setInstallDate(const QString& serviceId);
-      QString startingServiceId();
-
-      GGS::Application::ArgumentParser *_commandLineArgs;
+      void setInstallDate();
+      bool hasStartingService();
+      
+      QString _startingServiceId;
       GGS::GameDownloader::GameDownloadService *_downloader;
 
     };

@@ -31,22 +31,20 @@ namespace GameNet {
       this->_downloader = value;
     }
 
-    void ApplicationStatistic::setCommandLineArgs(ArgumentParser *value)
+    void ApplicationStatistic::setStartingGame(const QString& serviceId)
     {
-      Q_ASSERT(value);
-      this->_commandLineArgs = value;
+      this->_startingServiceId = serviceId;
     }
 
     void ApplicationStatistic::init()
     {
       Q_ASSERT(this->_downloader);
-      Q_ASSERT(this->_commandLineArgs);
 
       quint64 installDate = this->installDate();
       if (installDate != 0)
         return;
 
-      this->setInstallDate(this->startingServiceId());
+      this->setInstallDate();
     }
 
     bool ApplicationStatistic::isGameInstalled(const QString& serviceId) const
@@ -111,29 +109,24 @@ namespace GameNet {
       return settings.value("installDate", 0).toULongLong();
     }
 
-    void ApplicationStatistic::setInstallDate(const QString& serviceId)
+    void ApplicationStatistic::setInstallDate()
     {
+
       quint64 installDate = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
       Settings settings;
       settings.beginGroup("qGNA");
       settings.setValue("installDate", installDate);
 
-      if (!serviceId.isEmpty() && serviceId != "0")
-        settings.setValue("installWithService", serviceId);
+      if (this->hasStartingService())
+        settings.setValue("installWithService", this->_startingServiceId);
     }
 
-    QString ApplicationStatistic::startingServiceId()
+    bool ApplicationStatistic::hasStartingService()
     {
-      Q_ASSERT(this->_commandLineArgs);
+      if (this->_startingServiceId.isEmpty() || this->_startingServiceId == "0")
+        return false;
 
-      if (!this->_commandLineArgs->contains("startservice"))
-        return "0";
-
-      QStringList arguments = this->_commandLineArgs->commandArguments("startservice");
-      if (arguments.count() > 0)
-        return arguments.at(0);
-
-      return "0";
+      return true;
     }
 
   }

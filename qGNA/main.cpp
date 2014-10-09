@@ -101,26 +101,26 @@ int main(int argc, char *argv[])
 
   initBugTrap(path);
 
-  DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
-  if (!dbusConnectionCheck.checkConnection()) {
-    return 0;
-  }
-
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
     
     QStringList arguments;
     
-	  if (!app.containsCommand("gogamenetmoney")) {
-		  arguments << "-activate"; 
+    if (!app.containsCommand("gogamenetmoney")) {
+      arguments << "-activate"; 
     }
 
-    app.sendArguments(arguments);    
-    QTimer::singleShot(50000, &app, SLOT(quit()));      
+    app.sendArguments(arguments);
+    QTimer::singleShot(50000, &app, SLOT(quit()));
+
     return app.exec();
   } else {
     app.startListen();
   }
+
+  DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
+  if (!dbusConnectionCheck.checkConnection())
+    return 0;
 
   GGS::Application::TaskBarEventFilter *taskBarFilter = new GGS::Application::TaskBarEventFilter(&app);
   app.installNativeEventFilter(taskBarFilter);

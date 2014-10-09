@@ -39,56 +39,61 @@ Application *createApplication(SingleApplication *app)
 
 int main(int argc, char *argv[])
 {
+  SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
+  QString path = QCoreApplication::applicationDirPath();
 
-    SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
-    QString path = QCoreApplication::applicationDirPath();
+  app.setLibraryPaths(QStringList() << path + "/plugins");
+  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
+  app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
-    app.setLibraryPaths(QStringList() << path + "/plugins");
-    app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
-    app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
+  MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 
-    MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
+  QThread::currentThread()->setObjectName("Main host thread");
+  QThreadPool::globalInstance()->setMaxThreadCount(50);
 
-    QThread::currentThread()->setObjectName("Main host thread");
-    QThreadPool::globalInstance()->setMaxThreadCount(50);
+  if (app.isAlreadyRunning()) {
+    QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
+    QStringList arguments;
+
     
-    if (app.isAlreadyRunning()) {
-      QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
-      QStringList arguments;
-      if (!app.containsCommand("gogamenetmoney")) {
-        arguments << "-activate";
-      }
-
-      app.sendArguments(arguments);
-      QTimer::singleShot(50000, &app, SLOT(quit()));
-      return app.exec();
-    } else {
-      app.startListen();
+    if (QCoreApplication::arguments().count() <= 1) {
+      arguments << "-activate";
     }
-    
-    LoggerHelper logger(path + "/host.log");
-    if (!requireAdminRights())
-      return -1;
 
-    initBugTrap(path);
+    //if (!app.containsCommand("gogamenetmoney")) {
+    //  arguments << "-activate";
+    //}
 
-    if (!initDatabase()) {
-      MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
-      return -1;
-    }
-    
-    GGS::Settings::SettingsSaver saver; 
-    GGS::Settings::Settings::setSettingsSaver(&saver); 
+    app.sendArguments(arguments);
+    QTimer::singleShot(50000, &app, SLOT(quit()));
+    return app.exec();
+  } else {
+    app.startListen();
+  }
 
-    GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
+  LoggerHelper logger(path + "/host.log");
+  if (!requireAdminRights())
+    return -1;
 
-    Application *application = createApplication(&app);
-    application->init();
+  initBugTrap(path);
 
-    int result = app.exec();
-    application->finalize();
+  if (!initDatabase()) {
+    MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
+    return -1;
+  }
 
-    return result;
+  GGS::Settings::SettingsSaver saver; 
+  GGS::Settings::Settings::setSettingsSaver(&saver); 
+
+  GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
+
+  Application *application = createApplication(&app);
+  application->init();
+
+  int result = app.exec();
+  application->finalize();
+
+  return result;
 }
 
 

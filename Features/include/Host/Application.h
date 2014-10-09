@@ -23,7 +23,6 @@ namespace Features {
 namespace GGS {
   namespace Application {
     class SingleApplication;
-    class ArgumentParser;
   }
 
   namespace GameDownloader {
@@ -57,6 +56,7 @@ namespace GameNet {
     class ExecutorHookFactory;
     class ApplicationStatistic;
     class MarketingStatistic;
+    class CommandLineManager;
 
     namespace Bridge {
       class DownloaderBridge;
@@ -102,7 +102,6 @@ namespace GameNet {
 
     private slots:
       void updateCompletedSlot(bool needRestart);
-      void commandRecieved(QString name, QStringList arguments);       
 
     signals:
       void initCompleted();
@@ -148,13 +147,12 @@ namespace GameNet {
       ApplicationStatistic *_applicationStatistic;
       MarketingStatistic *_marketingStatistic;
       GGS::Marketing::MarketingTarget *_marketingTarget;
+      CommandLineManager *_commandLineManager;
 
       bool _initFinished;
       bool _updateFinished;
 
       QMap<QString, QTranslator*> _translators;
-      
-      GGS::Application::ArgumentParser* _commandLineArguments;
 
       QHash<QString, QPair<QString, GGS::RestApi::GameNetCredential> > _connectionCredential;
     };

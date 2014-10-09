@@ -15,6 +15,7 @@
 #include <Host/UIProcess.h>
 #include <Host/ApplicationStatistic.h>
 #include <Host/MarketingStatistic.h>
+#include <Host/CommandLineManager.h>
 
 #include <Host/Dbus/DBusServer.h>
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
@@ -39,7 +40,6 @@
 
 #include <GameDownloader/GameDownloadService.h>
 
-#include <Application/ArgumentParser.h>
 #include <Application/SingleApplication.h>
 
 #include <RestApi/RestApiManager.h>
@@ -85,18 +85,17 @@ namespace GameNet {
       , _updateManagerBridge(new Bridge::UpdateManagerBridge(this))
       , _applicationBridge(new Bridge::ApplicationBridge(this))
       , _uiProcess(new UIProcess(this))
-      , _commandLineArguments(new GGS::Application::ArgumentParser(this))
       , _applicationRestarter(new ApplicationRestarter(this))
       , _downloaderHookFactory(new HookFactory(this))
       , _executorHookFactory(new ExecutorHookFactory(this))
       , _applicationStatistic(new ApplicationStatistic(this))
       , _marketingStatistic(new MarketingStatistic(this))
       , _marketingTarget(new GGS::Marketing::MarketingTarget(this))
+      , _commandLineManager(new CommandLineManager(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
     {
-      this->_commandLineArguments->parse(QCoreApplication::arguments());
     }
 
     Application::~Application()
@@ -128,19 +127,13 @@ namespace GameNet {
       return this->_initFinished && this->_updateFinished;
     }
 
-    void Application::commandRecieved(QString name, QStringList arguments)
-    {
-      if (name == "activate")
-        this->startUi();
-    }
-
     void Application::setSingleApplication(SingleApplication *value)
     {
       Q_ASSERT(value);
       this->_singleApplication = value;
 
       QObject::connect(value, &SingleApplication::commandRecieved, 
-        this, &Application::commandRecieved, Qt::QueuedConnection); 
+        this->_commandLineManager, &CommandLineManager::commandRecieved, Qt::QueuedConnection); 
 
       QObject::connect(this, &Application::initCompleted, 
         value, &SingleApplication::initializeFinished);
@@ -154,7 +147,7 @@ namespace GameNet {
       this->initGameDownloader();
 
       this->_applicationStatistic->setDownloader(this->_gameDownloader);
-      this->_applicationStatistic->setCommandLineArgs(this->_commandLineArguments);
+      this->_applicationStatistic->setStartingGame(this->_commandLineManager->startingService());
       this->_applicationStatistic->init();
 
       this->_applicationBridge->setApplcation(this);
@@ -190,7 +183,7 @@ namespace GameNet {
       this->_executorHookFactory->init();
 
       this->_serviceLoader->setApplicationPath(QCoreApplication::applicationDirPath());
-      this->_serviceLoader->setGameArea(GGS::Core::Service::Live);
+      this->_serviceLoader->setGameArea(this->_commandLineManager->gameArea());
       this->_serviceLoader->setDownloader(this->_gameDownloader);
       this->_serviceLoader->setExecutor(this->_executor->mainExecutor());
       this->_serviceLoader->setDownloaderHookFactory(this->_downloaderHookFactory);
@@ -224,6 +217,15 @@ namespace GameNet {
       
       this->_applicationRestarter->setShutdownManager(this->_shutdown);
       
+      this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
+      this->_uiProcess->setFileName("qGNA.exe");
+
+      QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
+        this, &Application::shutdown);
+
+      QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand, 
+        this->_uiProcess, &UIProcess::sendCommand);
+
       /*
         INFO Если (когда) поменяется схема инициализации, обратить внимание на эту строчку
              которая должна вызыватся после всего.
@@ -310,10 +312,6 @@ namespace GameNet {
 
     void Application::registerServices()
     {
-      // UNDONE 16.09.2014 необходимо в ServiceSettings добавить проброску настроек оверлея
-      // В QML надо переписать то как включаются/выключаются - надо использовать порксю
-      // в GameExecutor::prepairExecuteUrl добавить обработку какого нить 
-      // overlay=1 - с подстановкой в инжект нужной дллки
       DownloadHookDescription dependencyHook;
       dependencyHook.first = "B4910801-2FA4-455E-AEAE-A2BAA2D3E4CA";
       dependencyHook.second.first = 0;
@@ -596,16 +594,14 @@ namespace GameNet {
 
     void Application::startUi()
     {
-      if (this->_commandLineArguments->contains("skip-ui"))
-        return;
-
-      if (this->_uiProcess->isRunning())
+      if (this->_commandLineManager->skipUi())
         return;
 
       qDebug() << "Starting qGNA UI";
       QStringList args = QCoreApplication::arguments();
       args.removeFirst(); // INFO first argument always self execute path
-      this->_uiProcess->start(QCoreApplication::applicationDirPath(), "qGNA.exe", args);
+
+      this->_uiProcess->start(args);
     }
 
     void Application::setCredential(

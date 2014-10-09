@@ -2,8 +2,6 @@
 
 #include <Settings/Settings.h>
 
-#include <Application/ArgumentParser.h>
-
 #include <GameDownloader/GameDownloadService.h>
 
 #include <QtCore/QDateTime>
@@ -15,7 +13,6 @@
 using GameNet::Host::ApplicationStatistic;
 using GGS::Settings::Settings;
 using GGS::GameDownloader::GameDownloadService;
-using GGS::Application::ArgumentParser;
 using ::testing::Return;
 
 class ApplicationStatisticTestGameDownloadServiceMock : public GameDownloadService
@@ -129,9 +126,6 @@ TEST_F(ApplicationStatisticTest, init)
 {
   QString expectedServiceId = "ApplicationStatisticTestOtherServiceId";
 
-  ArgumentParser parser;
-  statistic.setCommandLineArgs(&parser);
-
   Settings settings;
   settings.beginGroup("qGNA");
   settings.setValue("installDate", 0);
@@ -146,13 +140,7 @@ TEST_F(ApplicationStatisticTest, init)
 TEST_F(ApplicationStatisticTest, initWithStartingGame)
 {
   QString expectedServiceId = "300012010000000000";
-
-  ArgumentParser parser;
-  QStringList args;
-  args << "C:/test.exe" << "/uri:gamenet://startservice/300012010000000000";
-  parser.parse(args);
-
-  statistic.setCommandLineArgs(&parser);
+  statistic.setStartingGame(expectedServiceId);
 
   Settings settings;
   settings.beginGroup("qGNA");
