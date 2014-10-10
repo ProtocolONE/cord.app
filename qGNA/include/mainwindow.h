@@ -90,9 +90,6 @@ class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
-  Q_PROPERTY(QString nickName READ nickName NOTIFY nickNameChanged)
-  Q_PROPERTY(QString techName READ techName NOTIFY techNameChanged)
-  Q_PROPERTY(QString mediumAvatarUrl READ mediumAvatarUrl NOTIFY mediumAvatarUrlChanged)
   Q_PROPERTY(QString language READ language NOTIFY languageChanged)
   Q_PROPERTY(QString fileVersion READ fileVersion NOTIFY fileVersionChanged) 
 
@@ -104,9 +101,6 @@ public:
   MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
-  const QString& nickName() { return this->_nickName; }
-  const QString& techName() { return this->_techName; }
-  const QString& mediumAvatarUrl() { return this->_mediumAvatarUrl; }
   QString language();
   const QString& fileVersion() { return _fileVersion; }
   Q_INVOKABLE void saveLanguage(const QString& language);
@@ -123,7 +117,6 @@ public slots:
 
   void restartApplication(bool shouldStartWithSameArguments = true);
   void authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie);
-  void userMainInfoResult(GGS::RestApi::CommandBase::CommandResults);
 
   void openExternalUrlWithAuth(const QString& url);
   void openExternalUrl(const QString& url);
@@ -140,9 +133,6 @@ public slots:
   bool executeService(QString id);
   bool executeSecondService(QString id, QString userId, QString appKey);
   void terminateSecondService();
-
-  void setTechName(QString& techName);
-  void setNickName(QString& nickName);
 
   bool isWindowVisible();
 
@@ -165,7 +155,6 @@ public slots:
 
 private:
   void loadPlugin(QString pluginName);
-  void setMediumAvatarUrl(const QString& mediumAvatarUrl);
 
   void translatorsParse();
 

@@ -189,7 +189,6 @@ void MainWindow::initialize()
   this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
   this->setStyleSheet("background:transparent;");
   this->setFixedSize(rootItem->width(), rootItem->height()); 
-  this->setMediumAvatarUrl("file:///" + QCoreApplication::applicationDirPath() + "/" + "Assets/Images/avatar.png"); 
 
   Message::setAdapter(messageAdapter);
 
@@ -252,29 +251,6 @@ bool MainWindow::nativeEvent(const QByteArray & eventType, void * message, long 
     this->_keyboardLayoutHelper.update();
 
   return QMainWindow::winEvent(message, result);
-}
-
-void MainWindow::setTechName(QString& techName){
-  if (this->_techName != techName){
-    this->_techName = techName;
-    emit this->techNameChanged();
-    emit this->techNameValueChanged(this->_techName);
-  }
-}
-
-void MainWindow::setNickName(QString& nickName) {
-  if (this->_nickName != nickName) {
-    this->_nickName = nickName;
-    emit this->nickNameChanged();
-    emit this->nickNameValueChanged(this->_nickName);
-  }
-}
-
-void MainWindow::setMediumAvatarUrl(const QString& mediumAvatarUrl) {
-  if (this->_mediumAvatarUrl != mediumAvatarUrl) {
-    this->_mediumAvatarUrl = mediumAvatarUrl;
-    emit this->mediumAvatarUrlChanged(); 
-  }
 }
 
 void MainWindow::activateWindow()
@@ -375,34 +351,6 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
   this->_restapiManager.setCridential(credential);
   
   this->_applicationProxy->setCredential("QGNA", createDbusCredential(credential));
-
-  using GGS::RestApi::Commands::User::GetUserMainInfo;
-  GetUserMainInfo *getUserMainInfo = new GetUserMainInfo(this);
-
-  QObject::connect(getUserMainInfo, &GetUserMainInfo::result,
-    this, &MainWindow::userMainInfoResult);
-  
-  getUserMainInfo->execute();
-}
-
-void MainWindow::userMainInfoResult(GGS::RestApi::CommandBase::CommandResults code)
-{
-  GGS::RestApi::Commands::User::GetUserMainInfo *getUserMainInfo = 
-    qobject_cast<GGS::RestApi::Commands::User::GetUserMainInfo *>(QObject::sender());
-
-  if (!getUserMainInfo)
-    return;
-
-  getUserMainInfo->deleteLater();
-
-  if (code != GGS::RestApi::CommandBase::NoError) {
-    qDebug() << "GetUserMainInfo execute command error " << code;
-    return;
-  }
-
-  this->setNickName(getUserMainInfo->response()->nickname());
-  this->setTechName(getUserMainInfo->response()->nametech());
-  this->setMediumAvatarUrl(getUserMainInfo->response()->mediumAvatarUrl());
 }
 
 void MainWindow::restartApplication(bool shouldStartWithSameArguments)
@@ -437,9 +385,6 @@ void MainWindow::logout()
   this->_credential.setAppKey("");
   this->_credential.setUserId("");
   this->_credential.setCookie("");
-
-  this->setTechName(QString(""));
-  this->setNickName(QString(""));
 
   this->_restapiManager.setCridential(this->_credential);
 }
@@ -575,11 +520,11 @@ void MainWindow::gameDownloaderFailed(const QString& serviceId)
 
 void MainWindow::removeStartGame(QString serviceId)
 {
-//   int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
-//   if (totalCount > 0) {
-//     this->selectService(serviceId);
-//     return;
-//   }
+  int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
+  if (totalCount > 0) {
+    this->selectService(serviceId);
+    return;
+  }
 
   this->downloadButtonStart(serviceId);
 }
