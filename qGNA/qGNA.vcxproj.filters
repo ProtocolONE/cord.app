@@ -7,28 +7,13 @@
     <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp" />
     <ClCompile Include="src\mainwindow.cpp" />
     <ClCompile Include="src\viewmodel\settingsviewmodel.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_EnterNickNameViewModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_QmlMessageAdapter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_EnterNickNameViewModel.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_QmlMessageAdapter.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\viewmodel\GameSettingsViewModel.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameSettingsViewModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameSettingsViewModel.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\viewmodel\EnterNickNameViewModel.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -121,9 +106,6 @@
     <CustomBuild Include="include\mainwindow.h" />
     <CustomBuild Include="include\viewmodel\settingsviewmodel.h" />
     <CustomBuild Include="include\QmlMessageAdapter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\viewmodel\EnterNickNameViewModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Player.h">

@@ -146,8 +146,6 @@ void MainWindow::initialize()
 
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
   
-  this->_enterNickViewModel = new EnterNickNameViewModel(this);
-
   SIGNAL_CONNECT_CHECK(QObject::connect(&this->_restapiManager, SIGNAL(genericError(GGS::RestApi::CommandBase::Error, QString)), 
     this, SLOT(restApiGenericError(GGS::RestApi::CommandBase::Error, QString))));
 
@@ -169,7 +167,6 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
   nQMLContainer->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
-  nQMLContainer->rootContext()->setContextProperty("enterNickNameViewModel", this->_enterNickViewModel);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
   
   nQMLContainer->setSource(QUrl("qrc:/Main.qml"));
@@ -576,18 +573,18 @@ void MainWindow::gameDownloaderFailed(const QString& serviceId)
   emit this->downloaderFailed(serviceId);
 }
 
-void MainWindow::removeStartGame(QString serviceId) 
+void MainWindow::removeStartGame(QString serviceId)
 {
-  int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
-  if (totalCount > 0) {
-    this->selectService(serviceId);
-    return;
-  }
+//   int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
+//   if (totalCount > 0) {
+//     this->selectService(serviceId);
+//     return;
+//   }
 
   this->downloadButtonStart(serviceId);
 }
 
-void MainWindow::downloadButtonStart(QString serviceId) 
+void MainWindow::downloadButtonStart(QString serviceId)
 {
   qDebug() << "downloadButtonStart " << serviceId;
 

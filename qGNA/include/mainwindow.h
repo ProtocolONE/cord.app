@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <viewmodel/SettingsViewModel.h>
-#include <viewmodel/EnterNickNameViewModel.h>
 #include <viewmodel/GameSettingsViewModel.h>
 
 #include <QmlMessageAdapter.h>
@@ -181,7 +180,6 @@ private:
 
   QmlMessageAdapter* messageAdapter;
   SettingsViewModel* settingsViewModel;
-  EnterNickNameViewModel *_enterNickViewModel;
   GameSettingsViewModel *_gameSettingsViewModel;
 
   QString _nickName;
