@@ -352,6 +352,14 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
   this->_clientConnection->setCredential(credential);
 }
 
+void MainWindow::restartApplicationAfterDriverDisconnect(Features::Thetta::ThettaInstaller::Result result)
+{
+  if (result == Features::Thetta::ThettaInstaller::Running) // походу 2ой дисконнект
+    return;
+
+  this->internalRestartApplication(this->_restartArguments);
+}
+
 void MainWindow::restartApplication(bool shouldStartWithSameArguments)
 {
   if (!this->_serviceLoader.thettaInstaller()) {
@@ -671,18 +679,33 @@ bool MainWindow::isLicenseAccepted(const QString& serviceId)
 
 void MainWindow::startGame(const QString& serviceId)
 {
-  if (this->_executor->isGameStarted(serviceId))
+  GGS::Core::Service *service = this->getService(serviceId);
+  if (!service)
     return;
 
-  if (this->_serviceSettings->isDownloadable(serviceId)) {
-    this->_downloader->start(serviceId, static_cast<int>(GGS::GameDownloader::Normal));
+  if (this->_premiumExecutor.isMainGameStarted())
     return;
-  } 
-  
-  bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
-  if (!isAuthed) {
-    emit this->authBeforeStartGameRequest(serviceId);
+
+  if (this->_premiumExecutor.isSecondGameStarted() && !this->_premiumExecutor.isSecondGameStarted(serviceId))
     return;
+ 
+  if (service->isDownloadable()) {
+    QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+    settings.beginGroup(serviceId);
+    settings.setValue("DownloadPath", service->downloadPath());
+    settings.setValue("InstallPath", service->installPath());
+    service->setIsDefaultInstallPath(true);
+    settings.endGroup();
+    this->_serviceLoader.setExecuteUrl(serviceId, service->installPath());
+    this->_gameDownloader.start(service, GGS::GameDownloader::Normal);
+  } else {
+    bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
+    if (!isAuthed) {
+      emit this->authBeforeStartGameRequest(serviceId);
+      return;
+    }
+
+    this->_premiumExecutor.executeMain(service);
   }
 
   GGS::RestApi::GameNetCredential baseCredential = 

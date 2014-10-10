@@ -96,6 +96,10 @@ public:
   MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+  const QString& installUpdateGnaPath() { return this->_installUpdateGnaPath; }
+  const QString& updateArea() { return this->_updateArea; }
+  const QString& updateUrl() { return this->_updateUrl; }
+
   QString language();
   const QString& fileVersion() { return _fileVersion; }
   Q_INVOKABLE void saveLanguage(const QString& language);
@@ -131,6 +135,7 @@ public slots:
   bool executeSecondService(QString id, QString userId, QString appKey);
   void terminateSecondService();
 
+  void startBackgroundCheckUpdate();
   bool isWindowVisible();
 
   bool anyLicenseAccepted();
@@ -149,6 +154,44 @@ public slots:
 
   bool silent();
   void onWindowClose();
+
+private:
+  void loadPlugin(QString pluginName);
+
+  void translatorsParse();
+  void initializeUpdateSettings();
+  int checkUpdateInterval();
+
+  void initAutorun();
+  void initRestApi();
+  void initMarketing();
+  bool isUseOpenGLrender();
+
+  void createShortcut(const QString& pathToLnk, const GGS::Core::Service* service);
+
+  GGS::RestApi::FakeCache _fakeCache;
+  GGS::RestApi::GameNetCredential _credential;
+  GGS::RestApi::RestApiManager _restapiManager;
+
+  QmlMessageAdapter* messageAdapter;
+  SettingsViewModel* settingsViewModel;
+  EnterNickNameViewModel *_enterNickViewModel;
+  GameSettingsViewModel *_gameSettingsViewModel;
+
+  QString _nickName;
+  QString _techName;
+  QString _mediumAvatarUrl;
+  QString _language;
+  QString _fileVersion;
+
+  MQDeclarativeView *nQMLContainer;
+
+  QPoint mLastMousePosition;
+  bool m_WindowState; // false - normal size, true - max size  
+  bool _gameDownloadInitialized;
+  GGS::Application::ArgumentParser _commandLineArguments;
+  GGS::Core::Service::Area _gameArea;
+  GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
 
 signals:
   /*
