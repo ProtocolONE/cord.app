@@ -1,11 +1,9 @@
 #pragma once
 
 #include <QtCore/QObject>
-#include <QtCore/QMap>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QHash>
-#include <QtCore/QPair>
 
 #include <RestApi/GameNetCredential.h>
 
@@ -57,6 +55,7 @@ namespace GameNet {
     class ApplicationStatistic;
     class MarketingStatistic;
     class CommandLineManager;
+    class Translation;
 
     namespace Bridge {
       class DownloaderBridge;
@@ -110,7 +109,6 @@ namespace GameNet {
       void startUi();
       void registerServices();
       void initGameDownloader();
-      void initTranslations();
       void registerDbusServices();
       void registerDBusObjects(QDBusConnection *connection);
 
@@ -148,11 +146,10 @@ namespace GameNet {
       MarketingStatistic *_marketingStatistic;
       GGS::Marketing::MarketingTarget *_marketingTarget;
       CommandLineManager *_commandLineManager;
+      Translation *_translation;
 
       bool _initFinished;
       bool _updateFinished;
-
-      QMap<QString, QTranslator*> _translators;
 
       QHash<QString, QPair<QString, GGS::RestApi::GameNetCredential> > _connectionCredential;
     };

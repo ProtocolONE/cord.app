@@ -109,6 +109,8 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
 xcopy /Y /I /R /E "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(SolutionDir)\Host\i18n\*.ts" "$(TargetDir)"
+
 xcopy /Y /I /R /E  "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
@@ -296,6 +298,8 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
 xcopy /Y /I /R /E "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
+xcopy /Y /I /R /E "$(SolutionDir)\Host\i18n\*.ts" "$(TargetDir)"
+
 xcopy /Y /I /R /E  "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"

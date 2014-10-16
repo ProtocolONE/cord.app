@@ -60,10 +60,6 @@ int main(int argc, char *argv[])
       arguments << "-activate";
     }
 
-    //if (!app.containsCommand("gogamenetmoney")) {
-    //  arguments << "-activate";
-    //}
-
     app.sendArguments(arguments);
     QTimer::singleShot(50000, &app, SLOT(quit()));
     return app.exec();

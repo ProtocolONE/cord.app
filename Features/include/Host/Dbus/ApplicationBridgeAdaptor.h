@@ -9,8 +9,8 @@
  * before re-generating it.
  */
 
-#ifndef APPLICATIONBRIDGEADAPTOR_H_1412580551
-#define APPLICATIONBRIDGEADAPTOR_H_1412580551
+#ifndef APPLICATIONBRIDGEADAPTOR_H_1413459456
+#define APPLICATIONBRIDGEADAPTOR_H_1413459456
 
 #include <Host/Bridge/Credential.h>
 
@@ -34,8 +34,10 @@ class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Application")
     Q_CLASSINFO("D-Bus Introspection", ""
 "  <interface name=\"com.gamenet.dbus.Application\">\n"
+"    <property access=\"readwrite\" type=\"s\" name=\"language\"/>\n"
 "    <signal name=\"initCompleted\"/>\n"
 "    <signal name=\"restartUIRequest\"/>\n"
+"    <signal name=\"languageChanged\"/>\n"
 "    <method name=\"isInitCompleted\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
 "    </method>\n"
@@ -58,6 +60,10 @@ public:
     virtual ~ApplicationBridgeAdaptor();
 
 public: // PROPERTIES
+    Q_PROPERTY(QString language READ language WRITE setLanguage)
+    QString language() const;
+    void setLanguage(const QString &value);
+
 public Q_SLOTS: // METHODS
     bool isInitCompleted();
     void openBrowser(const QString &url);
@@ -66,6 +72,7 @@ public Q_SLOTS: // METHODS
     void switchClientVersion();
 Q_SIGNALS: // SIGNALS
     void initCompleted();
+    void languageChanged();
     void restartUIRequest();
 };
 

@@ -16,6 +16,8 @@
 #include <Host/ApplicationStatistic.h>
 #include <Host/MarketingStatistic.h>
 #include <Host/CommandLineManager.h>
+#include <Host/MessageAdapter.h>
+#include <Host/Translation.h>
 
 #include <Host/Dbus/DBusServer.h>
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
@@ -51,7 +53,6 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
-#include <QtCore/QTranslator>
 #include <QtCore/QUrl>
 #include <QtCore/QCoreApplication>
 
@@ -92,6 +93,8 @@ namespace GameNet {
       , _marketingStatistic(new MarketingStatistic(this))
       , _marketingTarget(new GGS::Marketing::MarketingTarget(this))
       , _commandLineManager(new CommandLineManager(this))
+      , _messageAdapterBridge(new Bridge::MessageAdapterBridge(this))
+      , _translation(new Translation(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -141,8 +144,16 @@ namespace GameNet {
 
     void Application::init()
     {
+      MessageAdapter *adapter = new MessageAdapter(this);
+      adapter->setHasUiProcess(std::bind(&UIProcess::isRunning, this->_uiProcess));
+      QObject::connect(this->_uiProcess, &UIProcess::closed, adapter, 
+        &MessageAdapter::uiProcessClosed);
+
+      this->_messageAdapterBridge->setAdapter(adapter);
+      GGS::Core::UI::Message::setAdapter(adapter);
+
       this->initRestApi();
-      this->initTranslations();
+      this->_translation->init();
 
       this->initGameDownloader();
 
@@ -152,6 +163,7 @@ namespace GameNet {
 
       this->_applicationBridge->setApplcation(this);
       this->_applicationBridge->setThetta(this->_thetta);
+      this->_applicationBridge->setTranslation(this->_translation);
       
       this->_downloaderBridge->setServiceLoader(this->_serviceLoader);
       this->_downloaderBridge->setDownloader(this->_gameDownloader);
@@ -408,7 +420,6 @@ namespace GameNet {
       QList<DownloadHookDescription> warincDownloadHooks;
       warincDownloadHooks << dependencyHook;
       warincGame.setDownloadHooks(warincDownloadHooks);
-      // UNDONE нет хука запускатора :_enterNickViewModel 
       this->_serviceLoader->registerService(warincGame);
 
       ServiceDescription caGame;
@@ -465,7 +476,6 @@ namespace GameNet {
       QList<DownloadHookDescription> rotDownloadHooks;
       rotDownloadHooks << dependencyHook;
       rotGame.setDownloadHooks(rotDownloadHooks);
-      // UNDONE нет хука запускатора :_enterNickViewModel 
       this->_serviceLoader->registerService(rotGame);
 
       ServiceDescription gaGame;
@@ -506,39 +516,6 @@ namespace GameNet {
 
       this->_downloadStatistics->init(this->_gameDownloader);
       this->_shutdown->setGameDownloadInitialized();
-    }
-
-    void Application::initTranslations()
-    {
-      // UNDONE 04.09.2014 Посмотреть можно ли свести переводы в 1 файл и грузить их оба с хоста и уи
-      QDir dir(QCoreApplication::applicationDirPath() + "/Languages/");
-      dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-      dir.setSorting(QDir::Size | QDir::Reversed);
-
-      QFileInfoList list = dir.entryInfoList();
-
-      for (int i = 0; i < list.size(); ++i) { // TODO Немного хардкод, обсудить это
-        QFileInfo fileInfo = list.at(i);
-
-        QString fileName = fileInfo.fileName();
-        if (!fileName.startsWith("host_", Qt::CaseInsensitive))
-          continue;
-
-        fileName.remove("host_");
-        fileName.remove(".qm");
-
-        if (fileName.size() == 2) {  
-          this->_translators[fileName] = new QTranslator(this);
-          // TODO да да, знаю, сделаю красиво позже.
-          this->_translators[fileName]->load(fileInfo.fileName(), QCoreApplication::applicationDirPath() + "/Languages/");
-        }
-      }
-
-      // UNDONE 04.09.2014 определиться как мы получаем язхык и выбираем его.
-      QString defaultLanguage("ru");
-      if (this->_translators.contains(defaultLanguage))
-        QCoreApplication::installTranslator(this->_translators[defaultLanguage]);
-      
     }
 
     void Application::initRestApi()

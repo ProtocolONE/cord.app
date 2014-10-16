@@ -13,6 +13,7 @@ namespace GameNet {
   namespace Host {
     class Application;
     class Thetta;
+    class Translation;
 
     namespace Bridge {
 
@@ -21,6 +22,9 @@ namespace GameNet {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
         Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Application")
+
+        Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
+
       public:
         explicit ApplicationBridge(QObject *parent = 0);
         virtual ~ApplicationBridge();
@@ -50,6 +54,22 @@ namespace GameNet {
          */
 
         void setThetta(Thetta *value);
+
+        /**
+         * \fn  void ApplicationBridge::setTranslation(Translation *value);
+         *
+         * \brief Sets a translation.
+         *
+         * \author  Ilya Tkachenko
+         * \date  16.10.2014
+         *
+         * \param [in,out]  value If non-null, the value.
+         */
+
+        void setTranslation(Translation *value);
+
+        QString language() const;
+        void setLanguage(const QString& value);
 
       public slots:
         /**
@@ -151,9 +171,12 @@ namespace GameNet {
 
         void restartUIRequest();      
 
+        void languageChanged();
+
       private:
         Application* _application;
         Thetta *_thetta;
+        Translation *_translation;
       };
 
     }

@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qGNA", "qGNA\qGNA.vcxproj", "{7ACF4961-015A-43B4-99D5-DA43AD44C41F}"
 	ProjectSection(ProjectDependencies) = postProject
+		{FD2D3608-E77C-46C1-92CC-01A7E9AB2B18} = {FD2D3608-E77C-46C1-92CC-01A7E9AB2B18}
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
 	EndProjectSection
 EndProject
@@ -50,7 +51,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = $(DefaultQtVersion)
 		QtVersion = $(DefaultQtVersion)
+		Qt5Version = $(DefaultQtVersion)
 	EndGlobalSection
 EndGlobal

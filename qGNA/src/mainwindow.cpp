@@ -6,6 +6,7 @@
 #include <viewmodel/ApplicationStatisticViewModel.h>
 
 #include <Host/CredentialConverter.h>
+#include <Host/Translation.h>
 
 #include <Host/Dbus/DbusConnection.h>
 #include <Host/Dbus/DownloaderBridgeProxy.h>
@@ -79,6 +80,8 @@ void MainWindow::initialize()
   this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", connection, this);
   this->_applicationStatistic = new ApplicationStatisticBridgeProxy(dbusService, "/applicationStatistic", connection, this);
 
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::languageChanged,
+    this, &MainWindow::languageChanged);
 
   this->_bestInstallPath = new BestInstallPath(this);
   this->_bestInstallPath->setServiceSettings(this->_serviceSettings);
@@ -102,10 +105,9 @@ void MainWindow::initialize()
     | Qt::WindowMinimizeButtonHint 
     | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы
 
-  this->translatorsParse();
+  GameNet::Host::Translation::load(this->translators, this);
+  this->selectLanguage(this->_applicationProxy->language());
 
-  GGS::Settings::Settings settings;
-  this->selectLanguage(settings.value("qGNA/language").toString());
   this->checkDesktopDepth();
 
   this->settingsViewModel = new SettingsViewModel(this);
@@ -145,9 +147,9 @@ void MainWindow::initialize()
   this->loadPlugin("qxmpp-declarative");
 
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-  
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_restapiManager, SIGNAL(genericError(GGS::RestApi::CommandBase::Error, QString)), 
-    this, SLOT(restApiGenericError(GGS::RestApi::CommandBase::Error, QString))));
+
+  QObject::connect(&this->_restapiManager, &GGS::RestApi::RestApiManager::genericError,
+    this, &MainWindow::restApiGenericError);
 
   messageAdapter = new QmlMessageAdapter(this);
   
@@ -272,39 +274,14 @@ bool MainWindow::isDownloading(QString serviceId)
   return this->_downloader->isInProgress(serviceId);
 }
 
-void MainWindow::translatorsParse()
-{
-  QDir dir(QCoreApplication::applicationDirPath() + "/Languages/");
-  dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-  dir.setSorting(QDir::Size | QDir::Reversed);
-
-  QFileInfoList list = dir.entryInfoList();
-
-  for (int i = 0; i < list.size(); ++i) { // TODO Немного хардкод, обсудить это
-    QFileInfo fileInfo = list.at(i);
-
-    QString fileName = fileInfo.fileName();
-    fileName.remove("qgna_");
-    fileName.remove(".qm");
-
-    if (fileName.size() == 2) {  
-      translators[fileName] = new QTranslator(this);
-      // TODO да да, знаю, сделаю красиво позже.
-      translators[fileName]->load(fileInfo.fileName(), QCoreApplication::applicationDirPath() + "/Languages/"); 
-    }
-  } 
-}
-
 QString MainWindow::language()
 {
-  GGS::Settings::Settings settings;
-  return settings.value("qGNA/language").toString(); 
+  return this->_applicationProxy->language();
 }
 
 void MainWindow::saveLanguage(const QString& language)
 {
-  GGS::Settings::Settings settings;
-  settings.setValue("qGNA/language", language);
+  this->_applicationProxy->setLanguage(language);
 }
 
 void MainWindow::selectLanguage(const QString& language) 

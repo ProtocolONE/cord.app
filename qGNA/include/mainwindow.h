@@ -156,8 +156,6 @@ public slots:
 private:
   void loadPlugin(QString pluginName);
 
-  void translatorsParse();
-
   void initAutorun();
   void initRestApi();
   void initMarketing();

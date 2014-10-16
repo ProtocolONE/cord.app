@@ -34,6 +34,18 @@ ApplicationBridgeAdaptor::~ApplicationBridgeAdaptor()
     // destructor
 }
 
+QString ApplicationBridgeAdaptor::language() const
+{
+    // get the value of property language
+    return qvariant_cast< QString >(parent()->property("language"));
+}
+
+void ApplicationBridgeAdaptor::setLanguage(const QString &value)
+{
+    // set the value of property language
+    parent()->setProperty("language", QVariant::fromValue(value));
+}
+
 bool ApplicationBridgeAdaptor::isInitCompleted()
 {
     // handle method call com.gamenet.dbus.Application.isInitCompleted

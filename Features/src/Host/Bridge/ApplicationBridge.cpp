@@ -6,6 +6,7 @@
 #include <Host/Application.h>
 #include <Host/Thetta.h>
 #include <Host/CredentialConverter.h>
+#include <Host/Translation.h>
 
 namespace GameNet {
   namespace Host {
@@ -16,6 +17,7 @@ namespace GameNet {
         : QObject(parent)
         , _application(nullptr)
         , _thetta(nullptr)
+        , _translation(nullptr)
       {
       }
 
@@ -28,7 +30,7 @@ namespace GameNet {
         Q_ASSERT(app);
         this->_application = app;
 
-        connect(this->_application, &Application::initCompleted,
+        QObject::connect(this->_application, &Application::initCompleted,
                 this, &ApplicationBridge::initCompleted);
       }
 
@@ -36,6 +38,15 @@ namespace GameNet {
       {
         Q_ASSERT(value);
         this->_thetta = value;
+      }
+
+      void ApplicationBridge::setTranslation(Translation *value)
+      {
+        Q_ASSERT(value);
+        this->_translation = value;
+
+        QObject::connect(value, &Translation::languageChanged,
+          this, &ApplicationBridge::languageChanged);
       }
 
       bool ApplicationBridge::isInitCompleted()
@@ -80,6 +91,18 @@ namespace GameNet {
           name, 
           applicationName, 
           createGameNetCredential(credential));
+      }
+
+      QString ApplicationBridge::language() const
+      {
+        Q_ASSERT(this->_translation);
+        return this->_translation->language();
+      }
+
+      void ApplicationBridge::setLanguage(const QString& value)
+      {
+        Q_ASSERT(this->_translation);
+        this->_translation->setLanguage(value);
       }
 
     }

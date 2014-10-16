@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef APPLICATIONBRIDGEPROXY_H_1412580547
-#define APPLICATIONBRIDGEPROXY_H_1412580547
+#ifndef APPLICATIONBRIDGEPROXY_H_1413459442
+#define APPLICATIONBRIDGEPROXY_H_1413459442
 
 #include <Host/Bridge/Credential.h>
 
@@ -36,6 +36,12 @@ public:
     ApplicationBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
 
     ~ApplicationBridgeProxy();
+
+    Q_PROPERTY(QString language READ language WRITE setLanguage)
+    inline QString language() const
+    { return qvariant_cast< QString >(property("language")); }
+    inline void setLanguage(const QString &value)
+    { setProperty("language", QVariant::fromValue(value)); }
 
 public Q_SLOTS: // METHODS
     inline QDBusPendingReply<bool> isInitCompleted()
@@ -73,6 +79,7 @@ public Q_SLOTS: // METHODS
 
 Q_SIGNALS: // SIGNALS
     void initCompleted();
+    void languageChanged();
     void restartUIRequest();
 };
 

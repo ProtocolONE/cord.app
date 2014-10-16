@@ -32,8 +32,43 @@ namespace GameNet {
       bool skipUi();
 
     signals:
+
+      /**
+       * \fn  void CommandLineManager::shutdown();
+       *
+       * \brief Запрос на закрытие приложения.
+       *
+       * \author  Ilya Tkachenko
+       * \date  17.10.2014
+       */
+
       void shutdown();
+
+      /**
+       * \fn  void CommandLineManager::uiCommand(const QString& name, const QStringList& arguments);
+       *
+       * \brief Комманда для QGNA-UI.
+       *
+       * \author  Ilya Tkachenko
+       * \date  17.10.2014
+       *
+       * \param name      The name.
+       * \param arguments The arguments.
+       */
+
       void uiCommand(const QString& name, const QStringList& arguments);
+
+      /**
+       * \fn  void CommandLineManager::openBrowser(const QString& url);
+       *
+       * \brief Запрос на открытие сайта в внешнем браузере.
+       *
+       * \author  Ilya Tkachenko
+       * \date  17.10.2014
+       *
+       * \param url URL of the document.
+       */
+      void openBrowser(const QString& url);
 
     private:
       GGS::Application::ArgumentParser* _commandLineArguments;

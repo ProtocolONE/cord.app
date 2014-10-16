@@ -4,11 +4,14 @@
 #include <Host/Application.h>
 #include <Host/Thetta.h>
 #include <Host/CredentialConverter.h>
+#include <Host/Translation.h>
 
 #include <Host/Bridge/ApplicationBridge.h>
 #include <Host/Bridge/Credential.h>
 
 #include <RestApi/GameNetCredential.h>
+
+#include <Settings/Settings.h>
 
 #include <QtTest/QSignalSpy>
 #include <QtCore/QEventLoop>
@@ -41,6 +44,16 @@ public:
   MOCK_METHOD1(openBrowser, void(const QString&));
 };
 
+class TranslationMock : public GameNet::Host::Translation
+{
+public:
+  MOCK_CONST_METHOD0(language, QString());
+  MOCK_METHOD1(setLanguage, void(const QString&));
+
+  // slots for signals
+  MOCK_METHOD0(onLanguageChanged, void());
+};
+
 class ApplicationBridgeTest : public ::testing::Test 
 {
 public:
@@ -48,14 +61,19 @@ public:
   {
     bridge.setApplcation(&appMock);
     bridge.setThetta(&thettaMock);
+    bridge.setTranslation(&translationMock);
 
     QObject::connect(&bridge, &ApplicationBridge::initCompleted,
       &appMock, &ApplicationMock::onInitCompleted);
+
+    QObject::connect(&bridge, &ApplicationBridge::languageChanged,
+      &translationMock, &TranslationMock::onLanguageChanged);
   }
 
   ApplicationBridge bridge;
   ApplicationMock appMock;
   ThettaMock thettaMock;
+  TranslationMock translationMock;
 };
 
 TEST_F(ApplicationBridgeTest, onInitCompleted)
@@ -113,4 +131,32 @@ TEST_F(ApplicationBridgeTest, setCredential)
     .Times(1);
 
   bridge.setCredential(appName, dbusCredential);
+}
+
+TEST_F(ApplicationBridgeTest, language)
+{
+  QString expectedLanguage("fr");
+
+  GGS::Settings::Settings settings;
+  settings.setValue("qGNA/language", expectedLanguage);
+
+  EXPECT_CALL(translationMock, language())
+    .WillOnce(Return(expectedLanguage));
+
+  ASSERT_EQ(expectedLanguage, bridge.language());
+}
+
+TEST_F(ApplicationBridgeTest, setLanguage)
+{
+  QString expectedLanguage("fr");
+  EXPECT_CALL(translationMock, setLanguage(expectedLanguage))
+    .Times(1);
+
+  bridge.setLanguage(expectedLanguage);
+}
+
+TEST_F(ApplicationBridgeTest, languageChanged)
+{
+  EXPECT_CALL(translationMock, onLanguageChanged()).Times(1);
+  translationMock.languageChanged();
 }

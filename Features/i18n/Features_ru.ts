@@ -2,14 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU">
 <context>
-    <name>Features::Marketing::MarketingTarget</name>
-    <message>
-        <source>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</source>
-        <translatorcomment>ФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФ</translatorcomment>
-        <translation type="obsolete">ФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФ</translation>
-    </message>
-</context>
-<context>
     <name>Features::Thetta::DistrIntegrityExecutorHook</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
