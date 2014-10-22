@@ -287,6 +287,8 @@ void MainWindow::activateWindow()
 
   this->_taskBarHelper.restore();
 
+  this->_taskBarHelper.restore();
+
   this->repaint();
 }
 
@@ -1082,6 +1084,11 @@ void MainWindow::onProgressUpdated(int progressValue, const QString &status)
 }
 
 void MainWindow::setTaskbarIcon(const QString &iconSource)
+{
+  this->_taskBarHelper.setIcon(iconSource);
+}
+
+void MainWindow::onLanguageChanged()
 {
   this->_taskBarHelper.setIcon(iconSource);
 }
