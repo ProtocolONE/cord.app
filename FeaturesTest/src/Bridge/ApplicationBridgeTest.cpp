@@ -3,39 +3,29 @@
 
 #include <Host/Application.h>
 #include <Host/Thetta.h>
-#include <Host/CredentialConverter.h>
 #include <Host/Translation.h>
 
 #include <Host/Bridge/ApplicationBridge.h>
-#include <Host/Bridge/Credential.h>
 
 #include <RestApi/GameNetCredential.h>
 
 #include <Settings/Settings.h>
 
-#include <QtTest/QSignalSpy>
-#include <QtCore/QEventLoop>
-#include <QtCore/QTimer>
-
 using ::testing::Return;
 
 using GameNet::Host::Bridge::ApplicationBridge;
-using GameNet::Host::Bridge::Credential;
-using GameNet::Host::Bridge::createGameNetCredential;
 using GGS::RestApi::GameNetCredential;
 
 class ApplicationMock : public GameNet::Host::Application
 {
 public:
-
    MOCK_METHOD0(isInitCompleted, bool());
    MOCK_METHOD2(restartApplication, void(bool, bool));
    MOCK_METHOD0(switchClientVersion, void());
 
-   MOCK_METHOD3(setCredential, void(const QString&, const QString&, const GameNetCredential&));
-
    // slots for signals
    MOCK_METHOD0(onInitCompleted, void());
+   MOCK_METHOD0(onRestartUIRequest, void());
 };
 
 class ThettaMock : public GameNet::Host::Thetta
@@ -59,12 +49,15 @@ class ApplicationBridgeTest : public ::testing::Test
 public:
   ApplicationBridgeTest() 
   {
-    bridge.setApplcation(&appMock);
+    bridge.setApplication(&appMock);
     bridge.setThetta(&thettaMock);
     bridge.setTranslation(&translationMock);
 
     QObject::connect(&bridge, &ApplicationBridge::initCompleted,
       &appMock, &ApplicationMock::onInitCompleted);
+    
+    QObject::connect(&bridge, &ApplicationBridge::restartUIRequest,
+      &appMock, &ApplicationMock::onRestartUIRequest);
 
     QObject::connect(&bridge, &ApplicationBridge::languageChanged,
       &translationMock, &TranslationMock::onLanguageChanged);
@@ -80,6 +73,12 @@ TEST_F(ApplicationBridgeTest, onInitCompleted)
 {
   EXPECT_CALL(appMock, onInitCompleted()).Times(1);
   appMock.initCompleted();
+}
+
+TEST_F(ApplicationBridgeTest, restartUIRequest)
+{
+  EXPECT_CALL(appMock, onRestartUIRequest()).Times(1);
+  appMock.restartUIRequest();
 }
 
 TEST_F(ApplicationBridgeTest, switchClientVersion)
@@ -114,23 +113,6 @@ TEST_F(ApplicationBridgeTest, openBrowser)
     .Times(1);
 
   bridge.openBrowser(testUrlString);
-}
-
-TEST_F(ApplicationBridgeTest, setCredential)
-{
-  QString appName("qgna");
-  Credential dbusCredential;
-  dbusCredential.userId = "123123123";
-  dbusCredential.appKey = "sdjkfnksdjfnjkqwer";
-  dbusCredential.cookie = "qkljerqlwkej13qwem1kl23jqwe";
-
-  GameNetCredential credential = createGameNetCredential(dbusCredential);
-  QString connectionName;
-
-  EXPECT_CALL(appMock, setCredential(connectionName, appName, credential))
-    .Times(1);
-
-  bridge.setCredential(appName, dbusCredential);
 }
 
 TEST_F(ApplicationBridgeTest, language)

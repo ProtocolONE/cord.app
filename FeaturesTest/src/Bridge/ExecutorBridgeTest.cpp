@@ -2,6 +2,8 @@
 #include <Host/CredentialConverter.h>
 #include <Host/Bridge/ExecutorBridge.h>
 
+#include <Host/Proxy/GameExecutorProxy.h>
+
 #include <RestApi/GameNetCredential.h>
 
 #include <gmock/gmock.h>
@@ -10,6 +12,7 @@
 #include <QtCore/QString>
 
 using GameNet::Host::GameExecutor;
+using GameNet::Host::Proxy::GameExecutorProxy;
 using GameNet::Host::Bridge::ExecutorBridge;
 using GameNet::Host::Bridge::Credential;
 using GameNet::Host::Bridge::createGameNetCredential;
@@ -17,10 +20,12 @@ using GGS::RestApi::GameNetCredential;
 
 using ::testing::Return;
 
-class GameExecutorMock : public GameExecutor
+class GameExecutorMock : public GameExecutorProxy
 {
 public:
-  using GameExecutor::execute;
+  using GameExecutorProxy::execute;
+  using GameExecutorProxy::executeSecond;
+  
 // slots
   MOCK_METHOD2(
     execute, 

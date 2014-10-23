@@ -6,7 +6,6 @@
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
 
-#include <QtDBus/QDBusContext>
 #include <QtDBus/QDBusArgument>
 
 namespace GGS {
@@ -154,7 +153,7 @@ namespace GameNet {
       DownloaderBridge is a central part of service downloading subsystem. It provides methods for start\stop downloading a particular service.
       
       */ 
-      class DownloaderBridge : public QObject, protected QDBusContext
+      class DownloaderBridge : public QObject
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")

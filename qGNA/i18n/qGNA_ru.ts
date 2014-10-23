@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>ClientConnection</name>
+    <message>
+        <source>DBUS_DISCONNECTED_TITLE</source>
+        <translation type="vanished">Внимание</translation>
+    </message>
+    <message>
+        <source>DBUS_DISCONNECTED_TEXT</source>
+        <translation type="vanished">Произошла ошибка. Мы вынуждены закрыть приложение. Пожалуйста, запустите его снова чтобы продолжить.</translation>
+    </message>
+</context>
+<context>
     <name>GameSettingsViewModel</name>
     <message>
         <source>CAPTION_OPEN_DIR</source>
@@ -80,17 +91,17 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="237"/>
-        <location filename="../src/mainwindow.cpp" line="647"/>
-        <location filename="../src/mainwindow.cpp" line="654"/>
-        <location filename="../src/mainwindow.cpp" line="679"/>
-        <location filename="../src/mainwindow.cpp" line="682"/>
+        <location filename="../src/mainwindow.cpp" line="254"/>
+        <location filename="../src/mainwindow.cpp" line="664"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
+        <location filename="../src/mainwindow.cpp" line="696"/>
+        <location filename="../src/mainwindow.cpp" line="699"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="647"/>
-        <location filename="../src/mainwindow.cpp" line="682"/>
+        <location filename="../src/mainwindow.cpp" line="664"/>
+        <location filename="../src/mainwindow.cpp" line="699"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;http://support.gamenet.ru&lt;/font&gt;&lt;/a&gt;  </translation>
     </message>
@@ -99,17 +110,17 @@
         <translation type="obsolete">Вход в игру доступен только для участников тестирования. О завершении тестирования и об открытии доступа в игру будет сообщено в новостях.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="655"/>
+        <location filename="../src/mainwindow.cpp" line="672"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="679"/>
+        <location filename="../src/mainwindow.cpp" line="696"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="237"/>
+        <location filename="../src/mainwindow.cpp" line="254"/>
         <source>UPDATE_FOUND_MESSAGE</source>
         <translation>Доступно новое обновление. Необходимо перезапустить приложение.</translation>
     </message>
@@ -125,12 +136,12 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="253"/>
+        <location filename="../src/mainwindow.cpp" line="270"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation>Упс! У нас иногда не получается нормально запускаться в режиме цветопередачи 16-бит. Простите, если это произошло в этот раз. Мы исправимся, а пока измените настроки цветопередачи на 32-бита.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="254"/>
+        <location filename="../src/mainwindow.cpp" line="271"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation>Информация</translation>
     </message>

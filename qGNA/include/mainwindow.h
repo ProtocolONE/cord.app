@@ -1,15 +1,11 @@
 ﻿#pragma once
 
-#include <viewmodel/SettingsViewModel.h>
-#include <viewmodel/GameSettingsViewModel.h>
-
 #include <QmlMessageAdapter.h>
+
 #include <Features/RememberGameDownloading.h>
-#include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
-#include <Features/PremiumExecutor.h>
 #include <Features/SilentMode.h>
-#include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/TaskBarProgressHelper.h>
+
 #include <Features/Thetta/ThettaInstaller.h>
 
 #include <Marketing/MarketingTarget.h>
@@ -19,19 +15,8 @@
 #include <RestApi/FakeCache>
 #include <RestApi/GameNetCredential>
 #include <RestApi/RestApiManager>
-#include <RestApi/HttpCommandRequest>
 
 #include <AutoRunHelper/UACHelper.h>
-
-#include <GameDownloader/GameDownloadService.h>
-#include <GameDownloader/StartType.h>
-
-#include <LibtorrentWrapper/Wrapper>
-#include <LibtorrentWrapper/TorrentConfig>
-#include <LibtorrentWrapper/EventArgs/ProgressEventArgs>
-
-#include <GameExecutor/GameExecutorService.h>
-#include <GameExecutor/ServiceInfoCounter>
 
 #include <Application/ArgumentParser.h>
 
@@ -40,11 +25,11 @@
 #include <QtCore/QUrl>
 #include <QtCore/QScopedPointer>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QDesktopServices>
-#include <QMainWindow>
 #include <QMouseEvent>
 
 #include "KeyboardLayoutHelper.h"
@@ -85,6 +70,16 @@ class ExecutorBridgeProxy;
 class UpdateManagerBridgeProxy;
 class ApplicationBridgeProxy;
 class ApplicationStatisticBridgeProxy;
+class ConnectionBridgeProxy;
+
+class SettingsViewModel;
+class GameSettingsViewModel;
+
+namespace GameNet {
+  namespace Host {
+    class ClientConnection;
+  }
+}
 
 class MainWindow : public QMainWindow
 {
@@ -153,36 +148,6 @@ public slots:
   bool silent();
   void onWindowClose();
 
-private:
-  void loadPlugin(QString pluginName);
-
-  void initAutorun();
-  void initRestApi();
-  void initMarketing();
-  bool isUseOpenGLrender();
-
-  GGS::RestApi::FakeCache _fakeCache;
-  GGS::RestApi::GameNetCredential _credential;
-  GGS::RestApi::RestApiManager _restapiManager;
-
-  QmlMessageAdapter* messageAdapter;
-  SettingsViewModel* settingsViewModel;
-  GameSettingsViewModel *_gameSettingsViewModel;
-
-  QString _nickName;
-  QString _techName;
-  QString _mediumAvatarUrl;
-  QString _language;
-  QString _fileVersion;
-
-  MQDeclarativeView *nQMLContainer;
-
-  QPoint mLastMousePosition;
-  bool m_WindowState; // false - normal size, true - max size  
-  GGS::Application::ArgumentParser _commandLineArguments;
-  GGS::Core::Service::Area _gameArea;
-  GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
-
 signals:
   /*
     Вызывается когда хост закончил инициализацию и обновление
@@ -215,7 +180,6 @@ signals:
   void secondInstanceExecuteRequest();
 
   void selectService(QString serviceId);
-  void needAuth();
   void needPakkanenVerification(QString serviceId);
 
   void downloaderStarted(QString service);
@@ -250,6 +214,7 @@ signals:
 
   void showLicense(QString serviceId);
   void quit();
+  void wrongCredential(const QString& userId);
 
 private slots:
   void onServiceStarted(const QString &serviceId);
@@ -270,7 +235,7 @@ private slots:
 
   void gameDownloaderStarted(const QString& serviceId, int startType);
   void gameDownloaderStopped(const QString& serviceId);
-  void gameDownloaderStopping(const QString& serviceId);     
+  void gameDownloaderStopping(const QString& serviceId);
   void gameDownloaderFailed(const QString& serviceId); 
   void gameDownloaderFinished(const QString& serviceId);
   void gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message);
@@ -278,15 +243,44 @@ private slots:
   void gameDownloaderServiceUpdated(const QString& serviceId); 
   void removeStartGame(QString serviceId);
 
-  void restApiGenericError(GGS::RestApi::CommandBase::Error, QString message);
+  void restApiGenericError(
+    GGS::RestApi::CommandBase::Error error,
+    QString message,
+    GGS::RestApi::CommandBase *command);
 
 private:
+  void loadPlugin(QString pluginName);
+
+  void initAutorun();
+  void initRestApi();
+  void initMarketing();
+  bool isUseOpenGLrender();
+
   void checkDesktopDepth();
 
   void startGame(const QString& serviceId);
 
   void prepairGameDownloader();
   void postUpdateInit();
+
+  GGS::RestApi::FakeCache _fakeCache;
+  GGS::RestApi::GameNetCredential _credential;
+  GGS::RestApi::RestApiManager _restapiManager;
+
+  QmlMessageAdapter* messageAdapter;
+  SettingsViewModel* settingsViewModel;
+  GameSettingsViewModel *_gameSettingsViewModel;
+
+  QString _language;
+  QString _fileVersion;
+
+  MQDeclarativeView *nQMLContainer;
+
+  QPoint mLastMousePosition;
+  bool m_WindowState; // false - normal size, true - max size  
+  GGS::Application::ArgumentParser _commandLineArguments;
+  GGS::Core::Service::Area _gameArea;
+  GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
 
   QMap<QString,QTranslator*> translators;
   GGS::GameDownloader::GameDownloadService _gameDownloader;
@@ -298,8 +292,6 @@ private:
 
   Features::TaskBarHelper _taskBarHelper;
   Features::SilentMode _silentMode;
-  
-  QString _hwid;
 
   DownloaderBridgeProxy *_downloader;
   DownloaderSettingsBridgeProxy *_downloaderSettings;
@@ -307,11 +299,12 @@ private:
   ExecutorBridgeProxy *_executor;
   ApplicationBridgeProxy* _applicationProxy;
   ApplicationStatisticBridgeProxy* _applicationStatistic;
+  GameNet::Host::ClientConnection *_clientConnection;
 
   BestInstallPath *_bestInstallPath;
 
 protected:
-	void closeEvent(QCloseEvent* event);
+  void closeEvent(QCloseEvent* event);
   bool event(QEvent* event);
   bool nativeEvent(const QByteArray & eventType, void * message, long * result) override;
 };

@@ -4,20 +4,16 @@
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
 
-#include <QtDBus/QDBusContext>
-#include <QtDBus/QDBusArgument>
-
-#include <Host/Bridge/Credential.h>
-
 namespace GameNet {
   namespace Host {
+
     class Application;
     class Thetta;
     class Translation;
 
     namespace Bridge {
 
-      class ApplicationBridge: public QObject, protected QDBusContext
+      class ApplicationBridge : public QObject, protected QDBusContext
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
@@ -40,7 +36,7 @@ namespace GameNet {
          * \param [in,out]  app If non-null, the application.
          */
 
-        void setApplcation(Application* app);
+        void setApplication(Application* app);
 
         /**
          * \fn  void ApplicationBridge::setThetta(Thetta *value);
@@ -122,31 +118,6 @@ namespace GameNet {
          */
         void openBrowser(const QString& url);
 
-
-        /*
-        <method name="setCredential">
-          <arg name="applicationName" type="s" direction="in"/>
-          <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="GameNet::Host::Bridge::Credential"/>
-        </method>
-        */
-        
-        /**
-         * \fn  void ApplicationBridge::setCredential( const QString& applicationName,
-         *      const Credential& credential);
-         *
-         * \brief Sets a credential.
-         *
-         * \author  Ilya Tkachenko
-         * \date  06.10.2014
-         *
-         * \param applicationName Name of the application.
-         * \param credential      The credential.
-         */
-        void setCredential(
-          const QString& applicationName,
-          const Credential& credential);
-
     signals:
 
         /**
@@ -169,7 +140,7 @@ namespace GameNet {
          * \date  26.09.2014
          */
 
-        void restartUIRequest();      
+        void restartUIRequest();
 
         void languageChanged();
 
@@ -180,6 +151,6 @@ namespace GameNet {
       };
 
     }
-
   }
 }
+      class ApplicationBridge : public QObject

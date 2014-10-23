@@ -1,22 +1,26 @@
-#include <Host/Proxy/DownloaderProxy.h>
-
+#include <Host/Connection.h>
 #include <Host/Application.h>
+#include <Host/ServiceHandle.h>
+
+#include <Host/Proxy/DownloaderProxy.h>
 
 #include <Core/Service.h>
 
-#include <RestApi/RestApiManager.h>
+#include <GameDownloader/GameDownloadService.h>
 
 using GGS::GameDownloader::GameDownloadService;
-using GGS::RestApi::GameNetCredential;
 using GGS::Core::Service;
+using GGS::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {
     namespace Proxy {
       
       DownloaderProxy::DownloaderProxy(QObject *parent /*= 0*/)
-        : GameDownloadService(parent)
-        , _application(nullptr)
+        : QObject(parent)
+        , _connection(nullptr)
+        , _downloader(nullptr)
+        , _serviceHandle(nullptr)
       {
       }
 
@@ -24,67 +28,200 @@ namespace GameNet {
       {
       }
 
-      void DownloaderProxy::setApplication(Application* value)
+      void DownloaderProxy::setDownloader(GameDownloadService* value)
       {
         Q_ASSERT(value);
-        this->_application = value;
+        this->_downloader = value;
+
+        QObject::connect(this->_downloader, &GameDownloadService::started, this, &DownloaderProxy::onStarted);
+        QObject::connect(this->_downloader, &GameDownloadService::finished, this, &DownloaderProxy::onFinished);
+        QObject::connect(this->_downloader, &GameDownloadService::stopped, this, &DownloaderProxy::onStopped);
+        QObject::connect(this->_downloader, &GameDownloadService::stopping, this, &DownloaderProxy::onStopping);
+        QObject::connect(this->_downloader, &GameDownloadService::failed, this, &DownloaderProxy::onFailed);
+        QObject::connect(this->_downloader, &GameDownloadService::serviceInstalled, this, &DownloaderProxy::onServiceInstalled);
+        QObject::connect(this->_downloader, &GameDownloadService::serviceUpdated, this, &DownloaderProxy::onServiceUpdated);
+        QObject::connect(this->_downloader, &GameDownloadService::statusMessageChanged, this, &DownloaderProxy::onStatusMessageChanged);
+        QObject::connect(this->_downloader, &GameDownloadService::totalProgressChanged, this, &DownloaderProxy::onTotalProgressChanged);
+        QObject::connect(this->_downloader, &GameDownloadService::downloadProgressChanged, this, &DownloaderProxy::onDownloadProgressChanged);
+        QObject::connect(this->_downloader, &GameDownloadService::finishedDownloading, this, &DownloaderProxy::finishedDownloading);
       }
 
-      void DownloaderProxy::init()
+      void DownloaderProxy::setConnection(Connection *value)
       {
-        Q_ASSERT(this->_application);
-        this->GameDownloadService::init();
-
-        QObject::connect(this, &GameDownloadService::started,
-          this, &DownloaderProxy::internalStarted);
-
-        QObject::connect(this, &GameDownloadService::finishedDownloading,
-          this, &DownloaderProxy::internalDownloaded);
-
-        QObject::connect(this, &GameDownloadService::finished,
-          this, &DownloaderProxy::internalFinished);
+        Q_ASSERT(value);
+        this->_connection = value;
       }
 
-      void DownloaderProxy::startWithName(
-        const QString& connectionName, 
-        const Service *service, 
-        GGS::GameDownloader::StartType startType)
+      void DownloaderProxy::setServiceHandle(ServiceHandle *value)
       {
-        Q_ASSERT(this->_application);
-        GameNetCredential credential = this->_application->credential(connectionName);
-        this->_credentialMap[service->id()] = credential;
-        this->start(service, startType);
+        Q_ASSERT(value);
+        this->_serviceHandle = value;
       }
 
-      void DownloaderProxy::internalStarted(const GGS::Core::Service* service)
+      const Connection* DownloaderProxy::connection()
       {
-        const QString& id = service->id();
-        GameNetCredential credential;
-        if (this->_credentialMap.contains(id))
-          credential = this->_credentialMap[id];
-
-        emit this->startedWithCredential(id, credential);
+        return this->_connection;
       }
 
-      void DownloaderProxy::internalDownloaded(const GGS::Core::Service* service)
+      void DownloaderProxy::onStarted(const Service *service, GGS::GameDownloader::StartType startType)
       {
-        const QString& id = service->id();
-        GameNetCredential credential;
-        if (this->_credentialMap.contains(id))
-          credential = this->_credentialMap[id];
+        if (!this->isConnectionLockedService(service))
+          return;
 
-        emit this->finishedDownloadingWithCredential(id, credential);
+        emit this->started(service, startType);
       }
 
-      void DownloaderProxy::internalFinished(const GGS::Core::Service* service)
+      void DownloaderProxy::onFinished(const Service *service)
       {
-        const QString& id = service->id();
-        GameNetCredential credential;
-        if (this->_credentialMap.contains(id))
-          credential = this->_credentialMap[id];
+        Q_ASSERT(this->_serviceHandle);
+        if (!this->isConnectionLockedService(service))
+          return;
 
-        this->_credentialMap.remove(id);
-        emit this->finishedWithCredential(id, credential);
+        this->_serviceHandle->unlock(service->id(), this->_connection);
+        emit this->finished(service);
+      }
+
+      void DownloaderProxy::onStopped(const Service *service)
+      {
+        Q_ASSERT(this->_serviceHandle);
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        this->_serviceHandle->unlock(service->id(), this->_connection);
+        emit this->stopped(service);
+      }
+
+      void DownloaderProxy::onStopping(const Service *service)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->stopping(service);
+      }
+
+      void DownloaderProxy::onFailed(const Service *service)
+      {
+        Q_ASSERT(this->_serviceHandle);
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        this->_serviceHandle->unlock(service->id(), this->_connection);
+        emit this->failed(service);
+      }
+
+      void DownloaderProxy::onServiceInstalled(const Service *service)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->serviceInstalled(service);
+      }
+
+      void DownloaderProxy::onServiceUpdated(const GGS::Core::Service *service)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->serviceUpdated(service);
+      }
+
+      void DownloaderProxy::onStatusMessageChanged(const Service *service, const QString& message)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->statusMessageChanged(service, message);
+      }
+
+      void DownloaderProxy::onTotalProgressChanged(const Service *service, qint8 progress)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->totalProgressChanged(service, progress);
+      }
+
+      void DownloaderProxy::onDownloadProgressChanged(
+        const GGS::Core::Service *service, 
+        qint8 progress, 
+        GGS::Libtorrent::EventArgs::ProgressEventArgs args)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->downloadProgressChanged(service, progress, args);
+      }
+
+      void DownloaderProxy::onFinishedDownloading(const GGS::Core::Service *service)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->finishedDownloading(service);
+      }
+
+      bool DownloaderProxy::isInProgress(const Service *service)
+      {
+        Q_ASSERT(this->_downloader);
+        return this->_downloader->isInProgress(service);
+      }
+
+      bool DownloaderProxy::isAnyServiceInProgress()
+      {
+        Q_ASSERT(this->_downloader);
+        return this->_downloader->isAnyServiceInProgress();
+      }
+
+      bool DownloaderProxy::isInstalled(const QString& serviceId)
+      {
+        Q_ASSERT(this->_downloader);
+        return this->_downloader->isInstalled(serviceId);
+      }
+
+      void DownloaderProxy::start(const Service *service, GGS::GameDownloader::StartType startType)
+      {
+        Q_ASSERT(this->_downloader);
+        Q_ASSERT(this->_serviceHandle);
+
+        if (!this->_serviceHandle->lock(service->id(), this->_connection))
+          return;
+
+        this->_credentialMap[service->id()] = this->_connection->credential();
+        this->_downloader->start(service, startType);
+      }
+
+      void DownloaderProxy::stop(const Service *service)
+      {
+        Q_ASSERT(this->_downloader);
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        this->_downloader->stop(service);
+      }
+
+      void DownloaderProxy::pauseSession()
+      {
+        Q_ASSERT(this->_downloader);
+        this->_downloader->pauseSession();
+      }
+
+      void DownloaderProxy::resumeSession()
+      {
+        Q_ASSERT(this->_downloader);
+        this->_downloader->resumeSession();
+      }
+
+      bool DownloaderProxy::isConnectionLockedService(const Service *service)
+      {
+        return this->_connection->isOwnService(service->id());
+      }
+
+      GameNetCredential DownloaderProxy::credential(const QString& serviceId)
+      {
+        if (!this->_credentialMap.contains(serviceId))
+          return GameNetCredential();
+
+        return this->_credentialMap[serviceId];
       }
 
     }

@@ -59,14 +59,14 @@ namespace Features {
   signals:
     void serviceStarted(const GGS::Core::Service &service);
     void serviceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState serviceState);
-    
+
     void secondServiceStarted(const GGS::Core::Service &service);
     void secondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState serviceState);
 
   private slots:
     void internalSecondServiceStarted(const GGS::Core::Service &service);
     void internalSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
-                 
+
     void internalServiceStarted(const GGS::Core::Service &service);
     void internalServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
 

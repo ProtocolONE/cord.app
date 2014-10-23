@@ -54,11 +54,27 @@ namespace GameNet {
         const GGS::RestApi::GameNetCredential& secondCredetial);
 
       virtual bool isGameStarted(const QString& serviceId) const;
+      virtual bool isSecondGameStarted(const QString& serviceId) const;
       virtual bool isAnyGameStarted() const;
       virtual bool canExecuteSecond(const QString& serviceId) const;
       virtual void shutdownSecond();
 
+      /**
+       * \fn  QString GameExecutor::executedGame() const;
+       *
+       * \brief Возвращает serviceId запущенной игры.
+       *
+       * \author  Ilya Tkachenko
+       * \date  30.10.2014
+       *
+       * \return serviceId.
+       */
+
+      QString executedGame() const;
+
       GGS::GameExecutor::GameExecutorService *mainExecutor();
+      GGS::GameExecutor::GameExecutorService* secondExecutor();
+      GGS::GameExecutor::GameExecutorService* simpleMainExecutor();
 
     signals:
       void serviceStarted(const QString& serviceId);

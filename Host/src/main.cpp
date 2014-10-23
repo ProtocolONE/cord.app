@@ -49,6 +49,12 @@ int main(int argc, char *argv[])
   MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 
   QThread::currentThread()->setObjectName("Main host thread");
+
+  // HACK В приложении активно используются QtConcurrent и другие сущности использующие QThreadPool
+  // Так как некоторые задачи критичны для запуска, а в случаи переполнение пула они будут положены в очередь,
+  // увеличим пул по умолчанию, чтобы пока проблемы не наблюдалось. В будущем надо для критичных
+  // задачь избегать QThreadPool и возможно переписать некоторые компоненты, например, GameExecutor, которые не должен
+  // использовать по одному потоку на игру.
   QThreadPool::globalInstance()->setMaxThreadCount(50);
 
   if (app.isAlreadyRunning()) {

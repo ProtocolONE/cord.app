@@ -98,8 +98,10 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
   object.setDescription(QString("Short cut for game %1").arg(name));
   object.setShowCmd(GGS::Core::System::Shell::ShortCut::MinNoActive);
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
+  
   // UNDONE: проверить что эта функция кошерна - у нее в дескрипшене есть фишка про смену дериктории самим аппликейшеном.
-  object.setPath(QCoreApplication::applicationFilePath());
+  QString hostPath = QString("%1\\%2").arg(QCoreApplication::applicationDirPath(), "qGNA.exe");
+  object.setPath(hostPath);
 
   QString iconPath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), serviceId);
   iconPath = QFile::exists(iconPath) ? iconPath : QCoreApplication::applicationFilePath();

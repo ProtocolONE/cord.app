@@ -53,16 +53,16 @@ namespace GameNet {
         Q_ASSERT(downloader);
         this->_downloader = downloader;
 
-        QObject::connect(this->_downloader, &GameDownloadService::started, this, &DownloaderBridge::onStarted);
-        QObject::connect(this->_downloader, &GameDownloadService::finished, this, &DownloaderBridge::onFinished);
-        QObject::connect(this->_downloader, &GameDownloadService::stopped, this, &DownloaderBridge::onStopped);
-        QObject::connect(this->_downloader, &GameDownloadService::stopping, this, &DownloaderBridge::onStopping);
-        QObject::connect(this->_downloader, &GameDownloadService::failed, this, &DownloaderBridge::onFailed);
-        QObject::connect(this->_downloader, &GameDownloadService::serviceInstalled, this, &DownloaderBridge::onServiceInstalled);
-        QObject::connect(this->_downloader, &GameDownloadService::serviceUpdated, this, &DownloaderBridge::onServiceUpdated);
-        QObject::connect(this->_downloader, &GameDownloadService::statusMessageChanged, this, &DownloaderBridge::onStatusMessageChanged);
-        QObject::connect(this->_downloader, &GameDownloadService::totalProgressChanged, this, &DownloaderBridge::onTotalProgress);
-        QObject::connect(this->_downloader, &GameDownloadService::downloadProgressChanged, this, &DownloaderBridge::onDownloadProgress);
+        QObject::connect(this->_downloader, &DownloaderProxy::started, this, &DownloaderBridge::onStarted);
+        QObject::connect(this->_downloader, &DownloaderProxy::finished, this, &DownloaderBridge::onFinished);
+        QObject::connect(this->_downloader, &DownloaderProxy::stopped, this, &DownloaderBridge::onStopped);
+        QObject::connect(this->_downloader, &DownloaderProxy::stopping, this, &DownloaderBridge::onStopping);
+        QObject::connect(this->_downloader, &DownloaderProxy::failed, this, &DownloaderBridge::onFailed);
+        QObject::connect(this->_downloader, &DownloaderProxy::serviceInstalled, this, &DownloaderBridge::onServiceInstalled);
+        QObject::connect(this->_downloader, &DownloaderProxy::serviceUpdated, this, &DownloaderBridge::onServiceUpdated);
+        QObject::connect(this->_downloader, &DownloaderProxy::statusMessageChanged, this, &DownloaderBridge::onStatusMessageChanged);
+        QObject::connect(this->_downloader, &DownloaderProxy::totalProgressChanged, this, &DownloaderBridge::onTotalProgress);
+        QObject::connect(this->_downloader, &DownloaderProxy::downloadProgressChanged, this, &DownloaderBridge::onDownloadProgress);
       }
 
       void DownloaderBridge::setServiceLoader(ServiceLoader *serviceLoader)
@@ -102,12 +102,7 @@ namespace GameNet {
         if (!service)
           return;
 
-        QString name;
-
-        if (this->calledFromDBus())
-          name = this->connection().name();
-
-        this->_downloader->startWithName(name, service, static_cast<GGS::GameDownloader::StartType>(startType));
+        this->_downloader->start(service, static_cast<GGS::GameDownloader::StartType>(startType));
       }
 
       void DownloaderBridge::stop(const QString& serviceId)

@@ -1,11 +1,7 @@
-// INFO windows.h can't be include before QDbusConnection
-#include <QtDBus/QDBusConnection>
-
 #include <Host/Bridge/ApplicationBridge.h>
 
 #include <Host/Application.h>
 #include <Host/Thetta.h>
-#include <Host/CredentialConverter.h>
 #include <Host/Translation.h>
 
 namespace GameNet {
@@ -25,13 +21,16 @@ namespace GameNet {
       {
       }
 
-      void ApplicationBridge::setApplcation(Application* app) 
+      void ApplicationBridge::setApplication(Application* app) 
       {
         Q_ASSERT(app);
         this->_application = app;
 
         QObject::connect(this->_application, &Application::initCompleted,
                 this, &ApplicationBridge::initCompleted);
+        
+        QObject::connect(this->_application, &Application::restartUIRequest,
+          this, &ApplicationBridge::restartUIRequest);
       }
 
       void ApplicationBridge::setThetta(Thetta *value)
@@ -75,22 +74,6 @@ namespace GameNet {
       {
         Q_ASSERT(this->_thetta);
         this->_thetta->openBrowser(url);
-      }
-
-      void ApplicationBridge::setCredential(
-        const QString& applicationName, 
-        const Credential& credential)
-      {
-        Q_ASSERT(this->_application);
-        QString name;
-
-        if (this->calledFromDBus())
-          name = this->connection().name();
-
-        this->_application->setCredential(
-          name, 
-          applicationName, 
-          createGameNetCredential(credential));
       }
 
       QString ApplicationBridge::language() const

@@ -166,6 +166,8 @@ public:
     executorHookFactory.reg<SendPlayingInfoMock>();
 
     loader.setExecutor(&executor);
+    loader.setSimpleMainExecutor(&simpleMainExecutor);
+    loader.setSecondExecutor(&secondExecutor);
     loader.setDownloader(&downloader);
     loader.setExecuterHookFactory(&executorHookFactory);
     loader.setDownloaderHookFactory(&downloaderHookFactory);
@@ -173,6 +175,8 @@ public:
 
   ServiceDescription description;
   GameExecutorServiceMock executor;
+  GameExecutorServiceMock simpleMainExecutor;
+  GameExecutorServiceMock secondExecutor;
   ServiceLoaderTestGameDownloadServiceMock downloader;
   HookFactory downloaderHookFactory;
   ExecutorHookFactory executorHookFactory;

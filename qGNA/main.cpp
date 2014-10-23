@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
   initBugTrap(path);
+  QThread::currentThread()->setObjectName("Main thread");
 
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
@@ -118,20 +119,6 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
-  if (!dbusConnectionCheck.checkConnection())
-    return 0;
-
-  GGS::Application::TaskBarEventFilter *taskBarFilter = new GGS::Application::TaskBarEventFilter(&app);
-  app.installNativeEventFilter(taskBarFilter);
-
-  GGS::Application::LanguageChangeEventFilter *languageChangeEventFilter = new GGS::Application::LanguageChangeEventFilter(&app);
-  app.installNativeEventFilter(languageChangeEventFilter);
-  
-  GGS::ResourceHelper::ResourceLoader loader;
-  loader.load(path + "/qGNA.rcc"); 
-
-  QThread::currentThread()->setObjectName("Main thread");
   
   // HACK В приложении активно используются QtConcurrent и другие сущности использующие QThreadPool
   // Так как некоторые задачи критичны для запуска, а в случаи переполнение пула они будут положены в очередь,
@@ -169,6 +156,21 @@ int main(int argc, char *argv[])
     return 0;
   }
 #endif
+
+  DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
+  if (!dbusConnectionCheck.checkConnection()) {
+    LogManager::qtLogger()->removeAllAppenders(); 
+    return 0;
+  }
+
+  GGS::Application::TaskBarEventFilter *taskBarFilter = new GGS::Application::TaskBarEventFilter(&app);
+  app.installNativeEventFilter(taskBarFilter);
+
+  GGS::Application::LanguageChangeEventFilter *languageChangeEventFilter = new GGS::Application::LanguageChangeEventFilter(&app);
+  app.installNativeEventFilter(languageChangeEventFilter);
+
+  GGS::ResourceHelper::ResourceLoader loader;
+  loader.load(path + "/qGNA.rcc"); 
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));

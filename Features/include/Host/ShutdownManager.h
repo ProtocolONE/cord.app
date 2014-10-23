@@ -18,6 +18,7 @@ namespace GameNet {
     class Thetta;
     class GameExecutor;
     class Application;
+    class ConnectionManager;
 
     class ShutdownManager : public QObject
     {
@@ -36,6 +37,7 @@ namespace GameNet {
       void setDownloader(GGS::GameDownloader::GameDownloadService *value);
       void setApplication(Application *value);
       void setSingleApplication(GGS::Application::SingleApplication *value);
+      void setConnectionManager(ConnectionManager *value);
 
     signals:
       void shutdownCompleted();
@@ -51,6 +53,7 @@ namespace GameNet {
       GGS::GameDownloader::GameDownloadService *_downloader;
       Application *_application;
       GGS::Application::SingleApplication *_singleApplication;
+      ConnectionManager *_connectionManager;
       bool _gameDownloadInitialized;
     };
 

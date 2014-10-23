@@ -1,3 +1,6 @@
+#include <Host/Connection.h>
+#include <Host/ServiceHandle.h>
+
 #include <Host/Proxy/GameExecutorProxy.h>
 
 using GGS::RestApi::GameNetCredential;
@@ -7,7 +10,10 @@ namespace GameNet {
     namespace Proxy {
 
       GameExecutorProxy::GameExecutorProxy(QObject *parent /*= 0*/)
-        : GameExecutor(parent)
+        : QObject(parent)
+        , _executor(nullptr)
+        , _connetion(nullptr)
+        , _serviceHandle(nullptr)
       {
       }
 
@@ -15,29 +21,49 @@ namespace GameNet {
       {
       }
 
-      void GameExecutorProxy::init()
+      void GameExecutorProxy::setExecutor(GameNet::Host::GameExecutor *value)
       {
-        this->GameExecutor::init();
+        Q_ASSERT(value);
+        this->_executor = value;
 
-        QObject::connect(this, &GameExecutor::serviceStarted,
-          this, &GameExecutorProxy::onServiceStarted);
+        QObject::connect(value, &GameExecutor::serviceStarted,
+          this, &GameExecutorProxy::onServiceStarted, Qt::QueuedConnection);
 
-        QObject::connect(this, &GameExecutor::serviceFinished,
-          this, &GameExecutorProxy::onServiceFinished);
+        QObject::connect(value, &GameExecutor::serviceFinished,
+          this, &GameExecutorProxy::onServiceFinished, Qt::QueuedConnection);
 
-        QObject::connect(this, &GameExecutor::secondServiceStarted,
-          this, &GameExecutorProxy::onSecondServiceStarted);
+        QObject::connect(value, &GameExecutor::secondServiceStarted,
+          this, &GameExecutorProxy::onSecondServiceStarted, Qt::QueuedConnection);
 
-        QObject::connect(this, &GameExecutor::secondServiceFinished,
-          this, &GameExecutorProxy::onSecondServiceFinished);
+        QObject::connect(value, &GameExecutor::secondServiceFinished,
+          this, &GameExecutorProxy::onSecondServiceFinished, Qt::QueuedConnection);
+      }
+
+      void GameExecutorProxy::setConnection(Connection *value)
+      {
+        Q_ASSERT(value);
+        this->_connetion = value;
+      }
+
+      void GameExecutorProxy::setServiceHandle(ServiceHandle *value)
+      {
+        Q_ASSERT(value);
+        this->_serviceHandle = value;
       }
 
       void GameExecutorProxy::execute(
         const QString& serviceId,
         const GameNetCredential& credetial)
       {
+        Q_ASSERT(this->_connetion);
+        Q_ASSERT(this->_executor);
+        Q_ASSERT(this->_serviceHandle);
+
+        if (!this->_serviceHandle->lock(serviceId, this->_connetion))
+          return;
+
         this->processExecute(serviceId, credetial);
-        this->GameExecutor::execute(serviceId, credetial);
+        this->_executor->execute(serviceId, credetial);
       }
 
       void GameExecutorProxy::executeSecond(
@@ -45,8 +71,15 @@ namespace GameNet {
         const GameNetCredential& credetial,
         const GameNetCredential& secondCredetial)
       {
+        Q_ASSERT(this->_connetion);
+        Q_ASSERT(this->_executor);
+        Q_ASSERT(this->_serviceHandle);
+
+        if (!this->_serviceHandle->lock(serviceId, this->_connetion))
+          return;
+
         this->processExecute(serviceId, credetial, secondCredetial);
-        this->GameExecutor::executeSecond(serviceId, credetial, secondCredetial);
+        this->_executor->executeSecond(serviceId, credetial, secondCredetial);
       }
 
       void GameExecutorProxy::processExecute(
@@ -57,8 +90,10 @@ namespace GameNet {
         QHash<QString, GGS::RestApi::GameNetCredential>& map = 
           secondCredetial.isEmpty() ? this->_executedGame : this->_executedSecondGame;
 
-        if (map.contains(serviceId))
-          return;
+        // INFO всегда переписываем автризацию на новую запускаемую.
+        // UI приложение должно следить и не запускать из одного подключения игру, если
+        // она уже запущена. Эта авторизация используется для отправки маркетинга, и поэтому ее нельзя
+        // просто так чистить при закрытии игры.
 
         const GameNetCredential& mainCredential = 
           secondCredetial.isEmpty() ? credetial : secondCredetial;
@@ -68,36 +103,90 @@ namespace GameNet {
 
       void GameExecutorProxy::onServiceStarted(const QString& serviceId)
       {
-        if (!this->_executedGame.contains(serviceId))
+        Q_ASSERT(this->_connetion);
+
+        if (!this->_connetion->isOwnService(serviceId))
           return;
 
-        emit this->startedWithCredential(serviceId, this->_executedGame[serviceId]);
+        emit this->serviceStarted(serviceId);
       }
 
       void GameExecutorProxy::onServiceFinished(const QString& serviceId, int finishState)
       {
-        if (!this->_executedGame.contains(serviceId))
+        Q_ASSERT(this->_connetion);
+        Q_ASSERT(this->_serviceHandle);
+
+        if (!this->_connetion->isOwnService(serviceId))
           return;
 
-        emit this->finishedWithCredential(serviceId, this->_executedGame[serviceId]);
-        this->_executedGame.remove(serviceId);
+        if (!this->_executor->isSecondGameStarted(serviceId))
+          this->_serviceHandle->unlock(serviceId, this->_connetion);
+
+        this->serviceFinished(serviceId, finishState);
       }
 
       void GameExecutorProxy::onSecondServiceStarted(const QString& serviceId)
       {
-        if (!this->_executedSecondGame.contains(serviceId))
+        Q_ASSERT(this->_connetion);
+
+        if (!this->_connetion->isOwnService(serviceId))
           return;
 
-        emit this->startedWithCredential(serviceId, this->_executedSecondGame[serviceId]);
+        this->secondServiceStarted(serviceId);
       }
 
       void GameExecutorProxy::onSecondServiceFinished(const QString& serviceId, int finishState)
       {
-        if (!this->_executedSecondGame.contains(serviceId))
+        Q_ASSERT(this->_connetion);
+        Q_ASSERT(this->_serviceHandle);
+
+        if (!this->_connetion->isOwnService(serviceId))
           return;
 
-        emit this->finishedWithCredential(serviceId, this->_executedSecondGame[serviceId]);
-        this->_executedSecondGame.remove(serviceId);
+        if (!this->_executor->isGameStarted(serviceId))
+          this->_serviceHandle->unlock(serviceId, this->_connetion);
+
+        this->secondServiceFinished(serviceId, finishState);
+      }
+
+      bool GameExecutorProxy::isGameStarted(const QString& serviceId) const
+      {
+        Q_ASSERT(this->_executor);
+        return this->_executor->isGameStarted(serviceId);
+      }
+
+      bool GameExecutorProxy::isAnyGameStarted() const
+      {
+        Q_ASSERT(this->_executor);
+        return this->_executor->isAnyGameStarted();
+      }
+
+      bool GameExecutorProxy::canExecuteSecond(const QString& serviceId) const
+      {
+        Q_ASSERT(this->_executor);
+        return this->_executor->canExecuteSecond(serviceId);
+      }
+
+      void GameExecutorProxy::shutdownSecond()
+      {
+        Q_ASSERT(this->_executor);
+        this->_executor->shutdownSecond();
+      }
+
+      GameNetCredential GameExecutorProxy::gameCredential(const QString& serviceId)
+      {
+        if (!this->_executedGame.contains(serviceId))
+          return GameNetCredential();
+          
+        return this->_executedGame[serviceId];
+      }
+
+      GameNetCredential GameExecutorProxy::secondGameCredential(const QString& serviceId)
+      {
+        if (!this->_executedSecondGame.contains(serviceId))
+          return GameNetCredential();
+
+        return this->_executedSecondGame[serviceId];
       }
 
     }

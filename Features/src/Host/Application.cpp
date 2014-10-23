@@ -1,3 +1,5 @@
+#include <Host/Connection.h>
+
 #include <Host/ApplicationStatistic.h>
 #include <Host/ApplicationRestarter.h>
 #include <Host/Application.h>
@@ -18,23 +20,8 @@
 #include <Host/CommandLineManager.h>
 #include <Host/MessageAdapter.h>
 #include <Host/Translation.h>
-
-#include <Host/Dbus/DBusServer.h>
-#include <Host/Dbus/DownloaderBridgeAdaptor.h>
-#include <Host/Dbus/DownloaderSettingsBridgeAdaptor.h>
-#include <Host/Dbus/ServiceSettingsBridgeAdaptor.h>
-#include <Host/Dbus/ExecutorBridgeAdaptor.h>
-#include <Host/Dbus/UpdateManagerBridgeAdaptor.h>
-#include <Host/Dbus/ApplicationBridgeAdaptor.h>
-#include <Host/Dbus/ApplicationStatisticBridgeAdaptor.h>
-
-#include <Host/Bridge/DownloaderBridge.h>
-#include <Host/Bridge/DownloaderSettingsBridge.h>
-#include <Host/Bridge/ServiceSettingsBridge.h>
-#include <Host/Bridge/ExecutorBridge.h>
-
-#include <Host/Proxy/GameExecutorProxy.h>
-#include <Host/Proxy/DownloaderProxy.h>
+#include <Host/ConnectionManager.h>
+#include <Host/ServiceHandle.h>
 
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
@@ -56,11 +43,8 @@
 #include <QtCore/QUrl>
 #include <QtCore/QCoreApplication>
 
-#include <QtDBus/QDBusMetaType>
-
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
-using GameNet::Host::DBus::DBusServer;
 
 namespace GameNet {
   namespace Host {
@@ -69,22 +53,16 @@ namespace GameNet {
       : _singleApplication(nullptr)
       , _shutdown(new ShutdownManager(this))
       , _serviceLoader(new ServiceLoader(this))
-      , _gameDownloader(new Proxy::DownloaderProxy)
-      , _downloaderBridge(new Bridge::DownloaderBridge(this))
+      , _gameDownloader(new GameDownloadService(this))
       , _downloaderSettings(new DownloaderSettings(this))
-      , _downloaderSettingsBridge(new Bridge::DownloaderSettingsBridge(this))
       , _serviceSettings(new ServiceSettings(this))
-      , _serviceSettingsBridge(new Bridge::ServiceSettingsBridge(this))
       , _downloadStatistics(new Features::GameDownloader::GameDownloadStatistics(this))
-      , _executor(new Proxy::GameExecutorProxy(this))
-      , _excutorBridge(new Bridge::ExecutorBridge(this))
+      , _executor(new GameExecutor(this))
       , _thetta(new Thetta(this))
       , _stopDownloadServiceOnExecuteGame(new Features::StopDownloadServiceWhileExecuteAnyGame(this))
       , _restApiManager(new GGS::RestApi::RestApiManager(this))
       , _restApiCache(new GGS::RestApi::FakeCache())
       , _updater(new Updater(this))
-      , _updateManagerBridge(new Bridge::UpdateManagerBridge(this))
-      , _applicationBridge(new Bridge::ApplicationBridge(this))
       , _uiProcess(new UIProcess(this))
       , _applicationRestarter(new ApplicationRestarter(this))
       , _downloaderHookFactory(new HookFactory(this))
@@ -93,8 +71,10 @@ namespace GameNet {
       , _marketingStatistic(new MarketingStatistic(this))
       , _marketingTarget(new GGS::Marketing::MarketingTarget(this))
       , _commandLineManager(new CommandLineManager(this))
-      , _messageAdapterBridge(new Bridge::MessageAdapterBridge(this))
+      , _messageAdapter(new MessageAdapter(this))
       , _translation(new Translation(this))
+      , _connectionManager(new ConnectionManager(this))
+      , _serviceHandle(new ServiceHandle(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -144,13 +124,11 @@ namespace GameNet {
 
     void Application::init()
     {
-      MessageAdapter *adapter = new MessageAdapter(this);
-      adapter->setHasUiProcess(std::bind(&UIProcess::isRunning, this->_uiProcess));
-      QObject::connect(this->_uiProcess, &UIProcess::closed, adapter, 
+      this->_messageAdapter->setHasUiProcess(std::bind(&UIProcess::isRunning, this->_uiProcess));
+      QObject::connect(this->_uiProcess, &UIProcess::closed, this->_messageAdapter, 
         &MessageAdapter::uiProcessClosed);
 
-      this->_messageAdapterBridge->setAdapter(adapter);
-      GGS::Core::UI::Message::setAdapter(adapter);
+      GGS::Core::UI::Message::setAdapter(this->_messageAdapter);
 
       this->initRestApi();
       this->_translation->init();
@@ -161,21 +139,6 @@ namespace GameNet {
       this->_applicationStatistic->setStartingGame(this->_commandLineManager->startingService());
       this->_applicationStatistic->init();
 
-      this->_applicationBridge->setApplcation(this);
-      this->_applicationBridge->setThetta(this->_thetta);
-      this->_applicationBridge->setTranslation(this->_translation);
-      
-      this->_downloaderBridge->setServiceLoader(this->_serviceLoader);
-      this->_downloaderBridge->setDownloader(this->_gameDownloader);
-      this->_downloaderSettingsBridge->setDownloaderSettings(this->_downloaderSettings);
-      this->_updateManagerBridge->setUpdateManager(this->_updater);
-
-      qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
-      qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
-
-      qRegisterMetaType<GameNet::Host::Bridge::Credential>("GameNet::Host::Bridge::Credential");
-      qDBusRegisterMetaType<GameNet::Host::Bridge::Credential>();
-
       this->_thetta->setApplication(this);
       this->_thetta->init();
 
@@ -183,7 +146,6 @@ namespace GameNet {
       this->_executor->setServiceSettings(this->_serviceSettings);
       this->_executor->setThetta(this->_thetta);
       this->_executor->init();
-      this->_excutorBridge->setExecutor(this->_executor);
 
       this->_downloaderHookFactory->setServiceLoader(this->_serviceLoader);
       this->_downloaderHookFactory->setServiceSettings(this->_serviceSettings);
@@ -198,12 +160,13 @@ namespace GameNet {
       this->_serviceLoader->setGameArea(this->_commandLineManager->gameArea());
       this->_serviceLoader->setDownloader(this->_gameDownloader);
       this->_serviceLoader->setExecutor(this->_executor->mainExecutor());
+      this->_serviceLoader->setSimpleMainExecutor(this->_executor->simpleMainExecutor());
+      this->_serviceLoader->setSecondExecutor(this->_executor->secondExecutor());
       this->_serviceLoader->setDownloaderHookFactory(this->_downloaderHookFactory);
       this->_serviceLoader->setExecuterHookFactory(this->_executorHookFactory);
 
       this->_serviceSettings->setServices(this->_serviceLoader);
       this->_serviceSettings->setDownloader(this->_gameDownloader);
-      this->_serviceSettingsBridge->setSettings(this->_serviceSettings);
 
       this->initMarketing();
 
@@ -226,11 +189,12 @@ namespace GameNet {
       this->_shutdown->setExecutor(this->_executor);
       this->_shutdown->setThetta(this->_thetta);
       this->_shutdown->setSingleApplication(this->_singleApplication);
+      this->_shutdown->setConnectionManager(this->_connectionManager);
       
       this->_applicationRestarter->setShutdownManager(this->_shutdown);
       
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
-      this->_uiProcess->setFileName("qGNA.exe");
+      this->_uiProcess->setFileName("gamenet.ui.exe");
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
         this, &Application::shutdown);
@@ -264,7 +228,7 @@ namespace GameNet {
           return;
         }
 
-        emit this->_applicationBridge->restartUIRequest();
+        emit this->restartUIRequest();
       }
 
       this->setUpdateFinished();
@@ -272,54 +236,13 @@ namespace GameNet {
 
     void Application::registerDbusServices()
     {
-#ifndef USE_SESSION_DBUS
-      DBusServer *server = new DBusServer(this);
-      if (!server->isConnected()) {
+      this->_connectionManager->setApplication(this);
+
+      if (!this->_connectionManager->init()) {
         MessageBoxW(0, L"Could not create DBusServer.", L"Error", MB_OK);
         QCoreApplication::quit();
         return;
-      };
-#endif
-
-      new DownloaderBridgeAdaptor(this->_downloaderBridge);
-      new DownloaderSettingsBridgeAdaptor(this->_downloaderSettingsBridge);
-      new ServiceSettingsBridgeAdaptor(this->_serviceSettingsBridge);
-      new ExecutorBridgeAdaptor(this->_excutorBridge);
-      new UpdateManagerBridgeAdaptor(this->_updateManagerBridge);
-      new ApplicationBridgeAdaptor(this->_applicationBridge);
-      new ApplicationStatisticBridgeAdaptor(this->_applicationStatistic);
-    
-#ifndef USE_SESSION_DBUS
-      QObject::connect(server, &DBusServer::newConnection, [this](const QDBusConnection &constConnection) {
-        qDebug() << "New IPC connection with name" << constConnection.name() << "accepted";
-
-        QDBusConnection connection = constConnection;
-        this->registerDBusObjects(&connection);
-      });
-#else
-      this->registerDBusObjects(&QDBusConnection::sessionBus());
-#endif
-    }
-
-    void Application::registerDBusObjects(QDBusConnection *connection)
-    {
-      connection->registerObject("/application", this->_applicationBridge);
-      connection->registerObject("/downloader", this->_downloaderBridge);
-      connection->registerObject("/downloader/settings", this->_downloaderSettingsBridge);
-      connection->registerObject("/serviceSettings", this->_serviceSettingsBridge);
-      connection->registerObject("/executor", this->_excutorBridge);
-      connection->registerObject("/updater", this->_updateManagerBridge);
-      connection->registerObject("/applicationStatistic", this->_applicationStatistic);
-      connection->registerService("com.gamenet.dbus");
-    }
-
-    void Application::unregisterDbusServices()
-    {
-      //INFO При использовании peer-to-peer подключения нет необходимо дерегистрировать сервис. Он должен быть всякий
-      //раз зарегистрирован для каждого нового подключения. Вызовем дерегистрацию, если используется отдельная шина.
-#ifdef USE_SESSION_DBUS
-      QDBusConnection::sessionBus()->unregisterService("com.gamenet.dbus");
-#endif
+      }
     }
 
     void Application::registerServices()
@@ -511,7 +434,6 @@ namespace GameNet {
       this->_downloaderSettings->setDownloader(this->_gameDownloader);
       this->_downloaderSettings->init();
 
-      this->_gameDownloader->setApplication(this);
       this->_gameDownloader->init();
 
       this->_downloadStatistics->init(this->_gameDownloader);
@@ -581,34 +503,6 @@ namespace GameNet {
       this->_uiProcess->start(args);
     }
 
-    void Application::setCredential(
-      const QString& connectionName,
-      const QString& applicationName,
-      const GGS::RestApi::GameNetCredential& credential)
-    {
-      // INFO 06.10.2014 На текущий момент нет возможности узнать, что подключение к Dbus было утерено.
-      // Потенциально тут есть утечка памяти, так как мы не чистим авторизацию при дисконнекте UI.
-      QString removeKey;
-      Q_FOREACH(const QString& key, this->_connectionCredential.keys()) {
-        if (this->_connectionCredential[key].first == applicationName) {
-          removeKey = key;
-          break;
-        }
-      }
-      
-      this->_connectionCredential.remove(removeKey);
-      this->_connectionCredential[connectionName].first = applicationName; 
-      this->_connectionCredential[connectionName].second = credential;
-    }
-
-    GGS::RestApi::GameNetCredential Application::credential(const QString& connectionName)
-    {
-      if (!this->_connectionCredential.contains(connectionName))
-        return GGS::RestApi::GameNetCredential();
-        
-      return this->_connectionCredential[connectionName].second;
-    }
-
     void Application::initMarketing()
     {
       QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
@@ -618,10 +512,21 @@ namespace GameNet {
       int installerKey = midSettings.value("InstKey").toInt();
       this->_marketingTarget->setInstallerKey(installerKey);
       this->_marketingTarget->setRequestInterval(1000);
-      
-      this->_marketingStatistic->setDownloader(this->_gameDownloader);
-      this->_marketingStatistic->setExecutor(this->_executor);
-      this->_marketingStatistic->init();
+    }
+
+    bool Application::executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name)
+    {
+      QString executedGame = this->_executor->executedGame();
+      if (executedGame.isEmpty())
+        return false;
+
+      Connection *connection = this->_serviceHandle->connectionLockedService(executedGame);
+      if (!connection)
+        return false;
+
+      credetial = connection->credential();
+      name = connection->applicationName();
+      return true;
     }
 
   }

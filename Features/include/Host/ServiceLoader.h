@@ -41,6 +41,9 @@ namespace GameNet {
 
       void setDownloader(GGS::GameDownloader::GameDownloadService *value);
       void setExecutor(GGS::GameExecutor::GameExecutorService *value);
+
+      void setSimpleMainExecutor(GGS::GameExecutor::GameExecutorService *value);
+      void setSecondExecutor(GGS::GameExecutor::GameExecutorService *value);
       
       void setDownloaderHookFactory(HookFactory *value);
       void setExecuterHookFactory(ExecutorHookFactory *value);
@@ -64,7 +67,10 @@ namespace GameNet {
       QHash<QString, GGS::Core::Service *> _serviceMap;
 
       GGS::GameDownloader::GameDownloadService *_downloader;
+
       GGS::GameExecutor::GameExecutorService *_executor;
+      GGS::GameExecutor::GameExecutorService *_secondExecutor; // Executor for premium second game
+      GGS::GameExecutor::GameExecutorService *_simpleMainExecutor; // Executor for main copy of game when second still alive.
 
       HookFactory *_factory;
       ExecutorHookFactory *_executorHookFactory;

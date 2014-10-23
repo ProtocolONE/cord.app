@@ -11,7 +11,9 @@
 namespace GameNet {
   namespace Host {
 
-    class GameExecutor;
+    namespace Proxy {
+      class GameExecutorProxy;
+    };
 
     namespace Bridge {
 
@@ -25,7 +27,7 @@ namespace GameNet {
         explicit ExecutorBridge(QObject *parent = 0);
         virtual ~ExecutorBridge();
 
-        void setExecutor(GameExecutor *value);
+        void setExecutor(Proxy::GameExecutorProxy *value);
         
       public slots:
 
@@ -61,7 +63,7 @@ namespace GameNet {
         void secondServiceFinished(const QString& serviceId, int finishState);
         
       private:
-        GameExecutor *_executor;
+        Proxy::GameExecutorProxy *_executor;
       };
 
     }

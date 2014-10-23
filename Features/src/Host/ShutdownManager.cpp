@@ -2,6 +2,7 @@
 #include <Host/Thetta.h>
 #include <Host/GameExecutor.h>
 #include <Host/Application.h>
+#include <Host/ConnectionManager.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -21,6 +22,7 @@ namespace GameNet {
       , _application(nullptr)
       , _singleApplication(nullptr)
       , _gameDownloadInitialized(false)
+      , _connectionManager(nullptr)
     {
     }
 
@@ -60,6 +62,12 @@ namespace GameNet {
       this->_singleApplication = value;
     }
 
+    void ShutdownManager::setConnectionManager(ConnectionManager *value)
+    {
+      Q_ASSERT(value);
+      this->_connectionManager = value;
+    }
+
     void ShutdownManager::setGameDownloadInitialized()
     {
       this->_gameDownloadInitialized = true;
@@ -67,7 +75,8 @@ namespace GameNet {
 
     void ShutdownManager::shutdown()
     {
-      this->_application->unregisterDbusServices();
+      Q_ASSERT(this->_connectionManager);
+      this->_connectionManager->shutdown();
       this->shutdownThetta();
     }
 

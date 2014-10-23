@@ -126,6 +126,11 @@ namespace GameNet {
       return this->_premiumExecutor->isGameStarted(serviceId);
     }
 
+    bool GameExecutor::isSecondGameStarted(const QString& serviceId) const
+    {
+      return this->_premiumExecutor->isSecondGameStarted(serviceId);
+    }
+
     bool GameExecutor::isAnyGameStarted() const
     {
       return this->_premiumExecutor->isAnyGameStarted();
@@ -215,6 +220,26 @@ namespace GameNet {
     void GameExecutor::shutdownSecond()
     {
       this->_premiumExecutor->shutdownSecond();
+    }
+
+    QString GameExecutor::executedGame() const
+    {
+      QString result = this->_premiumExecutor->firstRunningGame();
+
+      if (result.isEmpty())
+        result = this->_premiumExecutor->firstRunningSecondGame();
+
+      return result;
+    }
+
+    GGS::GameExecutor::GameExecutorService* GameExecutor::secondExecutor()
+    {
+      return this->_premiumExecutor->secondExecutor();
+    }
+
+    GGS::GameExecutor::GameExecutorService* GameExecutor::simpleMainExecutor()
+    {
+      return this->_premiumExecutor->simpleMainExecutor();
     }
 
   }

@@ -1,10 +1,12 @@
 #include <Host/Bridge/ExecutorBridge.h>
-#include <Host/GameExecutor.h>
 #include <Host/CredentialConverter.h>
+
+#include <Host/Proxy/GameExecutorProxy.h>
 
 #include <RestApi/GameNetCredential.h>
 
 using GGS::RestApi::GameNetCredential;
+using GameNet::Host::Proxy::GameExecutorProxy;
 
 namespace GameNet {
   namespace Host {
@@ -20,21 +22,21 @@ namespace GameNet {
       {
       }
 
-      void ExecutorBridge::setExecutor(GameExecutor *value)
+      void ExecutorBridge::setExecutor(GameExecutorProxy *value)
       {
         Q_ASSERT(value);
         this->_executor = value;
 
-        QObject::connect(value, &GameExecutor::serviceStarted,
+        QObject::connect(value, &GameExecutorProxy::serviceStarted,
           this, &ExecutorBridge::serviceStarted);
 
-        QObject::connect(value, &GameExecutor::serviceFinished,
+        QObject::connect(value, &GameExecutorProxy::serviceFinished,
           this, &ExecutorBridge::serviceFinished);
 
-        QObject::connect(value, &GameExecutor::secondServiceStarted,
+        QObject::connect(value, &GameExecutorProxy::secondServiceStarted,
           this, &ExecutorBridge::secondServiceStarted);
 
-        QObject::connect(value, &GameExecutor::secondServiceFinished,
+        QObject::connect(value, &GameExecutorProxy::secondServiceFinished,
           this, &ExecutorBridge::secondServiceFinished);
       }
 

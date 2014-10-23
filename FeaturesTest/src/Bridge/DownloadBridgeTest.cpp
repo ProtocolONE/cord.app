@@ -97,8 +97,6 @@ public:
     this->_downloadBridge.setDownloader(&this->_downloadServiceFixture);
     this->_downloadBridge.setServiceLoader(&this->_serviceLoaderFixture);
 
-    this->_downloadServiceFixture.setApplication(&this->_application);
-
     QObject::connect(&this->_downloadBridge, &DownloaderBridge::started, 
       &this->_downloadServiceFixture, &GameDownloadServiceMock::onStarted);
 
@@ -257,11 +255,6 @@ TEST_F(DownloadBridgeTest, start)
 {
   GGS::GameDownloader::StartType type = GGS::GameDownloader::StartType::Shadow;
   EXPECT_CALL(_downloadServiceFixture, start(&_service, type)).Times(1);
-
-  QString connectionName;
-  GGS::RestApi::GameNetCredential credential;
-  EXPECT_CALL(_application, credential(connectionName))
-    .WillOnce(Return(credential));
 
   _downloadBridge.start(_service.id(), static_cast<int>(type));
 }

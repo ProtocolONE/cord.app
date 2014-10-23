@@ -66,12 +66,6 @@ void ApplicationBridgeAdaptor::restartApplication(bool isMinimized)
     QMetaObject::invokeMethod(parent(), "restartApplication", Q_ARG(bool, isMinimized));
 }
 
-void ApplicationBridgeAdaptor::setCredential(const QString &applicationName, GameNet::Host::Bridge::Credential credential)
-{
-    // handle method call com.gamenet.dbus.Application.setCredential
-    QMetaObject::invokeMethod(parent(), "setCredential", Q_ARG(QString, applicationName), Q_ARG(GameNet::Host::Bridge::Credential, credential));
-}
-
 void ApplicationBridgeAdaptor::switchClientVersion()
 {
     // handle method call com.gamenet.dbus.Application.switchClientVersion

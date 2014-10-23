@@ -1,12 +1,16 @@
 #include <mainwindow.h>
 #include <Player.h>
 #include <BestInstallPath.h>
+#include <HostMessageAdapter.h>
 
 #include <viewmodel/UpdateViewModel.h>
 #include <viewmodel/ApplicationStatisticViewModel.h>
+#include <viewmodel/SettingsViewModel.h>
+#include <viewmodel/GameSettingsViewModel.h>
 
 #include <Host/CredentialConverter.h>
 #include <Host/Translation.h>
+#include <Host/ClientConnection.h>
 
 #include <Host/Dbus/DbusConnection.h>
 #include <Host/Dbus/DownloaderBridgeProxy.h>
@@ -21,9 +25,10 @@
 #include <Core/System/FileInfo.h>
 #include <Core/System/HardwareId.h>
 
-#include <RestApi/Commands/Service/GetLicense.h>
-#include <RestApi/Commands/Service/GetServices.h>
-#include <RestApi/Commands/User/GetUserMainInfo>
+#include <GameExecutor/GameExecutorService.h>
+
+#include <UpdateSystem/UpdateInfoGetterResultInterface.h>
+
 #include <RestApi/RequestFactory.h>
 
 #include <Application/WindowHelper.h>
@@ -43,6 +48,8 @@
 
 using GameNet::Host::Bridge::Credential;
 using GameNet::Host::DBus::DBusConnection;
+using GameNet::Host::ClientConnection;
+
 using GameNet::Host::Bridge::createDbusCredential;
 using GameNet::Host::Bridge::createGameNetCredential;
 
@@ -53,6 +60,10 @@ MainWindow::MainWindow(QWidget *parent)
   , _downloaderSettings(nullptr)
   , _serviceSettings(nullptr)
   , _executor(nullptr)
+  , _applicationProxy(nullptr)
+  , _applicationStatistic(nullptr)
+  , _clientConnection(nullptr)
+  , _bestInstallPath(nullptr)
 {
   this->hide();
 }
@@ -72,6 +83,15 @@ void MainWindow::initialize()
   // DBUS...
   QDBusConnection &connection = DBusConnection::bus();
   QString dbusService("com.gamenet.dbus");
+
+  this->_clientConnection = new ClientConnection(this);
+  this->_clientConnection->init();
+
+  QObject::connect(this->_clientConnection, &ClientConnection::disconnected,
+    this, &MainWindow::onWindowClose);
+
+  QObject::connect(this->_clientConnection, &ClientConnection::wrongCredential,
+    this, &MainWindow::wrongCredential);
 
   this->_applicationProxy = new ApplicationBridgeProxy(dbusService, "/application", connection, this);
   this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", connection, this);
@@ -148,7 +168,7 @@ void MainWindow::initialize()
 
   this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-  QObject::connect(&this->_restapiManager, &GGS::RestApi::RestApiManager::genericError,
+  QObject::connect(&this->_restapiManager, &GGS::RestApi::RestApiManager::genericErrorEx,
     this, &MainWindow::restApiGenericError);
 
   messageAdapter = new QmlMessageAdapter(this);
@@ -326,8 +346,8 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
 
   this->_credential = credential;
   this->_restapiManager.setCridential(credential);
-  
-  this->_applicationProxy->setCredential("QGNA", createDbusCredential(credential));
+
+  this->_clientConnection->setCredential(credential);
 }
 
 void MainWindow::restartApplication(bool shouldStartWithSameArguments)
@@ -628,7 +648,7 @@ void MainWindow::onServiceFinished(const QString &serviceId, int state)
 
   switch(state) {
   case GGS::GameExecutor::AuthorizationError:
-    emit this->needAuth();
+    emit this->wrongCredential(this->_credential.userId());
     break;
   case GGS::GameExecutor::ServiceAccountBlockedError:
     GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
@@ -685,65 +705,29 @@ void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, co
   emit this->downloaderServiceStatusMessageChanged(serviceId, message);
 }
 
-void MainWindow::startBackgroundCheckUpdate()
-{
-  this->_checkUpdateHelper.checkUpdate();
-}
-
-int MainWindow::checkUpdateInterval()
-{
-  QDateTime now = QDateTime::currentDateTimeUtc();
-  now = now.addSecs(14400); // Moscow time UTC+4
-  int hour = now.time().hour();
-  if (hour >= 14)
-    return 10800000;
-
-  return 1800000;
-}
-
-void MainWindow::checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result)
-{
-  switch(result)
-  {
-  case GGS::UpdateSystem::CheckUpdateHelper::Error:
-    QTimer::singleShot(300000, &this->_checkUpdateHelper, SLOT(checkUpdate()));
-    break;
-  case GGS::UpdateSystem::CheckUpdateHelper::FoundUpdate: {
-    DEBUG_LOG << "New update found. Restart required.";
-
-    if (!this->_executor->isAnyGameStarted()
-      && !this->_downloader->isAnyServiceInProgress()) {
-
-        if (this->isVisible())
-          GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
-
-        this->restartApplication(false);
-        return;
-    }
-
-    QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
-                                                          }
-                                                          break;
-  case GGS::UpdateSystem::CheckUpdateHelper::NotFound:
-    QTimer::singleShot(this->checkUpdateInterval(), &this->_checkUpdateHelper, SLOT(checkUpdate()));
-    break;
-  default:
-    DEBUG_LOG << "Unknown result " << result;
-    break;
-  }
-}
-
-void MainWindow::restApiGenericError(GGS::RestApi::CommandBase::Error error, QString message)
+void MainWindow::restApiGenericError(
+  GGS::RestApi::CommandBase::Error error,
+  QString message,
+  GGS::RestApi::CommandBase *command)
 {
   using GGS::RestApi::CommandBase;
+
   switch(error) {
   case CommandBase::AuthorizationFailed: // break пропущен не спроста
   case CommandBase::AccountNotExists:
   case CommandBase::AuthorizationLimitExceed:
   case CommandBase::UnknownAccountStatus:
-    emit this->needAuth();
     break;
+  default:
+    return; // ignore all other error 
   }
+
+  const QMap<QString, QString>* params = command->commandParameters();
+  QString userId = params->value("userId", "");
+  if (userId.isEmpty())
+    return;
+
+  emit this->wrongCredential(userId);
 }
 
 void MainWindow::showEvent(QShowEvent* event)
@@ -943,6 +927,8 @@ bool MainWindow::executeSecondService(QString id, QString userId, QString appKey
   credential.setUserId(userId);
   credential.setAppKey(appKey);
   // set cookie if needed 
+
+  this->_clientConnection->setSecondCredential(credential);
 
   this->_executor->executeSecond(
     id,

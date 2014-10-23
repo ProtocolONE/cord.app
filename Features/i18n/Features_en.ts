@@ -23,4 +23,15 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>GameNet::Host::ClientConnection</name>
+    <message>
+        <source>DBUS_DISCONNECTED_TITLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DBUS_DISCONNECTED_TEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

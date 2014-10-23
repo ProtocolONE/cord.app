@@ -5,13 +5,14 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
+namespace GGS {
+  namespace Core {
+    class Service;
+  }
+}
+
 namespace GameNet {
   namespace Host {
-
-    namespace Proxy {
-      class GameExecutorProxy;
-      class DownloaderProxy;
-    }
     
     class MarketingStatistic : public QObject
     {
@@ -19,37 +20,17 @@ namespace GameNet {
       explicit MarketingStatistic(QObject *parent = 0);
       virtual ~MarketingStatistic();
 
-      void init();
+      void onServiceStarted(const QString& serviceId);
+      void onServiceFinished(const QString& serviceId, int finishState);
+      void onSecondServiceStarted(const QString& serviceId);
+      void onSecondServiceFinished(const QString& serviceId, int finishState);
 
-      void setDownloader(Proxy::DownloaderProxy *value);
-      void setExecutor(Proxy::GameExecutorProxy *value);
+      void onGameDownloadStarted(const GGS::Core::Service *service);
+      void onGameTorrentDownloadFinished(const GGS::Core::Service *service);
+      void onGameDownloadFinished(const GGS::Core::Service *service);
 
     private:
       void setCredential(QVariantMap &params, const GGS::RestApi::GameNetCredential &credetial);
-
-      void onGameStarted(
-        const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential credetial);
-
-      void onGameFinished(
-        const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential credetial);
-
-      void onGameDownloadStarted(
-        const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential credetial);
-
-      void onGameTorrentDownloadFinished(
-        const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential credetial);
-
-      void onGameDownloadFinished(
-        const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential credetial);
-
-      Proxy::DownloaderProxy *_downloader;
-      Proxy::GameExecutorProxy *_executor;
-
     };
 
   }

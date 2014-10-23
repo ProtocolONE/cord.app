@@ -9,17 +9,22 @@
 
 namespace GameNet {
   namespace Host {
+
+    class Connection;
+    class ServiceHandle;
+
     namespace Proxy {
 
-      class GameExecutorProxy :
-        public GameNet::Host::GameExecutor
+      class GameExecutorProxy : public QObject
       {
         Q_OBJECT
       public:
         explicit GameExecutorProxy(QObject *parent = 0);
         virtual ~GameExecutorProxy();
 
-        virtual void init();
+        void setExecutor(GameNet::Host::GameExecutor *value);
+        void setConnection(Connection *value);
+        void setServiceHandle(ServiceHandle *value);
 
         virtual void execute(
           const QString& serviceId,
@@ -30,14 +35,19 @@ namespace GameNet {
           const GGS::RestApi::GameNetCredential& credetial,
           const GGS::RestApi::GameNetCredential& secondCredetial);
 
-      signals:
-        void startedWithCredential(
-          const QString& serviceId, 
-          const GGS::RestApi::GameNetCredential credetial);
+        virtual bool isGameStarted(const QString& serviceId) const;
+        virtual bool isAnyGameStarted() const;
+        virtual bool canExecuteSecond(const QString& serviceId) const;
+        virtual void shutdownSecond();
 
-        void finishedWithCredential(
-          const QString& serviceId, 
-          const GGS::RestApi::GameNetCredential credetial);
+        GGS::RestApi::GameNetCredential gameCredential(const QString& serviceId);
+        GGS::RestApi::GameNetCredential secondGameCredential(const QString& serviceId);
+
+      signals:
+        void serviceStarted(const QString& serviceId);
+        void serviceFinished(const QString& serviceId, int finishState);
+        void secondServiceStarted(const QString& serviceId);
+        void secondServiceFinished(const QString& serviceId, int finishState);
 
       private:
         void onServiceStarted(const QString& serviceId);
@@ -50,8 +60,13 @@ namespace GameNet {
           const GGS::RestApi::GameNetCredential& credetial,
           const GGS::RestApi::GameNetCredential& secondCredetial  = GGS::RestApi::GameNetCredential());
 
+        Connection *_connetion;
+        GameNet::Host::GameExecutor *_executor;
+        ServiceHandle *_serviceHandle;
+
         QHash<QString, GGS::RestApi::GameNetCredential> _executedGame;
         QHash<QString, GGS::RestApi::GameNetCredential> _executedSecondGame;
+        
      };
 
     }

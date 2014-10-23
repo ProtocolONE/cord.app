@@ -28,6 +28,8 @@ namespace GameNet {
       : QObject(parent)
       , _downloader(nullptr)
       , _executor(nullptr)
+      , _secondExecutor(nullptr)
+      , _simpleMainExecutor(nullptr)
       , _factory(nullptr)
       , _executorHookFactory(nullptr)
       , _gameArea(Service::Live)
@@ -48,6 +50,18 @@ namespace GameNet {
     {
       Q_ASSERT(value);
       this->_executor = value;
+    }
+
+    void ServiceLoader::setSimpleMainExecutor(GameExecutorService *value)
+    {
+      Q_ASSERT(value);
+      this->_simpleMainExecutor = value;
+    }
+
+    void ServiceLoader::setSecondExecutor(GameExecutorService *value)
+    {
+      Q_ASSERT(value);
+      this->_secondExecutor = value;
     }
 
     void ServiceLoader::setDownloaderHookFactory(HookFactory *value)
@@ -193,6 +207,8 @@ namespace GameNet {
     void ServiceLoader::initExecutorHooks(const Service *service, const ServiceDescription& description)
     {
       Q_ASSERT(this->_executor);
+      Q_ASSERT(this->_secondExecutor);
+      Q_ASSERT(this->_simpleMainExecutor);
 
       using GGS::GameExecutor::HookInterface;
       using GGS::GameExecutor::Hook::SendPlayingInfo;
@@ -215,6 +231,14 @@ namespace GameNet {
         HookInterface *playing = this->_executorHookFactory->create(SendPlayingInfo::id());
         Q_ASSERT(playing);
         this->_executor->addHook(*service, playing, 0);
+
+        playing = this->_executorHookFactory->create(SendPlayingInfo::id());
+        Q_ASSERT(playing);
+        this->_secondExecutor->addHook(*service, playing, 0);
+
+        playing = this->_executorHookFactory->create(SendPlayingInfo::id());
+        Q_ASSERT(playing);
+        this->_simpleMainExecutor->addHook(*service, playing, 0);
       }
     }
 
@@ -234,6 +258,7 @@ namespace GameNet {
 
       settings.setValue("installDate", QDateTime::currentDateTime());
     }
+
 
   }
 }

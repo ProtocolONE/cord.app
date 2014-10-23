@@ -29,4 +29,16 @@
 &lt;/ul&gt;</translation>
     </message>
 </context>
+<context>
+    <name>GameNet::Host::ClientConnection</name>
+    <message>
+        <source>DBUS_DISCONNECTED_TITLE</source>
+        <translatorcomment>Произошла ошибка. Мы вынуждены закрыть приложение. Пожалуйста, запустите его снова чтобы продолжить.</translatorcomment>
+        <translation>Внимание</translation>
+    </message>
+    <message>
+        <source>DBUS_DISCONNECTED_TEXT</source>
+        <translation></translation>
+    </message>
+</context>
 </TS>

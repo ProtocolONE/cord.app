@@ -2,13 +2,8 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QHash>
-
-#include <RestApi/GameNetCredential.h>
 
 class QTranslator;
-class QDBusConnection;
 
 namespace Features {
   namespace GameDownloader {
@@ -30,6 +25,7 @@ namespace GGS {
   namespace RestApi {
     class RestApiManager;
     class FakeCache;
+    class GameNetCredential;
   }
 
   namespace Marketing {
@@ -56,13 +52,9 @@ namespace GameNet {
     class MarketingStatistic;
     class CommandLineManager;
     class Translation;
-
-    namespace Bridge {
-      class DownloaderBridge;
-      class DownloaderSettingsBridge;
-      class ServiceSettingsBridge;
-      class ExecutorBridge;
-    }
+    class MessageAdapter;
+    class ConnectionManager;
+    class ServiceHandle;
 
     namespace Proxy {
       class GameExecutorProxy;
@@ -78,25 +70,15 @@ namespace GameNet {
 
       void init();
       void finalize();
+
       void setSingleApplication(GGS::Application::SingleApplication *value);
 
       virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
-      void unregisterDbusServices();
+
       void shutdown();
-
-      virtual void setCredential(
-        const QString& connectionName,
-        const QString& applicationName,
-        const GGS::RestApi::GameNetCredential& credential);
-
-      virtual GGS::RestApi::GameNetCredential credential(const QString& connectionName);
 
     public slots:
       virtual bool isInitCompleted();
-
-      void setInitFinished();
-      void setUpdateFinished();
-
       virtual void switchClientVersion();
 
     private slots:
@@ -104,34 +86,33 @@ namespace GameNet {
 
     signals:
       void initCompleted();
+      void restartUIRequest();
       
     private:
+      friend class ConnectionManager;
+
+      void setInitFinished();
+      void setUpdateFinished();
+
       void startUi();
       void registerServices();
       void initGameDownloader();
       void registerDbusServices();
-      void registerDBusObjects(QDBusConnection *connection);
 
       void initRestApi();
       void initMarketing();
 
       GGS::Application::SingleApplication *_singleApplication;
       ServiceLoader *_serviceLoader;
-      Proxy::DownloaderProxy *_gameDownloader;
+      GGS::GameDownloader::GameDownloadService *_gameDownloader;
 
       DownloaderSettings *_downloaderSettings;
       ServiceSettings *_serviceSettings;
-      Proxy::GameExecutorProxy *_executor;
+      GameExecutor *_executor;
       ShutdownManager *_shutdown;
       HookFactory *_downloaderHookFactory;
       ExecutorHookFactory *_executorHookFactory;
-
-      Bridge::DownloaderBridge* _downloaderBridge;
-      Bridge::DownloaderSettingsBridge *_downloaderSettingsBridge;
-      Bridge::ServiceSettingsBridge *_serviceSettingsBridge;
-      Bridge::ExecutorBridge *_excutorBridge;
-      Bridge::UpdateManagerBridge* _updateManagerBridge;
-      Bridge::ApplicationBridge* _applicationBridge;
+      ConnectionManager *_connectionManager;
 
       Features::GameDownloader::GameDownloadStatistics *_downloadStatistics;
       Features::StopDownloadServiceWhileExecuteAnyGame *_stopDownloadServiceOnExecuteGame;
@@ -147,11 +128,11 @@ namespace GameNet {
       GGS::Marketing::MarketingTarget *_marketingTarget;
       CommandLineManager *_commandLineManager;
       Translation *_translation;
+      MessageAdapter *_messageAdapter;
+      ServiceHandle *_serviceHandle;
 
       bool _initFinished;
       bool _updateFinished;
-
-      QHash<QString, QPair<QString, GGS::RestApi::GameNetCredential> > _connectionCredential;
     };
 
   }
