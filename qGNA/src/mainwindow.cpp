@@ -404,6 +404,8 @@ void MainWindow::logout()
   this->_credential.setCookie("");
 
   this->_restapiManager.setCridential(this->_credential);
+  this->_premiumExecutor.terminateAll();
+}
 
   // UNDONE QGNA-1081 Необходимо дописать функционал на закрытие игры.
   //this->_premiumExecutor.terminateAll();
