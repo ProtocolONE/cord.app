@@ -5,23 +5,6 @@
 
 #include <Features/RestApi/ServiceHasAccess.h>
 
-#include <viewmodel/UpdateViewModel.h>
-#include <viewmodel/ApplicationStatisticViewModel.h>
-#include <viewmodel/SettingsViewModel.h>
-#include <viewmodel/GameSettingsViewModel.h>
-
-#include <Host/CredentialConverter.h>
-#include <Host/Translation.h>
-#include <Host/ClientConnection.h>
-
-#include <Host/Dbus/DbusConnection.h>
-#include <Host/Dbus/DownloaderBridgeProxy.h>
-#include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
-#include <Host/Dbus/ServiceSettingsBridgeProxy.h>
-#include <Host/Dbus/ExecutorBridgeProxy.h>
-#include <Host/Dbus/ApplicationBridgeProxy.h>
-#include <Host/Dbus/ApplicationStatisticBridgeProxy.h>
-
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
 #include <Core/System/FileInfo.h>
@@ -555,8 +538,17 @@ bool MainWindow::executeService(QString id)
     return false;
   }
 
-  GGS::RestApi::GameNetCredential baseCredential = 
-    GGS::RestApi::RestApiManager::commonInstance()->credential();
+  if (id == "300002010000000000" || 
+    id == "300003010000000000" || 
+    id == "300004010000000000" || 
+    id == "300005010000000000" || 
+    id == "300009010000000000" || 
+    id == "100009010000000000" ||
+    id == "100003010000000000" ||
+    id == "300012010000000000" ||
+    id == "30000000000") {
+      this->_premiumExecutor.executeMain(service);
+  }
 
   this->_executor->execute(id, createDbusCredential(baseCredential));
   return true;
@@ -597,6 +589,17 @@ void MainWindow::downloadButtonStart(QString serviceId)
 {
   qDebug() << "downloadButtonStart " << serviceId;
 
+  GGS::Core::Service *service = this->getService(serviceId);
+  if (!service)
+    return;
+
+  if (serviceId == "30000000000" && !this->hasFriendsAndFamilyAccess(serviceId)) {
+    //INFO Парни, этот код нужен ровно на 3 суток. Простите, за 100500 но очень не хочется добавлять сигнал отдельный
+    //чтобы его тут же удалить. https://jira.gamenet.ru:8443/browse/QGNA-1037
+    emit this->serviceFinished(serviceId, 100500);
+    return;
+  }
+  
   emit this->downloadButtonStartSignal(serviceId); 
 
   if (!this->_serviceSettings->isDownloadable(serviceId)) {
@@ -1107,3 +1110,30 @@ void MainWindow::switchClientVersion()
 {
   this->_applicationProxy->switchClientVersion();
 }
+
+bool MainWindow::silent()
+{
+  return this->_silentMode.isEnabled();
+}
+
+bool MainWindow::hasFriendsAndFamilyAccess(const QString &serviceId)
+{
+  QEventLoop loop;
+  int hasAccess = 0;
+
+  ServiceHasAccess *command = new ServiceHasAccess(this);
+  command->setServiceId(serviceId);
+
+  QObject::connect(command, &ServiceHasAccess::result, [command, &hasAccess]() {
+    hasAccess = command->hasAccess();
+    command->deleteLater();
+  });
+
+  QObject::connect(command, &ServiceHasAccess::result, &loop, &QEventLoop::quit);
+
+  command->execute();
+  loop.exec();
+    
+  return hasAccess == 1;  
+}
+

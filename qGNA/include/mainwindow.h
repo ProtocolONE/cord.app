@@ -309,9 +309,9 @@ private:
   void prepairGameDownloader();
   void postUpdateInit();
 
-  GGS::RestApi::FakeCache _fakeCache;
-  GGS::RestApi::GameNetCredential _credential;
-  GGS::RestApi::RestApiManager _restapiManager;
+  bool hasFriendsAndFamilyAccess(const QString &serviceId); 
+
+  GGS::Core::Service* getService(const QString& id);
 
   QmlMessageAdapter* messageAdapter;
   SettingsViewModel* settingsViewModel;
