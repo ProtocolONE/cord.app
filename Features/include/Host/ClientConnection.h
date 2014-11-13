@@ -18,7 +18,7 @@ namespace GameNet {
     {
       Q_OBJECT
     public:
-      explicit ClientConnection(QObject* parent = 0);
+      ClientConnection(const QString &name, QObject* parent = 0);
       virtual ~ClientConnection();
 
       void init();
@@ -38,6 +38,7 @@ namespace GameNet {
       QTimer _timeoutTimer;
       QTimer _pingpongTimer;
       ConnectionBridgeProxy *_connection;
+      QString _appName;
     };
 
   }

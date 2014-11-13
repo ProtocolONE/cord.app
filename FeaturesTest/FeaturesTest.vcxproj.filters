@@ -109,6 +109,9 @@
     <ClCompile Include="src\Bridge\ServiceHandleBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Integration\Zzima\ZzimaCredentialConverterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\TestEventLoopFinisher.h">

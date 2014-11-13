@@ -9,6 +9,7 @@ namespace GameNet {
 
     class Application;
     class Connection;
+    class MutexHandle;
 
     namespace DBus {
       class DBusServer;
@@ -43,9 +44,14 @@ namespace GameNet {
       void registerUpdateManager(Connection * connection);
       void registerServiceHandle(Connection * connection);
 
+#ifdef ZZIMA_INTEGRATION
+      void registerServicesForZzima(Connection * connection);
+      void registerZzimaExecutor(Connection* connection);
+#endif
+
       Application *_application;
       QMap<QString, Connection*> _connections;
-
+      MutexHandle *_sharedMutex;
     };
 
   }

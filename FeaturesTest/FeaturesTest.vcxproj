@@ -297,6 +297,9 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plug
     <ClCompile Include="src\GameDownloader\DownloadStatsPub.cpp" />
     <ClCompile Include="src\GameDownloader\DownloadStatsTest.cpp" />
     <ClCompile Include="src\GameDownloader\ExternalIpTest.cpp" />
+    <ClCompile Include="src\Integration\Zzima\ZzimaCredentialConverterTest.cpp" />
+    <ClCompile Include="src\ServiceDescriptionTest.cpp" />
+    <ClCompile Include="src\ServiceLoaderTest.cpp" />
     <ClCompile Include="src\SingleShotFunctor.cpp" />
     <ClCompile Include="src\StopDownloadServiceWhileExecuteAnyGameTest.cpp" />
     <ClCompile Include="src\TestEventLoopFinisher.cpp" />

@@ -1,10 +1,9 @@
 #pragma once
 
 #include <QtCore/QObject>
-
-#include <QtNetwork/QNetworkAccessManager>
-
 #include <QtNetwork/QNetworkReply>
+
+class QNetworkAccessManager;
 
 namespace GameNet {
 
@@ -27,7 +26,7 @@ namespace GameNet {
 
   private:
     QString _targetFilePath;
-    QNetworkAccessManager _networkAccessManager;
+    QNetworkAccessManager *_networkAccessManager;
   };
 
 }

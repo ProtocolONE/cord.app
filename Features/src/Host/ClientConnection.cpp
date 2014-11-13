@@ -19,9 +19,10 @@ using GameNet::Host::Bridge::createDbusCredential;
 namespace GameNet {
   namespace Host {
 
-    ClientConnection::ClientConnection(QObject* parent /*= 0*/)
+    ClientConnection::ClientConnection(const QString &name, QObject* parent /*= 0*/)
       : QObject(parent)
       , _connection(nullptr)
+      , _appName(name)
     {
       QObject::connect(&this->_timeoutTimer, &QTimer::timeout,
         this, &ClientConnection::timeoutTick);
@@ -44,7 +45,7 @@ namespace GameNet {
       QString dbusService("com.gamenet.dbus");
 
       this->_connection = new ConnectionBridgeProxy(dbusService, "/connection", connection, this);
-      this->_connection->setApplicationName("QGNA");
+      this->_connection->setApplicationName(this->_appName);
 
       QObject::connect(this->_connection, &ConnectionBridgeProxy::pong,
         this, &ClientConnection::onPong);

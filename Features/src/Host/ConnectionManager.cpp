@@ -34,6 +34,12 @@
 #include <Host/Dbus/MessageAdapterBridgeAdaptor.h>
 #include <Host/Dbus/ServiceHandleBridgeAdaptor.h>
 
+#ifdef ZZIMA_INTEGRATION
+#include <Features/Integration/Zzima/ZzimaGameExecutorAdapter.h>
+#include <Features/Integration/Zzima/ZzimaExecutorBridge.h>
+#include <Features/Integration/Zzima/Dbus/ZzimaExecutorBridgeAdaptor.h>
+#endif
+
 #include <RestApi/RestApiManager.h>
 
 #include <QtDBus/QDBusConnection>
@@ -44,9 +50,43 @@ using GGS::RestApi::RestApiManager;
 namespace GameNet {
   namespace Host {
 
+    class MutexHandle 
+    {
+    public:
+      MutexHandle(std::string name)
+        : _name(name)
+        , _handle(INVALID_HANDLE_VALUE)
+      {
+      }
+
+      ~MutexHandle() 
+      {
+        this->close();
+      }
+
+      void open()
+      {
+        this->_handle = CreateMutexA(0, 0, this->_name.c_str());
+      }
+
+      void close() 
+      {
+        if (this->_handle == INVALID_HANDLE_VALUE || this->_handle == NULL)
+          return;
+
+        CloseHandle(this->_handle);
+        this->_handle = INVALID_HANDLE_VALUE;
+      }
+
+    private:
+      HANDLE _handle;
+      std::string _name;
+    };
+
     ConnectionManager::ConnectionManager(QObject *parent /*= 0*/)
       : QObject(parent)
       , _application(nullptr)
+      , _sharedMutex(new MutexHandle("Global\\GameNet_{832D7C60-7B55-4e5d-99F6-1CC18A59F86B}"))
     {
     }
 
@@ -103,6 +143,8 @@ namespace GameNet {
       });
 #endif
 
+      this->_sharedMutex->open();
+      
       return true;
     }
 
@@ -112,8 +154,14 @@ namespace GameNet {
       const QString& applicationName = connection->applicationName();
       this->_connections[applicationName] = connection;
 
-      if (applicationName == "QGNA")
+      if (applicationName == "QGNA"){
         this->registerServicesForQGNA(connection);
+      }
+#ifdef ZZIMA_INTEGRATION
+      else if (applicationName == "zzima"){
+        this->registerServicesForZzima(connection);
+      }
+#endif
     }
 
     void ConnectionManager::registerServicesForQGNA(Connection * connection)
@@ -219,11 +267,11 @@ namespace GameNet {
       QObject::connect(executor, &Proxy::GameExecutorProxy::secondServiceFinished,
         this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceFinished);
 
-      Bridge::ExecutorBridge* excutorBridge = new Bridge::ExecutorBridge(connection);
-      excutorBridge->setExecutor(executor);
+      Bridge::ExecutorBridge* executorBridge = new Bridge::ExecutorBridge(connection);
+      executorBridge->setExecutor(executor);
 
-      new ExecutorBridgeAdaptor(excutorBridge);
-      connection->registerObject("/executor", excutorBridge);
+      new ExecutorBridgeAdaptor(executorBridge);
+      connection->registerObject("/executor", executorBridge);
     }
 
     void ConnectionManager::registerUpdateManager(Connection* connection)
@@ -268,6 +316,47 @@ namespace GameNet {
 
       connection->deleteLater();
     }
+
+#ifdef ZZIMA_INTEGRATION
+    void ConnectionManager::registerServicesForZzima(Connection * connection)
+    {
+      this->registerDownloader(connection);
+      this->registerDownloaderSettings(connection);
+      this->registerServiceSettings(connection);
+      this->registerZzimaExecutor(connection);
+    }
+
+    void ConnectionManager::registerZzimaExecutor(Connection * connection)
+    {
+      using namespace GameNet::Integration::Zzima;
+
+      Proxy::GameExecutorProxy *executorProxy = new Proxy::GameExecutorProxy(connection);
+      executorProxy->setConnection(connection);
+      executorProxy->setExecutor(this->_application->_executor);
+      executorProxy->setServiceHandle(this->_application->_serviceHandle);
+
+      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::serviceStarted,
+        this->_application->_marketingStatistic, &MarketingStatistic::onServiceStarted);
+
+      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::serviceFinished,
+        this->_application->_marketingStatistic, &MarketingStatistic::onServiceFinished);
+
+      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::secondServiceStarted,
+        this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceStarted);
+
+      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::secondServiceFinished,
+        this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceFinished);
+
+      ZzimaGameExecutorAdapter *adapter = new ZzimaGameExecutorAdapter(connection);
+      adapter->setProxy(executorProxy);
+
+      ZzimaExecutorBridge* executorBridge = new ZzimaExecutorBridge(connection);
+      executorBridge->setAdapter(adapter);
+
+      new ZzimaExecutorBridgeAdaptor(executorBridge);
+      connection->registerObject("/zzimaexecutor", executorBridge);
+    }
+#endif
 
   }
 }

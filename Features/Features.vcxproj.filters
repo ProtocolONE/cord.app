@@ -105,12 +105,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridge.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridge.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -204,9 +198,6 @@
     <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridge.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Host\Bridge\ServiceSettingsBridge.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -285,18 +276,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeProxy.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeAdaptor.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -334,12 +313,6 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ExecutorBridgeProxy.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeAdaptor.cpp">
@@ -606,83 +579,155 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ClientConnection.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\DADownloaderHook.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridge.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridge.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutorAdapter.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutorAdapter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Integration\ZzimaExecutorBridge.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Integration\ZzimaGameExecutorAdapter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Integration\ZzimaCredentialConverter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaCredentialConverter.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaCredentialConverter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridgeProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridgeProxy.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Integration\Dbus\ZzimaExecutorBridgeProxy.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridgeAdaptor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridgeAdaptor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Integration\Dbus\ZzimaExecutorBridgeAdaptor.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ExecutorBridgeProxy.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ExecutorBridgeAdaptor.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridge.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_executorbridge.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridgeadaptor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_executorbridgeadaptor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridgeproxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_executorbridgeproxy.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DADownloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameNetDownloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_IPCBridgeProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_TimeOut.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaConnection.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaLauncher.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DADownloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GameNetDownloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_IPCBridgeProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_TimeOut.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaConnection.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaLauncher.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Integration\TimeOut.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Integration\ZZima\DADownloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DADownloaderHook.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_DADownloaderHook.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\DADownloader.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DADownloader.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DADownloader.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="src\Integration\ZZima\DADownloaderHook.cpp">
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\Dbus\IPCBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_IPCBridgeProxy.cpp">
       <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_IPCBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\ZzimaConnection.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaConnection.cpp">
       <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaConnection.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\TimeOut.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_TimeOut.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_TimeOut.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor.cpp">
       <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files</Filter>
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\ZzimaLauncher.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaLauncher.cpp">
       <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaLauncher.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameNetDownloader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameNetDownloader.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="src\Features\GameNetDownloader.cpp">
       <Filter>Generated Files</Filter>
@@ -755,9 +800,6 @@
     <CustomBuild Include="include\Host\Bridge\DownloaderSettingsBridge.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\ExecutorBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\Host\Bridge\ServiceSettingsBridge.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -813,12 +855,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ExecutorBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ExecutorBridgeProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeAdaptor.h">
@@ -914,28 +950,52 @@
     <CustomBuild Include="include\Host\ClientConnection.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\DADownloaderHook.h">
+    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaExecutorBridge.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\DADownloader.h">
+    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaGameExecutorAdapter.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\Dbus\IPCBridgeProxy.h">
+    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaCredentialConverter.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaConnection.h">
+    <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\TimeOut.h">
+    <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeAdaptor.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor.h">
+    <CustomBuild Include="include\host\bridge\executorbridge.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\host\dbus\executorbridgeadaptor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\host\dbus\executorbridgeproxy.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor_p.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h">
+    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\TimeOut.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\ZZima\ZzimaConnection.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\ZZima\Dbus\IPCBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\ZZima\DADownloaderHook.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\ZZima\DADownloader.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\GameNetDownloader.h">
