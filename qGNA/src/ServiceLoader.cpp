@@ -40,8 +40,7 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initService("300012010000000000", "http://fs0.gamenet.ru/update/reborn/", "Reborn");
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
-  this->initService("300004010000000000", "http://fs0.gamenet.ru/update/rot/", "RageofTitans");
-
+  
   this->initService("30000000000", "http://fs0.gamenet.ru/update/bd/", "BlackDesert");
 
   //this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
@@ -51,7 +50,6 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initFJService();
   //this->initBDService();
 
-  this->_gameDownloader->registerHook("300004010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300009010000000000", -1, -1, &this->_caDistIntegrity);
 }
@@ -72,7 +70,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
   service->setIsDownloadable(true);
   service->setName(name);
 
-  bool hasDownloadPath = (id == "300004010000000000" || id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000");
+  bool hasDownloadPath = (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000");
   service->setHashDownloadPath(hasDownloadPath);
 
   QString root = QCoreApplication::applicationDirPath();
@@ -98,7 +96,7 @@ void ServiceLoader::initService(const QString& id, const QString& torrentUrl, co
 
   MemoryProtector_CheckFunction3(0x0A08C78A, 0x171DD8F4, 0x0DD60760, 0x37e12d6a);
 
-  if (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000" || id == "300004010000000000")
+  if (id == "300002010000000000" || id == "300009010000000000" || id == "100009010000000000")
     service->setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
   else
     service->setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
@@ -258,17 +256,7 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
     QString injectedDll2 = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
 #endif
 
-    url.addQueryItem("executorHelper", injectedDll2);
-
-
-
-
-  } else if (id == "300004010000000000") { // RoT
-    url.setScheme("exe");
-    url.setPath(QString("%1/%2/bin/tyj.exe").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("workingDir", QString("%1/%2/bin/").arg(currentInstallPath, service->areaString()));
-    url.addQueryItem("args", "-sa UserId=%userId%%appKey% -sa Token=%token%");
-    service->setGameId("72");
+    query.addQueryItem("executorHelper", injectedDll2);
   } else if (id == "30000000000") { // Bd
     url.setScheme("exe");
 
@@ -306,10 +294,6 @@ void ServiceLoader::setServiceSettings(ServiceSettingsBridgeProxy *value)
 {
   using namespace GGS::GameExecutor::Hook;
   using namespace GGS::GameDownloader::Hooks;
-
-  // 26.06.2013 Так как старых ГНА уже очень мало, и история со всплывашкой в этой хуке мешает гайду, он отключен.
-  //if (id != "300007010000000000")
-  //  this->_gameDownloaderBuilder->gameDownloader().registerHook(id, 100, 0, &this->_oldGameClientMigrate);
 
   if (id == "300012010000000000") { // reborn
     this->_gameExecutorService->addHook(*service, new DisableDEP(service), 0);
@@ -357,7 +341,7 @@ void ServiceLoader::setServiceSettings(ServiceSettingsBridgeProxy *value)
     //  this->_gameExecutorService->addHook(*service, new GGS::GameExecutor::Hook::DisableAeroHook(service));
   }
 
-  if (id == "300004010000000000" || id == "300005010000000000" )
+  if (id == "300005010000000000" )
     service->setExternalDependencyList("dxwebsetup.exe,/Q");
 }
 
@@ -485,7 +469,6 @@ bool ServiceLoader::anyLicenseAccepted()
   QStringList ids;
   ids << "300002010000000000"
     << "300003010000000000"
-    << "300004010000000000"
     << "300005010000000000"
     << "300009010000000000"
     << "300012010000000000"

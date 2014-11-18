@@ -392,8 +392,17 @@ void MainWindow::logout()
   this->_premiumExecutor.terminateAll();
 }
 
-  // UNDONE QGNA-1081 Необходимо дописать функционал на закрытие игры.
-  //this->_premiumExecutor.terminateAll();
+void MainWindow::initServices()
+{
+  this->_serviceLoader.setGameDownloader(&this->_gameDownloader);
+  this->_serviceLoader.setExecutor(&this->_gameExecutorService);
+  this->_serviceLoader.init(this->_gameArea, this->_applicationArea);
+
+  this->_gameExecutorService.addHook(
+    *this->_serviceLoader.getService("300005010000000000"), 
+    this->_enterNickViewModel, 0);
+
+  this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
 }
 
 void MainWindow::prepairGameDownloader()
@@ -540,7 +549,6 @@ bool MainWindow::executeService(QString id)
 
   if (id == "300002010000000000" || 
     id == "300003010000000000" || 
-    id == "300004010000000000" || 
     id == "300005010000000000" || 
     id == "300009010000000000" || 
     id == "100009010000000000" ||
