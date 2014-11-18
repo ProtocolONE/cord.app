@@ -28,6 +28,16 @@ void GetDirectoryDialog::getDirectory(const QString& serviceName, const QString&
   dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
   dialog->setFileMode(QFileDialog::Directory);
 
+  /*
+    QGNA-919
+    Диалог выбора папки в стандартном режиме (QFileDialog::Directory), игнорирует эту опцию опцию в Windows XP, и все равно 
+    ожидает выделения файла.
+    После замены вида диалога на DirectoryOnly, все работает как надо
+  */
+  if (QSysInfo::windowsVersion() == QSysInfo::WV_XP) {
+    dialog->setFileMode(QFileDialog::DirectoryOnly);
+  }
+
   QObject::connect(dialog, &QDialog::finished, [=](int result) {
     dialog->deleteLater();
         
