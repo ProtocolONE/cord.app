@@ -33,12 +33,11 @@
     <name>GameNet::Host::ClientConnection</name>
     <message>
         <source>DBUS_DISCONNECTED_TITLE</source>
-        <translatorcomment>Произошла ошибка. Мы вынуждены закрыть приложение. Пожалуйста, запустите его снова чтобы продолжить.</translatorcomment>
         <translation>Внимание</translation>
     </message>
     <message>
         <source>DBUS_DISCONNECTED_TEXT</source>
-        <translation></translation>
+        <translation>Произошла ошибка. Мы вынуждены закрыть приложение. Пожалуйста, запустите его снова чтобы продолжить.</translation>
     </message>
 </context>
 </TS>

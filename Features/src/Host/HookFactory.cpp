@@ -6,6 +6,9 @@
 
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
 
+#include <Integration/ZZima/DADownloaderHook.h>
+#include <Integration/ZZima/ZZimaConnection.h>
+
 using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
 using Features::Thetta::DistrIntegrity;
@@ -18,6 +21,7 @@ namespace GameNet {
       : QObject(parent)
       , _serviceSettings(nullptr)
       , _serviceLoader(nullptr)
+      , _zzimaConnection(nullptr)
     {
     }
 
@@ -44,6 +48,11 @@ namespace GameNet {
         hook->setServiceSettings(this->_serviceSettings);
         hook->setServiceLoader(this->_serviceLoader);
         result = hook;
+      } else if (guid == "9F6083BB-D03D-45A9-89FE-2D6EF098544A") {
+        GameNet::Integration::ZZima::DADownloaderHook *hook = new GameNet::Integration::ZZima::DADownloaderHook(this);
+        hook->setZzimaConnection(this->_zzimaConnection);
+        hook->setServiceSettings(this->_serviceSettings);
+        result = hook;
       }
 
       Q_ASSERT(result->hookId() == guid);
@@ -64,6 +73,12 @@ namespace GameNet {
     {
       Q_ASSERT(value);
       this->_serviceLoader = value;
+    }
+
+    void HookFactory::setZzimaConnection(::GameNet::Integration::ZZima::ZZimaConnection *value)
+    {
+      Q_ASSERT(value);
+      this->_zzimaConnection = value;
     }
 
   }

@@ -34,6 +34,12 @@ namespace GGS {
 }
 
 namespace GameNet {
+  namespace Integration {
+    namespace ZZima {
+      class ZZimaConnection;
+    }
+  }
+
   namespace Host {
 
     class ServiceLoader;
@@ -130,6 +136,7 @@ namespace GameNet {
       Translation *_translation;
       MessageAdapter *_messageAdapter;
       ServiceHandle *_serviceHandle;
+      ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
 
       bool _initFinished;
       bool _updateFinished;

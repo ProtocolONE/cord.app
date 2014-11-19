@@ -23,6 +23,9 @@
 #include <Host/ConnectionManager.h>
 #include <Host/ServiceHandle.h>
 
+#include <Integration/ZZima/ZzimaGameExecutor.h>
+#include <Integration/ZZima/ZZimaConnection.h>
+
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Thetta/ThettaInstaller.h>
@@ -45,6 +48,7 @@
 
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
+using ::GameNet::Integration::ZZima::ZZimaConnection;
 
 namespace GameNet {
   namespace Host {
@@ -75,6 +79,7 @@ namespace GameNet {
       , _translation(new Translation(this))
       , _connectionManager(new ConnectionManager(this))
       , _serviceHandle(new ServiceHandle(this))
+      , _zzimaConnection(new ZZimaConnection(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -146,9 +151,16 @@ namespace GameNet {
       this->_executor->setServiceSettings(this->_serviceSettings);
       this->_executor->setThetta(this->_thetta);
       this->_executor->init();
+      
+      GameNet::Integration::ZZima::ZzimaGameExecutor * zzimaExecutor = 
+        new GameNet::Integration::ZZima::ZzimaGameExecutor(this);
+      zzimaExecutor->setZzimaConnection(this->_zzimaConnection);
+
+      this->_executor->mainExecutor()->registerExecutor(zzimaExecutor);
 
       this->_downloaderHookFactory->setServiceLoader(this->_serviceLoader);
       this->_downloaderHookFactory->setServiceSettings(this->_serviceSettings);
+      this->_downloaderHookFactory->setZzimaConnection(this->_zzimaConnection);
 
       this->_executorHookFactory->setDownloader(this->_gameDownloader);
       this->_executorHookFactory->setExecutor(this->_executor->mainExecutor());
@@ -427,6 +439,33 @@ namespace GameNet {
       bdGame.setHasDownloadPath(false);
       bdGame.setExecuteUrl("http://blackdesert.ru/");
       this->_serviceLoader->registerService(bdGame);
+
+      // HACK DA game
+      ServiceDescription daGame;
+      daGame.setId("60000000000");
+      daGame.setGameId("1030");
+      daGame.setName("DarkAge");
+      daGame.setTorrentUrl("http://torrents.zzima.net/fwclient.torrent");
+      daGame.setIsDownloadable(true);
+      daGame.setHasDownloadPath(false);
+      daGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
+      daGame.setExecuteUrl("zzima:start");
+      daGame.setGameSize(8400);
+
+      QList<DownloadHookDescription> daDownloaderHooks;
+      DownloadHookDescription daInstallHook;
+      daInstallHook.first = "9F6083BB-D03D-45A9-89FE-2D6EF098544A";
+      daInstallHook.second.first = 999;
+      daInstallHook.second.second = 0;
+      daDownloaderHooks << daInstallHook;
+      daGame.setDownloadHooks(daDownloaderHooks);
+
+      //QList<ExecutorHookDescription> daExecutorHooks;
+      //daExecutorHooks << ExecutorHookDescription("54B0860B-215C-462F-A80E-F7664DEA984F", 0); // DisableDEP
+      //daExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
+      //daGame.setExecutorHooks(daExecutorHooks);
+
+      this->_serviceLoader->registerService(daGame);
     }
 
     void Application::initGameDownloader()
@@ -439,13 +478,14 @@ namespace GameNet {
       this->_downloadStatistics->init(this->_gameDownloader);
       this->_shutdown->setGameDownloadInitialized();
     }
-
+    
     void Application::initRestApi()
     {
         QStringList ports;
         ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
         QString randomPort = ports.takeAt(qrand() % ports.count());
         QString apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+        //apiUrl = "http://api.gamenet.stg/restapi";
 
         GGS::Settings::Settings settings;
         settings.setValue("qGNA/restApi/url", apiUrl);

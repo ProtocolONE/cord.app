@@ -67,6 +67,20 @@ namespace GameNet {
       return this->_commandLineArguments->contains("skip-ui");
     }
 
+    void CommandLineManager::gogamenetmoney(const QString& name, const QStringList& arguments)
+    {
+      GameNetCredential credential;
+      bool seendToUi = this->shouldSendToUi(credential);
+
+      if (arguments.size() > 0 && arguments.at(0) == "darkage") {
+        this->openUrlWithAuth("https://gamenet.ru/games/da/exchange", credential);
+        return;
+      }
+
+      if (seendToUi) {
+        emit this->uiCommand(name, arguments);
+        return;
+      }
 
   }
 }

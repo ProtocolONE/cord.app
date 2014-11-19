@@ -8,9 +8,9 @@
 
 #include <QtDBus/QtDBus>
 
-namespace GameNet{
-  namespace Host{
-    namespace DBus{
+namespace GameNet {
+  namespace Host {
+    namespace DBus {
       DBusServer::DBusServer(QObject *parent)
         : QObject(parent)
         , _server(new QDBusServer("tcp:host=127.0.0.1,port=0,family=ipv4", this))
