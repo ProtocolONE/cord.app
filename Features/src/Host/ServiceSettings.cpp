@@ -61,17 +61,21 @@ namespace GameNet {
     {
       Q_ASSERT(this->_services);
       Q_ASSERT(this->_downloader);
-      
       Service* service = this->_services->getService(serviceId);
       if (!service)
+        return;
+
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      settings.beginGroup(serviceId);
+
+      if (service->downloadPath() == path && 
+          service->downloadPath() == settings.value("DownloadPath"))
         return;
 
       service->setDownloadPath(path);
       service->setTorrentFilePath(path);
       this->_downloader->directoryChanged(service);
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-      settings.beginGroup(serviceId);
       settings.setValue("DownloadPath", path);
     }
 
@@ -93,11 +97,17 @@ namespace GameNet {
       if (!service)
         return;
 
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      settings.beginGroup(serviceId);
+
+      if (service->installPath() == path && 
+          service->installPath() == settings.value("InstallPath"))
+        return;
+
       service->setInstallPath(path);
       service->setIsDefaultInstallPath(false);
       this->_downloader->directoryChanged(service);
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-      settings.beginGroup(serviceId);
+
       settings.setValue("InstallPath", path);
     }
 
