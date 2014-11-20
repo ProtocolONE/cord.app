@@ -29,7 +29,8 @@ namespace GameNet {
       bool ignoreCommand = name == "empty"
         || name == "skip-ui"
         || name == "gamepts"
-        || name == "gametest";
+        || name == "gametest"
+        || name == "minimized";
 
       if (ignoreCommand)
         return;
