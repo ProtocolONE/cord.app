@@ -94,14 +94,10 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
   settings.setValue("filesToDelete", this->serialize(filesToDelete));
   
   GGS::Core::System::Shell::ShortCut object;
-  object.setArguments(QString("/uri:gamenet://startservice/%1").arg(serviceId));
   object.setDescription(QString("Short cut for game %1").arg(name));
   object.setShowCmd(GGS::Core::System::Shell::ShortCut::MinNoActive);
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
-  
-  // UNDONE: проверить что эта функция кошерна - у нее в дескрипшене есть фишка про смену дериктории самим аппликейшеном.
-  QString hostPath = QString("%1\\%2").arg(QCoreApplication::applicationDirPath(), "qGNA.exe");
-  object.setPath(hostPath);
+  object.setPath(QString("gamenet://startservice/%1").arg(serviceId));
 
   QString iconPath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), serviceId);
   iconPath = QFile::exists(iconPath) ? iconPath : QCoreApplication::applicationFilePath();
