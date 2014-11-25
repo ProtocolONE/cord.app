@@ -542,6 +542,7 @@ namespace GameNet {
       QStringList args = QCoreApplication::arguments();
       args.removeFirst(); // INFO first argument always self execute path
       
+      this->_uiProcess->destroyProcess();
       this->_uiProcess->start(args);
     }
 

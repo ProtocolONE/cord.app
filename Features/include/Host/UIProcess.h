@@ -86,12 +86,23 @@ namespace GameNet {
        */
       void sendCommand(const QString& name, const QStringList& args); 
 
-      void closeUI();
+       /**
+       * \fn  void UIProcess::destroyProcess();
+       *
+       * \brief Берет имя ранее заданое в setFileName, и закрывает этот процесс, если он запущен.
+       *
+       * \author  Igor Bugaev
+       * \date  25.11.2014
+       */
+      void destroyProcess();
 
     signals:
       void closed();
 
     private:
+      bool isStarted();
+      void executeAndWait(const QString& file, const QString& params);
+      void destroyRunningApplication(const QString& name);
       void processFinished();
 
       UIProcessPrivate *_d;

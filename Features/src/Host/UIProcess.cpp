@@ -4,8 +4,10 @@
 
 #include <QtCore/QWinEventNotifier>
 #include <QtCore/QDir>
+#include <QtCore/QProcess>
 
 #include <Windows.h>
+#include <psapi.h>
 
 namespace GameNet {
   namespace Host {
@@ -192,5 +194,115 @@ namespace GameNet {
       this->_d->closeHandle();
     }
 
+    void UIProcess::destroyRunningApplication(const QString& name)
+    {
+      if (!this->isStarted())
+        return;
+
+      this->executeAndWait("taskkill.exe", "/f /im " + name);
+      this->executeAndWait("tskill.exe", name);
+
+      DWORD processes[1024];
+      DWORD count;
+      wchar_t file_w[255];
+
+      name.toWCharArray(file_w);
+      file_w[name.count()] = '\0';
+
+      DWORD count;
+      DWORD processes[1024];
+      if (!EnumProcesses(processes, sizeof(processes), &count))
+        return;
+
+      count /= sizeof(DWORD);
+
+      for (unsigned int i = 0; i < count; i++) {
+        if (processes[i] == 0) 
+          continue;
+
+        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION, FALSE, processes[i]);
+
+        if (hProcess == NULL)
+          continue;
+
+        wchar_t processFileName[255];
+
+        if (GetProcessImageFileName(hProcess, processFileName, 255) == 0)
+          continue;
+
+        if (wcsstr(processFileName, file_w) != 0) {
+          DWORD result = WAIT_OBJECT_0;
+
+          while(result == WAIT_OBJECT_0) {
+            result = WaitForSingleObject(hProcess, 100);
+            TerminateProcess(hProcess, 0);
+          }
+        }
+
+        CloseHandle(hProcess);
+      }
+    }
+
+    void UIProcess::executeAndWait(const QString& file, const QString& params)
+    {
+      QProcess process;
+      process.start(file + " " + params);
+      process.waitForFinished(-1);
+    }
+
+    void UIProcess::destroyProcess()
+    {
+      this->destroyRunningApplication(this->_d->_filename);
+    }
+
+    bool UIProcess::isStarted()
+    {
+      const std::string name("Global\\{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+      HANDLE h = OpenMutexA(MUTEX_ALL_ACCESS, 0, name.c_str());
+      bool result = h != NULL;
+
+      if (result)
+        CloseHandle(h);
+
+      return result;
+    }
   }
 }
+      wchar_t file_w[MAX_PATH];
+      name.toWCharArray(file_w);
+      file_w[name.count()] = '\0';
+
+      DWORD count;
+      DWORD processes[1024];
+      if (!EnumProcesses(processes, sizeof(processes), &count)){
+        return;
+
+      count /= sizeof(DWORD);
+
+      for (unsigned int i = 0; i < count; i++) {
+        wchar_t szProcessName[MAX_PATH] = TEXT("<unknown>");
+
+        if (processes[i] == 0) 
+          continue;
+
+        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION, FALSE, processes[i]);
+
+        if (hProcess == NULL)
+          continue;
+
+        wchar_t processFileName[MAX_PATH];
+
+        if (GetProcessImageFileName(hProcess, processFileName, MAX_PATH) == 0)
+          continue;
+
+        if (wcsstr(processFileName, file_w) != 0) {
+          DWORD result = WAIT_OBJECT_0;
+
+          while(result == WAIT_OBJECT_0) {
+            result = WaitForSingleObject(hProcess, 100);
+            TerminateProcess(hProcess, 0);
+          }
+        }
+
+        CloseHandle(hProcess);
+      }
