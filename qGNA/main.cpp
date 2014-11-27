@@ -8,9 +8,6 @@
 #include <Features/RememberGameDownloading.h>
 #include <Features/SilentMode.h>
 
-#include <Features/Thetta/TlsInitializer.h>
-#include <Features/Thetta/Protector.h>
-
 #include <Features/TaskBarEventFilter.h>
 #include <Features/LanguageChangeEventFilter.h>
 
@@ -86,8 +83,6 @@ int main(int argc, char *argv[])
   QStringList plugins;
   plugins << path + "/plugins";
   app.setLibraryPaths(plugins);
-  
-  MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 
   if (app.containsCommand("silent")) {
     Features::SilentMode mode;

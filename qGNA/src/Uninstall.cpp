@@ -12,8 +12,6 @@
 #include <Application/ArgumentParser.h>
 #include <Settings/Settings>
 
-#include <Thetta/Driver.h>
-
 #include <QtCore/QFile>
 #include <QtCore/QCoreApplication>
 
@@ -27,8 +25,6 @@ Uninstall::~Uninstall()
 
 void Uninstall::run(const QStringList& arguments)
 {
-  uninstallDriver();
-
   GGS::Application::ArgumentParser argumentsParser;
   argumentsParser.parse(arguments);
 
@@ -48,14 +44,4 @@ void Uninstall::run(const QStringList& arguments)
 
   Q_FOREACH(QString fileName, filesToDelete)
     QFile::remove(fileName);
-}
-
-void Uninstall::uninstallDriver()
-{
-  QString thettaDirectory = QString("%1/Thetta").arg(QCoreApplication::applicationDirPath());
-  Thetta::Driver driver(0);
-  driver.setPath(thettaDirectory);
-  driver.setName(QString("Thetta"));
-  driver.unload();
-  driver.uninstall();
 }

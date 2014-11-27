@@ -35,8 +35,6 @@
 
 #include <Settings/settings.h>
 
-#include <HookEngine/HookEngine.h>
-
 #include <QtCore/QTranslator>
 #include <QtCore/QSysInfo>
 #include <QtCore/QFlags>

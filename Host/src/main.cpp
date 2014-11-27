@@ -14,6 +14,8 @@
 
 #include <Core/System/Shell/UrlProtocolHelper.h>
 
+#include <Uninstall.h>
+
 #include <QtCore/QThread>
 #include <QtCore/QThreadPool>
 #include <QtCore/QCoreApplication>
@@ -41,6 +43,11 @@ int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
   QString path = QCoreApplication::applicationDirPath();
+
+  if (app.containsCommand("uninstall")) {
+    Uninstall::run(app.arguments());
+    return 0;
+  }
 
   app.setLibraryPaths(QStringList() << path + "/plugins");
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");

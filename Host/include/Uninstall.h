@@ -20,4 +20,7 @@ public:
 
   static void run(const QStringList& arguments);
 
+private:
+  static void uninstallDriver();
+
 };
