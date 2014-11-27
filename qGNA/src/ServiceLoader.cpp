@@ -7,6 +7,8 @@
 #include <Features/Thetta/Protector.h>
 #include <Features/Thetta/DistrIntegrityExecutorHook.h>
 
+#include <Features/BlackDesertDefaultSettings.h>
+
 #include <GameExecutor/Extension.h>
 
 #include <Dbus/ServiceSettingsBridgeProxy.h>
@@ -343,6 +345,10 @@ void ServiceLoader::setServiceSettings(ServiceSettingsBridgeProxy *value)
 
   if (id == "300005010000000000" )
     service->setExternalDependencyList("dxwebsetup.exe,/Q");
+
+  if (id == "30000000000") // BD
+    this->_gameExecutorService->addHook(*service, new Features::BlackDesertDefaultSettings(service), 100);
+
 }
 
 void ServiceLoader::migrateInstallDate(const QString& serviceId)
