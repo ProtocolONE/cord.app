@@ -82,7 +82,7 @@ void MainWindow::initialize()
   QDBusConnection &connection = DBusConnection::bus();
   QString dbusService("com.gamenet.dbus");
 
-  this->_clientConnection = new ClientConnection(this);
+  this->_clientConnection = new ClientConnection("QGNA", this);
   this->_clientConnection->init();
 
   QObject::connect(this->_clientConnection, &ClientConnection::disconnected,
