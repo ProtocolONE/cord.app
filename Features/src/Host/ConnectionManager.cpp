@@ -87,6 +87,7 @@ namespace GameNet {
       : QObject(parent)
       , _application(nullptr)
       , _sharedMutex(new MutexHandle("Global\\GameNet_{832D7C60-7B55-4e5d-99F6-1CC18A59F86B}"))
+      , _server(nullptr)
     {
     }
 
@@ -98,6 +99,8 @@ namespace GameNet {
     {
       Q_ASSERT(value);
       this->_application = value;
+
+      connect(this->_application, &Application::initCompleted, this, &ConnectionManager::onInitCompleted);
     }
 
     bool ConnectionManager::init()
@@ -124,6 +127,7 @@ namespace GameNet {
       connection->setApplicationName("QGNA");
 #else
       DBusServer *server = new DBusServer(this);
+      this->_server = server;
       if (!server->isConnected())
         return false;
       
@@ -142,8 +146,6 @@ namespace GameNet {
           this, &ConnectionManager::onClientDisconnected);
       });
 #endif
-
-      this->_sharedMutex->open();
       
       return true;
     }
@@ -301,9 +303,19 @@ namespace GameNet {
       //INFO При использовании peer-to-peer подключения нет необходимо дерегистрировать сервис. Он должен быть всякий
       //раз зарегистрирован для каждого нового подключения. Вызовем дерегистрацию, если используется отдельная шина.
 
+      if (this->_server) {
+        delete this->_server;
+        this->_server = nullptr;
+      }
+
       #ifdef USE_SESSION_DBUS
             QDBusConnection::sessionBus().unregisterService("com.gamenet.dbus");
       #endif
+    }
+
+    void ConnectionManager::onInitCompleted()
+    {
+      this->_sharedMutex->open();
     }
 
     void ConnectionManager::onClientDisconnected()

@@ -514,6 +514,7 @@ namespace GameNet {
 
     void Application::restartApplication(bool shouldStartWithSameArguments, bool isMinimized)
     {
+      this->_uiProcess->closeUI();
       this->_applicationRestarter->restartApplication(shouldStartWithSameArguments, isMinimized);
     }
 

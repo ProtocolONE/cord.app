@@ -86,6 +86,11 @@ namespace GameNet {
        */
       void sendCommand(const QString& name, const QStringList& args); 
 
+      void closeUI();
+
+    signals:
+      void closed();
+
     private:
       void processFinished();
 

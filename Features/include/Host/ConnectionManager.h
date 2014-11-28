@@ -27,6 +27,9 @@ namespace GameNet {
       bool init();
       void shutdown();
 
+    private slots:
+      void onInitCompleted();
+
     private:
       void onClientDisconnected();
 
@@ -52,6 +55,8 @@ namespace GameNet {
       Application *_application;
       QMap<QString, Connection*> _connections;
       MutexHandle *_sharedMutex;
+      DBus::DBusServer* _server;
+
     };
 
   }

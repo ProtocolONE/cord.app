@@ -187,5 +187,10 @@ namespace GameNet {
       this->_d->closeHandle();
     }
 
+    void UIProcess::closeUI()
+    {
+      this->_d->closeHandle();
+    }
+
   }
 }

@@ -28,7 +28,7 @@ using GGS::Application::SingleApplication;
 
 Application *createApplication(SingleApplication *app) 
 {
-  Application *application = new Application(app);
+  Application *application = new Application(0);
   application->setSingleApplication(app);
 
   QObject::connect(application, &Application::initCompleted, [application]() {
@@ -101,7 +101,9 @@ int main(int argc, char *argv[])
 
   int result = app.exec();
   application->finalize();
-
+  
+  // HACK на удалении падает.... в неожиданных местах. Нужна помощь.
+  //delete application;
   return result;
 }
 
