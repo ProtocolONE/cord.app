@@ -4,6 +4,7 @@
 
 #include <GameDownloader/GameDownloadService.h>
 
+#include <GameExecutor/Hook/ActivateWindow.h>
 #include <GameExecutor/Hook/RestoreResolution.h>
 #include <GameExecutor/Hook/DisableDEP.h>
 #include <GameExecutor/Hook/DownloadCustomFile.h>
@@ -38,6 +39,10 @@ namespace GameNet {
       , _thetta(nullptr)
       , _saveUserInfo(new SaveUserInfo(this))
     {
+      this->_window.setGeometry(-30000, -30000, 1, 1);
+      this->_window.setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip);
+      this->_window.setAttribute(Qt::WA_TranslucentBackground);
+      this->_window.setStyleSheet("background:transparent;");
     }
 
     ExecutorHookFactory::~ExecutorHookFactory()
@@ -68,6 +73,9 @@ namespace GameNet {
       using namespace Features;
       using namespace Features::Thetta;
 
+      this->reg<ActivateWindow>([this](ActivateWindow* a){
+        a->setWidget(&this->_window);
+      });
       this->reg<RestoreResolution>();
       this->reg<DisableDEP>();
       this->reg<DownloadCustomFile>();

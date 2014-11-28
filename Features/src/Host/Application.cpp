@@ -310,6 +310,7 @@ namespace GameNet {
       QList<ExecutorHookDescription> bsExecutorHooks;
       bsExecutorHooks << ExecutorHookDescription("54B0860B-215C-462F-A80E-F7664DEA984F", 0); // DisableDEP
       bsExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
+
       bsGame.setExecutorHooks(bsExecutorHooks);
 
       this->_serviceLoader->registerService(bsGame);
@@ -539,7 +540,7 @@ namespace GameNet {
       qDebug() << "Starting qGNA UI";
       QStringList args = QCoreApplication::arguments();
       args.removeFirst(); // INFO first argument always self execute path
-
+      
       this->_uiProcess->start(args);
     }
 

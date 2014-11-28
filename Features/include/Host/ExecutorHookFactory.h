@@ -8,6 +8,8 @@
 #include <QtCore/QSet>
 #include <QtCore/QDebug>
 
+#include <QtWidgets/QWidget>
+
 namespace Features {
   namespace Thetta {
     class SaveUserInfo;
@@ -54,6 +56,7 @@ namespace GameNet {
       HookFactory *_downloaderHookFactory;
       Thetta *_thetta;
       Features::Thetta::SaveUserInfo *_saveUserInfo;
+      QWidget _window;
 
       // INFO кол выводит класс и его id при регистрации хуков
       //template<typename T>

@@ -14,6 +14,7 @@
 #include <GameExecutor/GameExecutorService.h>
 #include <GameExecutor/HookInterface.h>
 #include <GameExecutor/Hook/SendPlayingInfo.h>
+#include <GameExecutor/Hook/ActivateWindow.h>
 
 #include <QtCore/QSettings>
 
@@ -212,6 +213,7 @@ namespace GameNet {
 
       using GGS::GameExecutor::HookInterface;
       using GGS::GameExecutor::Hook::SendPlayingInfo;
+      using GGS::GameExecutor::Hook::ActivateWindow;
       using Features::Thetta::ThettaMonitor;
 
       Q_FOREACH(const ExecutorHookDescription& info, description.executorHooks()) {
@@ -239,6 +241,18 @@ namespace GameNet {
         playing = this->_executorHookFactory->create(SendPlayingInfo::id());
         Q_ASSERT(playing);
         this->_simpleMainExecutor->addHook(*service, playing, 0);
+
+        HookInterface* activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
+        Q_ASSERT(activateWindow);
+        this->_executor->addHook(*service, activateWindow, 0);
+
+        activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
+        Q_ASSERT(activateWindow);
+        this->_secondExecutor->addHook(*service, activateWindow, 0);
+
+        activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
+        Q_ASSERT(activateWindow);
+        this->_simpleMainExecutor->addHook(*service, activateWindow, 0);
       }
     }
 
