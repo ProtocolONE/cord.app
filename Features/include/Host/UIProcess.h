@@ -96,6 +96,9 @@ namespace GameNet {
        */
       void destroyProcess();
 
+    public slots:
+      void closeUI();
+
     signals:
       void closed();
 

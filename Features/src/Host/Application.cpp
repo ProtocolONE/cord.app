@@ -213,6 +213,9 @@ namespace GameNet {
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
         this, &Application::shutdown);
+      
+      QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
+        this->_uiProcess, &UIProcess::closeUI);
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand, 
         this->_uiProcess, &UIProcess::sendCommand);

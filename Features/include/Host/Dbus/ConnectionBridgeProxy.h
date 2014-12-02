@@ -51,10 +51,10 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("setApplicationName"), argumentList);
     }
 
-    inline QDBusPendingReply<> terminate()
+    inline QDBusPendingReply<> close()
     {
         QList<QVariant> argumentList;
-        return asyncCallWithArgumentList(QLatin1String("terminate"), argumentList);
+        return asyncCallWithArgumentList(QLatin1String("close"), argumentList);
     }
 
     inline QDBusPendingReply<> setCredential(GameNet::Host::Bridge::Credential credential)

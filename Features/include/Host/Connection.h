@@ -26,6 +26,7 @@ namespace GameNet {
       virtual void setSecondCredential(const GGS::RestApi::GameNetCredential& value);
 
       virtual void ping();
+      virtual void close();
 
       virtual const GGS::RestApi::GameNetCredential& credential();
       const QString& applicationName();
@@ -35,8 +36,6 @@ namespace GameNet {
       bool isOwnService(const QString& serviceId);
       void lockService(const QString& serviceId);
       void unlockService(const QString& serviceId);
-
-      void terminate();
 
       void onGenericError(
         GGS::RestApi::CommandBase::Error error,
@@ -48,7 +47,6 @@ namespace GameNet {
       void connectionInfoReceived();
       void wrongCredential(const QString& userId);
       void disconnected();
-      void terminateSignal();
 
     private:
       void timeoutTick();

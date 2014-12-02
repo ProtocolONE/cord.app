@@ -22,7 +22,7 @@ namespace GameNet {
       virtual ~ClientConnection();
 
       void init();
-      void terminate();
+      void close();
 
       void setCredential(const GGS::RestApi::GameNetCredential& value);
       void setSecondCredential(const GGS::RestApi::GameNetCredential& value);

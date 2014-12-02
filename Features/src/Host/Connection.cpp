@@ -122,9 +122,9 @@ namespace GameNet {
       emit this->disconnected();
     }
 
-    void Connection::terminate()
+    void Connection::close()
     {
-      emit this->terminateSignal();
+      emit this->disconnected();
     }
 
   }

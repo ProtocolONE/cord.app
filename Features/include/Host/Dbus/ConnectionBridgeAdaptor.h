@@ -42,7 +42,7 @@ class ConnectionBridgeAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"in\" type=\"s\" name=\"applicationName\"/>\n"
 "    </method>\n"
 "    <method name=\"ping\"/>\n"
-"    <method name=\"terminate\"/>\n"
+"    <method name=\"close\"/>\n"
 "    <method name=\"setCredential\">\n"
 "      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
 "      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In0\"/>\n"
@@ -61,7 +61,7 @@ public: // PROPERTIES
 public Q_SLOTS: // METHODS
     void ping();
     void setApplicationName(const QString &applicationName);
-    void terminate();    
+    void close();    
     void setCredential(GameNet::Host::Bridge::Credential credential);
     void setSecondCredential(GameNet::Host::Bridge::Credential credential);
 Q_SIGNALS: // SIGNALS

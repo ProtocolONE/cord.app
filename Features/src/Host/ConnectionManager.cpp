@@ -154,10 +154,7 @@ namespace GameNet {
           connection, &Connection::onGenericError);
 
         QObject::connect(connection, &Connection::disconnected,
-          this, &ConnectionManager::onClientDisconnected);
-
-        QObject::connect(connection, &Connection::terminateSignal,
-          this->_application, &Application::shutdown);
+          this, &ConnectionManager::onClientDisconnected, Qt::QueuedConnection);
       });
 #endif
       
@@ -341,6 +338,11 @@ namespace GameNet {
       this->_connections.remove(connection->applicationName());
       this->_application->_serviceHandle->unlockAllForConnection(connection);
 
+      if (connection->applicationName() == "QGNA") {
+        this->_application->shutdown();
+        return;
+      }
+      
       connection->deleteLater();
     }
 

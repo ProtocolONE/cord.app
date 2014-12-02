@@ -30,6 +30,7 @@ public:
   MOCK_METHOD1(setCredential, void(const GameNetCredential&));
   MOCK_METHOD1(setSecondCredential, void(const GameNetCredential&));
   MOCK_METHOD0(ping, void());
+  MOCK_METHOD0(close, void());
 
   // mock slot for signals
   MOCK_METHOD1(onWrongCredential, void(const QString&));
@@ -111,3 +112,12 @@ TEST_F(ConnectionBridgeTest, pong)
 
   connection.pong();
 }
+
+TEST_F(ConnectionBridgeTest, close)
+{
+  EXPECT_CALL(connection, close())
+    .Times(1);
+
+  bridge.close();
+}
+

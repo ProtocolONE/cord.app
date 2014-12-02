@@ -53,10 +53,10 @@ namespace GameNet {
         this->_connection->ping();
       }
 
-      void ConnectionBridge::terminate()
+      void ConnectionBridge::close()
       {
         Q_ASSERT(this->_connection);
-        this->_connection->terminate();
+        this->_connection->close();
       }
 
     }
