@@ -91,5 +91,11 @@ namespace GameNet {
       this->_connection->setSecondCredential(createDbusCredential(value));
     }
 
+    void ClientConnection::terminate()
+    {
+      Q_ASSERT(this->_connection);
+      this->_connection->terminate();
+    }
+
   }
 }

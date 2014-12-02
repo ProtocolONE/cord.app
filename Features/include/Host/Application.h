@@ -82,9 +82,8 @@ namespace GameNet {
 
       virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
 
-      void shutdown();
-
     public slots:
+      void shutdown();
       virtual bool isInitCompleted();
       virtual void switchClientVersion();
 

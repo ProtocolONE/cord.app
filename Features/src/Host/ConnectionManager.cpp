@@ -155,6 +155,9 @@ namespace GameNet {
 
         QObject::connect(connection, &Connection::disconnected,
           this, &ConnectionManager::onClientDisconnected);
+
+        QObject::connect(connection, &Connection::terminateSignal,
+          this->_application, &Application::shutdown);
       });
 #endif
       

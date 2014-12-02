@@ -90,6 +90,17 @@ namespace GameNet {
 
         void ping();
 
+        /**
+         * \fn  void ConnectionBridge::terminate();
+         *
+         * \brief Send terminate host request
+         *
+         * \author  Igor Bugaev
+         * \date  02.12.2014
+         */
+
+        void terminate();
+
       signals:
 
         /**

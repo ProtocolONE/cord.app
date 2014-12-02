@@ -329,6 +329,7 @@ void MainWindow::onWindowClose()
 
   this->repaint();
   this->hide();
+  this->_clientConnection->terminate();
   QCoreApplication::quit();
 }
 

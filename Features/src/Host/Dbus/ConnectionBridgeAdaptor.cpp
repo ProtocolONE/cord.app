@@ -46,6 +46,12 @@ void ConnectionBridgeAdaptor::setApplicationName(const QString &applicationName)
     QMetaObject::invokeMethod(parent(), "setApplicationName", Q_ARG(QString, applicationName));
 }
 
+void ConnectionBridgeAdaptor::terminate()
+{
+    // handle method call com.gamenet.dbus.Connection.terminate
+    QMetaObject::invokeMethod(parent(), "terminate");
+}
+
 void ConnectionBridgeAdaptor::setCredential(GameNet::Host::Bridge::Credential credential)
 {
     // handle method call com.gamenet.dbus.Connection.setCredential
