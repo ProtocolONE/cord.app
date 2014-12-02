@@ -397,26 +397,6 @@ namespace GameNet {
 
       this->_serviceLoader->registerService(caGame);
 
-      ServiceDescription rotGame;
-      rotGame.setId("300004010000000000");
-      rotGame.setGameId("72");
-      rotGame.setName("RageofTitans");
-      rotGame.setTorrentUrl("http://fs0.gamenet.ru/update/rot/");
-      rotGame.setIsDownloadable(true);
-      rotGame.setHasDownloadPath(true);
-      rotGame.setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
-      rotGame.setExecuteUrl(
-        "exe:%gamePath%/bin/tyj.exe"
-        "?workingDir=%gamePath%/bin/"
-        "&args=-sa UserId=%userId%%appKey% -sa Token=%token%");
-      rotGame.setGameSize(1000);
-      rotGame.setDependencyList("dxwebsetup.exe,/Q");
-
-      QList<DownloadHookDescription> rotDownloadHooks;
-      rotDownloadHooks << dependencyHook;
-      rotGame.setDownloadHooks(rotDownloadHooks);
-      this->_serviceLoader->registerService(rotGame);
-
       ServiceDescription gaGame;
       gaGame.setId("300007010000000000");
       gaGame.setGameId("83");
