@@ -3,6 +3,7 @@
 #include <Host/Application.h>
 #include <Host/Thetta.h>
 #include <Host/Translation.h>
+#include <Host/AutoRunManager.h>
 
 namespace GameNet {
   namespace Host {
@@ -14,6 +15,7 @@ namespace GameNet {
         , _application(nullptr)
         , _thetta(nullptr)
         , _translation(nullptr)
+        , _autoRunManager(nullptr)
       {
       }
 
@@ -46,6 +48,14 @@ namespace GameNet {
 
         QObject::connect(value, &Translation::languageChanged,
           this, &ApplicationBridge::languageChanged);
+      }
+
+      void ApplicationBridge::setAutoRunManager(AutoRunManager *value)
+      {
+        Q_ASSERT(value);
+        this->_autoRunManager = value;
+        QObject::connect(value, &AutoRunManager::autoStartModeChanged,
+          this, &ApplicationBridge::autoStartModeChanged);
       }
 
       bool ApplicationBridge::isInitCompleted()
@@ -86,6 +96,18 @@ namespace GameNet {
       {
         Q_ASSERT(this->_translation);
         this->_translation->setLanguage(value);
+      }
+
+      void ApplicationBridge::setAutoStartMode(int value)
+      {
+        Q_ASSERT(this->_autoRunManager);
+        this->_autoRunManager->setAutoStartMode(value);
+      }
+
+      int ApplicationBridge::autoStartMode() const
+      {
+        Q_ASSERT(this->_autoRunManager);
+        return this->_autoRunManager->autoStartMode();
       }
 
     }

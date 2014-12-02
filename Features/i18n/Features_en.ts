@@ -24,6 +24,13 @@
     </message>
 </context>
 <context>
+    <name>GameNet::Host::AutoRunManager</name>
+    <message>
+        <source>AUTORUN_TASK_DESCRIPTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameNet::Host::ClientConnection</name>
     <message>
         <source>DBUS_DISCONNECTED_TITLE</source>

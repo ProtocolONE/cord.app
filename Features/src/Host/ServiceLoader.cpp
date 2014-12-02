@@ -224,7 +224,7 @@ namespace GameNet {
         this->_executor->addHook(*service, hook, info.second);
       }
 
-      // INFO тут обязательные хуки
+      // INFO тут обязательные хуки !!! Внимание эти хуки должны быть зарегистрированы в тестах!
       if (description.isDownloadable()) {
         HookInterface *thetta = this->_executorHookFactory->create(ThettaMonitor::id());
         Q_ASSERT(thetta);
@@ -272,7 +272,6 @@ namespace GameNet {
 
       settings.setValue("installDate", QDateTime::currentDateTime());
     }
-
 
   }
 }

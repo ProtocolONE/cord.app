@@ -2,6 +2,7 @@
 
 #include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
 #include <Host/DBus/UpdateManagerBridgeProxy.h>
+#include <Host/Dbus/ApplicationBridgeProxy.h>
 
 #include <Settings/Settings.h>
 #include <Core/UI/Message>
@@ -14,52 +15,21 @@
 SettingsViewModel::SettingsViewModel(QObject *parent)
   : QObject(parent)
 {
-  _instantlySave = true;
+  this->_instantlySave = true;
 }
 
 SettingsViewModel::~SettingsViewModel()
 {
-
 }
 
-void SettingsViewModel::addToAutoStart(bool autostart, bool isMinimized)   
+void SettingsViewModel::setAutoStart(int value)
 {
-  GGS::AutoRunHelper::AutoRunHelper autorunHelper;
-  autorunHelper.setTaskName("GameNet");
-
-  if (!autostart) {
-    qDebug() << "remove from autorun result: " << autorunHelper.removeFromAutoRun();
-  } else {
-    autorunHelper.setPathToExe(QCoreApplication::applicationFilePath());
-    
-    autorunHelper.setCommandLineArguments(isMinimized ? QString("/minimized") : QString(""));
-    autorunHelper.setTaskDescription(tr("AUTORUN_TASK_DESCRIPTION"));
-    qDebug() << "add to autorun result: " << autorunHelper.addToAutoRun();  
-  }
-}
-
-void SettingsViewModel::setAutoStart(int _autostart)
-{
-  //https://corp.syncopate.local/!%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/QGNA/%D0%9A%D0%BB%D1%8E%D1%87%D0%B8_%D1%80%D0%B5%D0%B5%D1%81%D1%82%D1%80%D0%B0
-  if (!(_autostart == 0 || _autostart == 1 || _autostart == 2))   
-    return;
-
-  int tmp = this->autoStart();
-  if (tmp == _autostart)
-    return;
-
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  settings.setValue("AutoRun", _autostart);
-  this->addToAutoStart(_autostart == 1 || _autostart == 2, _autostart == 2);
-  emit this->autoStartChanged();
+  this->_applicationProxy->setAutoStartMode(value);
 }
 
 int SettingsViewModel::autoStart()
 {
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);         
-  bool ok;
-  int result = settings.value("AutoRun", 0).toInt(&ok);
-  return ok ? result : 0;
+  return this->_applicationProxy->autoStartMode();
 }
 
 bool SettingsViewModel::notifyWhenStartedGameNet()
@@ -286,4 +256,13 @@ QString SettingsViewModel::updateArea()
   }
 
   return QString("live");
+}
+
+void SettingsViewModel::setApplicationProxy(ApplicationBridgeProxy *value)
+{
+  Q_ASSERT(value);
+  this->_applicationProxy = value;
+
+  QObject::connect(value, &ApplicationBridgeProxy::autoStartModeChanged,
+    this, &SettingsViewModel::autoStartChanged);
 }

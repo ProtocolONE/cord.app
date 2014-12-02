@@ -251,7 +251,6 @@ private slots:
 private:
   void loadPlugin(QString pluginName);
 
-  void initAutorun();
   void initRestApi();
   void initMarketing();
   bool isUseOpenGLrender();

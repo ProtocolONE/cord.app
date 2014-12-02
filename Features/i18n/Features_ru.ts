@@ -30,6 +30,13 @@
     </message>
 </context>
 <context>
+    <name>GameNet::Host::AutoRunManager</name>
+    <message>
+        <source>AUTORUN_TASK_DESCRIPTION</source>
+        <translation>Обеспечивает поддержание приложения GameNet Application в актуальном состоянии. Если отключить или снять эту задачу, то приложение GameNet Application перестанет обновляться, что может вызвать отключение части функций или ошибки в работе приложения. При удалении приложения GameNet Application, задача будет автоматически удалена.</translation>
+    </message>
+</context>
+<context>
     <name>GameNet::Host::ClientConnection</name>
     <message>
         <source>DBUS_DISCONNECTED_TITLE</source>

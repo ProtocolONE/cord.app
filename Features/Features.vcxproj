@@ -11,6 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AutoRunManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AutoRunManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Host\AutoRunManager.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_DADownloader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -1048,6 +1055,16 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DQGNA_NO_UPDATE -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -DZZIMA_INTEGRATION -D_UNICODE "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I." "-I$(QTDIR)\include\QtNetwork"</Command>
     </CustomBuild>
+    <CustomBuild Include="include\Host\AutoRunManager.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing AutoRunManager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DQGNA_NO_UPDATE -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -DZZIMA_INTEGRATION -D_UNICODE "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I." "-I$(QTDIR)\include\QtNetwork"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing AutoRunManager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DQGNA_NO_UPDATE -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -DZZIMA_INTEGRATION -D_UNICODE "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I." "-I$(QTDIR)\include\QtNetwork"</Command>
+    </CustomBuild>
     <ClInclude Include="include\Host\CredentialConverter.h" />
     <ClInclude Include="include\Host\Bridge\Credential.h" />
     <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h">
@@ -1677,8 +1694,8 @@
     </ClCompile>
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CASettingsX86d.lib;ThettaX86d.lib;MarketingX86d.lib;HookEngined.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CASettingsX86d.lib;ThettaX86d.lib;MarketingX86d.lib;AutoRunHelperX86d.lib;HookEngined.lib;crypt32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
@@ -1701,8 +1718,8 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
     </ClCompile>
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CASettingsX86.lib;ThettaX86.lib;MarketingX86.lib;HookEngine.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CASettingsX86.lib;ThettaX86.lib;MarketingX86.lib;AutoRunHelperX86.lib;HookEngine.lib;crypt32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"

@@ -130,8 +130,7 @@ void MainWindow::initialize()
 
   this->settingsViewModel = new SettingsViewModel(this);
   this->settingsViewModel->setDownloaderSettings(this->_downloaderSettings);
-  
-  this->initAutorun();
+  this->settingsViewModel->setApplicationProxy(this->_applicationProxy);
 
   qmlRegisterType<UpdateViewModel>("qGNA.Library", 1, 0, "UpdateViewModel");
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");
@@ -763,12 +762,6 @@ void MainWindow::gameDownloaderServiceUpdated(const QString& serviceId)
 {
   this->activateWindow();
   emit this->selectService(serviceId);
-}
-
-void MainWindow::initAutorun()
-{
-  int autoStart = this->settingsViewModel->autoStart();
-  this->settingsViewModel->addToAutoStart(autoStart == 1 || autoStart == 2, autoStart == 2);
 }
 
 void MainWindow::postUpdateInit()

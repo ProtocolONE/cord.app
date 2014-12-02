@@ -79,7 +79,7 @@ IF "$(Configuration)"=="Debug" (
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
-del /F /Q "$(TargetDir)*.ts"
+@rem del /F /Q "$(TargetDir)*.ts"
 
 @REM vs_redist
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"

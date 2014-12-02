@@ -34,6 +34,18 @@ ApplicationBridgeAdaptor::~ApplicationBridgeAdaptor()
     // destructor
 }
 
+int ApplicationBridgeAdaptor::autoStartMode() const
+{
+    // get the value of property autoStartMode
+    return qvariant_cast< int >(parent()->property("autoStartMode"));
+}
+
+void ApplicationBridgeAdaptor::setAutoStartMode(int value)
+{
+    // set the value of property autoStartMode
+    parent()->setProperty("autoStartMode", QVariant::fromValue(value));
+}
+
 QString ApplicationBridgeAdaptor::language() const
 {
     // get the value of property language

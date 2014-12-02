@@ -61,6 +61,7 @@ namespace GameNet {
     class MessageAdapter;
     class ConnectionManager;
     class ServiceHandle;
+    class AutoRunManager;
 
     namespace Proxy {
       class GameExecutorProxy;
@@ -137,6 +138,7 @@ namespace GameNet {
       MessageAdapter *_messageAdapter;
       ServiceHandle *_serviceHandle;
       ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
+      AutoRunManager *_autoRunManager;
 
       bool _initFinished;
       bool _updateFinished;

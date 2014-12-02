@@ -10,6 +10,7 @@ namespace GameNet {
     class Application;
     class Thetta;
     class Translation;
+    class AutoRunManager;
 
     namespace Bridge {
 
@@ -20,6 +21,7 @@ namespace GameNet {
         Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Application")
 
         Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
+        Q_PROPERTY(int autoStartMode READ autoStartMode WRITE setAutoStartMode NOTIFY autoStartModeChanged)
 
       public:
         explicit ApplicationBridge(QObject *parent = 0);
@@ -66,6 +68,9 @@ namespace GameNet {
 
         QString language() const;
         void setLanguage(const QString& value);
+
+        void setAutoStartMode(int value);
+        int autoStartMode() const;
 
       public slots:
         /**
@@ -143,14 +148,19 @@ namespace GameNet {
         void restartUIRequest();
 
         void languageChanged();
+        void autoStartModeChanged();
 
       private:
         Application* _application;
         Thetta *_thetta;
         Translation *_translation;
+        AutoRunManager *_autoRunManager;
       };
 
     }
   }
 }
       class ApplicationBridge : public QObject
+        void setAutoRunManager(AutoRunManager *value);
+
+        QString language() const;

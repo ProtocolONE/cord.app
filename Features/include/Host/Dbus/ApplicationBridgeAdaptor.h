@@ -9,8 +9,8 @@
  * before re-generating it.
  */
 
-#ifndef APPLICATIONBRIDGEADAPTOR_H_1414563433
-#define APPLICATIONBRIDGEADAPTOR_H_1414563433
+#ifndef APPLICATIONBRIDGEADAPTOR_H_1417436671
+#define APPLICATIONBRIDGEADAPTOR_H_1417436671
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
@@ -33,9 +33,11 @@ class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Introspection", ""
 "  <interface name=\"com.gamenet.dbus.Application\">\n"
 "    <property access=\"readwrite\" type=\"s\" name=\"language\"/>\n"
+"    <property access=\"readwrite\" type=\"i\" name=\"autoStartMode\"/>\n"
 "    <signal name=\"initCompleted\"/>\n"
 "    <signal name=\"restartUIRequest\"/>\n"
 "    <signal name=\"languageChanged\"/>\n"
+"    <signal name=\"autoStartModeChanged\"/>\n"
 "    <method name=\"isInitCompleted\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
 "    </method>\n"
@@ -53,6 +55,10 @@ public:
     virtual ~ApplicationBridgeAdaptor();
 
 public: // PROPERTIES
+    Q_PROPERTY(int autoStartMode READ autoStartMode WRITE setAutoStartMode)
+    int autoStartMode() const;
+    void setAutoStartMode(int value);
+
     Q_PROPERTY(QString language READ language WRITE setLanguage)
     QString language() const;
     void setLanguage(const QString &value);
@@ -63,6 +69,7 @@ public Q_SLOTS: // METHODS
     void restartApplication(bool isMinimized);
     void switchClientVersion();
 Q_SIGNALS: // SIGNALS
+    void autoStartModeChanged();
     void initCompleted();
     void languageChanged();
     void restartUIRequest();

@@ -22,6 +22,7 @@
 #include <Host/Translation.h>
 #include <Host/ConnectionManager.h>
 #include <Host/ServiceHandle.h>
+#include <Host/AutoRunManager.h>
 
 #include <Integration/ZZima/ZzimaGameExecutor.h>
 #include <Integration/ZZima/ZZimaConnection.h>
@@ -80,6 +81,7 @@ namespace GameNet {
       , _connectionManager(new ConnectionManager(this))
       , _serviceHandle(new ServiceHandle(this))
       , _zzimaConnection(new ZZimaConnection(this))
+      , _autoRunManager(new AutoRunManager(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -137,6 +139,7 @@ namespace GameNet {
 
       this->initRestApi();
       this->_translation->init();
+      this->_autoRunManager->init();
 
       this->initGameDownloader();
 

@@ -4,6 +4,7 @@
 #include <Host/Application.h>
 #include <Host/Thetta.h>
 #include <Host/Translation.h>
+#include <Host/AutoRunManager.h>
 
 #include <Host/Bridge/ApplicationBridge.h>
 
@@ -44,6 +45,16 @@ public:
   MOCK_METHOD0(onLanguageChanged, void());
 };
 
+class AutoRunManagerMock : public GameNet::Host::AutoRunManager
+{
+public:
+  MOCK_CONST_METHOD0(autoStartMode, int());
+  MOCK_METHOD1(setAutoStartMode, void(int));
+
+  // slots for signals
+  MOCK_METHOD0(onAutoStartModeChanged, void());
+};
+
 class ApplicationBridgeTest : public ::testing::Test 
 {
 public:
@@ -52,6 +63,7 @@ public:
     bridge.setApplication(&appMock);
     bridge.setThetta(&thettaMock);
     bridge.setTranslation(&translationMock);
+    bridge.setAutoRunManager(&autoRunManager);
 
     QObject::connect(&bridge, &ApplicationBridge::initCompleted,
       &appMock, &ApplicationMock::onInitCompleted);
@@ -61,12 +73,16 @@ public:
 
     QObject::connect(&bridge, &ApplicationBridge::languageChanged,
       &translationMock, &TranslationMock::onLanguageChanged);
+
+    QObject::connect(&bridge, &ApplicationBridge::autoStartModeChanged,
+      &autoRunManager, &AutoRunManagerMock::onAutoStartModeChanged);
   }
 
   ApplicationBridge bridge;
   ApplicationMock appMock;
   ThettaMock thettaMock;
   TranslationMock translationMock;
+  AutoRunManagerMock autoRunManager;
 };
 
 TEST_F(ApplicationBridgeTest, onInitCompleted)
@@ -141,4 +157,29 @@ TEST_F(ApplicationBridgeTest, languageChanged)
 {
   EXPECT_CALL(translationMock, onLanguageChanged()).Times(1);
   translationMock.languageChanged();
+}
+
+TEST_F(ApplicationBridgeTest, autoStartMode)
+{
+  int expectedMode = 2;
+
+  EXPECT_CALL(autoRunManager, autoStartMode())
+    .WillOnce(Return(expectedMode));
+
+  ASSERT_EQ(expectedMode, bridge.autoStartMode());
+}
+
+TEST_F(ApplicationBridgeTest, setAutoStartMode)
+{
+  int expectedMode = 2;
+  EXPECT_CALL(autoRunManager, setAutoStartMode(expectedMode))
+    .Times(1);
+
+  bridge.setAutoStartMode(expectedMode);
+}
+
+TEST_F(ApplicationBridgeTest, autoStartModeChanged)
+{
+  EXPECT_CALL(autoRunManager, onAutoStartModeChanged()).Times(1);
+  autoRunManager.autoStartModeChanged();
 }

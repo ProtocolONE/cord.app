@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <QtCore/QCoreApplication>
+#include <QtWidgets/QApplication>
 
 #pragma optimize("", off)
 void checkProtector()
@@ -37,7 +37,7 @@ bool initDatabase()
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
     QStringList plugins;
     QString path = QCoreApplication::applicationDirPath();
 

@@ -19,6 +19,7 @@
 #include <GameExecutor/GameExecutorService.h>
 #include <GameExecutor/hookinterface.h>
 #include <GameExecutor/Hook/SendPlayingInfo.h>
+#include <GameExecutor/Hook/ActivateWindow.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QVector>
@@ -35,6 +36,7 @@ using GGS::Core::Service;
 
 using GGS::GameExecutor::GameExecutorService;
 using GGS::GameExecutor::HookInterface;
+using GGS::GameExecutor::Hook::ActivateWindow;
 using GGS::GameExecutor::Hook::SendPlayingInfo;
 
 using GGS::GameDownloader::GameDownloadService;
@@ -164,6 +166,8 @@ public:
 
     executorHookFactory.reg<ThettaMonitorMock>();
     executorHookFactory.reg<SendPlayingInfoMock>();
+    executorHookFactory.reg<ActivateWindow>();
+
 
     loader.setExecutor(&executor);
     loader.setSimpleMainExecutor(&simpleMainExecutor);

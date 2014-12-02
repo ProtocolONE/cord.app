@@ -5,6 +5,7 @@
 
 class DownloaderSettingsBridgeProxy;
 class UpdateManagerBridgeProxy;
+class ApplicationBridgeProxy;
 
 class SettingsViewModel : public QObject
 {
@@ -26,7 +27,7 @@ class SettingsViewModel : public QObject
 
 public:
     explicit SettingsViewModel(QObject *parent = 0);
-    ~SettingsViewModel();
+    virtual ~SettingsViewModel();
 
 public slots:
 
@@ -57,11 +58,10 @@ public slots:
     QString uploadSpeed();
     void setUploadSpeed(const QString& _speed);
 
-    void setAutoStart(int _autostart);
+    void setAutoStart(int value);
     int autoStart();
 
     void setDefaultSettings();
-    void addToAutoStart(bool autostart, bool isMinimized); 
     void loadSettings();
 
     QString updateArea();
@@ -70,11 +70,13 @@ public slots:
     void setSeedEnabled(bool value);
 
     void setDownloaderSettings(DownloaderSettingsBridgeProxy *value);
+    void setApplicationProxy(ApplicationBridgeProxy *value);
 
 private:
     bool _instantlySave;
     DownloaderSettingsBridgeProxy* _downloaderSettings;
     UpdateManagerBridgeProxy* _updaterProxy;
+    ApplicationBridgeProxy *_applicationProxy;
 
 signals:
     void autoStartChanged();

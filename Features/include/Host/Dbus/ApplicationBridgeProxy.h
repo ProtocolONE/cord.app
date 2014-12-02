@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef APPLICATIONBRIDGEPROXY_H_1414563432
-#define APPLICATIONBRIDGEPROXY_H_1414563432
+#ifndef APPLICATIONBRIDGEPROXY_H_1417436670
+#define APPLICATIONBRIDGEPROXY_H_1417436670
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -34,6 +34,12 @@ public:
     ApplicationBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
 
     ~ApplicationBridgeProxy();
+
+    Q_PROPERTY(int autoStartMode READ autoStartMode WRITE setAutoStartMode)
+    inline int autoStartMode() const
+    { return qvariant_cast< int >(property("autoStartMode")); }
+    inline void setAutoStartMode(int value)
+    { setProperty("autoStartMode", QVariant::fromValue(value)); }
 
     Q_PROPERTY(QString language READ language WRITE setLanguage)
     inline QString language() const
@@ -69,6 +75,7 @@ public Q_SLOTS: // METHODS
     }
 
 Q_SIGNALS: // SIGNALS
+    void autoStartModeChanged();
     void initCompleted();
     void languageChanged();
     void restartUIRequest();

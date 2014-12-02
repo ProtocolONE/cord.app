@@ -194,6 +194,7 @@ namespace GameNet {
       applicationBridge->setApplication(this->_application);
       applicationBridge->setThetta(this->_application->_thetta);
       applicationBridge->setTranslation(this->_application->_translation);
+      applicationBridge->setAutoRunManager(this->_application->_autoRunManager);
 
       new ApplicationBridgeAdaptor(applicationBridge);
       connection->registerObject("/application", applicationBridge);

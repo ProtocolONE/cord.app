@@ -127,6 +127,8 @@ copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
 @REM Our libraries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
 
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
+
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
 
@@ -237,6 +239,8 @@ copy /Y /B  "$(ProjectDir)session.conf" "$(TargetDir)"
 
 @REM Our libraries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
