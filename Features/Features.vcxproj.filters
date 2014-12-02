@@ -1,31 +1,204 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AutoRunManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_AutoRunManager.cpp" />
+    <ClCompile Include="src\Host\AutoRunManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameNetDownloader.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_GameNetDownloader.cpp" />
+    <ClCompile Include="src\Features\GameNetDownloader.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ClientConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridgeadaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridgeproxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandle.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaCredentialConverter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutorAdapter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ClientConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_executorbridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_executorbridgeadaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_executorbridgeproxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandle.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaCredentialConverter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutorAdapter.cpp" />
+    <ClCompile Include="src\Features\Integration\Dbus\ZzimaExecutorBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Features\Integration\Dbus\ZzimaExecutorBridgeProxy.cpp" />
+    <ClCompile Include="src\Features\Integration\ZzimaCredentialConverter.cpp" />
+    <ClCompile Include="src\Features\Integration\ZzimaExecutorBridge.cpp" />
+    <ClCompile Include="src\Features\Integration\ZzimaGameExecutorAdapter.cpp" />
+    <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp" />
+    <ClCompile Include="src\Host\ClientConnection.cpp" />
+    <ClCompile Include="src\Host\Dbus\ExecutorBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\ExecutorBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Proxy\ServiceHandleProxy.cpp" />
+    <ClCompile Include="src\Host\Bridge\ServiceHandleBridge.cpp" />
+    <ClCompile Include="src\Host\ServiceHandle.cpp" />
+    <ClCompile Include="src\Host\Bridge\ConnectionBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionManager.cpp" />
+    <ClCompile Include="src\Host\ConnectionManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Connection.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Connection.cpp" />
+    <ClCompile Include="src\Host\Connection.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_CommandLineManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Translation.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_CommandLineManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Translation.cpp" />
+    <ClCompile Include="src\Host\Bridge\MessageAdapterBridge.cpp" />
+    <ClCompile Include="src\Host\Dbus\ConnectionBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\ConnectionBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\MessageAdapter.cpp" />
+    <ClCompile Include="src\Host\CommandLineManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderProxy.cpp" />
+    <ClCompile Include="src\Host\Bridge\Credential.cpp" />
+    <ClCompile Include="src\Host\CredentialConverter.cpp" />
+    <ClCompile Include="src\Host\Proxy\DownloaderProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutorProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutorProxy.cpp" />
+    <ClCompile Include="src\Host\GameExecutor.cpp" />
+    <ClCompile Include="src\Host\Proxy\GameExecutorProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\MarketingStatistic.cpp" />
+    <ClCompile Include="src\Host\Bridge\ApplicationStatisticBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatistic.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatistic.cpp" />
+    <ClCompile Include="src\Host\ApplicationStatistic.cpp" />
+    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\DBusServer.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DBusServer.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DBusServer.cpp" />
+    <ClCompile Include="src\Host\Dbus\DbusConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Application.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationRestarter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DbusConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DistrIntegrity.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DistrIntegrityExecutorHook.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettings.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorHookFactory.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ExternalIpAddress.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_HookFactory.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_LanguageChangeEventFilter.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_PremiumExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_SaveUserInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceDescription.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceLoader.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettings.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ShutdownManager.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_SilentMode.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_TaskBarEventFilter.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_taskbarprogresshelper.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Thetta.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThettaHashSender.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThettaInstaller.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitor.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThettaMonitorApp.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThettaSender.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_UIProcess.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Updater.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Application.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationRestarter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DbusConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrity.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrityExecutorHook.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettings.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorHookFactory.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ExternalIpAddress.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_HookFactory.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_LanguageChangeEventFilter.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_PremiumExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_SaveUserInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceDescription.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceLoader.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettings.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ShutdownManager.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_SilentMode.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_TaskBarEventFilter.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_taskbarprogresshelper.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Thetta.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaHashSender.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaInstaller.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitor.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaMonitorApp.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThettaSender.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_UIProcess.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridge.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridgeAdaptor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Updater.cpp" />
+    <ClCompile Include="src\Features\Thetta\SaveUserInfo.cpp" />
     <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp" />
     <ClCompile Include="src\Features\SilentMode.cpp" />
     <ClCompile Include="src\Features\TaskBarEventFilter.cpp" />
+    <ClCompile Include="src\Features\Thetta\DistrIntegrity.cpp" />
+    <ClCompile Include="src\Features\Thetta\DistrIntegrityExecutorHook.cpp" />
     <ClCompile Include="src\Features\Thetta\ForbiddenCertificateTester.cpp" />
     <ClCompile Include="src\Features\Thetta\Protector.cpp" />
     <ClCompile Include="src\Features\PremiumExecutor.cpp" />
@@ -60,717 +233,124 @@
     <ClCompile Include="src\Features\ThronInstaller.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaMonitorApp.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaHashSender.cpp" />
-    <ClCompile Include="src\Features\Thetta\DistrIntegrity.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\DistrIntegrityExecutorHook.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DistrIntegrity.cpp">
+    <ClCompile Include="src\Host\Application.cpp" />
+    <ClCompile Include="src\Host\ApplicationRestarter.cpp" />
+    <ClCompile Include="src\Host\Bridge\ApplicationBridge.cpp" />
+    <ClCompile Include="src\Host\Bridge\DownloaderBridge.cpp" />
+    <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridge.cpp" />
+    <ClCompile Include="src\Host\Bridge\ServiceSettingsBridge.cpp" />
+    <ClCompile Include="src\Host\Bridge\UpdateManagerBridge.cpp" />
+    <ClCompile Include="src\Host\Dbus\ApplicationBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\ApplicationBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\DownloaderBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\DownloaderBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeAdaptor.cpp" />
+    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeProxy.cpp" />
+    <ClCompile Include="src\Host\DownloaderSettings.cpp" />
+    <ClCompile Include="src\Host\ExecutorHookFactory.cpp" />
+    <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp" />
+    <ClCompile Include="src\Host\HookFactory.cpp" />
+    <ClCompile Include="src\Host\ServiceDescription.cpp" />
+    <ClCompile Include="src\Host\ServiceLoader.cpp" />
+    <ClCompile Include="src\Host\ServiceSettings.cpp" />
+    <ClCompile Include="src\Host\ShutdownManager.cpp" />
+    <ClCompile Include="src\Host\StopDownloadOnExecuteInit.cpp" />
+    <ClCompile Include="src\Host\Thetta.cpp" />
+    <ClCompile Include="src\Host\UIProcess.cpp" />
+    <ClCompile Include="src\Host\Updater.cpp" />
+    <ClCompile Include="src\Host\Translation.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_IPCBridgeProxy.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrity.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_IPCBridgeProxy.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DistrIntegrityExecutorHook.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_TimeOut.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrityExecutorHook.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\SaveUserInfo.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SaveUserInfo.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SaveUserInfo.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Application.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Application.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationRestarter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationRestarter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettings.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettings.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorHookFactory.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorHookFactory.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_HookFactory.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_HookFactory.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceDescription.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceDescription.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceLoader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceLoader.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettings.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettings.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ShutdownManager.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ShutdownManager.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Thetta.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Thetta.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_UIProcess.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_UIProcess.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Updater.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Updater.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ApplicationBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\DownloaderBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ServiceSettingsBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\UpdateManagerBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Application.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ApplicationRestarter.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\DownloaderSettings.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ExecutorHookFactory.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\HookFactory.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceDescription.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceLoader.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceSettings.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ShutdownManager.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\StopDownloadOnExecuteInit.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Thetta.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\UIProcess.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Updater.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ApplicationBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\DownloaderBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\DownloaderBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ApplicationBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DbusConnection.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DbusConnection.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\DbusConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DBusServer.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DBusServer.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\DBusServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ApplicationStatistic.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatistic.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatistic.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ApplicationStatisticBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\MarketingStatistic.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Proxy\GameExecutorProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutorProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutorProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\GameExecutor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Proxy\DownloaderProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\Credential.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\CredentialConverter.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\CommandLineManager.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CommandLineManager.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CommandLineManager.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\MessageAdapter.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\MessageAdapterBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Translation.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Translation.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Translation.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Connection.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Connection.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Connection.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ConnectionManager.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionManager.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionManager.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ConnectionBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ConnectionBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ConnectionBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceHandle.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandle.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandle.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ServiceHandleBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Proxy\ServiceHandleProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ClientConnection.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ClientConnection.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ClientConnection.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutorAdapter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutorAdapter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Integration\ZzimaExecutorBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Integration\ZzimaGameExecutorAdapter.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Integration\ZzimaCredentialConverter.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaCredentialConverter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaCredentialConverter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Integration\Dbus\ZzimaExecutorBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Integration\Dbus\ZzimaExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ExecutorBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Dbus\ExecutorBridgeAdaptor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridge.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_executorbridge.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridgeadaptor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_executorbridgeadaptor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_executorbridgeproxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_executorbridgeproxy.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_TimeOut.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DADownloader.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_IPCBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_TimeOut.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaConnection.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaLauncher.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_DADownloader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_IPCBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_TimeOut.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaConnection.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaLauncher.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\TimeOut.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\DADownloader.cpp">
-      <Filter>Generated Files\Debug</Filter>
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DADownloaderHook.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_DADownloaderHook.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZZimaConnection.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\DADownloaderHook.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ZZimaConnection.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor.cpp">
       <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor_p.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaLauncher.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaLauncher.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\Dbus\IPCBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\ZzimaConnection.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="src\Integration\ZZima\DADownloader.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Integration\ZZima\DADownloaderHook.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Integration\ZZima\ZZimaConnection.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
+      <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Integration\ZZima\ZzimaLauncher.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\GameNetDownloader.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameNetDownloader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GameNetDownloader.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\AutoRunManager.cpp">
+    <ClCompile Include="src\Integration\TimeOut.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_AutoRunManager.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_AutoRunManager.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor_p.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Host\CredentialConverter.h" />
+    <ClInclude Include="include\Host\Bridge\Credential.h" />
+    <ClInclude Include="include\Host\MarketingStatistic.h" />
+    <ClInclude Include="include\Helper\DebugLog.h" />
+    <ClInclude Include="include\Helper\ElevateRights.hpp" />
+    <ClInclude Include="include\Helper\Logger.hpp" />
+    <ClInclude Include="include\Host\StopDownloadOnExecuteInit.h" />
+    <ClInclude Include="include\Host\Factory.h" />
+    <ClInclude Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
     <ClInclude Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
     <ClInclude Include="include\Features\Thetta\ProtectorHooks.h" />
     <ClInclude Include="include\Features\Thetta\TlsInitializer.h" />
     <ClInclude Include="include\Features\Thetta\Json.h" />
     <ClInclude Include="include\Features\Thetta\Protector.h" />
-    <ClInclude Include="include\Helper\DebugLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\GameDownloader\Hook\SaveInstallPath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\Factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\StopDownloadOnExecuteInit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Helper\ElevateRights.hpp" />
-    <ClInclude Include="include\Helper\Logger.hpp" />
-    <ClInclude Include="include\Host\MarketingStatistic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\Bridge\Credential.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\CredentialConverter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -782,8 +362,74 @@
     <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
     <CustomBuild Include="include\Features\GameDownloader\ExternalIpAddress.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaMonitor.h" />
+    <CustomBuild Include="include\Host\Proxy\ServiceHandleProxy.h" />
+    <CustomBuild Include="include\Host\Bridge\ServiceHandleBridge.h" />
+    <CustomBuild Include="include\Host\ServiceHandle.h" />
+    <CustomBuild Include="include\Host\Translation.h" />
+    <CustomBuild Include="include\Host\Bridge\MessageAdapterBridge.h" />
+    <CustomBuild Include="include\Host\MessageAdapter.h" />
+    <CustomBuild Include="include\Host\Proxy\GameExecutorProxy.h" />
+    <CustomBuild Include="include\Host\GameExecutor.h" />
+    <CustomBuild Include="include\Host\Proxy\DownloaderProxy.h" />
+    <CustomBuild Include="include\Host\CommandLineManager.h" />
+    <CustomBuild Include="include\Host\Connection.h" />
+    <CustomBuild Include="include\Host\ConnectionManager.h" />
+    <CustomBuild Include="include\Host\Bridge\ConnectionBridge.h" />
+    <CustomBuild Include="include\Host\ClientConnection.h" />
+    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaExecutorBridge.h" />
+    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaGameExecutorAdapter.h" />
+    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaCredentialConverter.h" />
+    <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeProxy.h" />
+    <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeAdaptor.h" />
+    <CustomBuild Include="include\Features\GameNetDownloader.h" />
+    <CustomBuild Include="include\Host\AutoRunManager.h" />
+    <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\ConnectionBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\ConnectionBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\DbusConnection.h" />
+    <CustomBuild Include="include\Host\Dbus\DBusServer.h" />
+    <CustomBuild Include="include\Host\ApplicationStatistic.h" />
+    <CustomBuild Include="include\Host\Bridge\ApplicationStatisticBridge.h" />
+    <CustomBuild Include="include\Host\Dbus\ApplicationBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\DownloaderBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\DownloaderBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\ExecutorBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\ExecutorBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\UpdateManagerBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\UpdateManagerBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\ApplicationBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeAdaptor.h" />
+    <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Updater.h" />
+    <CustomBuild Include="include\Host\UIProcess.h" />
+    <CustomBuild Include="include\Host\Thetta.h" />
+    <CustomBuild Include="include\Host\ShutdownManager.h" />
+    <CustomBuild Include="include\Host\ServiceSettings.h" />
+    <CustomBuild Include="include\Host\ServiceLoader.h" />
+    <CustomBuild Include="include\Host\ServiceDescription.h" />
+    <CustomBuild Include="include\Host\HookFactory.h" />
+    <CustomBuild Include="include\Host\Application.h" />
+    <CustomBuild Include="include\Host\ApplicationRestarter.h" />
+    <CustomBuild Include="include\Host\DownloaderSettings.h" />
+    <CustomBuild Include="include\Host\ExecutorHookFactory.h" />
+    <CustomBuild Include="include\Host\Bridge\UpdateManagerBridge.h" />
+    <CustomBuild Include="include\Host\Bridge\ServiceSettingsBridge.h" />
+    <CustomBuild Include="include\Host\Bridge\ExecutorBridge.h" />
+    <CustomBuild Include="include\Host\Bridge\DownloaderSettingsBridge.h" />
+    <CustomBuild Include="include\Host\Bridge\DownloaderBridge.h" />
+    <CustomBuild Include="include\Host\Bridge\ApplicationBridge.h" />
+    <CustomBuild Include="include\Features\Thetta\SaveUserInfo.h" />
     <CustomBuild Include="include\Features\TaskBarEventFilter.h" />
     <CustomBuild Include="include\Features\LanguageChangeEventFilter.h" />
+    <CustomBuild Include="include\features\thetta\DistrIntegrityExecutorHook.h" />
+    <CustomBuild Include="include\features\thetta\DistrIntegrity.h" />
     <CustomBuild Include="include\Features\SilentMode.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaHashSender.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaMonitorApp.h" />
@@ -791,226 +437,28 @@
     <CustomBuild Include="include\features\taskbarprogresshelper.h" />
     <CustomBuild Include="include\Features\PremiumExecutor.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h" />
-    <CustomBuild Include="include\features\thetta\DistrIntegrity.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\features\thetta\DistrIntegrityExecutorHook.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\SaveUserInfo.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\ApplicationBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\DownloaderBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\DownloaderSettingsBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\ServiceSettingsBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\UpdateManagerBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Application.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ApplicationRestarter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\DownloaderSettings.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ExecutorHookFactory.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\HookFactory.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceDescription.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceLoader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceSettings.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ShutdownManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Thetta.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\UIProcess.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Updater.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ApplicationBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\DownloaderBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\DownloaderBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\UpdateManagerBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\UpdateManagerBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ApplicationBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\DbusConnection.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\DBusServer.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ApplicationStatistic.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\ApplicationStatisticBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Proxy\GameExecutorProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\GameExecutor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Proxy\DownloaderProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\CommandLineManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\MessageAdapter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\MessageAdapterBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Translation.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Connection.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ConnectionManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\ConnectionBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ConnectionBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ConnectionBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceHandle.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Bridge\ServiceHandleBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Proxy\ServiceHandleProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ClientConnection.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaExecutorBridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaGameExecutorAdapter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Integration\Zzima\ZzimaCredentialConverter.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeAdaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\host\bridge\executorbridge.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\host\dbus\executorbridgeadaptor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\host\dbus\executorbridgeproxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor_p.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor.h">
+    <CustomBuild Include="include\Integration\ZZima\Dbus\IPCBridgeProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Integration\TimeOut.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaConnection.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\Dbus\IPCBridgeProxy.h">
+    <CustomBuild Include="include\Integration\ZZima\DADownloader.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Integration\ZZima\DADownloaderHook.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\DADownloader.h">
+    <CustomBuild Include="include\Integration\ZZima\ZZimaConnection.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Features\GameNetDownloader.h">
+    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Host\AutoRunManager.h">
+    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor_p.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -1026,19 +474,14 @@
       <ParseFiles>true</ParseFiles>
     </Filter>
     <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{e52ffd06-2faf-4661-89a6-b99e57c1b1df}</UniqueIdentifier>
+      <UniqueIdentifier>{53885873-6e78-41ee-8b60-bc70d3cb90ab}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{d35226f7-7d15-4bb6-83e1-ad5234f091f0}</UniqueIdentifier>
+      <UniqueIdentifier>{bbc9a11a-acd7-46fd-9213-98a88ad5476d}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;cxx;c;def</Extensions>
-      <ParseFiles>true</ParseFiles>
     </Filter>
   </ItemGroup>
 </Project>
