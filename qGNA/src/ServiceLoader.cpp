@@ -43,14 +43,14 @@ void ServiceLoader::init(GGS::Core::Service::Area gameArea, GGS::Core::Service::
   this->initService("300005010000000000", "http://fs0.gamenet.ru/update/warinc/", "FireStorm");
   this->initService("300009010000000000", "http://fs0.gamenet.ru/update/ca/", "CombatArms");
   
-  this->initService("30000000000", "http://fs0.gamenet.ru/update/bd/", "BlackDesert");
+  //this->initService("30000000000", "http://fs0.gamenet.ru/update/bd/", "BlackDesert");
 
   //this->initService("100009010000000000", "http://gnlupdate.tst.local/update/ca/", "CombatArmsTest");
   //this->initService("100003010000000000", "http://gnlupdate.tst.local/update/bs/", "BSTest");
 
   this->initGAService();
   this->initFJService();
-  //this->initBDService();
+  this->initBDService();
 
   this->_gameDownloader->registerHook("300005010000000000", 0, 10, &this->_installDependencyHook);
   this->_gameDownloader->registerHook("300009010000000000", -1, -1, &this->_caDistIntegrity);
@@ -259,21 +259,23 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
 #endif
 
     query.addQueryItem("executorHelper", injectedDll2);
-  } else if (id == "30000000000") { // Bd
-    url.setScheme("exe");
+  } 
+  //else if (id == "30000000000") { // Bd
+  //  url.setScheme("exe");
 
-    BOOL isWow64 = FALSE;
-    IsWow64Process(GetCurrentProcess(),&isWow64);
+  //  BOOL isWow64 = FALSE;
+  //  IsWow64Process(GetCurrentProcess(),&isWow64);
 
-    if (isWow64)
-      url.setPath(QString("%1/%2/bin64/BlackDesert64.exe").arg(currentInstallPath, service->areaString()));
-    else 
-      url.setPath(QString("%1/%2/bin/BlackDesert32.exe").arg(currentInstallPath, service->areaString()));
-                  
-    query.addQueryItem("workingDir", QString("%1/%2/bin/").arg(currentInstallPath, service->areaString()));
-    query.addQueryItem("args", "");
-    service->setGameId("1021");
-  } else if (id == "100009010000000000") {
+  //  if (isWow64)
+  //    url.setPath(QString("%1/%2/bin64/BlackDesert64.exe").arg(currentInstallPath, service->areaString()));
+  //  else 
+  //    url.setPath(QString("%1/%2/bin/BlackDesert32.exe").arg(currentInstallPath, service->areaString()));
+  //                
+  //  query.addQueryItem("workingDir", QString("%1/%2/bin/").arg(currentInstallPath, service->areaString()));
+  //  query.addQueryItem("args", "");
+  //  service->setGameId("1021");
+  //} 
+  else if (id == "100009010000000000") {
     url.setScheme("exe");
     url.setPath(QString("%1/%2/sample.exe").arg(currentInstallPath, service->areaString()));
     url.addQueryItem("workingDir", QString("%1/%2/").arg(currentInstallPath, service->areaString()));

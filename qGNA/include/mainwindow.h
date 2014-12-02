@@ -309,8 +309,6 @@ private:
   void prepairGameDownloader();
   void postUpdateInit();
 
-  bool hasFriendsAndFamilyAccess(const QString &serviceId); 
-
   GGS::Core::Service* getService(const QString& id);
 
   QmlMessageAdapter* messageAdapter;
