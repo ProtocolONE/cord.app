@@ -44,6 +44,8 @@
 
 #include <QtDBus/QDBusConnection>
 
+#include <Sddl.h>
+
 using GameNet::Host::DBus::DBusServer;
 using GGS::RestApi::RestApiManager;
 
@@ -66,7 +68,16 @@ namespace GameNet {
 
       void open()
       {
-        this->_handle = CreateMutexA(0, 0, this->_name.c_str());
+        SECURITY_DESCRIPTOR SecurityDescriptor;
+        InitializeSecurityDescriptor(&SecurityDescriptor, SECURITY_DESCRIPTOR_REVISION);
+        SetSecurityDescriptorDacl(&SecurityDescriptor, TRUE, NULL, FALSE);
+
+        SECURITY_ATTRIBUTES attr;
+        attr.lpSecurityDescriptor = &SecurityDescriptor;
+        attr.bInheritHandle = FALSE;
+        attr.nLength = sizeof(SECURITY_ATTRIBUTES);
+
+        this->_handle = CreateMutexA(&attr, 0, this->_name.c_str());
       }
 
       void close() 
