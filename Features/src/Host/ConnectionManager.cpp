@@ -338,7 +338,7 @@ namespace GameNet {
       this->_connections.remove(connection->applicationName());
       this->_application->_serviceHandle->unlockAllForConnection(connection);
 
-      if (connection->applicationName() == "QGNA") {
+      if (this->_connections.count() == 0) {
         this->_application->shutdown();
         return;
       }
