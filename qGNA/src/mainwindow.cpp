@@ -3,7 +3,23 @@
 #include <BestInstallPath.h>
 #include <HostMessageAdapter.h>
 
-#include <Features/RestApi/ServiceHasAccess.h>
+#include <viewmodel/UpdateViewModel.h>
+#include <viewmodel/ApplicationStatisticViewModel.h>
+#include <viewmodel/SettingsViewModel.h>
+#include <viewmodel/GameSettingsViewModel.h>
+#include <viewmodel/ServiceHandleViewModel.h>
+
+#include <Host/CredentialConverter.h>
+#include <Host/Translation.h>
+#include <Host/ClientConnection.h>
+
+#include <Host/Dbus/DbusConnection.h>
+#include <Host/Dbus/DownloaderBridgeProxy.h>
+#include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
+#include <Host/Dbus/ServiceSettingsBridgeProxy.h>
+#include <Host/Dbus/ExecutorBridgeProxy.h>
+#include <Host/Dbus/ApplicationBridgeProxy.h>
+#include <Host/Dbus/ApplicationStatisticBridgeProxy.h>
 
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
@@ -82,7 +98,7 @@ void MainWindow::initialize()
   this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", connection, this);
   this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", connection, this);
   this->_applicationStatistic = new ApplicationStatisticBridgeProxy(dbusService, "/applicationStatistic", connection, this);
-
+  
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::languageChanged,
     this, &MainWindow::languageChanged);
 
@@ -117,10 +133,12 @@ void MainWindow::initialize()
   this->settingsViewModel->setDownloaderSettings(this->_downloaderSettings);
   this->settingsViewModel->setApplicationProxy(this->_applicationProxy);
 
+
   qmlRegisterType<UpdateViewModel>("qGNA.Library", 1, 0, "UpdateViewModel");
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");
   qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");
   qmlRegisterType<ApplicationStatisticViewModel>("qGNA.Library", 1, 0, "ApplicationStatistic");
+  qmlRegisterType<ServiceHandleViewModel>("qGNA.Library", 1, 0, "ServiceHandle");
 
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
@@ -172,7 +190,7 @@ void MainWindow::initialize()
   nQMLContainer->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
   nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
   nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
-  
+
   nQMLContainer->setSource(QUrl("qrc:/Main.qml"));
   nQMLContainer->setAlignment(Qt::AlignCenter);
   nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
