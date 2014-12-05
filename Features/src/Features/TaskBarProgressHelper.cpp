@@ -1,7 +1,7 @@
 /****************************************************************************
 ** This file is a part of Syncopate Limited GameNet Application or it parts.
 **
-** Copyright (©) 2011 - 2013, Syncopate Limited and/or affiliates. 
+** Copyright (ï¿½) 2011 - 2013, Syncopate Limited and/or affiliates. 
 ** All rights reserved.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -10,7 +10,8 @@
 
 #include <Features/TaskBarProgressHelper.h>
 
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QMainWindow>
+#include <QtWin>
 
 #include <Windows.h>
 
@@ -22,6 +23,8 @@ namespace Features {
     : QObject(parent)
     , _appMainWindow(0)
     , _taskBarCreatedMsgId(0)
+    , _lastStatus(StatusUnknown)
+    , _lastProgress(0)
   {
     this->_isPlatformSupported = this->isPlatformSupported();
   }
@@ -69,11 +72,14 @@ namespace Features {
     if (this->_isPlatformSupported) {
       this->_taskbarList.Release();
       this->_taskbarList.CoCreateInstance(CLSID_TaskbarList);
+      this->restore();
     }
   }
-
+  
   void TaskBarHelper::setProgress(int progress)
   {
+    this->_lastProgress = progress;
+
     if (!this->_taskbarList)
       return;
 
@@ -84,12 +90,14 @@ namespace Features {
     } else if (progressValue > 100) {
       progressValue = 100;
     }
-
+    
     this->_taskbarList->SetProgressValue(this->_appMainWindow, progressValue, 100);
   }
 
   void TaskBarHelper::setStatus(Status status)
   {
+    this->_lastStatus = status;
+
     if (!this->_taskbarList)
       return;
 
@@ -98,7 +106,8 @@ namespace Features {
     switch(status){
     case StatusUnknown:
       flag = TBPF_NOPROGRESS;
-      break;
+      
+     break;
     case StatusNormal:
       flag = TBPF_NORMAL;
       break;
@@ -111,5 +120,33 @@ namespace Features {
     }
 
     this->_taskbarList->SetProgressState(this->_appMainWindow, flag);
+  }
+
+  void TaskBarHelper::setIcon(const QString &iconSource, const QString &hint) 
+  {
+    this->_lastIcon = iconSource;
+    
+    if (!this->_taskbarList)
+      return;
+
+    QIcon icon = QIcon(iconSource);
+    std::wstring wHint = hint.toStdWString();
+
+    HICON hIcon = 0;
+
+    if (!icon.isNull())
+      hIcon = QtWin::toHICON(icon.pixmap(GetSystemMetrics(SM_CXSMICON)));
+
+    HRESULT hr = this->_taskbarList->SetOverlayIcon(this->_appMainWindow, hIcon, wHint.c_str());
+
+    if (hIcon != NULL)
+      DestroyIcon(hIcon);
+  }
+
+  void TaskBarHelper::restore()
+  {
+    this->setProgress(this->_lastProgress);
+    this->setStatus(this->_lastStatus);
+    this->setIcon(this->_lastIcon);
   }
 }

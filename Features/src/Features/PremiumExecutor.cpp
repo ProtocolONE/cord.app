@@ -225,4 +225,26 @@ namespace Features {
     return *this->_secondGameStarted.begin();
   }
 
+  bool PremiumExecutor::isMainGameStarted()
+  {
+    return this->_mainGameStarted.count() > 0;
+  }
+
+  bool PremiumExecutor::isSecondGameStarted()
+  {
+    return this->_secondGameStarted.count() > 0;
+  }
+
+  void PremiumExecutor::terminateAll()
+  {
+    if (this->_mainExecutor->isAnyGameStarted())
+      this->_mainExecutor->terminateAll();
+
+    if (this->_simpleMainExecutor.isAnyGameStarted())
+      this->_simpleMainExecutor.terminateAll();
+
+    if (this->_secondExecutor.isAnyGameStarted())
+      this->_secondExecutor.terminateAll();
+  }
+
 }

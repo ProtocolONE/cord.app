@@ -102,6 +102,8 @@ public:
   Q_INVOKABLE void selectLanguage(const QString& language);
   void setFileVersion(const QString& fileVersion) { _fileVersion = fileVersion; }
 
+  Q_INVOKABLE void setTaskbarIcon(const QString &iconSource);
+
 public slots:
   /*
     Возвращает true если Host приложение проинициализировано, и обновлено

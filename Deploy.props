@@ -19,7 +19,6 @@
     <ApplicationArea>trunk</ApplicationArea>
     <OpenSSLArea>0.9.8r</OpenSSLArea>
     <QmlExtensionArea>trunk</QmlExtensionArea>
-    <QxmppArea>0.7.7</QxmppArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
     <OverlayArea>trunk</OverlayArea>
@@ -88,10 +87,6 @@
     </BuildMacro>
     <BuildMacro Include="QmlExtensionArea">
       <Value>$(QmlExtensionArea)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
-    <BuildMacro Include="QxmppArea">
-      <Value>$(QxmppArea)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="MarketingArea">

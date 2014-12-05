@@ -335,6 +335,15 @@
     <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor_p.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Features\BlackDesertDefaultSettings.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BlackDesertDefaultSettings.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BlackDesertDefaultSettings.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Host\CredentialConverter.h" />
@@ -459,6 +468,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\BlackDesertDefaultSettings.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

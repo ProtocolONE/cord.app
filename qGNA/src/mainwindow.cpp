@@ -1,7 +1,9 @@
-#include <mainwindow.h>
+﻿#include <mainwindow.h>
 #include <Player.h>
 #include <BestInstallPath.h>
 #include <HostMessageAdapter.h>
+
+#include <Features/RestApi/ServiceHasAccess.h>
 
 #include <viewmodel/UpdateViewModel.h>
 #include <viewmodel/ApplicationStatisticViewModel.h>
@@ -283,6 +285,8 @@ void MainWindow::activateWindow()
   // Эта функция активирует окно и поднмиает его повех всех окон
   GGS::Application::WindowHelper::activate(this->winId());
 
+  this->_taskBarHelper.restore();
+
   this->repaint();
 }
 
@@ -382,6 +386,9 @@ void MainWindow::logout()
   this->_credential.setCookie("");
 
   this->_restapiManager.setCridential(this->_credential);
+
+  // UNDONE QGNA-1081 Необходимо дописать функционал на закрытие игры.
+  //this->_premiumExecutor.terminateAll();
 }
 
 void MainWindow::prepairGameDownloader()
@@ -961,6 +968,11 @@ void MainWindow::onProgressUpdated(int progressValue, const QString &status)
 
   this->_taskBarHelper.setProgress(progressValue);
   this->_taskBarHelper.setStatus(newStatus);
+}
+
+void MainWindow::setTaskbarIcon(const QString &iconSource)
+{
+  this->_taskBarHelper.setIcon(iconSource);
 }
 
 void MainWindow::onLanguageChanged()

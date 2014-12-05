@@ -35,6 +35,8 @@ namespace Features {
 
     void setProgress(int progress);
     void setStatus(Status status);
+    void setIcon(const QString &iconSource, const QString &hint = QString());
+    void restore();
 
   private:
     bool isPlatformSupported() const;
@@ -44,6 +46,10 @@ namespace Features {
     HWND _appMainWindow;
     CComPtr<ITaskbarList3> _taskbarList;
     unsigned int _taskBarCreatedMsgId;
+
+    Status _lastStatus;
+    int _lastProgress;
+    QString _lastIcon;
   };
 
 }
