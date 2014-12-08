@@ -123,7 +123,7 @@ namespace GameNet {
       this->_singleApplication = value;
 
       QObject::connect(value, &SingleApplication::commandRecieved, 
-        this->_commandLineManager, &CommandLineManager::commandRecieved, Qt::QueuedConnection); 
+        this->_commandLineManager, &CommandLineManager::commandRecieved, Qt::QueuedConnection);
 
       QObject::connect(this, &Application::initCompleted, 
         value, &SingleApplication::initializeFinished);
@@ -134,6 +134,9 @@ namespace GameNet {
       this->_messageAdapter->setHasUiProcess(std::bind(&UIProcess::isRunning, this->_uiProcess));
       QObject::connect(this->_uiProcess, &UIProcess::closed, this->_messageAdapter, 
         &MessageAdapter::uiProcessClosed);
+
+      QObject::connect(this, &Application::restartApplicationRequest,
+        this, &Application::internalRestartApplication, Qt::QueuedConnection);
 
       GGS::Core::UI::Message::setAdapter(this->_messageAdapter);
 
@@ -500,8 +503,9 @@ namespace GameNet {
 
     void Application::restartApplication(bool shouldStartWithSameArguments, bool isMinimized)
     {
-      this->_uiProcess->closeUI();
-      this->_applicationRestarter->restartApplication(shouldStartWithSameArguments, isMinimized);
+      // INFO Необходимо выйти из запроса на рестарт приложения, 
+      // иначе dbus вызвавший метод упадет на попытке вернуть результат
+      emit this->restartApplicationRequest(shouldStartWithSameArguments, isMinimized);
     }
 
     void Application::finalize()
@@ -556,6 +560,12 @@ namespace GameNet {
       credetial = connection->credential();
       name = connection->applicationName();
       return true;
+    }
+
+    void Application::internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized)
+    {
+      this->_uiProcess->closeUI();
+      this->_applicationRestarter->restartApplication(shouldStartWithSameArguments, isMinimized);
     }
 
   }

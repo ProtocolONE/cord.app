@@ -93,7 +93,8 @@ namespace GameNet {
     signals:
       void initCompleted();
       void restartUIRequest();
-      
+      void restartApplicationRequest(bool shouldStartWithSameArguments, bool isMinimized);
+
     private:
       friend class ConnectionManager;
 
@@ -107,6 +108,9 @@ namespace GameNet {
 
       void initRestApi();
       void initMarketing();
+
+      bool executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name);
+      void internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized);
 
       GGS::Application::SingleApplication *_singleApplication;
       ServiceLoader *_serviceLoader;
