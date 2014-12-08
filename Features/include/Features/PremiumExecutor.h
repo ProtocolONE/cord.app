@@ -42,10 +42,10 @@ namespace Features {
       const GGS::RestApi::GameNetCredential& credetial, 
       const GGS::RestApi::GameNetCredential& secondCredetial);
 
-    void shutdownSecond();
+    void shutdownSecond(const QString& serviceId = QString());
 
     void shutdown();
-    void terminateAll();
+    void terminateAll(const QString& serviceId = QString());
 
     bool isGameStarted(const QString& id);
     bool isSecondGameStarted(const QString& id);

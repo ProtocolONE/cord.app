@@ -50,7 +50,10 @@ namespace GameNet {
 
     void Connection::setCredential(const GameNetCredential& value)
     {
-      this->_credential = value;
+      if (value.isEmpty())
+        emit this->logoutMain();
+      else
+        this->_credential = value;
     }
 
     void Connection::setSecondCredential(const GameNetCredential& value)
@@ -125,6 +128,11 @@ namespace GameNet {
     void Connection::close()
     {
       emit this->disconnected();
+    }
+
+    QList<QString> Connection::lockedServices()
+    {
+      return this->_lockedServices.toList();
     }
 
   }

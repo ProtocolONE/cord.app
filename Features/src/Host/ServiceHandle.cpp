@@ -68,5 +68,13 @@ namespace GameNet {
       return this->_lockedServices.value(serviceId, nullptr);
     }
 
+    QList<QString> ServiceHandle::lockedServices(Connection* connection)
+    {
+      Q_ASSERT(connection);
+
+      QMutexLocker lock(&this->_mutex);
+      return connection->lockedServices();
+    }
+
   }
 }

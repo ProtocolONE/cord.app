@@ -17,6 +17,8 @@ namespace GameNet {
     {
       Q_OBJECT
     public:
+      friend class ServiceHandle;
+
       explicit Connection(const QDBusConnection& connection, QObject *parent = 0);
       virtual ~Connection();
 
@@ -34,8 +36,6 @@ namespace GameNet {
       void registerObject(const QString &path, QObject *object);
 
       bool isOwnService(const QString& serviceId);
-      void lockService(const QString& serviceId);
-      void unlockService(const QString& serviceId);
 
       void onGenericError(
         GGS::RestApi::CommandBase::Error error,
@@ -48,8 +48,14 @@ namespace GameNet {
       void wrongCredential(const QString& userId);
       void disconnected();
 
+      void logoutMain();
+
     private:
       void timeoutTick();
+
+      QList<QString> lockedServices();
+      void lockService(const QString& serviceId);
+      void unlockService(const QString& serviceId);
 
       QDBusConnection _dbusConnection;
 

@@ -88,12 +88,12 @@ namespace Features {
     this->_secondGameStarted.insert(service->id());
   }
 
-  void PremiumExecutor::shutdownSecond()
+  void PremiumExecutor::shutdownSecond(const QString& serviceId /* = QString()*/)
   {
     QMutexLocker locker(&this->_mutex);
 
     if (this->_secondExecutor.isAnyGameStarted()) {
-      this->_secondExecutor.terminateAll();
+      this->_secondExecutor.terminate(serviceId);
     }
   }
 
@@ -219,16 +219,16 @@ namespace Features {
     return this->_secondGameStarted.count() > 0;
   }
 
-  void PremiumExecutor::terminateAll()
+  void PremiumExecutor::terminateAll(const QString& serviceId /* = QString()*/)
   {
     if (this->_mainExecutor->isAnyGameStarted())
-      this->_mainExecutor->terminateAll();
+      this->_mainExecutor->terminate(serviceId);
 
     if (this->_simpleMainExecutor.isAnyGameStarted())
-      this->_simpleMainExecutor.terminateAll();
+      this->_simpleMainExecutor.terminate(serviceId);
 
     if (this->_secondExecutor.isAnyGameStarted())
-      this->_secondExecutor.terminateAll();
+      this->_secondExecutor.terminate(serviceId);
   }
 
 }

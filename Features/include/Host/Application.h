@@ -62,6 +62,7 @@ namespace GameNet {
     class ConnectionManager;
     class ServiceHandle;
     class AutoRunManager;
+    class Connection;
 
     namespace Proxy {
       class GameExecutorProxy;
@@ -111,6 +112,8 @@ namespace GameNet {
 
       bool executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name);
       void internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized);
+      void onNewConnection(Connection *connection);
+      void onConnectionLogoutMain();
 
       GGS::Application::SingleApplication *_singleApplication;
       ServiceLoader *_serviceLoader;

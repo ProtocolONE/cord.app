@@ -27,6 +27,9 @@ namespace GameNet {
       bool init();
       void shutdown();
 
+    signals:
+      void newConnection(Connection *connection);
+      
     private slots:
       void onInitCompleted();
 

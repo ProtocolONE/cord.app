@@ -242,5 +242,15 @@ namespace GameNet {
       return this->_premiumExecutor->simpleMainExecutor();
     }
 
+    void GameExecutor::terminateAll(const QString& serviceId /*= QString()*/)
+    {
+      this->_premiumExecutor->terminateAll(serviceId);
+    }
+
+    void GameExecutor::terminateSecond(const QString& serviceId /*= QString()*/)
+    {
+      this->_premiumExecutor->shutdownSecond(serviceId);
+    }
+
   }
 }

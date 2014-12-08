@@ -111,7 +111,8 @@ namespace GameNet {
       Q_ASSERT(value);
       this->_application = value;
 
-      connect(this->_application, &Application::initCompleted, this, &ConnectionManager::onInitCompleted);
+      QObject::connect(this->_application, &Application::initCompleted, 
+        this, &ConnectionManager::onInitCompleted);
     }
 
     bool ConnectionManager::init()
@@ -175,6 +176,8 @@ namespace GameNet {
         this->registerServicesForZzima(connection);
       }
 #endif
+
+      emit this->newConnection(connection);
     }
 
     void ConnectionManager::registerServicesForQGNA(Connection * connection)

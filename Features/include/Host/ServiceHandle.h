@@ -23,7 +23,8 @@ namespace GameNet {
       void unlockAllForConnection(Connection* connection);
 
       Connection* connectionLockedService(const QString& serviceId);
-
+      QList<QString> lockedServices(Connection* connection);
+      
     signals:
       void locked(const QString& serviceId, Connection* connection);
       void unlocked(const QString& serviceId, Connection* connection);

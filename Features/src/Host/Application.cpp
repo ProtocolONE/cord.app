@@ -264,6 +264,9 @@ namespace GameNet {
         QCoreApplication::quit();
         return;
       }
+
+      QObject::connect(this->_connectionManager, &ConnectionManager::newConnection, 
+        this, &Application::onNewConnection);
     }
 
     void Application::registerServices()
@@ -568,5 +571,22 @@ namespace GameNet {
       this->_applicationRestarter->restartApplication(shouldStartWithSameArguments, isMinimized);
     }
 
+    void Application::onNewConnection(Connection *connection)
+    {
+      QObject::connect(connection, &Connection::logoutMain,
+        this, &Application::onConnectionLogoutMain);
+    }
+
+    void Application::onConnectionLogoutMain()
+    {
+      Connection *connection = qobject_cast<Connection *>(QObject::sender());
+      if (!connection)
+        return;
+
+      QList<QString> lockedGames = this->_serviceHandle->lockedServices(connection);
+      Q_FOREACH(const QString& serviceId, lockedGames) {
+        this->_executor->terminateAll(serviceId);
+      }
+    }
   }
 }

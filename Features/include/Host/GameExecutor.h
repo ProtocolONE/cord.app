@@ -76,6 +76,9 @@ namespace GameNet {
       GGS::GameExecutor::GameExecutorService* secondExecutor();
       GGS::GameExecutor::GameExecutorService* simpleMainExecutor();
 
+      void terminateAll(const QString& serviceId = QString());
+      void terminateSecond(const QString& serviceId = QString());
+
     signals:
       void serviceStarted(const QString& serviceId);
       void serviceFinished(const QString& serviceId, int finishState);

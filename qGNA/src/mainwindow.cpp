@@ -410,17 +410,7 @@ void MainWindow::logout()
   this->_premiumExecutor.terminateAll();
 }
 
-void MainWindow::initServices()
-{
-  this->_serviceLoader.setGameDownloader(&this->_gameDownloader);
-  this->_serviceLoader.setExecutor(&this->_gameExecutorService);
-  this->_serviceLoader.init(this->_gameArea, this->_applicationArea);
-
-  this->_gameExecutorService.addHook(
-    *this->_serviceLoader.getService("300005010000000000"), 
-    this->_enterNickViewModel, 0);
-
-  this->_gameSettingsViewModel->setServiceList(&this->_serviceLoader.serviceMap());
+  this->_clientConnection->setCredential(this->_credential);
 }
 
 void MainWindow::prepairGameDownloader()
