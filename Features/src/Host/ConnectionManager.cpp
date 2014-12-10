@@ -381,6 +381,7 @@ namespace GameNet {
 
       ZzimaGameExecutorAdapter *adapter = new ZzimaGameExecutorAdapter(connection);
       adapter->setProxy(executorProxy);
+      adapter->setConnection(connection);
 
       ZzimaExecutorBridge* executorBridge = new ZzimaExecutorBridge(connection);
       executorBridge->setAdapter(adapter);
