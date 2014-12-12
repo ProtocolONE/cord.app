@@ -14,6 +14,8 @@ namespace GameNet {
     Connection::Connection(const QDBusConnection& connection, QObject *parent /*= 0*/)
       : QObject(parent)
       , _dbusConnection(connection)
+      , _maxTimeoutFail(10) // 10 * 5000 = 50 sec
+      , _timeoutFail(0)
     {
       Bridge::ConnectionBridge *bridge = new Bridge::ConnectionBridge(this);
       bridge->setConnection(this);
@@ -26,7 +28,7 @@ namespace GameNet {
       QObject::connect(&this->_timeoutTimer, &QTimer::timeout,
         this, &Connection::timeoutTick);
 
-      this->_timeoutTimer.setInterval(45000);
+      this->_timeoutTimer.setInterval(5000);
       this->_timeoutTimer.start();
     }
 
@@ -117,11 +119,16 @@ namespace GameNet {
     void Connection::ping()
     {
       this->_timeoutTimer.start();
+      this->_timeoutFail = 0;
       emit this->pong();
     }
 
     void Connection::timeoutTick()
     {
+      this->_timeoutFail++;
+      if (this->_timeoutFail < this->_maxTimeoutFail)
+        return;
+
       this->_timeoutTimer.stop();
       qDebug() << "Client" << this->_applicationName << "disconnected";
       emit this->disconnected();

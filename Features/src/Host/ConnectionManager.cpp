@@ -119,6 +119,10 @@ namespace GameNet {
     {
       Q_ASSERT(this->_application);
 
+#ifndef USE_SESSION_DBUS
+      Q_ASSERT(this->_server);
+#endif
+
       qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
       qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
 
@@ -138,12 +142,13 @@ namespace GameNet {
 
       connection->setApplicationName("QGNA");
 #else
-      DBusServer *server = new DBusServer(this);
-      this->_server = server;
-      if (!server->isConnected())
+
+      if (!this->_server->isConnected()) {
+        qDebug() << "DbusServer failed: " << this->_server->lastError();
         return false;
-      
-      QObject::connect(server, &DBusServer::newConnection, [this](const QDBusConnection &constConnection) {
+      }
+
+      QObject::connect(this->_server, &DBusServer::newConnection, [this](const QDBusConnection &constConnection) {
         qDebug() << "New IPC connection with name" << constConnection.name() << "accepted";
         
         Connection *connection = new Connection(constConnection, this);
@@ -389,6 +394,13 @@ namespace GameNet {
       new ZzimaExecutorBridgeAdaptor(executorBridge);
       connection->registerObject("/zzimaexecutor", executorBridge);
     }
+
+    void ConnectionManager::setDbusServer(DBus::DBusServer* value)
+    {
+      Q_ASSERT(value);
+      this->_server = value;
+    }
+
 #endif
 
   }

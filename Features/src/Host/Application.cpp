@@ -24,6 +24,8 @@
 #include <Host/ServiceHandle.h>
 #include <Host/AutoRunManager.h>
 
+#include <Host/Dbus/DBusServer.h>
+
 #include <Integration/ZZima/ZzimaGameExecutor.h>
 #include <Integration/ZZima/ZZimaConnection.h>
 
@@ -51,6 +53,7 @@
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
 using ::GameNet::Integration::ZZima::ZZimaConnection;
+using GameNet::Host::DBus::DBusServer;
 
 namespace GameNet {
   namespace Host {
@@ -83,7 +86,7 @@ namespace GameNet {
       , _serviceHandle(new ServiceHandle(this))
       , _zzimaConnection(new ZZimaConnection(this))
       , _autoRunManager(new AutoRunManager(this))
-      , _systemInfoManager(new Features::Marketing::SystemInfo::SystemInfoManager(this))
+      , _dbusServer(nullptr)
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -133,6 +136,17 @@ namespace GameNet {
 
     void Application::init()
     {
+
+#ifndef USE_SESSION_DBUS
+      this->_dbusServer = new DBusServer(this);
+      if (!this->_dbusServer->isConnected()) {
+        qDebug() << "DbusServer failed: " << this->_dbusServer->lastError();
+        MessageBoxW(0, L"Could not create DBusServer.", L"Error", MB_OK);
+        QCoreApplication::quit();
+        return;
+      }
+#endif
+
       this->_messageAdapter->setHasUiProcess(std::bind(&UIProcess::isRunning, this->_uiProcess));
       QObject::connect(this->_uiProcess, &UIProcess::closed, this->_messageAdapter, 
         &MessageAdapter::uiProcessClosed);
@@ -159,7 +173,7 @@ namespace GameNet {
       this->_executor->setServiceSettings(this->_serviceSettings);
       this->_executor->setThetta(this->_thetta);
       this->_executor->init();
-      
+
       GameNet::Integration::ZZima::ZzimaGameExecutor * zzimaExecutor = 
         new GameNet::Integration::ZZima::ZzimaGameExecutor(this);
       zzimaExecutor->setZzimaConnection(this->_zzimaConnection);
@@ -189,11 +203,7 @@ namespace GameNet {
       this->_serviceSettings->setDownloader(this->_gameDownloader);
 
       this->initMarketing();
-
       this->registerServices();
-
-      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
-        this->_thetta->installer()->connectToDriver();
 
       StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
       stopDownloadOnExecuteInit.setDownloader(this->_gameDownloader);
@@ -202,15 +212,13 @@ namespace GameNet {
       stopDownloadOnExecuteInit.setExecutor(this->_executor);
       stopDownloadOnExecuteInit.init();
 
-      this->registerDbusServices();
-
       this->_shutdown->setApplication(this);
       this->_shutdown->setDownloader(this->_gameDownloader);
       this->_shutdown->setExecutor(this->_executor);
       this->_shutdown->setThetta(this->_thetta);
       this->_shutdown->setSingleApplication(this->_singleApplication);
       this->_shutdown->setConnectionManager(this->_connectionManager);
-      
+
       this->_applicationRestarter->setShutdownManager(this->_shutdown);
       
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
@@ -224,6 +232,18 @@ namespace GameNet {
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand, 
         this->_uiProcess, &UIProcess::sendCommand);
+
+      QObject::connect(this->_commandLineManager, &CommandLineManager::openBrowser, 
+        this->_thetta, &Thetta::openBrowser);
+
+      this->_commandLineManager->setExecutedGameCredential(
+        std::bind(&Application::executedGameCredential, this, std::placeholders::_1, std::placeholders::_2));
+
+      if (!this->registerDbusServices())
+        return;
+
+      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
+        this->_thetta->installer()->connectToDriver();
 
       /*
         INFO Если (когда) поменяется схема инициализации, обратить внимание на эту строчку
@@ -257,18 +277,23 @@ namespace GameNet {
       this->setUpdateFinished();
     }
 
-    void Application::registerDbusServices()
+    bool Application::registerDbusServices()
     {
+#ifndef USE_SESSION_DBUS
+      this->_connectionManager->setDbusServer(this->_dbusServer);
+#endif
       this->_connectionManager->setApplication(this);
 
       if (!this->_connectionManager->init()) {
         MessageBoxW(0, L"Could not create DBusServer.", L"Error", MB_OK);
-        QCoreApplication::quit();
-        return;
+        this->shutdown();
+        return false;
       }
 
       QObject::connect(this->_connectionManager, &ConnectionManager::newConnection, 
         this, &Application::onNewConnection);
+
+      return true;
     }
 
     void Application::registerServices()
@@ -435,36 +460,36 @@ namespace GameNet {
       bdGame.setExecuteUrl("http://blackdesert.ru/");
       this->_serviceLoader->registerService(bdGame);
 
-      ServiceDescription daGame;
-      daGame.setId("60000000000");
-      daGame.setGameId("1030");
-      daGame.setName("DarkAge");
-      daGame.setIsDownloadable(false); 
-      daGame.setHasDownloadPath(false);
-      daGame.setExecuteUrl("http://gamenet.ru/games/da/");
-      this->_serviceLoader->registerService(daGame);
-
-      // NORMAL DA Game Info
       //ServiceDescription daGame;
       //daGame.setId("60000000000");
       //daGame.setGameId("1030");
       //daGame.setName("DarkAge");
-      //daGame.setTorrentUrl("http://torrents.zzima.net/fwclient.torrent");
-      //daGame.setIsDownloadable(true);
+      //daGame.setIsDownloadable(false); 
       //daGame.setHasDownloadPath(false);
-      //daGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-      //daGame.setExecuteUrl("zzima:start");
-      //daGame.setGameSize(8400);
-
-      //QList<DownloadHookDescription> daDownloaderHooks;
-      //DownloadHookDescription daInstallHook;
-      //daInstallHook.first = "9F6083BB-D03D-45A9-89FE-2D6EF098544A";
-      //daInstallHook.second.first = 999;
-      //daInstallHook.second.second = 0;
-      //daDownloaderHooks << daInstallHook;
-      //daGame.setDownloadHooks(daDownloaderHooks);
-
+      //daGame.setExecuteUrl("http://gamenet.ru/games/da/");
       //this->_serviceLoader->registerService(daGame);
+
+      // NORMAL DA Game Info
+      ServiceDescription daGame;
+      daGame.setId("60000000000");
+      daGame.setGameId("1030");
+      daGame.setName("DarkAge");
+      daGame.setTorrentUrl("http://torrents.zzima.net/fwclient.torrent");
+      daGame.setIsDownloadable(true);
+      daGame.setHasDownloadPath(false);
+      daGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
+      daGame.setExecuteUrl("zzima:start");
+      daGame.setGameSize(8400);
+
+      QList<DownloadHookDescription> daDownloaderHooks;
+      DownloadHookDescription daInstallHook;
+      daInstallHook.first = "9F6083BB-D03D-45A9-89FE-2D6EF098544A";
+      daInstallHook.second.first = 999;
+      daInstallHook.second.second = 0;
+      daDownloaderHooks << daInstallHook;
+      daGame.setDownloadHooks(daDownloaderHooks);
+
+      this->_serviceLoader->registerService(daGame);
     }
 
     void Application::initGameDownloader()

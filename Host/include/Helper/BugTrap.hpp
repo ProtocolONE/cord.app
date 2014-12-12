@@ -18,6 +18,8 @@ namespace GameNet {
       BT_SetSupportURL(L"https://support.gamenet.ru");
       BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
       BT_SetSupportServer(L"fs1.gamenet.ru", 9999);
+      BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/qgna.log").utf16()));
+      BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/qgna.log.1").utf16()));
       BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/host.log").utf16()));
       BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/host.log.1").utf16()));
       BT_InstallSehFilter();

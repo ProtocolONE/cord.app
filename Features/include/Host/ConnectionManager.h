@@ -23,6 +23,7 @@ namespace GameNet {
       virtual ~ConnectionManager();
 
       void setApplication(Application *value);
+      void setDbusServer(DBus::DBusServer* value);
 
       bool init();
       void shutdown();

@@ -70,6 +70,10 @@ namespace GameNet {
     class AutoRunManager;
     class Connection;
 
+    namespace DBus {
+      class DBusServer;
+    }
+
     namespace Proxy {
       class GameExecutorProxy;
       class DownloaderProxy;
@@ -82,7 +86,6 @@ namespace GameNet {
       explicit Application(QObject *parent = 0);
       ~Application();
 
-      void init();
       void finalize();
 
       void setSingleApplication(GGS::Application::SingleApplication *value);
@@ -90,6 +93,7 @@ namespace GameNet {
       virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
 
     public slots:
+      void init();
       void shutdown();
       virtual bool isInitCompleted();
       virtual void switchClientVersion();
@@ -111,7 +115,7 @@ namespace GameNet {
       void startUi();
       void registerServices();
       void initGameDownloader();
-      void registerDbusServices();
+      bool registerDbusServices();
 
       void initRestApi();
       void initMarketing();
@@ -151,7 +155,7 @@ namespace GameNet {
       ServiceHandle *_serviceHandle;
       ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
       AutoRunManager *_autoRunManager;
-      Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
+      DBus::DBusServer *_dbusServer;
 
       bool _initFinished;
       bool _updateFinished;

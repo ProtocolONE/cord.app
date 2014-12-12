@@ -24,9 +24,9 @@
   #define ORIGINALFILENAME "HOST.EXE"
   #define PRODUCTNAME      "GameNet host application"
 #else
-  #define FILEVER          $$MAJOR$$,$$MINOR$$,$$HUDSON_BUILD$$
+  #define FILEVER          $$MAJOR$$,$$MINOR$$,$$PATCH$$,$$BUILD$$
   #define PRODUCTVER       FILEVER
-  #define STRFILEVER       "$$MAJOR$$,$$MINOR$$,$$HUDSON_BUILD$$,$$GIT_REVISION$$"
+  #define STRFILEVER       "$$MAJOR$$,$$MINOR$$,$$PATCH$$,$$BUILD$$"
   #define STRPRODUCTVER    STRFILEVER
 
   #define COMPANYNAME      "$$COMPANYNAME$$"

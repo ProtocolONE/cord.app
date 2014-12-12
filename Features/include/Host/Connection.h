@@ -65,6 +65,8 @@ namespace GameNet {
       GGS::RestApi::GameNetCredential _secondCredential;
       QSet<QString> _lockedServices;
       QTimer _timeoutTimer;
+      int _maxTimeoutFail;
+      int _timeoutFail;
     };
 
   }

@@ -76,10 +76,7 @@
       <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <PreBuildEvent>
-      <Command>echo "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
-"$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
-
-IF "$(QGNACOMMONDIR)"=="" (
+      <Command>IF "$(QGNACOMMONDIR)"=="" (
 ECHO QGNACOMMONDIR not defined!
 EXIT /B 1
 )
@@ -89,6 +86,9 @@ ECHO QGNAQMLDIR not defined!
 EXIT /B 1
 )
 
+echo =============== build QML  ===================
+echo SCRIPT: call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 </Command>
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
@@ -265,9 +265,7 @@ del "$(TargetDir)\*.ilk"</Command>
       <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <PreBuildEvent>
-      <Command>"$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
-
-IF "$(QGNACOMMONDIR)"=="" (
+      <Command>IF "$(QGNACOMMONDIR)"=="" (
 ECHO QGNACOMMONDIR not defined!
 EXIT /B 1
 )
@@ -276,6 +274,10 @@ if "$(QGNAQMLDIR)"=="" (
 ECHO QGNAQMLDIR not defined!
 EXIT /B 1
 )
+
+echo =============== build QML  ===================
+echo SCRIPT: call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 </Command>
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>

@@ -33,11 +33,15 @@ namespace GameNet {
 
     private:
       void timeoutTick();
+      void internalDisconnected();
       void sendPing();
       void onPong();
 
       QTimer _timeoutTimer;
       QTimer _pingpongTimer;
+      int _maxTimeoutFail;
+      int _timeoutFail;
+
       ConnectionBridgeProxy *_connection;
       QString _appName;
     };

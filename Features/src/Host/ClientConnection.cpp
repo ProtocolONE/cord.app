@@ -21,13 +21,15 @@ namespace GameNet {
 
     ClientConnection::ClientConnection(const QString &name, QObject* parent /*= 0*/)
       : QObject(parent)
+      , _maxTimeoutFail(10) // 10 * 5000 = 50 sec
+      , _timeoutFail(0)
       , _connection(nullptr)
       , _appName(name)
     {
       QObject::connect(&this->_timeoutTimer, &QTimer::timeout,
         this, &ClientConnection::timeoutTick);
 
-      this->_timeoutTimer.setInterval(45000);
+      this->_timeoutTimer.setInterval(5000);
 
       QObject::connect(&this->_pingpongTimer, &QTimer::timeout,
         this, &ClientConnection::sendPing);
@@ -60,23 +62,33 @@ namespace GameNet {
 
     void ClientConnection::timeoutTick()
     {
-      this->_pingpongTimer.stop();
+      this->_timeoutFail++;
+      if (this->_timeoutFail < this->_maxTimeoutFail)
+        return;
 
-      qDebug() << "Disconnected from host";
-      GGS::Core::UI::Message::critical(tr("DBUS_DISCONNECTED_TITLE"), tr("DBUS_DISCONNECTED_TEXT"));
-
-      emit this->disconnected();
+      this->internalDisconnected();
     }
 
     void ClientConnection::sendPing()
     {
       Q_ASSERT(this->_connection);
-      this->_connection->ping();
+      QDBusPendingReply<> result = this->_connection->ping();
+
+      if (!result.isError())
+        return;
+
+      qDebug() << "Ping finished with error:" << result.error().name() 
+        << "message:" << result.error().message() 
+        << "code:" << result.error().type();
+
+      if (result.error().type() == QDBusError::Disconnected)
+        this->internalDisconnected();
     }
 
     void ClientConnection::onPong()
     {
       this->_timeoutTimer.start();
+      this->_timeoutFail = 0;
     }
 
     void ClientConnection::setCredential(const GGS::RestApi::GameNetCredential& value)
@@ -95,6 +107,17 @@ namespace GameNet {
     {
       Q_ASSERT(this->_connection);
       this->_connection->close();
+    }
+
+    void ClientConnection::internalDisconnected()
+    {
+      this->_timeoutTimer.stop();
+      this->_pingpongTimer.stop();
+
+      qDebug() << "Disconnected from host";
+      GGS::Core::UI::Message::critical(tr("DBUS_DISCONNECTED_TITLE"), tr("DBUS_DISCONNECTED_TEXT"));
+
+      emit this->disconnected();
     }
 
   }

@@ -12,6 +12,8 @@
 
 #include <QtCore/QByteArray>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
+#include <QtCore/QDir>
 #include <QtCore/QDebug>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
@@ -28,7 +30,6 @@ namespace GameNet {
 
   GameNetDownloader::~GameNetDownloader()
   {
-
   }
 
   void GameNetDownloader::download(const QString &url, const QString &path)
@@ -55,7 +56,7 @@ namespace GameNet {
 
     int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    if(statusCode == 301 || statusCode == 302) {
+    if (statusCode == 301 || statusCode == 302) {
       QUrl newUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
       QNetworkRequest newRequest(newUrl);
       this->_networkAccessManager->get(newRequest);
@@ -63,6 +64,10 @@ namespace GameNet {
     }
 
     QByteArray data = reply->readAll();
+
+    QFileInfo info(this->_targetFilePath);
+    QDir dir;
+    dir.mkpath(info.absolutePath());
 
     QFile file(this->_targetFilePath);
     if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {

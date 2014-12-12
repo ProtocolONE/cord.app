@@ -97,9 +97,11 @@ int main(int argc, char *argv[])
   GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
   Application *application = createApplication(&app);
-  application->init();
+
+  QTimer::singleShot(1, application, SLOT(init()));
 
   int result = app.exec();
+
   application->finalize();
   
   // HACK на удалении падает.... в неожиданных местах. Нужна помощь.
