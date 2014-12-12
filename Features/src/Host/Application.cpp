@@ -435,32 +435,36 @@ namespace GameNet {
       bdGame.setExecuteUrl("http://blackdesert.ru/");
       this->_serviceLoader->registerService(bdGame);
 
-      // HACK DA game
       ServiceDescription daGame;
       daGame.setId("60000000000");
       daGame.setGameId("1030");
       daGame.setName("DarkAge");
-      daGame.setTorrentUrl("http://torrents.zzima.net/fwclient.torrent");
-      daGame.setIsDownloadable(true);
+      daGame.setIsDownloadable(false); 
       daGame.setHasDownloadPath(false);
-      daGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-      daGame.setExecuteUrl("zzima:start");
-      daGame.setGameSize(8400);
-
-      QList<DownloadHookDescription> daDownloaderHooks;
-      DownloadHookDescription daInstallHook;
-      daInstallHook.first = "9F6083BB-D03D-45A9-89FE-2D6EF098544A";
-      daInstallHook.second.first = 999;
-      daInstallHook.second.second = 0;
-      daDownloaderHooks << daInstallHook;
-      daGame.setDownloadHooks(daDownloaderHooks);
-
-      //QList<ExecutorHookDescription> daExecutorHooks;
-      //daExecutorHooks << ExecutorHookDescription("54B0860B-215C-462F-A80E-F7664DEA984F", 0); // DisableDEP
-      //daExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
-      //daGame.setExecutorHooks(daExecutorHooks);
-
+      daGame.setExecuteUrl("http://gamenet.ru/games/da/");
       this->_serviceLoader->registerService(daGame);
+
+      // NORMAL DA Game Info
+      //ServiceDescription daGame;
+      //daGame.setId("60000000000");
+      //daGame.setGameId("1030");
+      //daGame.setName("DarkAge");
+      //daGame.setTorrentUrl("http://torrents.zzima.net/fwclient.torrent");
+      //daGame.setIsDownloadable(true);
+      //daGame.setHasDownloadPath(false);
+      //daGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
+      //daGame.setExecuteUrl("zzima:start");
+      //daGame.setGameSize(8400);
+
+      //QList<DownloadHookDescription> daDownloaderHooks;
+      //DownloadHookDescription daInstallHook;
+      //daInstallHook.first = "9F6083BB-D03D-45A9-89FE-2D6EF098544A";
+      //daInstallHook.second.first = 999;
+      //daInstallHook.second.second = 0;
+      //daDownloaderHooks << daInstallHook;
+      //daGame.setDownloadHooks(daDownloaderHooks);
+
+      //this->_serviceLoader->registerService(daGame);
     }
 
     void Application::initGameDownloader()
