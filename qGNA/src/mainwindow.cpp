@@ -149,7 +149,8 @@ void MainWindow::initialize()
   
   //next 2 lines QGNA-60
   this->nQMLContainer = new MQDeclarativeView(this);
-  SIGNAL_CONNECT_CHECK(connect(nQMLContainer, SIGNAL(leftMouseClick(int, int)), this, SIGNAL(leftMouseClick(int, int))));
+  connect(nQMLContainer, &MQDeclarativeView::leftMousePress, this, &MainWindow::leftMousePress);
+  connect(nQMLContainer, &MQDeclarativeView::leftMouseRelease, this, &MainWindow::leftMouseRelease);
 
   QStringList importPaths;
   importPaths << ":/";
@@ -1068,11 +1069,18 @@ void MainWindow::terminateSecondService()
   this->_executor->shutdownSecond();
 }
 
-void MQDeclarativeView::mousePressEvent(QMouseEvent* event){
-  if (event->buttons() & Qt::LeftButton)
-    emit this->leftMouseClick(event->x(), event->y()); 
+void MQDeclarativeView::mousePressEvent(QMouseEvent* event) {
+  if (event->button() & Qt::LeftButton)
+    emit this->leftMousePress(event->x(), event->y()); 
 
   QDeclarativeView::mousePressEvent(event);
+}
+
+void MQDeclarativeView::mouseReleaseEvent(QMouseEvent* event) {
+  if (event->button() & Qt::LeftButton)
+    emit this->leftMouseRelease(event->x(), event->y()); 
+
+  QDeclarativeView::mouseReleaseEvent(event);
 }
 
 void MainWindow::onTaskbarButtonCreated()

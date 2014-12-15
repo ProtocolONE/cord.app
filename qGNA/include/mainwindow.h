@@ -55,10 +55,12 @@ public:
   }
 
 protected:
-  void mousePressEvent(QMouseEvent* event);
+  void mousePressEvent(QMouseEvent* event) override;
+  void mouseReleaseEvent(QMouseEvent* event) override;
 
 signals:
-  void leftMouseClick(int globalX, int globalY); 
+  void leftMousePress(int globalX, int globalY); 
+  void leftMouseRelease(int globalX, int globalY); 
 };
 
 class BestInstallPath;
@@ -241,7 +243,8 @@ signals:
   void downloadButtonStartSignal(QString serviceId);
   void updateFinished();
 
-  void leftMouseClick(int globalX, int globalY); 
+  void leftMousePress(int globalX, int globalY); 
+  void leftMouseRelease(int globalX, int globalY);  
 
   void closeMainWindow();
   void windowDeactivate();
