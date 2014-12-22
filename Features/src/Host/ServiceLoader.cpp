@@ -272,6 +272,5 @@ namespace GameNet {
 
       settings.setValue("installDate", QDateTime::currentDateTime());
     }
-
   }
 }

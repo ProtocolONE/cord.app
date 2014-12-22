@@ -1003,7 +1003,6 @@ void MainWindow::initRestApi()
   ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
   QString randomPort = ports.takeAt(qrand() % ports.count());
   QString apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-  //apiUrl = "http://api.gamenet.stg/restapi";
 
   GGS::Settings::Settings settings;
   settings.setValue("qGNA/restApi/url", apiUrl);
@@ -1126,9 +1125,4 @@ bool MainWindow::silent()
 void MainWindow::switchClientVersion()
 {
   this->_applicationProxy->switchClientVersion();
-}
-
-bool MainWindow::silent()
-{
-  return this->_silentMode.isEnabled();
 }

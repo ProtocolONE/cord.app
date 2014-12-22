@@ -23,6 +23,7 @@
 #include <Host/ConnectionManager.h>
 #include <Host/ServiceHandle.h>
 #include <Host/AutoRunManager.h>
+#include <Host/ServicesListRequest.h>
 
 #include <Host/Dbus/DBusServer.h>
 
@@ -40,8 +41,6 @@
 
 #include <RestApi/RestApiManager.h>
 #include <RestApi/FakeCache.h>
-#include <RestApi/CommandBase>
-#include <RestApi/Commands/Service/GetHosts.h>
 
 #include <Settings/Settings.h>
 
@@ -88,7 +87,7 @@ namespace GameNet {
       , _serviceHandle(new ServiceHandle(this))
       , _zzimaConnection(new ZZimaConnection(this))
       , _autoRunManager(new AutoRunManager(this))
-      , _dbusServer(nullptr)
+      , _servicesListRequest(new ServicesListRequest(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -164,6 +163,9 @@ namespace GameNet {
 
       this->initGameDownloader();
 
+      this->_servicesListRequest->setServiceLoader(this->_serviceLoader);
+      this->_servicesListRequest->setApplicationArea(this->_updater->applicationArea());
+
       this->_applicationStatistic->setDownloader(this->_gameDownloader);
       this->_applicationStatistic->setStartingGame(this->_commandLineManager->startingService());
       this->_applicationStatistic->init();
@@ -206,10 +208,8 @@ namespace GameNet {
 
       this->initMarketing();
 
-      using GGS::RestApi::Commands::Service::GetHosts;
-      GetHosts *cmd = new GetHosts();
-      QObject::connect(cmd, &GetHosts::result, this, &Application::registerServices);
-      cmd->execute();
+      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
+        this->_thetta->installer()->connectToDriver();
 
       StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
       stopDownloadOnExecuteInit.setDownloader(this->_gameDownloader);
@@ -230,6 +230,9 @@ namespace GameNet {
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
       this->_uiProcess->setFileName("gamenet.ui.exe");
 
+      QObject::connect(this->_servicesListRequest, &ServicesListRequest::finished,
+        this, &Application::setInitFinished);
+
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
         this, &Application::shutdown);
       
@@ -245,25 +248,13 @@ namespace GameNet {
       this->_commandLineManager->setExecutedGameCredential(
         std::bind(&Application::executedGameCredential, this, std::placeholders::_1, std::placeholders::_2));
 
-      if (!this->registerDbusServices())
-        return;
-
-      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
-        this->_thetta->installer()->connectToDriver();
-
-      /*
-        INFO Если (когда) поменяется схема инициализации, обратить внимание на эту строчку
-             которая должна вызыватся после всего.
-             Т.е. например после получения списка сервисов.
-      */
-      this->setInitFinished();
       this->startUi();
       
       QObject::connect(this->_updater, &Updater::allCompleted, this, &Application::updateCompletedSlot);
-      
+
       this->_updater->setCanRestart([this] () -> bool {
         return !this->_executor->isAnyGameStarted() && 
-               !this->_gameDownloader->isAnyServiceInProgress();
+          !this->_gameDownloader->isAnyServiceInProgress();
       });
 
       this->_updater->startCheckUpdate();
@@ -279,6 +270,8 @@ namespace GameNet {
 
         emit this->restartUIRequest();
       }
+
+      this->_servicesListRequest->request();
 
       this->setUpdateFinished();
     }
@@ -302,79 +295,6 @@ namespace GameNet {
       return true;
     }
 
-    void Application::registerServices()
-    {
-      using GGS::RestApi::Commands::Service::GetHosts;
-      GetHosts* hosts = qobject_cast<GetHosts*>(sender());
-      if (!hosts) {
-        return;
-      }
-
-      QMap<QString, QString> data;
-      Q_FOREACH(data, hosts->servicesData) {
-        if (data["isPublishedInApp"] != "1") {
-          continue;
-        }
-
-        ServiceDescription serviceDist;
-        serviceDist.setId(data["serviceId"]);
-        serviceDist.setGameId(data["gameId"]);
-        serviceDist.setName(data["folderName"]);
-        serviceDist.setIsDownloadable(data["isBrowserGame"] != "1");
-        serviceDist.setHasDownloadPath(data["hasDownloadPath"] == "1");
-        serviceDist.setExtractorType(data["extractorType"]);
-        serviceDist.setExecuteUrl(data["executeUrl"]);
-        serviceDist.setGameSize(data["gameSize"].toInt());
-        
-        QList<ExecutorHookDescription> executorHooks;
-        if (!data["executorHooks"].isEmpty())
-          Q_FOREACH(QString executorHook, data["executorHooks"].split(",")) {
-            QString priority = "0";
-
-            if (executorHook.contains(":")) {
-              priority = executorHook.left(executorHook.indexOf(":"));
-              executorHook = executorHook.remove(0, priority.count() + 1);
-            }
-
-            executorHooks << ExecutorHookDescription(executorHook, priority.toInt());
-        }
-
-        if (!executorHooks.isEmpty())
-          serviceDist.setExecutorHooks(executorHooks);
-
-        QList<DownloadHookDescription> downloadHooks;
-        if (!data["downloadHooks"].isEmpty())
-          Q_FOREACH(QString downloadHook, data["downloadHooks"].split(",")) {
-            QString priority = "0";
-            QString priority2 = "0";
-
-            if (downloadHook.contains(":")) {
-              priority = downloadHook.left(downloadHook.indexOf(":"));
-              downloadHook = downloadHook.remove(0, priority.count() + 1);
-            }
-
-            if (downloadHook.contains(":")) {
-              priority2 = downloadHook.left(downloadHook.indexOf(":"));
-              downloadHook = downloadHook.remove(0, priority.count() + 1);
-            }
-
-            DownloadHookDescription hook;
-            hook.first = downloadHook;
-            hook.second.first = priority.toInt();
-            hook.second.second = priority2.toInt();
-
-            downloadHooks << hook;
-        }
-
-        if (!downloadHooks.isEmpty()) 
-          serviceDist.setDownloadHooks(downloadHooks);
-
-        this->_serviceLoader->registerService(serviceDist);
-      }
-
-      hosts->deleteLater();
-    }
-
     void Application::initGameDownloader()
     {
       this->_downloaderSettings->setDownloader(this->_gameDownloader);
@@ -392,7 +312,6 @@ namespace GameNet {
         ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
         QString randomPort = ports.takeAt(qrand() % ports.count());
         QString apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-        apiUrl = "http://api.stg.gamenet.ru/";
 
         GGS::Settings::Settings settings;
         settings.setValue("qGNA/restApi/url", apiUrl);

@@ -69,6 +69,7 @@ namespace GameNet {
     class ServiceHandle;
     class AutoRunManager;
     class Connection;
+    class ServicesListRequest;
 
     namespace DBus {
       class DBusServer;
@@ -113,7 +114,6 @@ namespace GameNet {
       void setUpdateFinished();
 
       void startUi();
-      void registerServices();
       void initGameDownloader();
       bool registerDbusServices();
 
@@ -127,6 +127,7 @@ namespace GameNet {
 
       GGS::Application::SingleApplication *_singleApplication;
       ServiceLoader *_serviceLoader;
+      ServicesListRequest *_servicesListRequest;
       GGS::GameDownloader::GameDownloadService *_gameDownloader;
 
       DownloaderSettings *_downloaderSettings;
