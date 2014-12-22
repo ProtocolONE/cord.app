@@ -40,6 +40,8 @@
 
 #include <RestApi/RestApiManager.h>
 #include <RestApi/FakeCache.h>
+#include <RestApi/CommandBase>
+#include <RestApi/Commands/Service/GetHosts.h>
 
 #include <Settings/Settings.h>
 
@@ -203,7 +205,11 @@ namespace GameNet {
       this->_serviceSettings->setDownloader(this->_gameDownloader);
 
       this->initMarketing();
-      this->registerServices();
+
+      using GGS::RestApi::Commands::Service::GetHosts;
+      GetHosts *cmd = new GetHosts();
+      QObject::connect(cmd, &GetHosts::result, this, &Application::registerServices);
+      cmd->execute();
 
       StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
       stopDownloadOnExecuteInit.setDownloader(this->_gameDownloader);
@@ -298,198 +304,75 @@ namespace GameNet {
 
     void Application::registerServices()
     {
-      DownloadHookDescription dependencyHook;
-      dependencyHook.first = "B4910801-2FA4-455E-AEAE-A2BAA2D3E4CA";
-      dependencyHook.second.first = 0;
-      dependencyHook.second.second = 10;
+      using GGS::RestApi::Commands::Service::GetHosts;
+      GetHosts* hosts = qobject_cast<GetHosts*>(sender());
+      if (!hosts) {
+        return;
+      }
 
-      ServiceDescription aikaGame;
-      aikaGame.setId("300002010000000000");
-      aikaGame.setGameId("631");
-      aikaGame.setName("Aika2");
-      aikaGame.setTorrentUrl("http://fs0.gamenet.ru/update/aika/");
-      aikaGame.setIsDownloadable(true);
-      aikaGame.setHasDownloadPath(true);
-      aikaGame.setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
-      aikaGame.setExecuteUrl(
-        "exe:%gamePath%/aikaru.exe"
-        "?workingDir=%gamePath%/"
-        "&args=%login% %token% 300002010000000000 login"
-        "&executorHelper=1"
-        "&downloadCustomFile=UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
-      aikaGame.setGameSize(2800);
-      
-      QList<ExecutorHookDescription> aikaExecutorHooks;
-      aikaExecutorHooks << ExecutorHookDescription("150EDADF-4B58-4E14-82D8-203832E57D3E", 0); // DisableIEDefalutProxy
-      aikaExecutorHooks << ExecutorHookDescription("D6B4E0F4-1CE3-4226-967F-1C04A09BC59D", 0); // RestoreResolution
-      aikaExecutorHooks << ExecutorHookDescription("9E25E28D-C06D-47C8-AC95-E139F35035FC", 0); // DefaultAikaSettings
-      aikaExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
-      aikaGame.setExecutorHooks(aikaExecutorHooks);
-      
-      this->_serviceLoader->registerService(aikaGame);
+      QMap<QString, QString> data;
+      Q_FOREACH(data, hosts->servicesData) {
+        if (data["isPublishedInApp"] != "1") {
+          continue;
+        }
 
-      ServiceDescription bsGame;
-      bsGame.setId("300003010000000000");
-      bsGame.setGameId("71");
-      bsGame.setName("BS");
-      bsGame.setTorrentUrl("http://fs0.gamenet.ru/update/bs/");
-      bsGame.setIsDownloadable(true);
-      bsGame.setHasDownloadPath(false);
-      bsGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-      bsGame.setExecuteUrl(
-        "exe:%gamePath%/client/client.exe"
-        "?workingDir=%gamePath%/"
-        "&args=%userId% %appKey% %token%"
-        "&executorHelper=1"
-        "&injectOverlay=1"
-        "&downloadCustomFile=launcher/serverinfo_back.xml,http://files.gamenet.ru/update/bs/,1,"
-                             "config/lastlogin.xml,http://files.gamenet.ru/update/bs/,0");
-      bsGame.setGameSize(2400);
+        ServiceDescription serviceDist;
+        serviceDist.setId(data["serviceId"]);
+        serviceDist.setGameId(data["gameId"]);
+        serviceDist.setName(data["folderName"]);
+        serviceDist.setIsDownloadable(data["isBrowserGame"] != "1");
+        serviceDist.setHasDownloadPath(data["hasDownloadPath"] == "1");
+        serviceDist.setExtractorType(data["extractorType"]);
+        serviceDist.setExecuteUrl(data["executeUrl"]);
+        serviceDist.setGameSize(data["gameSize"].toInt());
+        
+        QList<ExecutorHookDescription> executorHooks;
+        if (!data["executorHooks"].isEmpty())
+          Q_FOREACH(QString executorHook, data["executorHooks"].split(",")) {
+            QString priority = "0";
 
-      QList<ExecutorHookDescription> bsExecutorHooks;
-      bsExecutorHooks << ExecutorHookDescription("54B0860B-215C-462F-A80E-F7664DEA984F", 0); // DisableDEP
-      bsExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
+            if (executorHook.contains(":")) {
+              priority = executorHook.left(executorHook.indexOf(":"));
+              executorHook = executorHook.remove(0, priority.count() + 1);
+            }
 
-      bsGame.setExecutorHooks(bsExecutorHooks);
+            executorHooks << ExecutorHookDescription(executorHook, priority.toInt());
+        }
 
-      this->_serviceLoader->registerService(bsGame);
+        if (!executorHooks.isEmpty())
+          serviceDist.setExecutorHooks(executorHooks);
 
-      ServiceDescription rebornGame;
-      rebornGame.setId("300012010000000000");
-      rebornGame.setGameId("760");
-      rebornGame.setName("Reborn");
-      rebornGame.setTorrentUrl("http://fs0.gamenet.ru/update/reborn/");
-      rebornGame.setIsDownloadable(true);
-      rebornGame.setHasDownloadPath(false);
-      rebornGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-      rebornGame.setExecuteUrl(
-        "exe:%gamePath%/client/Client.exe"
-        "?workingDir=%gamePath%/"
-        "&args=%userId% %token%"
-        "&executorHelper=1"
-        "&downloadCustomFile=launcher/serverinfo_back.xml,http://files.gamenet.ru/update/reborn/,1");
-      rebornGame.setGameSize(3300);
+        QList<DownloadHookDescription> downloadHooks;
+        if (!data["downloadHooks"].isEmpty())
+          Q_FOREACH(QString downloadHook, data["downloadHooks"].split(",")) {
+            QString priority = "0";
+            QString priority2 = "0";
 
-      QList<ExecutorHookDescription> rebornExecutorHooks;
-      rebornExecutorHooks << ExecutorHookDescription("54B0860B-215C-462F-A80E-F7664DEA984F", 0); // DisableDEP
-      rebornExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
-      rebornGame.setExecutorHooks(rebornExecutorHooks);
+            if (downloadHook.contains(":")) {
+              priority = downloadHook.left(downloadHook.indexOf(":"));
+              downloadHook = downloadHook.remove(0, priority.count() + 1);
+            }
 
-      this->_serviceLoader->registerService(rebornGame);
+            if (downloadHook.contains(":")) {
+              priority2 = downloadHook.left(downloadHook.indexOf(":"));
+              downloadHook = downloadHook.remove(0, priority.count() + 1);
+            }
 
-      ServiceDescription warincGame;
-      warincGame.setId("300005010000000000");
-      warincGame.setGameId("70");
-      warincGame.setName("FireStorm");
-      warincGame.setTorrentUrl("http://fs0.gamenet.ru/update/warinc/");
-      warincGame.setIsDownloadable(true);
-      warincGame.setHasDownloadPath(false);
-      warincGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-      warincGame.setExecuteUrl(
-        "exe:%gamePath%/WarInc.exe"
-        "?workingDir=%gamePath%/"
-        "&args=-WOUpdatedOk -gna %userId% %appKey% %token%");
-      warincGame.setGameSize(2500);
-      warincGame.setDependencyList("dxwebsetup.exe,/Q");
+            DownloadHookDescription hook;
+            hook.first = downloadHook;
+            hook.second.first = priority.toInt();
+            hook.second.second = priority2.toInt();
 
-      QList<DownloadHookDescription> warincDownloadHooks;
-      warincDownloadHooks << dependencyHook;
-      warincGame.setDownloadHooks(warincDownloadHooks);
-      this->_serviceLoader->registerService(warincGame);
+            downloadHooks << hook;
+        }
 
-      ServiceDescription caGame;
-      caGame.setId("300009010000000000");
-      caGame.setGameId("92");
-      caGame.setName("CombatArms");
-      caGame.setTorrentUrl("http://fs0.gamenet.ru/update/ca/");
-      caGame.setIsDownloadable(true);
-      caGame.setHasDownloadPath(true);
-      caGame.setExtractorType("D9E40EE5-806F-4B7D-8D5C-B6A4BF0110E9");
-      caGame.setExecuteUrl(
-        "exe:%gamePath%/engine.exe"
-        "?workingDir=%gamePath%/"
-        "&args=-windowtitle \"CombatArms\" -rez Engine.REZ -rez Game -authip 31.25.225.205 -authport 10002 "
-           "-pcroom 0 -Ver Ver_RU_2.1207.03 -UserID %userid% -Password %appkey%:%token%"
-           
-        "&executorHelper=1"
-        "&downloadCustomFile=Profiles/player.txt,http://files.gamenet.ru/update/ca/,0");
-      caGame.setGameSize(4800);
-      
-      QList<DownloadHookDescription> caDownloadHooks;
-      DownloadHookDescription distribIntegrity;
-      distribIntegrity.first = QLatin1String("36003110-6DC9-4D16-8076-D84FFAFC36B8");
-      distribIntegrity.second.first = -1;
-      distribIntegrity.second.second = -1;
-      caDownloadHooks << distribIntegrity;
-      caGame.setDownloadHooks(caDownloadHooks);
+        if (!downloadHooks.isEmpty()) 
+          serviceDist.setDownloadHooks(downloadHooks);
 
-      QList<ExecutorHookDescription> caExecutorHooks;
-      caExecutorHooks << ExecutorHookDescription("59E0D256-27E2-4D38-BBA6-DE9201DF53D7", 0); // CASettingsFix
-      caExecutorHooks << ExecutorHookDescription("150EDADF-4B58-4E14-82D8-203832E57D3E", 0); // DisableIEDefalutProxy
-      caExecutorHooks << ExecutorHookDescription("5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37", 100); // DownloadCustomFile
-      caExecutorHooks << ExecutorHookDescription("B0215EBC-27F0-4C3C-BC21-0C3611AFEEF4", 0); // DisableAeroHook
-      caExecutorHooks << ExecutorHookDescription("D2352B73-1EEA-4522-AF4C-5F3A859FADFB", -1); // DistrIntegrityExecutorHook
-      caGame.setExecutorHooks(caExecutorHooks);
+        this->_serviceLoader->registerService(serviceDist);
+      }
 
-      this->_serviceLoader->registerService(caGame);
-
-      ServiceDescription gaGame;
-      gaGame.setId("300007010000000000");
-      gaGame.setGameId("83");
-      gaGame.setName("300007010000000000");
-      gaGame.setIsDownloadable(false);
-      gaGame.setHasDownloadPath(false);
-      gaGame.setExecuteUrl("http://www.playga.ru/");
-      this->_serviceLoader->registerService(gaGame);
-
-      ServiceDescription fjGame;
-      fjGame.setId("300011010000000000");
-      fjGame.setGameId("759");
-      fjGame.setName("300011010000000000");
-      fjGame.setIsDownloadable(false);
-      fjGame.setHasDownloadPath(false);
-      fjGame.setExecuteUrl("http://www.gamenet.ru/games/ferma/play/?fullscreen=1");
-      this->_serviceLoader->registerService(fjGame);
-
-      ServiceDescription bdGame;
-      bdGame.setId("30000000000");
-      bdGame.setGameId("1021");
-      bdGame.setName("30000000000");
-      bdGame.setIsDownloadable(false);
-      bdGame.setHasDownloadPath(false);
-      bdGame.setExecuteUrl("http://blackdesert.ru/");
-      this->_serviceLoader->registerService(bdGame);
-
-      //ServiceDescription daGame;
-      //daGame.setId("60000000000");
-      //daGame.setGameId("1030");
-      //daGame.setName("DarkAge");
-      //daGame.setIsDownloadable(false); 
-      //daGame.setHasDownloadPath(false);
-      //daGame.setExecuteUrl("http://gamenet.ru/games/da/");
-      //this->_serviceLoader->registerService(daGame);
-
-      // NORMAL DA Game Info
-      ServiceDescription daGame;
-      daGame.setId("60000000000");
-      daGame.setGameId("1030");
-      daGame.setName("DarkAge");
-      daGame.setTorrentUrl("http://torrents.zzima.net/fwclient.torrent");
-      daGame.setIsDownloadable(true);
-      daGame.setHasDownloadPath(false);
-      daGame.setExtractorType("3A3AC78E-0332-45F4-A466-89C2B8E8BB9C");
-      daGame.setExecuteUrl("zzima:start");
-      daGame.setGameSize(8400);
-
-      QList<DownloadHookDescription> daDownloaderHooks;
-      DownloadHookDescription daInstallHook;
-      daInstallHook.first = "9F6083BB-D03D-45A9-89FE-2D6EF098544A";
-      daInstallHook.second.first = 999;
-      daInstallHook.second.second = 0;
-      daDownloaderHooks << daInstallHook;
-      daGame.setDownloadHooks(daDownloaderHooks);
-
-      this->_serviceLoader->registerService(daGame);
+      hosts->deleteLater();
     }
 
     void Application::initGameDownloader()
@@ -509,7 +392,7 @@ namespace GameNet {
         ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
         QString randomPort = ports.takeAt(qrand() % ports.count());
         QString apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-        //apiUrl = "http://api.gamenet.stg/restapi";
+        apiUrl = "http://api.stg.gamenet.ru/";
 
         GGS::Settings::Settings settings;
         settings.setValue("qGNA/restApi/url", apiUrl);
