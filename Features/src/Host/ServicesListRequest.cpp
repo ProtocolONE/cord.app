@@ -1,8 +1,12 @@
 #include <Host/ServicesListRequest.h>
 #include <Host/ServiceLoader.h>
+#include <Settings/Settings.h>
+#include <Features/GameNetDownloader.h>
 
+#include <QCoreApplication>
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
+#include <QtCore/QFile>
 
 namespace GameNet {
   namespace Host {
@@ -74,6 +78,10 @@ namespace GameNet {
         serviceDist.setExecuteUrl(data["executeUrl"]);
         serviceDist.setGameSize(data["gameSize"].toInt());
 
+        if (!data["iconInApp"].isEmpty()) {
+          this->downloadIconRequest(data["iconInApp"], data["serviceId"]);
+        }
+       
         QList<ExecutorHookDescription> executorHooks;
         if (!data["executorHooks"].isEmpty())
           Q_FOREACH(QString executorHook, data["executorHooks"].split(",")) {
@@ -131,6 +139,85 @@ namespace GameNet {
     void ServicesListRequest::setApplicationArea(GGS::Core::Service::Area area)
     {
       this->_applicationArea = area;
+    }
+
+    void ServicesListRequest::downloadIconRequest(const QString& url, const QString& serviceId)
+    {
+      GameNetDownloader* downloader = new GameNetDownloader(this);
+
+      QObject::connect(downloader, &GameNetDownloader::downloaded,
+        downloader, &QObject::deleteLater);
+
+      QObject::connect(downloader, &GameNetDownloader::error,
+        this, &ServicesListRequest::downloadFailed);
+
+      QString filePath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath()).arg(serviceId);
+      QString lastModified = this->readLastModified(filePath);
+
+      QNetworkRequest request(url);
+      if (!lastModified.isEmpty())
+        request.setRawHeader("If-Modified-Since", lastModified.toLatin1());
+
+      QNetworkReply *reply = this->_networkManager.head(request);
+      QObject::connect(reply, &QNetworkReply::finished, [this, filePath, url, downloader, reply](){
+        reply->deleteLater();
+
+        int httpCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        // Http codes defined by rfc: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+        // 200 OK
+        // 304 Not Modified
+        if (httpCode != 304 && httpCode != 200) {
+          return;
+        }
+
+        QString lastModified = QString::fromLatin1(reply->rawHeader(QByteArray("Last-Modified")));
+
+        bool changed = !QFile::exists(filePath) || httpCode == 200;
+
+        if (httpCode != 304) {
+          ServicesListRequest* baseClass = this;
+          QString localFilePath = filePath;
+
+          QObject::connect(downloader, &GameNetDownloader::downloaded,
+            [baseClass, localFilePath, lastModified](){
+              baseClass->saveLastModifed(localFilePath, lastModified);
+          });
+        }
+
+        if (changed) {
+          downloader->download(url, filePath);
+          return;
+        }
+
+        downloader->deleteLater();
+      });
+    }
+
+    QString ServicesListRequest::readLastModified(const QString& path)
+    {
+      GGS::Settings::Settings settings; 
+      settings.beginGroup("ServicesListRequest");
+      settings.beginGroup("Icons");
+      settings.beginGroup(path);
+      return settings.value("lastModified", "").toString();
+    }
+
+    void ServicesListRequest::saveLastModifed(const QString& path, const QString& value)
+    {
+      GGS::Settings::Settings settings; 
+      settings.beginGroup("ServicesListRequest");
+      settings.beginGroup("Icons");
+      settings.beginGroup(path);
+      settings.setValue("lastModified", value);
+    }
+
+    void ServicesListRequest::downloadFailed()
+    {
+      GameNetDownloader* cmd = qobject_cast<GameNetDownloader*>(sender());
+      if (cmd) 
+        cmd->deleteLater();
+
+      qDebug() << "Download icon warning";
     }
 
   }

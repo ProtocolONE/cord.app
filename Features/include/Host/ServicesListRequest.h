@@ -4,6 +4,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtCore/QString>
+#include <QNetworkAccessManager>
 
 #include <Core/Service.h>
 #include <RestApi/Commands/Service/GetHosts.h>
@@ -29,6 +30,13 @@ namespace GameNet {
       void finished();
 
     private:
+      void downloadFailed();
+
+      void downloadIconRequest(const QString& url, const QString& serviceId);
+
+      QString readLastModified(const QString& path);
+      void saveLastModifed(const QString& path, const QString& value);
+
       void registerServices(const QList<QMap<QString, QString>>& servicesData);
       int getRetryInterval();
       void getHostsResult(GGS::RestApi::CommandBase::CommandResults result);
@@ -37,6 +45,7 @@ namespace GameNet {
       ServiceLoader* _serviceLoader;
       int _retryCount;
       QVector<int> _retryIntervals;
+      QNetworkAccessManager _networkManager;
     };
 
   }
