@@ -87,6 +87,7 @@ namespace GameNet {
       , _serviceHandle(new ServiceHandle(this))
       , _zzimaConnection(new ZZimaConnection(this))
       , _autoRunManager(new AutoRunManager(this))
+      , _dbusServer(nullptr)
       , _servicesListRequest(new ServicesListRequest(this))
       , _initFinished(false)
       , _updateFinished(false)
@@ -208,9 +209,6 @@ namespace GameNet {
 
       this->initMarketing();
 
-      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
-        this->_thetta->installer()->connectToDriver();
-
       StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
       stopDownloadOnExecuteInit.setDownloader(this->_gameDownloader);
       stopDownloadOnExecuteInit.setServices(this->_serviceLoader);
@@ -247,6 +245,12 @@ namespace GameNet {
 
       this->_commandLineManager->setExecutedGameCredential(
         std::bind(&Application::executedGameCredential, this, std::placeholders::_1, std::placeholders::_2));
+
+      if (!this->registerDbusServices())
+        return;
+
+      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
+        this->_thetta->installer()->connectToDriver();
 
       this->startUi();
       
