@@ -4,9 +4,9 @@
 #include <Host/ApplicationRestarter.h>
 #include <Host/Application.h>
 #include <Host/Updater.h>
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/ServiceSettings.h>
-#include <Host/ServiceDescription.h>
+#include <Host/ServiceProcess/ServiceDescription.h>
 #include <Host/GameExecutor.h>
 #include <Host/Thetta.h>
 #include <Host/StopDownloadOnExecuteInit.h>
@@ -23,7 +23,7 @@
 #include <Host/ConnectionManager.h>
 #include <Host/ServiceHandle.h>
 #include <Host/AutoRunManager.h>
-#include <Host/ServicesListRequest.h>
+#include <Host/ServiceProcess/ServicesListRequest.h>
 
 #include <Host/Dbus/DBusServer.h>
 
@@ -62,7 +62,7 @@ namespace GameNet {
     Application::Application(QObject *parent /*= 0*/)
       : _singleApplication(nullptr)
       , _shutdown(new ShutdownManager(this))
-      , _serviceLoader(new ServiceLoader(this))
+      , _serviceLoader(new ServiceProcess::ServiceLoader(this))
       , _gameDownloader(new GameDownloadService(this))
       , _downloaderSettings(new DownloaderSettings(this))
       , _serviceSettings(new ServiceSettings(this))
@@ -88,7 +88,7 @@ namespace GameNet {
       , _zzimaConnection(new ZZimaConnection(this))
       , _autoRunManager(new AutoRunManager(this))
       , _dbusServer(nullptr)
-      , _servicesListRequest(new ServicesListRequest(this))
+      , _servicesListRequest(new ServiceProcess::ServicesListRequest(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -228,7 +228,7 @@ namespace GameNet {
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
       this->_uiProcess->setFileName("gamenet.ui.exe");
 
-      QObject::connect(this->_servicesListRequest, &ServicesListRequest::finished,
+      QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished,
         this, &Application::setInitFinished);
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,

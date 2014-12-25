@@ -25,8 +25,9 @@ namespace GGS {
 
 namespace GameNet {
   namespace Host {
-
-    class ServiceLoader;
+    namespace ServiceProcess {
+      class ServiceLoader;
+    }
     class Thetta;
     class ServiceSettings;
 
@@ -37,7 +38,7 @@ namespace GameNet {
       explicit GameExecutor(QObject *parent = 0);
       virtual ~GameExecutor();
 
-      void setServices(ServiceLoader *value);
+      void setServices(ServiceProcess::ServiceLoader *value);
       void setThetta(Thetta *value);
       void setServiceSettings(ServiceSettings* value);
 
@@ -97,7 +98,7 @@ namespace GameNet {
       GGS::GameExecutor::GameExecutorService *_mainExecutor;
       Features::PremiumExecutor *_premiumExecutor;
       GGS::GameExecutor::ServiceInfoCounter *_gameExecutorServiceInfoCounter;
-      ServiceLoader *_services;
+      ServiceProcess::ServiceLoader *_services;
       ServiceSettings* _serviceSettings;
       Thetta *_thetta;
     };

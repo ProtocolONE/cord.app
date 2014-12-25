@@ -47,8 +47,11 @@ namespace GameNet {
   }
 
   namespace Host {
+    namespace ServiceProcess {
+      class ServiceLoader;
+      class ServicesListRequest;
+    }
 
-    class ServiceLoader;
     class DownloaderSettings;
     class ServiceSettings;
     class GameExecutor;
@@ -69,7 +72,7 @@ namespace GameNet {
     class ServiceHandle;
     class AutoRunManager;
     class Connection;
-    class ServicesListRequest;
+    
 
     namespace DBus {
       class DBusServer;
@@ -126,8 +129,8 @@ namespace GameNet {
       void onConnectionLogoutMain();
 
       GGS::Application::SingleApplication *_singleApplication;
-      ServiceLoader *_serviceLoader;
-      ServicesListRequest *_servicesListRequest;
+      ServiceProcess::ServiceLoader *_serviceLoader;
+      ServiceProcess::ServicesListRequest *_servicesListRequest;
       GGS::GameDownloader::GameDownloadService *_gameDownloader;
 
       DownloaderSettings *_downloaderSettings;

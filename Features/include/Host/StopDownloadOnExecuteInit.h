@@ -14,7 +14,10 @@ namespace GameNet {
   namespace Host {
 
     class GameExecutor;
-    class ServiceLoader;
+
+    namespace ServiceProcess {
+      class ServiceLoader;
+    }
 
     class StopDownloadOnExecuteInit
     {
@@ -24,7 +27,7 @@ namespace GameNet {
 
       void setTarget(Features::StopDownloadServiceWhileExecuteAnyGame *value);
       void setDownloader(GGS::GameDownloader::GameDownloadService *value);
-      void setServices(ServiceLoader *value);
+      void setServices(ServiceProcess::ServiceLoader *value);
       void setExecutor(GameExecutor *value);
 
       void init();
@@ -32,7 +35,7 @@ namespace GameNet {
     private:
       Features::StopDownloadServiceWhileExecuteAnyGame *_target;
       GGS::GameDownloader::GameDownloadService *_downloader;
-      ServiceLoader *_services;
+      ServiceProcess::ServiceLoader *_services;
       GameExecutor *_excutor;
     };
 

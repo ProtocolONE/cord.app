@@ -4,7 +4,7 @@
 #include <LibtorrentWrapper/EventArgs/ProgressEventArgs>
 #include <Host/Bridge/DownloaderBridge.h>
 #include <Host/Proxy/DownloaderProxy.h>
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/Application.h>
 #include <Core/Service.h>
 
@@ -33,7 +33,7 @@ void constructFakeProgressEventArgs(GGS::Libtorrent::EventArgs::ProgressEventArg
   args.setPeerTotalDownload(1234567890); 
 }
 
-class ServiceLoaderFixture : public GameNet::Host::ServiceLoader
+class ServiceLoaderFixture : public GameNet::Host::ServiceProcess::ServiceLoader
 {
 public:
   explicit ServiceLoaderFixture() {};

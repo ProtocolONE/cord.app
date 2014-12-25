@@ -1,11 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <Host/ServiceDescription.h>
+#include <Host/ServiceProcess/ServiceDescription.h>
 
-using GameNet::Host::ServiceDescription;
-using GameNet::Host::DownloadHookDescription;
-using GameNet::Host::ExecutorHookDescription;
+using GameNet::Host::ServiceProcess::ServiceDescription;
+using GameNet::Host::ServiceProcess::DownloadHookDescription;
+using GameNet::Host::ServiceProcess::ExecutorHookDescription;
 
 class ServiceDescriptionTest : public ::testing::Test
 {

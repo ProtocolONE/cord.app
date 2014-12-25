@@ -1,5 +1,5 @@
 #include <Host/ServiceSettings.h>
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 
 #include <Core/Service.h>
 #include <Settings/Settings.h>
@@ -25,7 +25,7 @@ namespace GameNet {
     {
     }
 
-    void ServiceSettings::setServices(ServiceLoader *value)
+    void ServiceSettings::setServices(ServiceProcess::ServiceLoader *value)
     {
       Q_ASSERT(value);
       this->_services = value;

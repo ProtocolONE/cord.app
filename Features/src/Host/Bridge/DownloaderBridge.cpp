@@ -3,7 +3,7 @@
 
 #include <Host/Bridge/DownloaderBridge.h>
 
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 
 #include <Host/Proxy/DownloaderProxy.h>
 
@@ -65,7 +65,7 @@ namespace GameNet {
         QObject::connect(this->_downloader, &DownloaderProxy::downloadProgressChanged, this, &DownloaderBridge::onDownloadProgress);
       }
 
-      void DownloaderBridge::setServiceLoader(ServiceLoader *serviceLoader)
+      void DownloaderBridge::setServiceLoader(ServiceProcess::ServiceLoader *serviceLoader)
       {
         Q_ASSERT(serviceLoader);
         this->_serviceLoader = serviceLoader;

@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
   // увеличим пул по умолчанию, чтобы пока проблемы не наблюдалось. В будущем надо для критичных
   // задачь избегать QThreadPool и возможно переписать некоторые компоненты, например, GameExecutor, которые не должен
   // использовать по одному потоку на игру.
-  QThreadPool::globalInstance()->setMaxThreadCount(50); 
+  QThreadPool::globalInstance()->setMaxThreadCount(50);
 
   TTCCLayout layout(TTCCLayout::ISO8601);
   layout.retain();

@@ -1,5 +1,5 @@
 #include <Host/ServiceSettings.h>
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
 #include <GameDownloader/GameDownloadService.h>
 #include <GameDownloader/ServiceState.h>
@@ -11,6 +11,7 @@
 using GGS::GameDownloader::GameDownloadService;
 using GGS::GameDownloader::ServiceState;
 using GGS::GameDownloader::HookBase;
+using GameNet::Host::ServiceProcess::ServiceLoader;
 using GGS::Core::Service;
 
 namespace GameNet {
@@ -39,7 +40,7 @@ namespace GameNet {
           settings.setValue("DownloadPath", this->_settings->downloadPath(id));
           settings.setValue("InstallPath", this->_settings->installPath(id));
 
-          Service *service = this->_services->getService(id);
+          GGS::Core::Service *service = this->_services->getService(id);
           Q_ASSERT(service);
           service->setIsDefaultInstallPath(false);
           
@@ -57,7 +58,7 @@ namespace GameNet {
           this->_settings = value;
         }
 
-        void SaveInstallPath::setServiceLoader(ServiceLoader *value)
+        void SaveInstallPath::setServiceLoader(ServiceProcess::ServiceLoader *value)
         {
           Q_ASSERT(value);
           this->_services = value;

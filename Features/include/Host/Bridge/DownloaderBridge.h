@@ -16,7 +16,9 @@ namespace GGS {
 
 namespace GameNet {
   namespace Host {
-    class ServiceLoader;
+    namespace ServiceProcess {
+      class ServiceLoader;
+    }
 
     namespace Proxy {
       class DownloaderProxy;
@@ -176,7 +178,7 @@ namespace GameNet {
 
         /// \cond
         void setDownloader(Proxy::DownloaderProxy *downloader);
-        void setServiceLoader(ServiceLoader *serviceLoader);
+        void setServiceLoader(ServiceProcess::ServiceLoader *serviceLoader);
         /// \endcond
         
       public slots:
@@ -364,7 +366,7 @@ namespace GameNet {
       
       private:
         Proxy::DownloaderProxy *_downloader;
-        ServiceLoader *_serviceLoader;
+        ServiceProcess::ServiceLoader *_serviceLoader;
 
         void onStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
         void onFinished(const GGS::Core::Service *service);

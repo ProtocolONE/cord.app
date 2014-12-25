@@ -15,8 +15,10 @@ namespace GGS {
 
 namespace GameNet {
   namespace Host {
+    namespace ServiceProcess {
+      class ServiceLoader;
+    }
 
-    class ServiceLoader;
     class ServiceSettings : public QObject
     {
       Q_OBJECT
@@ -24,7 +26,7 @@ namespace GameNet {
       explicit ServiceSettings(QObject *parent = 0);
       virtual ~ServiceSettings();
 
-      void setServices(ServiceLoader *value);
+      void setServices(ServiceProcess::ServiceLoader *value);
       void setDownloader(GGS::GameDownloader::GameDownloadService *value);
 
       virtual bool isDownloadable(const QString& serviceId) const;
@@ -45,7 +47,7 @@ namespace GameNet {
       virtual void setOverlayEnabled(const QString& serviceId, bool enabled);
 
     private:
-      ServiceLoader *_services;
+      ServiceProcess::ServiceLoader *_services;
       GGS::GameDownloader::GameDownloadService *_downloader;
     };
 

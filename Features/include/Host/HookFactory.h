@@ -18,7 +18,11 @@ namespace GameNet {
   namespace Host {
 
     class ServiceSettings;
-    class ServiceLoader;
+
+    namespace ServiceProcess {
+      class ServiceLoader;
+    }
+
     class HookFactory : public QObject
     {
       Q_OBJECT
@@ -27,7 +31,7 @@ namespace GameNet {
       ~HookFactory();
 
       void setServiceSettings(ServiceSettings *value);
-      void setServiceLoader(ServiceLoader *value);
+      void setServiceLoader(ServiceProcess::ServiceLoader *value);
       void setZzimaConnection(::GameNet::Integration::ZZima::ZZimaConnection *value);
 
       GGS::GameDownloader::HookBase* create(const QString& guid);
@@ -35,7 +39,7 @@ namespace GameNet {
     private:
       QHash<QString, GGS::GameDownloader::HookBase*> _cache;
       ServiceSettings *_serviceSettings;
-      ServiceLoader *_serviceLoader;
+      ServiceProcess::ServiceLoader *_serviceLoader;
       ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
     };
 

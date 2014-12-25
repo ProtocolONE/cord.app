@@ -12,7 +12,10 @@ namespace GGS {
 namespace GameNet {
   namespace Host {
     class ServiceSettings;
-    class ServiceLoader;
+
+    namespace ServiceProcess {
+      class ServiceLoader;
+    }
 
     namespace GameDownloader {
       namespace Hook {
@@ -32,11 +35,11 @@ namespace GameNet {
             GGS::GameDownloader::ServiceState *state) override;
 
           void setServiceSettings(ServiceSettings *value);
-          void setServiceLoader(ServiceLoader *value);
+          void setServiceLoader(ServiceProcess::ServiceLoader *value);
 
         private:
           ServiceSettings *_settings;
-          ServiceLoader *_services;
+          ServiceProcess::ServiceLoader *_services;
         };
 
       }

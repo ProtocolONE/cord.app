@@ -1,5 +1,5 @@
 #include <Host/StopDownloadOnExecuteInit.h>
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/GameExecutor.h>
 
 #include <GameDownloader/GameDownloadService.h>
@@ -33,7 +33,7 @@ namespace GameNet {
       this->_downloader = value;
     }
 
-    void StopDownloadOnExecuteInit::setServices(ServiceLoader *value)
+    void StopDownloadOnExecuteInit::setServices(ServiceProcess::ServiceLoader *value)
     {
       Q_ASSERT(value);
       this->_services = value;

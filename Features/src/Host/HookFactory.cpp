@@ -70,7 +70,7 @@ namespace GameNet {
       this->_serviceSettings = value;
     }
 
-    void HookFactory::setServiceLoader(ServiceLoader *value)
+    void HookFactory::setServiceLoader(ServiceProcess::ServiceLoader *value)
     {
       Q_ASSERT(value);
       this->_serviceLoader = value;

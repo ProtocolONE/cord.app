@@ -254,8 +254,6 @@
     <ClCompile Include="src\Host\ExecutorHookFactory.cpp" />
     <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp" />
     <ClCompile Include="src\Host\HookFactory.cpp" />
-    <ClCompile Include="src\Host\ServiceDescription.cpp" />
-    <ClCompile Include="src\Host\ServiceLoader.cpp" />
     <ClCompile Include="src\Host\ServiceSettings.cpp" />
     <ClCompile Include="src\Host\ShutdownManager.cpp" />
     <ClCompile Include="src\Host\StopDownloadOnExecuteInit.cpp" />
@@ -359,7 +357,18 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Host\ServicesListRequest.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp" />
+    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp" />
+    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -445,8 +454,6 @@
     <CustomBuild Include="include\Host\Thetta.h" />
     <CustomBuild Include="include\Host\ShutdownManager.h" />
     <CustomBuild Include="include\Host\ServiceSettings.h" />
-    <CustomBuild Include="include\Host\ServiceLoader.h" />
-    <CustomBuild Include="include\Host\ServiceDescription.h" />
     <CustomBuild Include="include\Host\HookFactory.h" />
     <CustomBuild Include="include\Host\Application.h" />
     <CustomBuild Include="include\Host\ApplicationRestarter.h" />
@@ -500,7 +507,12 @@
     <CustomBuild Include="include\Features\BlackDesertDefaultSettings.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Host\ServicesListRequest.h">
+    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h" />
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h" />
+    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

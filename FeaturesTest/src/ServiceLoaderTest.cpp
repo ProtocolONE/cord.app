@@ -4,8 +4,8 @@
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/DistrIntegrity.h>
 
-#include <Host/ServiceLoader.h>
-#include <Host/ServiceDescription.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceDescription.h>
 #include <Host/ServiceSettings.h>
 #include <Host/HookFactory.h>
 #include <Host/ExecutorHookFactory.h>
@@ -24,11 +24,11 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QVector>
 
-using GameNet::Host::ServiceLoader;
-using GameNet::Host::ServiceDescription;
+using GameNet::Host::ServiceProcess::ServiceLoader;
+using GameNet::Host::ServiceProcess::ServiceDescription;
 using GameNet::Host::ServiceSettings;
-using GameNet::Host::DownloadHookDescription;
-using GameNet::Host::ExecutorHookDescription;
+using GameNet::Host::ServiceProcess::DownloadHookDescription;
+using GameNet::Host::ServiceProcess::ExecutorHookDescription;
 using GameNet::Host::HookFactory;
 using GameNet::Host::ExecutorHookFactory;
 

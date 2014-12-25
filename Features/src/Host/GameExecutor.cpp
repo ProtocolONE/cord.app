@@ -1,6 +1,6 @@
 #include <Host/GameExecutor.h>
 #include <Host/Thetta.h>
-#include <Host/ServiceLoader.h>
+#include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/ServiceSettings.h>
 
 #include <Features/PremiumExecutor.h>
@@ -38,7 +38,7 @@ namespace GameNet {
     {
     }
 
-    void GameExecutor::setServices(ServiceLoader *value)
+    void GameExecutor::setServices(ServiceProcess::ServiceLoader *value)
     {
       Q_ASSERT(value);
       this->_services = value;
