@@ -71,7 +71,7 @@ namespace GameNet {
       void ApplicationBridge::restartApplication(bool isMinimized)
       {
         Q_ASSERT(this->_application);
-        this->_application->restartApplication(true, isMinimized);
+        this->_application->restartApplication(false, isMinimized);
       }
 
       void ApplicationBridge::switchClientVersion()

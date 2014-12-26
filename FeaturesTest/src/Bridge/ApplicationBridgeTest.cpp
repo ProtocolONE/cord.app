@@ -107,7 +107,7 @@ TEST_F(ApplicationBridgeTest, switchClientVersion)
 
 TEST_F(ApplicationBridgeTest, restartApplication)
 {
-  EXPECT_CALL(appMock, restartApplication(true, true))
+  EXPECT_CALL(appMock, restartApplication(false, true))
     .Times(1);
 
   bridge.restartApplication(true);
