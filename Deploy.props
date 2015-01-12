@@ -23,7 +23,7 @@
     <OverlayArea>trunk</OverlayArea>
     <HookEngineArea>1.0</HookEngineArea>
     <ThettaArea>1.0.177</ThettaArea>
-    <QxmppArea>8.1.0</QxmppArea>
+    <QxmppArea>0.8.1</QxmppArea>
     <QxmppDeclarativeArea>1.1.0</QxmppDeclarativeArea>
 </PropertyGroup>
   <PropertyGroup />
