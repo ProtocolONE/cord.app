@@ -50,10 +50,12 @@ namespace GameNet {
 
     void Connection::setCredential(const GameNetCredential& value)
     {
-      if (value.isEmpty())
+      if (value.isEmpty()) {
         emit this->logoutMain();
-      else
+      } else {
         this->_credential = value;
+        emit this->mainCredentialChanged();
+      }
     }
 
     void Connection::setSecondCredential(const GameNetCredential& value)

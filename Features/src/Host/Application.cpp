@@ -30,6 +30,7 @@
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Thetta/ThettaInstaller.h>
+#include <Features/Marketing/SystemInfo/SystemInfoManager.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -82,6 +83,7 @@ namespace GameNet {
       , _serviceHandle(new ServiceHandle(this))
       , _zzimaConnection(new ZZimaConnection(this))
       , _autoRunManager(new AutoRunManager(this))
+      , _systemInfoManager(new Features::Marketing::SystemInfo::SystemInfoManager(this))
       , _initFinished(false)
       , _updateFinished(false)
       , QObject(parent)
@@ -548,6 +550,9 @@ namespace GameNet {
       int installerKey = midSettings.value("InstKey").toInt();
       this->_marketingTarget->setInstallerKey(installerKey);
       this->_marketingTarget->setRequestInterval(1000);
+
+      this->_systemInfoManager->setMid(mid);
+      this->_systemInfoManager->init();
     }
 
     bool Application::executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name)
@@ -575,6 +580,18 @@ namespace GameNet {
     {
       QObject::connect(connection, &Connection::logoutMain,
         this, &Application::onConnectionLogoutMain);
+
+      if (connection->applicationName() == "QGNA") {
+        auto qgnaLogout = [this]() {
+          this->_systemInfoManager->setCredential(GGS::RestApi::GameNetCredential());
+        };
+
+        QObject::connect(connection, &Connection::logoutMain, qgnaLogout);
+        QObject::connect(connection, &Connection::disconnected, qgnaLogout);
+        QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
+          this->_systemInfoManager->setCredential(connection->credential());
+        });
+      }
     }
 
     void Application::onConnectionLogoutMain()

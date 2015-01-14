@@ -10,6 +10,12 @@ namespace Features {
     class GameDownloadStatistics;
   }
 
+  namespace Marketing {
+    namespace SystemInfo {
+      class SystemInfoManager;
+    }
+  }
+
   class StopDownloadServiceWhileExecuteAnyGame;
 }
 
@@ -145,6 +151,7 @@ namespace GameNet {
       ServiceHandle *_serviceHandle;
       ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
       AutoRunManager *_autoRunManager;
+      Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
 
       bool _initFinished;
       bool _updateFinished;

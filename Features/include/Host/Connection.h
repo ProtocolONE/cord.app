@@ -49,6 +49,7 @@ namespace GameNet {
       void disconnected();
 
       void logoutMain();
+      void mainCredentialChanged();
 
     private:
       void timeoutTick();
