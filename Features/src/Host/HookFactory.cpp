@@ -55,6 +55,7 @@ namespace GameNet {
         result = hook;
       }
 
+      Q_ASSERT(result);
       Q_ASSERT(result->hookId() == guid);
 
       if (result)

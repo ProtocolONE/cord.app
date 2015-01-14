@@ -8,33 +8,6 @@ namespace Features {
     namespace SystemInfo {
       namespace SoftVendor {
 
-        class CoInit {
-        public:
-          CoInit() : _success(false)
-          {
-            HRESULT hres =  CoInitializeEx(0, COINIT_MULTITHREADED);
-            if (hres == RPC_E_CHANGED_MODE)
-              hres =  CoInitializeEx(0, COINIT_APARTMENTTHREADED);
-
-            this->_success = SUCCEEDED(hres);
-          }
-
-          ~CoInit()
-          {
-            if (this->_success)
-              CoUninitialize();
-          }
-
-          bool isSuccess() 
-          {
-            return this->_success;
-          }
-
-        private:
-          bool _success;
-
-        };
-
         Antivirus::Antivirus(QObject *parent)
           : VendorBase("antivirus", parent)
         {
