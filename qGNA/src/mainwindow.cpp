@@ -108,6 +108,19 @@ void MainWindow::initialize()
   this->initializeUpdateSettings();
   this->initRestApi();
 
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::restartUIRequest,
+                    this, &MainWindow::restartUIRequestSlot);
+
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::shutdownUIRequest,
+    this, &MainWindow::shutdownUIRequestSlot);
+
+  qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
+  qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
+
+  new HostMessageAdapter(this);
+
+  this->initRestApi(); 
+
   this->_commandLineArguments.parse(QCoreApplication::arguments());
 
   if (this->_commandLineArguments.contains("gamepts"))
@@ -248,6 +261,23 @@ void MainWindow::restartUIRequestSlot()
   }
 
   this->_applicationProxy->restartApplication(true);
+}
+
+void MainWindow::shutdownUIRequestSlot()
+{
+  if (this->_executor->isAnyGameStarted()) {
+    auto result = GGS::Core::UI::Message::information(
+      tr("CLOSE_APP_CAPTION"), 
+      tr("CLOSE_APP_TEXT"), 
+      static_cast<GGS::Core::UI::Message::StandardButton>(
+        GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Cancel));
+
+    if (result != GGS::Core::UI::Message::Ok) 
+      return;
+  }
+
+  this->_applicationProxy->shutdownUIResult();
+  this->onWindowClose();
 }
 
 bool MainWindow::isInitCompleted()

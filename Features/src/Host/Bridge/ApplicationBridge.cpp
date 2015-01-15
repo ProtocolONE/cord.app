@@ -33,6 +33,9 @@ namespace GameNet {
         
         QObject::connect(this->_application, &Application::restartUIRequest,
           this, &ApplicationBridge::restartUIRequest);
+
+        QObject::connect(this->_application, &Application::shutdownUIRequest,
+          this, &ApplicationBridge::shutdownUIRequest);
       }
 
       void ApplicationBridge::setThetta(Thetta *value)
@@ -72,6 +75,12 @@ namespace GameNet {
       {
         Q_ASSERT(this->_application);
         this->_application->restartApplication(false, isMinimized);
+      }
+
+      void ApplicationBridge::shutdownUIResult()
+      {
+        Q_ASSERT(this->_application);
+        this->_application->shutdownUIResult();
       }
 
       void ApplicationBridge::switchClientVersion()

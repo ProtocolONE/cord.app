@@ -2,6 +2,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QMutex>
 
 class QTranslator;
 
@@ -95,6 +96,7 @@ namespace GameNet {
       void setSingleApplication(GGS::Application::SingleApplication *value);
 
       virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
+      virtual void shutdownUIResult();
 
     public slots:
       void init();
@@ -108,7 +110,12 @@ namespace GameNet {
     signals:
       void initCompleted();
       void restartUIRequest();
+      void shutdownUIRequest();
       void restartApplicationRequest(bool shouldStartWithSameArguments, bool isMinimized);
+
+      // INFO Необходим для реимита результата из dbus.
+      // в Версии Qt 5.4 можно будет заменитьна QTimer::singleShot
+      void internalShutdownUIResult();
 
     private:
       friend class ConnectionManager;
@@ -125,6 +132,7 @@ namespace GameNet {
 
       bool executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name);
       void internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized);
+      void internalShutdown();
       void onNewConnection(Connection *connection);
       void onConnectionLogoutMain();
 
@@ -163,6 +171,8 @@ namespace GameNet {
 
       bool _initFinished;
       bool _updateFinished;
+      bool _closing;
+      QMutex _closeMutex;
     };
 
   }

@@ -50,6 +50,7 @@
 #include <QtCore/QMetaType>
 #include <QtCore/QUrl>
 #include <QtCore/QCoreApplication>
+#include <QtCore/QMutexLocker>
 
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
@@ -91,6 +92,7 @@ namespace GameNet {
       , _servicesListRequest(new ServiceProcess::ServicesListRequest(this))
       , _initFinished(false)
       , _updateFinished(false)
+      , _closing(false)
       , QObject(parent)
     {
     }
@@ -155,6 +157,9 @@ namespace GameNet {
 
       QObject::connect(this, &Application::restartApplicationRequest,
         this, &Application::internalRestartApplication, Qt::QueuedConnection);
+
+      QObject::connect(this, &Application::internalShutdownUIResult,
+        this, &Application::internalShutdown, Qt::QueuedConnection);
 
       GGS::Core::UI::Message::setAdapter(this->_messageAdapter);
 
@@ -233,9 +238,6 @@ namespace GameNet {
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
         this, &Application::shutdown);
-      
-      QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
-        this->_uiProcess, &UIProcess::closeUI);
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand, 
         this->_uiProcess, &UIProcess::sendCommand);
@@ -355,12 +357,18 @@ namespace GameNet {
 
     void Application::shutdown()
     {
-      QObject::connect(this->_shutdown, &ShutdownManager::shutdownCompleted,
-        []() {
-          QCoreApplication::quit();
-      });
+      if (!this->isInitCompleted() || !this->_uiProcess->isRunning()) {
+        this->internalShutdown();
+        return;
+      }
 
-      this->_shutdown->shutdown();
+      emit shutdownUIRequest();
+    }
+
+    void Application::shutdownUIResult()
+    {
+      // INFO В Qt 5.4 заменить на QTimer::singleShot
+      emit this->internalShutdownUIResult();
     }
 
     void Application::startUi()
@@ -411,6 +419,26 @@ namespace GameNet {
       this->_applicationRestarter->restartApplication(shouldStartWithSameArguments, isMinimized);
     }
 
+    void Application::internalShutdown()
+    {
+      {
+        QMutexLocker locker(&this->_closeMutex);
+        if (this->_closing)
+          return;
+
+        this->_closing = true;
+      }
+
+      this->_uiProcess->closeUI();
+
+      QObject::connect(this->_shutdown, &ShutdownManager::shutdownCompleted,
+        []() {
+          QCoreApplication::quit();
+      });
+
+      this->_shutdown->shutdown();
+    }
+
     void Application::onNewConnection(Connection *connection)
     {
       QObject::connect(connection, &Connection::logoutMain,
@@ -440,5 +468,6 @@ namespace GameNet {
         this->_executor->terminateAll(serviceId);
       }
     }
+
   }
 }

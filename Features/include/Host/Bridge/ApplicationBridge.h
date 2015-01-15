@@ -100,6 +100,17 @@ namespace GameNet {
         void restartApplication(bool isMinimized);
 
         /**
+         * \fn  void ApplicationBridge::shutdownUIResult();
+         *
+         * \brief Call it to agree shutdownUIRequest and continue closing application.
+         *
+         * \author  Ilya Tkachenko
+         * \date  15.01.2015
+         */
+
+        void shutdownUIResult();
+
+        /**
          * \fn  void ApplicationBridge::switchClientVersion();
          *
          * \brief Switch client version.
@@ -146,6 +157,16 @@ namespace GameNet {
          */
 
         void restartUIRequest();
+
+        /**
+         * \fn  void ApplicationBridge::shutdownUIRequest();
+         *
+         * \brief Shutdown user interface request.
+         *
+         * \author  Ilya Tkachenko
+         * \date  15.01.2015
+         */
+        void shutdownUIRequest();
 
         void languageChanged();
         void autoStartModeChanged();

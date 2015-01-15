@@ -116,12 +116,14 @@ namespace GameNet {
 
       inline void closeHandle() 
       {
+        QMutexLocker locker(&this->_mutex);
         if (this->_threadHandle != INVALID_HANDLE_VALUE)
           CloseHandle(this->_threadHandle);
 
         this->_threadHandle = INVALID_HANDLE_VALUE;
 
-        if (this->_processHandle != INVALID_HANDLE_VALUE) {
+        if (this->_processHandle != INVALID_HANDLE_VALUE) { 
+          WaitForSingleObject(this->_processHandle, 2000);
           TerminateProcess(this->_processHandle, 0);
           CloseHandle(this->_processHandle);
         }
@@ -134,6 +136,7 @@ namespace GameNet {
       QString _filename;
       HANDLE _processHandle;
       HANDLE _threadHandle;
+      QMutex _mutex;
     };
 
     UIProcess::UIProcess(QObject* parent) 
@@ -306,3 +309,7 @@ namespace GameNet {
 
         CloseHandle(hProcess);
       }
+#include <QtCore/QProcess>
+#include <QtCore/QMutex>
+#include <QtCore/QMutexLocker>
+

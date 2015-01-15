@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef APPLICATIONBRIDGEPROXY_H_1417436670
-#define APPLICATIONBRIDGEPROXY_H_1417436670
+#ifndef APPLICATIONBRIDGEPROXY_H_1421313697
+#define APPLICATIONBRIDGEPROXY_H_1421313697
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -68,6 +68,12 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("restartApplication"), argumentList);
     }
 
+    inline QDBusPendingReply<> shutdownUIResult()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QLatin1String("shutdownUIResult"), argumentList);
+    }
+
     inline QDBusPendingReply<> switchClientVersion()
     {
         QList<QVariant> argumentList;
@@ -79,6 +85,7 @@ Q_SIGNALS: // SIGNALS
     void initCompleted();
     void languageChanged();
     void restartUIRequest();
+    void shutdownUIRequest();
 };
 
 namespace com {

@@ -9,8 +9,8 @@
  * before re-generating it.
  */
 
-#ifndef APPLICATIONBRIDGEADAPTOR_H_1417436671
-#define APPLICATIONBRIDGEADAPTOR_H_1417436671
+#ifndef APPLICATIONBRIDGEADAPTOR_H_1421313698
+#define APPLICATIONBRIDGEADAPTOR_H_1421313698
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
@@ -36,6 +36,7 @@ class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
 "    <property access=\"readwrite\" type=\"i\" name=\"autoStartMode\"/>\n"
 "    <signal name=\"initCompleted\"/>\n"
 "    <signal name=\"restartUIRequest\"/>\n"
+"    <signal name=\"shutdownUIRequest\"/>\n"
 "    <signal name=\"languageChanged\"/>\n"
 "    <signal name=\"autoStartModeChanged\"/>\n"
 "    <method name=\"isInitCompleted\">\n"
@@ -44,6 +45,7 @@ class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"restartApplication\">\n"
 "      <arg direction=\"in\" type=\"b\" name=\"isMinimized\"/>\n"
 "    </method>\n"
+"    <method name=\"shutdownUIResult\"/>\n"
 "    <method name=\"switchClientVersion\"/>\n"
 "    <method name=\"openBrowser\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"url\"/>\n"
@@ -67,12 +69,14 @@ public Q_SLOTS: // METHODS
     bool isInitCompleted();
     void openBrowser(const QString &url);
     void restartApplication(bool isMinimized);
+    void shutdownUIResult();
     void switchClientVersion();
 Q_SIGNALS: // SIGNALS
     void autoStartModeChanged();
     void initCompleted();
     void languageChanged();
     void restartUIRequest();
+    void shutdownUIRequest();
 };
 
 #endif

@@ -9,7 +9,6 @@
  */
 
 #include <Host/Dbus/ApplicationBridgeAdaptor.h>
-
 #include <QtCore/QMetaObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>
@@ -76,6 +75,12 @@ void ApplicationBridgeAdaptor::restartApplication(bool isMinimized)
 {
     // handle method call com.gamenet.dbus.Application.restartApplication
     QMetaObject::invokeMethod(parent(), "restartApplication", Q_ARG(bool, isMinimized));
+}
+
+void ApplicationBridgeAdaptor::shutdownUIResult()
+{
+    // handle method call com.gamenet.dbus.Application.shutdownUIResult
+    QMetaObject::invokeMethod(parent(), "shutdownUIResult");
 }
 
 void ApplicationBridgeAdaptor::switchClientVersion()

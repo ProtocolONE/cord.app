@@ -267,6 +267,8 @@ signals:
   void wrongCredential(const QString& userId);
 
 private slots:
+  void restartUIRequestSlot();
+  void shutdownUIRequestSlot();
   void onServiceStarted(const QString &serviceId);
   void onServiceFinished(const QString &serviceId, int state);
 

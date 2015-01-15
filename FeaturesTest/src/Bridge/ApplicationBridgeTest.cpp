@@ -23,10 +23,12 @@ public:
    MOCK_METHOD0(isInitCompleted, bool());
    MOCK_METHOD2(restartApplication, void(bool, bool));
    MOCK_METHOD0(switchClientVersion, void());
+   MOCK_METHOD0(shutdownUIResult, void());
 
    // slots for signals
    MOCK_METHOD0(onInitCompleted, void());
    MOCK_METHOD0(onRestartUIRequest, void());
+   MOCK_METHOD0(onShutdownUIRequest, void());
 };
 
 class ThettaMock : public GameNet::Host::Thetta
@@ -71,6 +73,9 @@ public:
     QObject::connect(&bridge, &ApplicationBridge::restartUIRequest,
       &appMock, &ApplicationMock::onRestartUIRequest);
 
+    QObject::connect(&bridge, &ApplicationBridge::shutdownUIRequest,
+      &appMock, &ApplicationMock::onShutdownUIRequest);
+
     QObject::connect(&bridge, &ApplicationBridge::languageChanged,
       &translationMock, &TranslationMock::onLanguageChanged);
 
@@ -97,6 +102,12 @@ TEST_F(ApplicationBridgeTest, restartUIRequest)
   appMock.restartUIRequest();
 }
 
+TEST_F(ApplicationBridgeTest, shutdownUIRequest)
+{
+  EXPECT_CALL(appMock, onShutdownUIRequest()).Times(1);
+  appMock.shutdownUIRequest();
+}
+
 TEST_F(ApplicationBridgeTest, switchClientVersion)
 {
   EXPECT_CALL(appMock, switchClientVersion())
@@ -111,6 +122,14 @@ TEST_F(ApplicationBridgeTest, restartApplication)
     .Times(1);
 
   bridge.restartApplication(true);
+}
+
+TEST_F(ApplicationBridgeTest, shutdownUIResult)
+{
+  EXPECT_CALL(appMock, shutdownUIResult())
+    .Times(1);
+
+  bridge.shutdownUIResult();
 }
 
 TEST_F(ApplicationBridgeTest, isInitCompleted) 
