@@ -28,7 +28,9 @@ void Uninstall::run(const QStringList& arguments)
 {
   uninstallDriver();
   QString program = QString("%1/gamenet.ui.exe").arg(QCoreApplication::applicationDirPath());
-  QProcess::startDetached(program, arguments);
+  QProcess uiProcess;
+  uiProcess.start(program, arguments);
+  uiProcess.waitForFinished();
 }
 
 void Uninstall::uninstallDriver()
