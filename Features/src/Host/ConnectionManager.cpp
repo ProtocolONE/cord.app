@@ -185,6 +185,11 @@ namespace GameNet {
       emit this->newConnection(connection);
     }
 
+    bool ConnectionManager::hasQGNA()
+    {
+      return this->_connections.contains("QGNA");
+    }
+
     void ConnectionManager::registerServicesForQGNA(Connection * connection)
     {
       this->registerApplicationStatistic(connection);

@@ -151,7 +151,7 @@ namespace GameNet {
       }
 #endif
 
-      this->_messageAdapter->setHasUiProcess(std::bind(&UIProcess::isRunning, this->_uiProcess));
+      this->_messageAdapter->setHasUiProcess(std::bind(&ConnectionManager::hasQGNA, this->_connectionManager));
       QObject::connect(this->_uiProcess, &UIProcess::closed, this->_messageAdapter, 
         &MessageAdapter::uiProcessClosed);
 
@@ -269,7 +269,7 @@ namespace GameNet {
     void Application::updateCompletedSlot(bool needRestart)
     {
       if (needRestart) {
-        if (!this->isInitCompleted() || !this->_uiProcess->isRunning()) {
+        if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
           this->restartApplication(true, false);
           return;
         }
@@ -357,7 +357,7 @@ namespace GameNet {
 
     void Application::shutdown()
     {
-      if (!this->isInitCompleted() || !this->_uiProcess->isRunning()) {
+      if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
         this->internalShutdown();
         return;
       }

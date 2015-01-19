@@ -28,6 +28,8 @@ namespace GameNet {
       bool init();
       void shutdown();
 
+      bool hasQGNA();
+
     signals:
       void newConnection(Connection *connection);
       
