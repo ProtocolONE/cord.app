@@ -251,9 +251,6 @@ namespace GameNet {
       if (!this->registerDbusServices())
         return;
 
-      if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
-        this->_thetta->installer()->connectToDriver();
-
       this->startUi();
       
       QObject::connect(this->_updater, &Updater::allCompleted, this, &Application::updateCompletedSlot);
@@ -445,6 +442,10 @@ namespace GameNet {
         this, &Application::onConnectionLogoutMain);
 
       if (connection->applicationName() == "QGNA") {
+
+        if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
+          this->_thetta->installer()->connectToDriver();
+
         auto qgnaLogout = [this]() {
           this->_systemInfoManager->setCredential(GGS::RestApi::GameNetCredential());
         };

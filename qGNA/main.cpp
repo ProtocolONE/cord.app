@@ -101,9 +101,9 @@ int main(int argc, char *argv[])
 
   if (app.isAlreadyRunning()) {
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
-    
+
     QStringList arguments;
-    
+
     if (!app.containsCommand("gogamenetmoney")) {
       arguments << "-activate"; 
     }
@@ -141,8 +141,8 @@ int main(int argc, char *argv[])
 #endif
 
 #ifndef QGNA_NO_ADMIN_REQUIRED
-  if(!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
-    if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {    
+  if (!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
+    if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {
       qDebug() << "Restart failed. May be user didn't accept UAC.";
 
       LogManager::qtLogger()->removeAllAppenders(); 
@@ -156,6 +156,7 @@ int main(int argc, char *argv[])
 
   DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
   if (!dbusConnectionCheck.checkConnection()) {
+    qDebug() << "Can't connect to DBUS.";
     LogManager::qtLogger()->removeAllAppenders(); 
     return 0;
   }
