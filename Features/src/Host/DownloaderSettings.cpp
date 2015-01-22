@@ -93,7 +93,7 @@ namespace GameNet {
       if (current == val)
         return;
 
-      this->_downloader->setUploadRateLimit(val * 1024);
+      this->_downloader->setDownloadRateLimit(val * 1024);
       GGS::Settings::Settings settings;
       settings.setValue("qGNA/downloadSpeed", QString::number(val));
       emit this->downloadRateChanged();
