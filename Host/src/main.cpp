@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
   QString path = QCoreApplication::applicationDirPath();
+  initBugTrap(path);
 
   if (app.containsCommand("uninstall")) {
     Uninstall::run(app.arguments());
@@ -68,7 +69,6 @@ int main(int argc, char *argv[])
     QObject::connect(&app, SIGNAL(sendMessageFinished()), &app, SLOT(quit()), Qt::QueuedConnection);
     QStringList arguments;
 
-    
     if (QCoreApplication::arguments().count() <= 1) {
       arguments << "-activate";
     }
@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
   if (!requireAdminRights())
     return -1;
 
-  initBugTrap(path);
 
   if (!initDatabase()) {
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);

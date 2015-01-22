@@ -40,7 +40,7 @@ namespace Features {
 
           quint64 totalSize = 0;
 
-          for (int i = 0; i < result.size(); ++i) {
+          for (size_t i = 0; i < result.size(); ++i) {
             writer->writeStartElement("node");
             const std::unordered_map<std::wstring, std::wstring>& row(result[i]);
             for (auto it = row.cbegin(); it != row.cend(); ++it) {
