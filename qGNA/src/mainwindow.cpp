@@ -1016,8 +1016,6 @@ void MainWindow::acceptFirstLicense(const QString& serviceId)
   settings.beginGroup(serviceId);
   Marketing::sendInstallerStepOnce(Marketing::InstallAcceptLicense);
   settings.setValue("LicenseHash", "1");
-
-  this->initFinished(); 
 }
 
 void MainWindow::initFinished()
