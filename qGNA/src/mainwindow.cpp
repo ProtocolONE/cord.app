@@ -247,7 +247,7 @@ void MainWindow::initialize()
   GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna, params);
   GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
 
-  QObject::connect(this, SIGNAL(windowActivate()), &this->_keyboardLayoutHelper, SLOT(update()));
+  QObject::connect(this, &MainWindow::windowActivated, &this->_keyboardLayoutHelper, &GGS::KeyboardLayoutHelper::update);
 
   this->_keyboardLayoutHelper.update();
 }
@@ -1047,10 +1047,10 @@ bool MainWindow::event(QEvent* event)
 {
   switch(event->type()) {
   case QEvent::WindowActivate:
-    emit this->windowActivate();
+    emit this->windowActivated();
     break;
   case QEvent::WindowDeactivate:
-    emit this->windowDeactivate();
+    emit this->windowDeactivated();
     break;
   }
 
@@ -1154,3 +1154,4 @@ void MainWindow::switchClientVersion()
 {
   this->_applicationProxy->switchClientVersion();
 }
+
