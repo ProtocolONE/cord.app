@@ -169,6 +169,7 @@ int main(int argc, char *argv[])
 
   GGS::ResourceHelper::ResourceLoader loader;
   loader.load(path + "/qGNA.rcc"); 
+  loader.load(path + "/smiles.rcc"); 
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));
