@@ -189,16 +189,6 @@ namespace GameNet {
       urlQuery.removeAllQueryItems("workingDir");
       urlQuery.addQueryItem("workingDir", workingDir);
 
-      if (urlQuery.hasQueryItem("executorHelper")) {
-        urlQuery.removeAllQueryItems("executorHelper");
-#ifdef _DEBUG
-        QString executorHelper = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86d.dll"; 
-#else
-        QString executorHelper = QCoreApplication::applicationDirPath() + "/GameExecutorHelperX86.dll";
-#endif
-        urlQuery.addQueryItem("executorHelper", executorHelper);
-      }
-
       if (urlQuery.hasQueryItem("injectOverlay")) {
         urlQuery.removeAllQueryItems("injectOverlay");
 
