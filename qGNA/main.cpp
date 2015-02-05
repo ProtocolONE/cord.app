@@ -25,6 +25,7 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QThreadPool>
+#include <QtCore/QProcess>
 
 #include <QtWidgets/QApplication>
 #include <QResource>
@@ -156,6 +157,7 @@ int main(int argc, char *argv[])
 
   DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
   if (!dbusConnectionCheck.checkConnection()) {
+    QProcess::startDetached("qGNA.exe", app.arguments(), path);
     qDebug() << "Can't connect to DBUS.";
     LogManager::qtLogger()->removeAllAppenders(); 
     return 0;
