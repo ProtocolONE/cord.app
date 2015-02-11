@@ -39,6 +39,7 @@ namespace GameNet {
         QObject::connect(this->_downloader, &GameDownloadService::stopping, this, &DownloaderProxy::onStopping);
         QObject::connect(this->_downloader, &GameDownloadService::failed, this, &DownloaderProxy::onFailed);
         QObject::connect(this->_downloader, &GameDownloadService::serviceInstalled, this, &DownloaderProxy::onServiceInstalled);
+        QObject::connect(this->_downloader, &GameDownloadService::serviceUninstalled, this, &DownloaderProxy::onServiceUninstalled);
         QObject::connect(this->_downloader, &GameDownloadService::serviceUpdated, this, &DownloaderProxy::onServiceUpdated);
         QObject::connect(this->_downloader, &GameDownloadService::statusMessageChanged, this, &DownloaderProxy::onStatusMessageChanged);
         QObject::connect(this->_downloader, &GameDownloadService::totalProgressChanged, this, &DownloaderProxy::onTotalProgressChanged);
@@ -115,6 +116,14 @@ namespace GameNet {
           return;
 
         emit this->serviceInstalled(service);
+      }
+
+      void DownloaderProxy::onServiceUninstalled(const Service *service)
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->serviceUninstalled(service);
       }
 
       void DownloaderProxy::onServiceUpdated(const GGS::Core::Service *service)

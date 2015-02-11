@@ -9,7 +9,6 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
-#include <QtCore/QDebug>
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QSettings>
 #include <QDirIterator>
@@ -54,6 +53,15 @@ void GameSettingsViewModel::createShortcutInMainMenu(const QString& serviceId)
   this->createShortcut(directorypath, serviceId);
 }
 
+void GameSettingsViewModel::removeShortcuts(const QString& serviceId)
+{
+  QString name = this->_serviceSettings->name(serviceId);
+  if (name.isEmpty())
+    return;
+
+  this->removeShortCutByName(name);
+}
+
 QStringList GameSettingsViewModel::deserialize(QByteArray serialized)
 {
   QStringList result;
@@ -91,6 +99,7 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
   settings.endGroup();
   QStringList filesToDelete = this->deserialize(settings.value("filesToDelete", QByteArray()).toByteArray());
   filesToDelete << lnkroot;
+
   settings.setValue("filesToDelete", this->serialize(filesToDelete));
   
   GGS::Core::System::Shell::ShortCut object;

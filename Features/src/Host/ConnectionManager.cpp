@@ -367,7 +367,7 @@ namespace GameNet {
       this->registerServiceSettings(connection);
       this->registerZzimaExecutor(connection);
     }
-
+    
     void ConnectionManager::registerZzimaExecutor(Connection * connection)
     {
       using namespace GameNet::Integration::Zzima;
@@ -399,7 +399,7 @@ namespace GameNet {
       new ZzimaExecutorBridgeAdaptor(executorBridge);
       connection->registerObject("/zzimaexecutor", executorBridge);
     }
-
+        
     void ConnectionManager::setDbusServer(DBus::DBusServer* value)
     {
       Q_ASSERT(value);

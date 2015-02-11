@@ -30,6 +30,9 @@ namespace GameNet {
         QString name() const;
         void setName(const QString& val);
 
+        QString displayName() const;
+        void setDisplayName(const QString& val);
+
         QString torrentUrl() const;
         void setTorrentUrl(const QString& val);
 
@@ -61,6 +64,7 @@ namespace GameNet {
         QString _id;
         QString _gameId;
         QString _name;
+        QString _displayName;
         QString _torrentUrl;
         bool _isDownloadable;
         bool _hasDownloadPath;

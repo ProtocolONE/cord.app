@@ -5,6 +5,7 @@
 #include <Features/Thetta/DistrIntegrity.h>
 
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
+#include <Host/GameDownloader/Hook/UpdateUninstallInfo.h>
 
 #include <Integration/ZZima/DADownloaderHook.h>
 #include <Integration/ZZima/ZZimaConnection.h>
@@ -13,6 +14,7 @@ using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
 using Features::Thetta::DistrIntegrity;
 using GameNet::Host::GameDownloader::Hook::SaveInstallPath;
+using GameNet::Host::GameDownloader::Hook::UpdateUninstallInfo;
 
 namespace GameNet {
   namespace Host {
@@ -52,6 +54,9 @@ namespace GameNet {
         GameNet::Integration::ZZima::DADownloaderHook *hook = new GameNet::Integration::ZZima::DADownloaderHook(this);
         hook->setZzimaConnection(this->_zzimaConnection);
         hook->setServiceSettings(this->_serviceSettings);
+        result = hook;
+      } else if (guid == "65CE6F6B-B21A-4d8b-8FD4-B5B750D556CD") {
+        UpdateUninstallInfo *hook = new UpdateUninstallInfo(this);
         result = hook;
       }
 

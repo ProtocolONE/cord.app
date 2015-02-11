@@ -59,6 +59,7 @@ namespace GameNet {
         QObject::connect(this->_downloader, &DownloaderProxy::stopping, this, &DownloaderBridge::onStopping);
         QObject::connect(this->_downloader, &DownloaderProxy::failed, this, &DownloaderBridge::onFailed);
         QObject::connect(this->_downloader, &DownloaderProxy::serviceInstalled, this, &DownloaderBridge::onServiceInstalled);
+        QObject::connect(this->_downloader, &DownloaderProxy::serviceUninstalled, this, &DownloaderBridge::onServiceUninstalled);
         QObject::connect(this->_downloader, &DownloaderProxy::serviceUpdated, this, &DownloaderBridge::onServiceUpdated);
         QObject::connect(this->_downloader, &DownloaderProxy::statusMessageChanged, this, &DownloaderBridge::onStatusMessageChanged);
         QObject::connect(this->_downloader, &DownloaderProxy::totalProgressChanged, this, &DownloaderBridge::onTotalProgress);
@@ -162,6 +163,12 @@ namespace GameNet {
       {
         Q_ASSERT(service);
         emit this->serviceInstalled(service->id());
+      }
+
+      void DownloaderBridge::onServiceUninstalled(const Service *service)
+      {
+        Q_ASSERT(service);
+        emit this->serviceUninstalled(service->id());
       }
 
       void DownloaderBridge::onServiceUpdated(const Service *service)

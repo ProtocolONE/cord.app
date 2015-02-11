@@ -146,6 +146,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>Host.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -243,6 +246,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>Host.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

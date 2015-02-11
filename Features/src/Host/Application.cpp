@@ -24,6 +24,8 @@
 #include <Host/ServiceHandle.h>
 #include <Host/AutoRunManager.h>
 #include <Host/ServiceProcess/ServicesListRequest.h>
+#include <Host/Installer/Migration.h>
+#include <Host/Installer/UninstallResult.h>
 
 #include <Host/Dbus/DBusServer.h>
 
@@ -57,6 +59,7 @@ using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
 using ::GameNet::Integration::ZZima::ZZimaConnection;
 using GameNet::Host::DBus::DBusServer;
+using GameNet::Host::Installer::UninstallResult;
 
 namespace GameNet {
   namespace Host {
@@ -107,8 +110,7 @@ namespace GameNet {
     {
       this->_initFinished = true;
 
-      if (this->_initFinished && this->_updateFinished)
-        emit this->initCompleted();
+      this->sendInitFinished();
     }
 
     void Application::setUpdateFinished() 
@@ -118,8 +120,22 @@ namespace GameNet {
 
       this->_updateFinished = true;
 
-      if (this->_initFinished && this->_updateFinished)
+      this->sendInitFinished();
+    }
+
+    void Application::sendInitFinished()
+    {
+      if (this->_initFinished && this->_updateFinished) {
         emit this->initCompleted();
+
+        if (!GameNet::Host::Installer::Migration::isMigrated()) {
+          GameNet::Host::Installer::Migration installerMigration;
+          installerMigration.setServices(this->_serviceLoader);
+          installerMigration.setDownloader(this->_gameDownloader);
+
+          installerMigration.migrate();
+        }
+      }
     }
 
     bool Application::isInitCompleted()
@@ -244,6 +260,9 @@ namespace GameNet {
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
         this, &Application::shutdown);
 
+      QObject::connect(this->_commandLineManager, &CommandLineManager::uninstallService, 
+        this, &Application::onUninstallRequestSlot);
+
       QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand, 
         this->_uiProcess, &UIProcess::sendCommand);
 
@@ -283,6 +302,16 @@ namespace GameNet {
 
       this->setUpdateFinished();
     }
+
+    void Application::onUninstallRequestSlot(const QString &serviceId)
+    {
+      UninstallResult *uninstallResult = new UninstallResult(serviceId, this);
+      QObject::connect(this->_gameDownloader, &GameDownloadService::serviceUninstalled, uninstallResult, &UninstallResult::onUninstallFinished);
+      QObject::connect(this->_gameDownloader, &GameDownloadService::failed, uninstallResult, &UninstallResult::onUninstallFailed);
+      QObject::connect(this, &Application::internalCancelUninstallRequest, uninstallResult, &UninstallResult::onUninstallCancelled);
+
+      emit this->uninstallServiceRequest(serviceId);
+   }
 
     bool Application::registerDbusServices()
     {
@@ -346,6 +375,11 @@ namespace GameNet {
 
       settings.setValue("Repository", area);
       this->restartApplication(true, false);
+    }
+
+    void Application::cancelUninstallServiceRequest(const QString &serviceId)
+    {
+      emit this->internalCancelUninstallRequest(serviceId);
     }
 
     void Application::restartApplication(bool shouldStartWithSameArguments, bool isMinimized)

@@ -68,7 +68,7 @@
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)lib\;$(VLDDIR)\lib\Win32;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystemViewModel\$(UpdateSystemViewModelArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>version.lib;qtmaind.lib;UpdateSystemX86d.lib;UpdateSystemViewModelX86d.lib;RestApiX86d.lib;AutoRunHelperX86d.lib;BugTrap.lib;SettingsX86d.lib;CoreX86d.lib;LibtorrentWrapperX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;ApplicationX86d.lib;FeaturesX86d.lib;QmlExtensionX86d.lib;ResourceHelperX86d.lib;MarketingX86d.lib;HookEngined.lib;Log4Qtd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5WebKitd.lib;Qt5Declaratived.lib;Qt5Scriptd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;Qt5Concurrentd.lib;Qt5Widgetsd.lib;Qt5Multimediad.lib;Qt5WebkitWidgetsd.lib;Qt5WinExtrasd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>version.lib;qtmaind.lib;UpdateSystemX86d.lib;UpdateSystemViewModelX86d.lib;RestApiX86d.lib;AutoRunHelperX86d.lib;BugTrap.lib;SettingsX86d.lib;LibtorrentWrapperX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;ApplicationX86d.lib;FeaturesX86d.lib;QmlExtensionX86d.lib;ResourceHelperX86d.lib;MarketingX86d.lib;HookEngined.lib;Log4Qtd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5WebKitd.lib;Qt5Declaratived.lib;Qt5Scriptd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;Qt5Concurrentd.lib;Qt5Widgetsd.lib;Qt5Multimediad.lib;Qt5WebkitWidgetsd.lib;Qt5DBusd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
@@ -239,10 +239,9 @@ del "$(TargetDir)\*.ilk"</Command>
       <Command>
       </Command>
     </CustomBuildStep>
-    <PreLinkEvent>
-      <Command>
-      </Command>
-    </PreLinkEvent>
+    <Manifest>
+      <AdditionalManifestFiles>qGNA.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -259,7 +258,7 @@ del "$(TargetDir)\*.ilk"</Command>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)lib\;$(VLDDIR)\lib\Win32;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystemViewModel\$(UpdateSystemViewModelArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>version.lib;qtmain.lib;UpdateSystemX86.lib;UpdateSystemViewModelX86.lib;RestApiX86.lib;AutoRunHelperX86.lib;Log4Qt.lib;SettingsX86.lib;BugTrap.lib;CoreX86.lib;LibtorrentWrapperX86.lib;GameDownloaderX86.lib;GameExecutorX86.lib;ApplicationX86.lib;FeaturesX86.lib;QmlExtensionX86.lib;ResourceHelperX86.lib;MarketingX86.lib;HookEngine.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Network.lib;Qt5Sql.lib;Qt5WebKit.lib;Qt5Declarative.lib;Qt5Script.lib;Qt5Xml.lib;Qt5XmlPatterns.lib;Qt5Concurrent.lib;Qt5Widgets.lib;Qt5Multimedia.lib;Qt5WebkitWidgets.lib;Qt5WinExtras.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>version.lib;qtmain.lib;UpdateSystemX86.lib;UpdateSystemViewModelX86.lib;RestApiX86.lib;AutoRunHelperX86.lib;Log4Qt.lib;SettingsX86.lib;BugTrap.lib;LibtorrentWrapperX86.lib;GameDownloaderX86.lib;GameExecutorX86.lib;ApplicationX86.lib;FeaturesX86.lib;QmlExtensionX86.lib;ResourceHelperX86.lib;MarketingX86.lib;HookEngine.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Network.lib;Qt5Sql.lib;Qt5WebKit.lib;Qt5Declarative.lib;Qt5Script.lib;Qt5Xml.lib;Qt5XmlPatterns.lib;Qt5Concurrent.lib;Qt5Widgets.lib;Qt5Multimedia.lib;Qt5WebkitWidgets.lib;Qt5DBus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
@@ -424,6 +423,9 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
 del "$(TargetDir)\*.ilk"</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>qGNA.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticViewModel.cpp">

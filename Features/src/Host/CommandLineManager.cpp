@@ -35,6 +35,27 @@ namespace GameNet {
       if (ignoreCommand)
         return;
 
+      if (name == "gogamenetmoney") {
+        this->gogamenetmoney(name, arguments);
+        return;
+      }
+
+      if (name == "gogamenethelper") {
+        this->gogamenethelper(name, arguments);
+        return;
+      }
+
+      if (name == "gocombatarmsrating") {
+        this->gocombatarmsrating(name, arguments);
+        return;
+      }
+
+      if (name == "uninstall") {
+        QString serviceId = arguments.at(0);
+        emit this->uninstallService(serviceId);
+        return;
+      }
+
       emit this->uiCommand(name, arguments);
     }
 

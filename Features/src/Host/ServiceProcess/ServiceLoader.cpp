@@ -125,6 +125,7 @@ namespace GameNet {
         service->setArea(this->_gameArea);
         service->setIsDownloadable(description.isDownloadable());
         service->setName(description.name());
+        service->setDisplayName(description.displayName());
         service->setHashDownloadPath(description.hasDownloadPath());
         service->setExtractorType(description.extractorType());
         service->setTorrentUrl(description.torrentUrl());
@@ -203,6 +204,10 @@ namespace GameNet {
           HookBase *saveInstallPath = this->_factory->create(QLatin1String("D4D358CD-DFF5-4B56-AF30-349CCAE86EED"));
           Q_ASSERT(saveInstallPath);
           this->_downloader->registerHook(description.id(), 100, 0, saveInstallPath);
+
+          HookBase *updateUnistallInfo = this->_factory->create(QLatin1String("65CE6F6B-B21A-4d8b-8FD4-B5B750D556CD"));
+          Q_ASSERT(updateUnistallInfo);
+          this->_downloader->registerHook(description.id(), 100, 0, updateUnistallInfo);
         }
       }
 

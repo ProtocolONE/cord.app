@@ -16,8 +16,8 @@ namespace GameNet {
       Q_OBJECT
       friend class UIProcessPrivate;
     public:
-      explicit UIProcess::UIProcess(QObject* parent = 0);
-      virtual UIProcess::~UIProcess();
+      explicit UIProcess(QObject* parent = 0);
+      virtual ~UIProcess();
 
       /**
        * \fn  void UIProcess::setDirectory(const QString& value);

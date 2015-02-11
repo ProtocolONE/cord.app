@@ -70,6 +70,15 @@ namespace GameNet {
        */
       void openBrowser(const QString& url);
 
+      /**
+       * \fn  void CommandLineManager::uninstallService(const QString& name, const QStringList& arguments);
+       *
+       * \brief Запрос на деинсталляцию сервиса
+       *
+       * \param url URL of the document.
+       */
+      void uninstallService(const QString& serviceId);
+
     private:
       GGS::Application::ArgumentParser* _commandLineArguments;
 

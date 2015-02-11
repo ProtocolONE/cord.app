@@ -45,6 +45,16 @@ namespace GameNet {
         this->_name = val;
       }
 
+      QString ServiceDescription::displayName() const
+      {
+        return this->_displayName;
+      }
+
+      void ServiceDescription::setDisplayName(const QString& val)
+      {
+        this->_displayName = val;
+      }
+
       QString ServiceDescription::torrentUrl() const
       {
         return this->_torrentUrl;

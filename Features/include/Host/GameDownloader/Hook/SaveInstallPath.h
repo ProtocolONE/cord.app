@@ -22,6 +22,7 @@ namespace GameNet {
 
         class SaveInstallPath : public GGS::GameDownloader::HookBase
         {
+          Q_OBJECT
         public:
           explicit SaveInstallPath(QObject *parent = 0);
           virtual ~SaveInstallPath();

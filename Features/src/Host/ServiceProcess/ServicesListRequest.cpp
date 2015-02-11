@@ -68,6 +68,7 @@ namespace GameNet {
           serviceDist.setId(data["serviceId"]);
           serviceDist.setGameId(data["gameId"]);
           serviceDist.setName(data["folderName"]);
+          serviceDist.setDisplayName(data["name"]);
           serviceDist.setTorrentUrl(data["torrentUrl"]);
           serviceDist.setIsDownloadable(data["isBrowserGame"] != "1");
           serviceDist.setHasDownloadPath(data["hasDownloadPath"] == "1");

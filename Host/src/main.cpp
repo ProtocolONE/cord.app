@@ -1,6 +1,7 @@
 #include <Host/Application.h>
 
 #include <Application/SingleApplication.h>
+#include <Application/ArgumentParser.h>
 
 #include <Features/ThronInstaller.h>
 
@@ -39,13 +40,27 @@ Application *createApplication(SingleApplication *app)
   return application;
 }
 
+bool isAboutToUninstallGameNet()
+{
+  if (QCoreApplication::arguments().contains("uninstall")) {
+    GGS::Application::ArgumentParser argumentsParser;
+    argumentsParser.parse(QCoreApplication::arguments());
+
+    if (argumentsParser.commandArguments("uninstall").empty()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
   QString path = QCoreApplication::applicationDirPath();
   initBugTrap(path);
 
-  if (app.containsCommand("uninstall")) {
+  if (isAboutToUninstallGameNet()) {
     Uninstall::run(app.arguments());
     return 0;
   }
@@ -83,7 +98,6 @@ int main(int argc, char *argv[])
   LoggerHelper logger(path + "/host.log");
   if (!requireAdminRights())
     return -1;
-
 
   if (!initDatabase()) {
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);

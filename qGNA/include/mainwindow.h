@@ -130,6 +130,9 @@ public slots:
   void downloadButtonStart(QString serviceId);
   void downloadButtonPause(QString serviceId);
 
+  void uninstallService(const QString serviceId);
+  void cancelServiceUninstall(const QString serviceId);
+
   bool isDownloading(QString serviceId);  
 
   void commandRecieved(QString name, QStringList arguments);       
@@ -158,44 +161,6 @@ public slots:
 
   bool silent();
   void onWindowClose();
-
-private:
-  void loadPlugin(QString pluginName);
-
-  void translatorsParse();
-  void initializeUpdateSettings();
-  int checkUpdateInterval();
-
-  void initAutorun();
-  void initRestApi();
-  void initMarketing();
-  bool isUseOpenGLrender();
-
-  void createShortcut(const QString& pathToLnk, const GGS::Core::Service* service);
-
-  GGS::RestApi::FakeCache _fakeCache;
-  GGS::RestApi::GameNetCredential _credential;
-  GGS::RestApi::RestApiManager _restapiManager;
-
-  QmlMessageAdapter* messageAdapter;
-  SettingsViewModel* settingsViewModel;
-  EnterNickNameViewModel *_enterNickViewModel;
-  GameSettingsViewModel *_gameSettingsViewModel;
-
-  QString _nickName;
-  QString _techName;
-  QString _mediumAvatarUrl;
-  QString _language;
-  QString _fileVersion;
-
-  MQDeclarativeView *nQMLContainer;
-
-  QPoint mLastMousePosition;
-  bool m_WindowState; // false - normal size, true - max size  
-  bool _gameDownloadInitialized;
-  GGS::Application::ArgumentParser _commandLineArguments;
-  GGS::Core::Service::Area _gameArea;
-  GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
 
 signals:
   /*
@@ -231,7 +196,7 @@ signals:
   void selectService(QString serviceId);
   void needPakkanenVerification(QString serviceId);
 
-  void downloaderStarted(QString service);
+  void downloaderStarted(QString service, int startType);
   void downloaderFinished(QString service);
   void downloaderStopped(QString service);  
   void downloaderStopping(QString service);
@@ -266,9 +231,12 @@ signals:
   void quit();
   void wrongCredential(const QString& userId);
 
+  void uninstallServiceRequest(QString serviceId);
+
 private slots:
   void restartUIRequestSlot();
   void shutdownUIRequestSlot();
+
   void onServiceStarted(const QString &serviceId);
   void onServiceFinished(const QString &serviceId, int state);
 

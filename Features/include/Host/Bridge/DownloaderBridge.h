@@ -312,6 +312,14 @@ namespace GameNet {
         void serviceInstalled(const QString& serviceId);
 
         /*!
+        \fn void serviceUninstalled(const QString& serviceId);
+
+        Signal is emitted when service is completely uninstalled
+
+        */
+        void serviceUninstalled(const QString& serviceId);
+
+        /*!
         \fn void serviceUpdated(const QString& serviceId);
 
         Signal is emitted when previously installed service downloading is complete and it's ready to run.
@@ -375,6 +383,7 @@ namespace GameNet {
         void onFailed(const GGS::Core::Service *service);
         
         void onServiceInstalled(const GGS::Core::Service *service);
+        void onServiceUninstalled(const  GGS::Core::Service *service);
         void onServiceUpdated(const GGS::Core::Service *service);
         void onStatusMessageChanged(const GGS::Core::Service *service, const QString& message);
 

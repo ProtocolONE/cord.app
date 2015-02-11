@@ -77,6 +77,7 @@ public:
   MOCK_METHOD1(onStopping, void(const QString&));
   MOCK_METHOD1(onFailed, void(const QString&));
   MOCK_METHOD1(onServiceInstalled, void(const QString&));
+  MOCK_METHOD1(onServiceUninstalled, void(const QString&));
   MOCK_METHOD1(onServiceUpdated, void(const QString&));
   MOCK_METHOD2(onStatusMessageChanged, void(const QString&, const QString&));
   MOCK_METHOD2(onTotalProgressChanged, void(const QString&, int));
@@ -114,6 +115,9 @@ public:
 
     QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceInstalled, 
       &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceInstalled);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceUninstalled, 
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceUninstalled);
 
     QObject::connect(&this->_downloadBridge, &DownloaderBridge::serviceUpdated, 
       &this->_downloadServiceFixture, &GameDownloadServiceMock::onServiceUpdated);
@@ -171,6 +175,12 @@ TEST_F(DownloadBridgeTest, EmitServiceInstalledSignal)
 {
   EXPECT_CALL(_downloadServiceFixture, onServiceInstalled(_service.id())).Times(1);
   _downloadServiceFixture.serviceInstalled(&_service);
+}
+
+TEST_F(DownloadBridgeTest, EmitServiceUninstalledSignal)
+{
+  EXPECT_CALL(_downloadServiceFixture, onServiceUninstalled(_service.id())).Times(1);
+  _downloadServiceFixture.serviceUninstalled(&_service);
 }
 
 TEST_F(DownloadBridgeTest, EmitServiceUpdatedSignal)

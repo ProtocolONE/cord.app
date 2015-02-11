@@ -409,6 +409,102 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner_p.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Ram.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Video.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Video.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Video.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Screen.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Screen.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Screen.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Hdd.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Hdd.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Hdd.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OsInfo.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OsInfo.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\OsInfo.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\ComInitialize.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Installer\Migration.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameDownloader\Hook\UpdateUninstallInfo.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateUninstallInfo.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_UpdateUninstallInfo.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SaveInstallPath.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SaveInstallPath.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Installer\UninstallResult.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_UninstallResult.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_UninstallResult.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Installer\UninstallInfo.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Host\CredentialConverter.h" />
@@ -419,7 +515,6 @@
     <ClInclude Include="include\Helper\Logger.hpp" />
     <ClInclude Include="include\Host\StopDownloadOnExecuteInit.h" />
     <ClInclude Include="include\Host\Factory.h" />
-    <ClInclude Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
     <ClInclude Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
     <ClInclude Include="include\Features\Thetta\ProtectorHooks.h" />
     <ClInclude Include="include\Features\Thetta\TlsInitializer.h" />
@@ -431,7 +526,9 @@
     <ClInclude Include="include\Features\ComInitialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Features\Thetta\ModuleSignatures.h" />
+    <ClInclude Include="include\Host\Installer\UninstallInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -566,8 +663,64 @@
     <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ModuleScanner.h" />
-    <CustomBuild Include="include\Features\Thetta\ModuleScanner_p.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\VendorBase.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\ZZima.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Nikita.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\CpuInfo.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\WmiQuery.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Antivirus.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Ram.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Video.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Screen.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Hdd.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\OsInfo.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\Installer\Migration.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\GameDownloader\Hook\UpdateUninstallInfo.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
+    <CustomBuild Include="include\Host\Installer\UninstallResult.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

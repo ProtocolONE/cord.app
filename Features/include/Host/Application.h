@@ -73,7 +73,6 @@ namespace GameNet {
     class ServiceHandle;
     class AutoRunManager;
     class Connection;
-    
 
     namespace DBus {
       class DBusServer;
@@ -103,25 +102,31 @@ namespace GameNet {
       void shutdown();
       virtual bool isInitCompleted();
       virtual void switchClientVersion();
+      virtual void cancelUninstallServiceRequest(const QString &serviceId);
 
     private slots:
       void updateCompletedSlot(bool needRestart);
+      void onUninstallRequestSlot(const QString &serviceId);
 
     signals:
       void initCompleted();
       void restartUIRequest();
       void shutdownUIRequest();
       void restartApplicationRequest(bool shouldStartWithSameArguments, bool isMinimized);
+      void uninstallServiceRequest(const QString &service);
 
       // INFO Необходим для реимита результата из dbus.
       // в Версии Qt 5.4 можно будет заменитьна QTimer::singleShot
       void internalShutdownUIResult();
+      void internalCancelUninstallRequest(const QString &serviceId);
 
     private:
       friend class ConnectionManager;
 
       void setInitFinished();
       void setUpdateFinished();
+      
+      void sendInitFinished();
 
       void startUi();
       void initGameDownloader();

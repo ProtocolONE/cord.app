@@ -56,6 +56,7 @@ namespace GameNet {
         void failed(const GGS::Core::Service *service);
         void shutdownCompleted();
         void serviceInstalled(const GGS::Core::Service *service);
+        void serviceUninstalled(const GGS::Core::Service *service);
         void serviceUpdated(const GGS::Core::Service *service);
         void statusMessageChanged(const GGS::Core::Service *service, const QString& message);
         void totalProgressChanged(const GGS::Core::Service *service, qint8 progress);
@@ -74,6 +75,7 @@ namespace GameNet {
         void onFailed(const GGS::Core::Service *service);
         
         void onServiceInstalled(const GGS::Core::Service *service);
+        void onServiceUninstalled(const GGS::Core::Service *service);
         void onServiceUpdated(const GGS::Core::Service *service);
         void onStatusMessageChanged(const GGS::Core::Service *service, const QString& message);
         void onTotalProgressChanged(const GGS::Core::Service *service, qint8 progress);

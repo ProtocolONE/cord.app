@@ -36,6 +36,9 @@ namespace GameNet {
 
         QObject::connect(this->_application, &Application::shutdownUIRequest,
           this, &ApplicationBridge::shutdownUIRequest);
+
+        QObject::connect(this->_application, &Application::uninstallServiceRequest,
+          this, &ApplicationBridge::uninstallServiceRequest);
       }
 
       void ApplicationBridge::setThetta(Thetta *value)
@@ -93,6 +96,12 @@ namespace GameNet {
       {
         Q_ASSERT(this->_thetta);
         this->_thetta->openBrowser(url);
+      }
+
+      void ApplicationBridge::cancelUninstallServiceRequest(const QString &serviceId)
+      {
+        Q_ASSERT(this->_application);
+        this->_application->cancelUninstallServiceRequest(serviceId);
       }
 
       QString ApplicationBridge::language() const

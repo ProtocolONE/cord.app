@@ -41,6 +41,7 @@
 
 using namespace Log4Qt; 
 using namespace GameNet;
+using GGS::Application::SingleApplication;
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
@@ -77,9 +78,22 @@ void initBugTrap(const QString &path)
   BT_InstallSehFilter();
 }
 
+bool isAboutToUninstallGameNet()
+{
+  if (QCoreApplication::arguments().contains("uninstall")) {
+    GGS::Application::ArgumentParser argumentsParser;
+    argumentsParser.parse(QCoreApplication::arguments());
+
+    if (argumentsParser.commandArguments("uninstall").empty()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 int main(int argc, char *argv[]) 
 {
-  using GGS::Application::SingleApplication;
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   QString path = QCoreApplication::applicationDirPath();
   
@@ -182,7 +196,7 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  if (app.containsCommand("uninstall")) {
+  if (isAboutToUninstallGameNet()) {
     Uninstall::run(app.arguments());
     LogManager::qtLogger()->removeAllAppenders();
     return 0;
@@ -221,5 +235,3 @@ int main(int argc, char *argv[])
 
   return result;
 }
-
-

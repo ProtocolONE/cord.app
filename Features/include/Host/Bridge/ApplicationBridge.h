@@ -134,6 +134,16 @@ namespace GameNet {
          */
         void openBrowser(const QString& url);
 
+        /**
+         * \fn  void ApplicationBridge::cancelUninstallServiceRequest(const QString &serviceId);
+         *
+         * \brief User answered 'No' to uninstall prompt for particular service
+         *
+         * \author  Nikita Gorbunov
+         * \date  24.02.2015
+         */
+        void cancelUninstallServiceRequest(const QString &serviceId);
+
     signals:
 
         /**
@@ -170,6 +180,15 @@ namespace GameNet {
 
         void languageChanged();
         void autoStartModeChanged();
+
+        /*!
+        \fn uninstallServiceRequest(const QString& serviceId);
+
+        This signal is emitted when host application is about to uninstall a particular service,
+        but the final decision is made by user (by UI)
+
+        */
+        void uninstallServiceRequest(const QString& serviceId);
 
       private:
         Application* _application;

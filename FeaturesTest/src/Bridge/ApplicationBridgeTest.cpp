@@ -24,11 +24,13 @@ public:
    MOCK_METHOD2(restartApplication, void(bool, bool));
    MOCK_METHOD0(switchClientVersion, void());
    MOCK_METHOD0(shutdownUIResult, void());
-
+   MOCK_METHOD1(cancelUninstallServiceRequest, void(const QString &));
+   
    // slots for signals
    MOCK_METHOD0(onInitCompleted, void());
    MOCK_METHOD0(onRestartUIRequest, void());
    MOCK_METHOD0(onShutdownUIRequest, void());
+   MOCK_METHOD1(onUninstallServiceRequest, void(const QString&));
 };
 
 class ThettaMock : public GameNet::Host::Thetta
@@ -62,6 +64,8 @@ class ApplicationBridgeTest : public ::testing::Test
 public:
   ApplicationBridgeTest() 
   {
+    serviceId = "1234567890";
+
     bridge.setApplication(&appMock);
     bridge.setThetta(&thettaMock);
     bridge.setTranslation(&translationMock);
@@ -76,13 +80,17 @@ public:
     QObject::connect(&bridge, &ApplicationBridge::shutdownUIRequest,
       &appMock, &ApplicationMock::onShutdownUIRequest);
 
-    QObject::connect(&bridge, &ApplicationBridge::languageChanged,
+     QObject::connect(&bridge, &ApplicationBridge::uninstallServiceRequest,
+      &appMock, &ApplicationMock::onUninstallServiceRequest);
+     
+     QObject::connect(&bridge, &ApplicationBridge::languageChanged,
       &translationMock, &TranslationMock::onLanguageChanged);
 
     QObject::connect(&bridge, &ApplicationBridge::autoStartModeChanged,
       &autoRunManager, &AutoRunManagerMock::onAutoStartModeChanged);
   }
 
+  QString serviceId;
   ApplicationBridge bridge;
   ApplicationMock appMock;
   ThettaMock thettaMock;
@@ -108,6 +116,12 @@ TEST_F(ApplicationBridgeTest, shutdownUIRequest)
   appMock.shutdownUIRequest();
 }
 
+TEST_F(ApplicationBridgeTest, uninstallServiceRequest)
+{
+  EXPECT_CALL(appMock, onUninstallServiceRequest(serviceId)).Times(1);
+  appMock.uninstallServiceRequest(serviceId);
+}
+
 TEST_F(ApplicationBridgeTest, switchClientVersion)
 {
   EXPECT_CALL(appMock, switchClientVersion())
@@ -130,6 +144,18 @@ TEST_F(ApplicationBridgeTest, shutdownUIResult)
     .Times(1);
 
   bridge.shutdownUIResult();
+}
+
+TEST_F(ApplicationBridgeTest, uninstallService)
+{
+  EXPECT_CALL(appMock, onUninstallServiceRequest(serviceId)).Times(1);
+  bridge.uninstallServiceRequest(serviceId);
+}
+
+TEST_F(ApplicationBridgeTest, cancelServiceUninstall)
+{
+  EXPECT_CALL(appMock, cancelUninstallServiceRequest(serviceId)).Times(1);
+  bridge.cancelUninstallServiceRequest(serviceId);
 }
 
 TEST_F(ApplicationBridgeTest, isInitCompleted) 

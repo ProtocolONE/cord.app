@@ -105,14 +105,17 @@ void MainWindow::initialize()
   this->_bestInstallPath = new BestInstallPath(this);
   this->_bestInstallPath->setServiceSettings(this->_serviceSettings);
 
-  this->initializeUpdateSettings();
-  this->initRestApi();
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::initCompleted,
+    this, &MainWindow::initCompleted);
 
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::restartUIRequest,
                     this, &MainWindow::restartUIRequestSlot);
 
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::shutdownUIRequest,
     this, &MainWindow::shutdownUIRequestSlot);
+
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::uninstallServiceRequest,
+    this, &MainWindow::uninstallServiceRequest);
 
   qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
   qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
@@ -235,7 +238,7 @@ void MainWindow::initialize()
     QObject::connect(this, &MainWindow::updateFinished,
       &this->_rememberGameFeature, &RememberGameDownloading::update);
   }
-  
+
   DWORD verion = GetVersion();
   int dwMajorVersion = (int)(LOBYTE(LOWORD(verion)));
   int dwMinorVersion = (int)(HIBYTE(LOWORD(verion)));
@@ -562,8 +565,7 @@ void MainWindow::progressChanged(QString serviceId, qint8 progress)
 
 void MainWindow::gameDownloaderStarted(const QString& serviceId, int startType)
 {
-  // GGS::GameDownloader::StartType
-  emit this->downloaderStarted(serviceId);
+  emit this->downloaderStarted(serviceId, startType);
 }
 
 void MainWindow::gameDownloaderFinished(const QString& serviceId) 
@@ -708,6 +710,16 @@ void MainWindow::initializeUpdateSettings()
   this->_executor->execute(serviceId, createDbusCredential(baseCredential));
 }
 
+void MainWindow::uninstallService(const QString serviceId)
+{
+  this->_downloader->start(serviceId, GGS::GameDownloader::Uninstall);
+}
+
+void MainWindow::cancelServiceUninstall(const QString serviceId)
+{
+  this->_applicationProxy->cancelUninstallServiceRequest(serviceId);
+}
+
 bool MainWindow::isLicenseAccepted(const QString& serviceId)
 {
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
@@ -795,6 +807,11 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
     this->openExternalUrlWithAuth("http://www.combatarms.ru/ratings/user/");
     return;
   } 
+
+  if (name == "uninstall" && arguments.size() > 0) {
+    QString serviceId = arguments.at(0);
+    emit this->uninstallServiceRequest(serviceId);
+  }
 }
 
 void MainWindow::onServiceStarted(const QString &serviceId)
@@ -1154,4 +1171,3 @@ void MainWindow::switchClientVersion()
 {
   this->_applicationProxy->switchClientVersion();
 }
-
