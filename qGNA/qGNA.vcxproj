@@ -183,9 +183,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$
 
 @REM QT binaries
 
-xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuuc53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuuc53.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"
@@ -372,9 +372,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$
 
 @REM QT binaries
 
-xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuuc53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuuc53.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
 xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"
