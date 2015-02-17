@@ -99,9 +99,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll
 @REM QT binaries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
 
-xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuuc53.dll" "$(TargetDir)"
 
 xcopy /Y /I /R "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
@@ -212,9 +212,9 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll
 @REM QT binaries
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
 
-xcopy /Y /I /R "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icudt53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuin53.dll" "$(TargetDir)"
+xcopy /Y /I /R "$(QGNACOMMONDIR)\53\bin\icuuc53.dll" "$(TargetDir)"
 
 xcopy /Y /I /R "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
