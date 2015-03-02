@@ -371,6 +371,44 @@
     <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\ModuleScanner.cpp" />
+    <ClCompile Include="src\Features\Thetta\ModuleScanner_p.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner_p.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Host\CredentialConverter.h" />
@@ -393,6 +431,7 @@
     <ClInclude Include="include\Features\ComInitialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Features\Thetta\ModuleSignatures.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -515,6 +554,20 @@
     <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\ModuleScanner.h" />
+    <CustomBuild Include="include\Features\Thetta\ModuleScanner_p.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

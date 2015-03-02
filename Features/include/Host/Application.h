@@ -101,6 +101,7 @@ namespace GameNet {
     public slots:
       void init();
       void shutdown();
+      void terminateFromScanner(const QString & serviceId);
       virtual bool isInitCompleted();
       virtual void switchClientVersion();
 

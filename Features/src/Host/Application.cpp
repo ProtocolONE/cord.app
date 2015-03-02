@@ -473,5 +473,9 @@ namespace GameNet {
       }
     }
 
+    void Application::terminateFromScanner(const QString & serviceId)
+    {
+      this->_executor->terminateAll(serviceId);
+    }
   }
 }

@@ -19,6 +19,7 @@
 #include <Features/Thetta/DistrIntegrity.h>
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/SaveUserInfo.h>
+#include <Features/Thetta/ModuleScanner.h>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
@@ -86,6 +87,7 @@ namespace GameNet {
       this->reg<ThettaMonitor>([this](ThettaMonitor* h){
         h->setDriverInstaller(this->_thetta->installer());
         h->setSaveUserInfo(this->_saveUserInfo);
+        this->_thetta->scanner()->setMonitor(h);
       });
 
       this->reg<CASettingsFix>([this](CASettingsFix *h) {
