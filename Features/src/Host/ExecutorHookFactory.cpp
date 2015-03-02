@@ -87,7 +87,12 @@ namespace GameNet {
       this->reg<ThettaMonitor>([this](ThettaMonitor* h){
         h->setDriverInstaller(this->_thetta->installer());
         h->setSaveUserInfo(this->_saveUserInfo);
-        this->_thetta->scanner()->setMonitor(h);
+
+        QObject::connect(h, &Features::Thetta::ThettaMonitor::onScanModuleLoaded, 
+          this->_thetta->scanner(), &Features::Thetta::ModuleScanner::onModuleLoaded);
+
+        QObject::connect(this->_thetta->scanner(), &Features::Thetta::ModuleScanner::needSendHash,
+          h, &Features::Thetta::ThettaMonitor::processQueue);
       });
 
       this->reg<CASettingsFix>([this](CASettingsFix *h) {

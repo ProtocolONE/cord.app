@@ -34,6 +34,7 @@
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Thetta/ThettaInstaller.h>
 #include <Features/Marketing/SystemInfo/SystemInfoManager.h>
+#include <Features/Thetta/ModuleScanner.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -178,6 +179,10 @@ namespace GameNet {
 
       this->_thetta->setApplication(this);
       this->_thetta->init();
+
+      //Connect service termination
+      QObject::connect(this->_thetta->scanner(), &Features::Thetta::ModuleScanner::scannerFoundModule,
+        this->_executor, &GameNet::Host::GameExecutor::terminateAll);
 
       this->_executor->setServices(this->_serviceLoader);
       this->_executor->setServiceSettings(this->_serviceSettings);
@@ -471,11 +476,6 @@ namespace GameNet {
       Q_FOREACH(const QString& serviceId, lockedGames) {
         this->_executor->terminateAll(serviceId);
       }
-    }
-
-    void Application::terminateFromScanner(const QString & serviceId)
-    {
-      this->_executor->terminateAll(serviceId);
     }
   }
 }
