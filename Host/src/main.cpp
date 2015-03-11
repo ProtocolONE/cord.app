@@ -20,6 +20,7 @@
 #include <QtCore/QThread>
 #include <QtCore/QThreadPool>
 #include <QtCore/QCoreApplication>
+#include <QtCore/QTime>
 
 #include <QtGui/QIcon>
 
@@ -98,6 +99,8 @@ int main(int argc, char *argv[])
   LoggerHelper logger(path + "/host.log");
   if (!requireAdminRights())
     return -1;
+
+  qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
 
   if (!initDatabase()) {
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);

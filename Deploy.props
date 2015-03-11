@@ -22,9 +22,9 @@
     <CASettingsArea>trunk</CASettingsArea>
     <OverlayArea>trunk</OverlayArea>
     <HookEngineArea>1.0</HookEngineArea>
-    <ThettaArea>1.0.196</ThettaArea>
+    <ThettaArea>1.0.209</ThettaArea>
     <QxmppArea>0.8.2</QxmppArea>
-    <QxmppDeclarativeArea>1.1.0</QxmppDeclarativeArea>
+    <QxmppDeclarativeArea>1.1.1</QxmppDeclarativeArea>
 </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />

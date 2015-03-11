@@ -26,6 +26,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QThreadPool>
 #include <QtCore/QProcess>
+#include <QtCore/QTime>
 
 #include <QtWidgets/QApplication>
 #include <QResource>
@@ -168,6 +169,8 @@ int main(int argc, char *argv[])
     return 0;
   }
 #endif
+
+  qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
 
   DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
   if (!dbusConnectionCheck.checkConnection()) {
