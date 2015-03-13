@@ -181,6 +181,14 @@ namespace GameNet {
       QDateTime now = QDateTime::currentDateTimeUtc();
       now = now.addSecs(14400); // Moscow time UTC+4
       int hour = now.time().hour();
+      
+      if (hour == 13) {
+        QTime time = now.time();
+        QTime time13(13, 0, 0);
+        int secs = time13.secsTo(time);
+        return static_cast<int>(((secs % 1800) / 1800.0f) * 10800.0f + 1800) * 1000;
+      }
+
       if (hour >= 14)
         return 10800000;
 
