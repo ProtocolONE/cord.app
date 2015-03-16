@@ -113,9 +113,9 @@ namespace GameNet {
 
     void MarketingStatistic::setCredential(QVariantMap &params, const GameNetCredential &credetial)
     {
+      params["userId"] = credetial.userId();
       params["overrideUserId"] = credetial.userId();
       params["overrideAppKey"] = credetial.appKey();
     }
-
   }
 }
