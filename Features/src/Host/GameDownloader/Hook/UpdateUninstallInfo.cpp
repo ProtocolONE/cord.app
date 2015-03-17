@@ -64,6 +64,11 @@ namespace GameNet {
         {
           Q_ASSERT(service);
 
+          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+          settings.beginGroup(service->id());
+          settings.remove("LicenseHash");
+          settings.endGroup();
+
           GameNet::Host::Installer::UninstallInfo info(service->id());
           info.remove();
         }

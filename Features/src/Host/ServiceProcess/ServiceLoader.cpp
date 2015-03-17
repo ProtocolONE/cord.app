@@ -207,7 +207,7 @@ namespace GameNet {
 
           HookBase *updateUnistallInfo = this->_factory->create(QLatin1String("65CE6F6B-B21A-4d8b-8FD4-B5B750D556CD"));
           Q_ASSERT(updateUnistallInfo);
-          this->_downloader->registerHook(description.id(), 100, 0, updateUnistallInfo);
+          this->_downloader->registerHook(description.id(), 90, 0, updateUnistallInfo);
         }
       }
 

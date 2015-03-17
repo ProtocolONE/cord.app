@@ -15,7 +15,8 @@ namespace GameNet {
       static const QString gameNetUninstallerGUID = "{4BD65630-3A19-4fc2-8AD8-2CF729DB6608}";
 
       UninstallInfo::UninstallInfo(const QString &serviceId)
-        : _displayVersion("1.0")
+        : _serviceId(serviceId)
+        , _displayVersion("1.0")
         , _helpLink("https://support.gamenet.ru")
         , _majorVersion(1)
         , _minorVersion(0)
