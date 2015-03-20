@@ -3,6 +3,7 @@
 
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/DistrIntegrity.h>
+#include <Features/WorkStationLock/WorkStationLockHook.h>
 
 #include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/ServiceProcess/ServiceDescription.h>
@@ -45,6 +46,7 @@ using GGS::GameDownloader::Hooks::InstallDependency;
 
 using Features::Thetta::DistrIntegrity;
 using Features::Thetta::ThettaMonitor;
+using Features::WorkStationLock::WorkStationLockHook;
 
 class ThettaMonitorMock : public HookInterface 
 {
@@ -167,8 +169,8 @@ public:
     executorHookFactory.reg<ThettaMonitorMock>();
     executorHookFactory.reg<SendPlayingInfoMock>();
     executorHookFactory.reg<ActivateWindow>();
-
-
+    executorHookFactory.reg<WorkStationLockHook>();
+    
     loader.setExecutor(&executor);
     loader.setSimpleMainExecutor(&simpleMainExecutor);
     loader.setSecondExecutor(&secondExecutor);

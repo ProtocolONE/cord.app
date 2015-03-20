@@ -217,7 +217,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_RemouteStartGame.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThronInstaller.cpp" />
-    <ClCompile Include="src\Features\CASettingsFix.cpp" />
     <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
     <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
     <ClCompile Include="src\Features\RememberGameDownloading.cpp" />
@@ -519,6 +518,33 @@
     </ClCompile>
     <ClCompile Include="src\Features\Thetta\ModuleScanner.cpp" />
     <ClCompile Include="src\Features\Thetta\ModuleScanner_p.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CASettingsFix.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\CASettingsFix.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\WorkStationLock\RegisterSessionNotificationFilter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RegisterSessionNotificationFilter.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RegisterSessionNotificationFilter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_WorkStationLockHook.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_WorkStationLockHook.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\WorkStationLock\WorkStationLockHook.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Host\CredentialConverter.h" />
@@ -548,7 +574,6 @@
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
     <CustomBuild Include="include\Features\RememberGameDownloading.h" />
     <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h" />
-    <CustomBuild Include="include\Features\CASettingsFix.h" />
     <CustomBuild Include="include\Features\ThronInstaller.h" />
     <CustomBuild Include="include\Features\GameDownloader\DownloadStats.h" />
     <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
@@ -733,6 +758,17 @@
     </CustomBuild>
     <CustomBuild Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
     <CustomBuild Include="include\Host\Installer\UninstallResult.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\ModuleScanner.h" />
+    <CustomBuild Include="include\Features\Thetta\ModuleScanner_p.h" />
+    <CustomBuild Include="include\Features\CASettingsFix.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\WorkStationLock\RegisterSessionNotificationFilter.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\WorkStationLock\WorkStationLockHook.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

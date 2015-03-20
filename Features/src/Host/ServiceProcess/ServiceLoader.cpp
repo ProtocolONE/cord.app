@@ -4,6 +4,7 @@
 #include <Host/ExecutorHookFactory.h>
 
 #include <Features/Thetta/ThettaMonitor.h>
+#include <Features/WorkStationLock/WorkStationLockHook.h>
 
 #include <Core/Service.h>
 
@@ -220,7 +221,9 @@ namespace GameNet {
         using GGS::GameExecutor::HookInterface;
         using GGS::GameExecutor::Hook::SendPlayingInfo;
         using GGS::GameExecutor::Hook::ActivateWindow;
+
         using Features::Thetta::ThettaMonitor;
+        using Features::WorkStationLock::WorkStationLockHook;
 
         Q_FOREACH(const ExecutorHookDescription& info, description.executorHooks()) {
           HookInterface *hook = this->_executorHookFactory->create(info.first);
@@ -259,6 +262,18 @@ namespace GameNet {
           activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
           Q_ASSERT(activateWindow);
           this->_simpleMainExecutor->addHook(*service, activateWindow, 0);
+
+          HookInterface* workStationLock = this->_executorHookFactory->create(WorkStationLockHook::id());
+          Q_ASSERT(workStationLock);
+          this->_simpleMainExecutor->addHook(*service, workStationLock, 0);
+
+          workStationLock = this->_executorHookFactory->create(WorkStationLockHook::id());
+          Q_ASSERT(workStationLock);
+          this->_secondExecutor->addHook(*service, workStationLock, 0);
+
+          workStationLock = this->_executorHookFactory->create(WorkStationLockHook::id());
+          Q_ASSERT(workStationLock);
+          this->_executor->addHook(*service, workStationLock, 0);
         }
       }
 

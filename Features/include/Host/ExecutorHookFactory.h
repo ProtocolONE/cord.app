@@ -14,6 +14,10 @@ namespace Features {
   namespace Thetta {
     class SaveUserInfo;
   }
+
+  namespace WorkStationLock {
+    class RegisterSessionNotificationFilter;
+  }
 }
 
 namespace GGS {
@@ -55,6 +59,7 @@ namespace GameNet {
       GGS::GameExecutor::GameExecutorService *_executor;
       HookFactory *_downloaderHookFactory;
       Thetta *_thetta;
+      Features::WorkStationLock::RegisterSessionNotificationFilter *_filter;
       Features::Thetta::SaveUserInfo *_saveUserInfo;
       QWidget _window;
 

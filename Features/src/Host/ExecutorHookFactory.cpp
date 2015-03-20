@@ -15,6 +15,8 @@
 #include <GameExecutor/Hook/BannerDownload.h>
 
 #include <Features/CASettingsFix.h>
+#include <Features/WorkStationLock/RegisterSessionNotificationFilter.h>
+#include <Features/WorkStationLock/WorkStationLockHook.h>
 #include <Features/Thetta/DistrIntegrityExecutorHook.h>
 #include <Features/Thetta/DistrIntegrity.h>
 #include <Features/Thetta/ThettaMonitor.h>
@@ -29,6 +31,8 @@ using GGS::GameExecutor::GameExecutorService;
 using GGS::GameExecutor::HookInterface;
 
 using Features::Thetta::SaveUserInfo;
+using Features::WorkStationLock::RegisterSessionNotificationFilter;
+using Features::WorkStationLock::WorkStationLockHook;
 
 namespace GameNet {
   namespace Host {
@@ -39,15 +43,21 @@ namespace GameNet {
       , _downloaderHookFactory(nullptr)
       , _thetta(nullptr)
       , _saveUserInfo(new SaveUserInfo(this))
+      , _filter(nullptr)
     {
       this->_window.setGeometry(-30000, -30000, 1, 1);
       this->_window.setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip);
       this->_window.setAttribute(Qt::WA_TranslucentBackground);
       this->_window.setStyleSheet("background:transparent;");
+     
+      this->_filter = new RegisterSessionNotificationFilter(&this->_window, reinterpret_cast<HWND>(this->_window.winId()));
+
+      QApplication::instance()->installNativeEventFilter(this->_filter);
     }
 
     ExecutorHookFactory::~ExecutorHookFactory()
     {
+      QApplication::instance()->removeNativeEventFilter(this->_filter);
     }
 
     void ExecutorHookFactory::setDownloader(GameDownloadService *value)
@@ -77,6 +87,10 @@ namespace GameNet {
       this->reg<ActivateWindow>([this](ActivateWindow* a){
         a->setWidget(&this->_window);
       });
+      this->reg<WorkStationLockHook>([this](WorkStationLockHook* hook){
+        hook->setFilter(this->_filter);
+      });
+
       this->reg<RestoreResolution>();
       this->reg<DisableDEP>();
       this->reg<DownloadCustomFile>();
@@ -127,6 +141,5 @@ namespace GameNet {
       Q_ASSERT(value);
       this->_thetta = value;
     }
-
   }
 }
