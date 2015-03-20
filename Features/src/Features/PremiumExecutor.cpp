@@ -11,6 +11,7 @@
 
 #include <GameExecutor/Executor/ExecutableFile.h>
 #include <GameExecutor/Executor/WebLink.h>
+#include <GameExecutor/Executor/WebLinkSsl.h>
 
 #include <RestApi/RestApiManager.h>
 
@@ -190,12 +191,12 @@ namespace Features {
   void PremiumExecutor::registerExecutors(GameExecutorService *executor)
   {
     using GGS::GameExecutor::Executor::ExecutableFile;
-    ExecutableFile *gameExecutorByLauncher = new ExecutableFile(this);
-    executor->registerExecutor(gameExecutorByLauncher);
+    using GGS::GameExecutor::Executor::WebLink;    
+    using GGS::GameExecutor::Executor::WebLinkSsl;
 
-    using GGS::GameExecutor::Executor::WebLink;
-    WebLink *webLinkExecutor = new WebLink(this);
-    executor->registerExecutor(webLinkExecutor);
+    executor->registerExecutor(new ExecutableFile(this));
+    executor->registerExecutor(new WebLink(this));
+    executor->registerExecutor(new WebLinkSsl(this));
   }
 
   void PremiumExecutor::setNoInjectItem(Service* service, const QString& value)
