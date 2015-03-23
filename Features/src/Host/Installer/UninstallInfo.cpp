@@ -5,6 +5,8 @@
 #include <QtCore/QFile>
 #include <QtCore/QSettings>
 
+#include <QtCore/QDebug>
+
 namespace GameNet {
   namespace Host {
     namespace Installer {
@@ -41,16 +43,17 @@ namespace GameNet {
 
         QString keyName = gameNetUninstallerGUID + "." + this->_serviceId;
 
-        QString applicationPath = QString("%1\\%2").arg(QDir::toNativeSeparators(QCoreApplication::applicationDirPath()))
-          .arg("Uninstaller.exe");
+        QString applicationPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
         QString iconPath = QString("%1\\Assets\\Images\\icons\\%2.ico")
           .arg(applicationPath)
           .arg(this->_serviceId);
+
         iconPath = QFile::exists(iconPath) ? iconPath : QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
 
-        QString uninstallString = QString("\"%1\" /uninstall %2")
+        QString uninstallString = QString("\"%1\\%2\" /uninstall %3")
           .arg(applicationPath)
+          .arg("Uninstaller.exe")
           .arg(this->_serviceId);
 
         QSettings settings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall", QSettings::NativeFormat);

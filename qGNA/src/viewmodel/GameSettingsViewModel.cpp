@@ -226,8 +226,7 @@ void GameSettingsViewModel::removeShortCutByName(const QString& name)
     lnkroot.append("\\");
     lnkroot.append(name);
     lnkroot.append(".lnk");
-    if (QFile::exists(lnkroot))
-      QFile::remove(lnkroot);
+    QFile::remove(lnkroot);
   }
 
   wchar_t tmp2[MAX_PATH] = {0};
@@ -238,8 +237,7 @@ void GameSettingsViewModel::removeShortCutByName(const QString& name)
     lnkroot.append("\\");
     lnkroot.append(name);
     lnkroot.append(".lnk");
-    if (QFile::exists(lnkroot))
-      QFile::remove(lnkroot);
+    QFile::remove(lnkroot);
   }
 }
 

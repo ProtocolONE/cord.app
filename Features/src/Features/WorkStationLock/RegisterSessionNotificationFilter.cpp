@@ -11,12 +11,14 @@ namespace Features {
       , _hwnd(hwnd)
       , _isLocked(false)
     {
-      Q_ASSERT(WTSRegisterSessionNotification(this->_hwnd, NOTIFY_FOR_THIS_SESSION));
+      BOOL result = WTSRegisterSessionNotification(this->_hwnd, NOTIFY_FOR_THIS_SESSION);
+      Q_ASSERT(result);
     }
 
     RegisterSessionNotificationFilter::~RegisterSessionNotificationFilter()
     {
-      Q_ASSERT(WTSUnRegisterSessionNotification(this->_hwnd));
+      BOOL result = WTSUnRegisterSessionNotification(this->_hwnd);
+      Q_ASSERT(result);
     }
 
     bool Features::WorkStationLock::RegisterSessionNotificationFilter::isLocked() const
