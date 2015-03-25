@@ -1,4 +1,5 @@
 #include <Features/Marketing/SystemInfo/Hardware/CpuInfo.h>
+#include <QtCore/QSettings>
 
 #include <iostream>
 #include <vector>
@@ -217,6 +218,11 @@ namespace Features {
           SYSTEM_INFO sysinfo;
           GetSystemInfo(&sysinfo);
           writer->writeTextElement("coreCount", QString::number(sysinfo.dwNumberOfProcessors));
+
+          QSettings registry("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", QSettings::NativeFormat);
+          if (registry.contains("~MHz")) {
+            writer->writeTextElement("frequency", QString::number(registry.value("~MHz").toInt()));
+          }
 
           writer->writeStartElement("flags");
 

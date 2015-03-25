@@ -19,6 +19,8 @@ namespace Features {
 
         private:
           void writeWmiVersion(QXmlStreamWriter *writer);
+
+          bool isWow64();
         };
 
       }

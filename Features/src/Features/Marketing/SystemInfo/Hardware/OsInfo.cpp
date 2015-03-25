@@ -1,5 +1,8 @@
 #include <Features/Marketing/SystemInfo/Hardware/OsInfo.h>
 #include <Features/WmiQuery.h>
+
+#include <Helper/DebugLog.h>
+
 #include <Windows.h>
 
 namespace Features {
@@ -19,10 +22,11 @@ namespace Features {
         void OsInfo::write(QXmlStreamWriter *writer)
         {
           writer->writeStartElement("os");
+
           OSVERSIONINFO osvi = {0};
           osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
           GetVersionEx(&osvi);
-          
+
           QString version = QString("%1.%2.%3")
             .arg(osvi.dwMajorVersion)
             .arg(osvi.dwMinorVersion)
@@ -30,6 +34,8 @@ namespace Features {
 
           writer->writeTextElement("Version", version);
           this->writeWmiVersion(writer);
+
+          writer->writeTextElement("WOW64", this->isWow64() ? "1" : "0");
 
           writer->writeEndElement();
         }
@@ -59,6 +65,27 @@ namespace Features {
           writer->writeTextElement("Caption", QString::fromStdWString(row[L"Caption"]));
           writer->writeTextElement("CountryCode", QString::fromStdWString(row[L"CountryCode"]));
           writer->writeTextElement("OperatingSystemSKU", QString::fromStdWString(row[L"OperatingSystemSKU"]));
+        }
+
+        bool OsInfo::isWow64()
+        {
+          typedef BOOL (APIENTRY *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
+          LPFN_ISWOW64PROCESS fnIsWow64Process;
+
+          fnIsWow64Process = reinterpret_cast<LPFN_ISWOW64PROCESS>(
+            GetProcAddress(GetModuleHandleW(L"kernel32"), "IsWow64Process"));
+
+          if (!fnIsWow64Process)
+            return false;
+
+          BOOL bIsWow64 = FALSE;
+          if (!fnIsWow64Process(GetCurrentProcess(), &bIsWow64)) {
+            DWORD error = GetLastError();
+            DEBUG_LOG << "Fail to call IsWow64Process: " << error;
+            return false;
+          }
+
+          return bIsWow64 != FALSE;
         }
 
       }
