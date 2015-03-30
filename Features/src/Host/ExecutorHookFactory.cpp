@@ -13,6 +13,7 @@
 #include <GameExecutor/Hook/DefaultAikaSettings.h>
 #include <GameExecutor/Hook/DisableAeroHook.h>
 #include <GameExecutor/Hook/BannerDownload.h>
+#include <GameExecutor/Hook/PreventWinXpLaunch.h>
 
 #include <Features/CASettingsFix.h>
 #include <Features/WorkStationLock/RegisterSessionNotificationFilter.h>
@@ -90,7 +91,7 @@ namespace GameNet {
       this->reg<WorkStationLockHook>([this](WorkStationLockHook* hook){
         hook->setFilter(this->_filter);
       });
-
+            
       this->reg<RestoreResolution>();
       this->reg<DisableDEP>();
       this->reg<DownloadCustomFile>();
@@ -98,6 +99,7 @@ namespace GameNet {
       this->reg<SendPlayingInfo>();
       this->reg<DefaultAikaSettings>();
       this->reg<DisableAeroHook>();
+      this->reg<PreventWinXpLaunch>();
       this->reg<ThettaMonitor>([this](ThettaMonitor* h){
         h->setDriverInstaller(this->_thetta->installer());
         h->setSaveUserInfo(this->_saveUserInfo);
