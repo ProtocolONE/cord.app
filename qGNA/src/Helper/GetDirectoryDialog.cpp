@@ -22,9 +22,30 @@ GetDirectoryDialog::~GetDirectoryDialog()
 {
 }
 
+QString GetDirectoryDialog::removeNotExisting(const QString & inputPath)
+{
+  QString resultPath;
+  QDir dir(inputPath);
+
+  while (!dir.exists()) {
+    QString tmpPath = dir.path();
+    int slashPos = tmpPath.lastIndexOf("/");
+
+    if (slashPos == -1) {
+      //Returning default
+      resultPath = inputPath; 
+      break;
+    }
+
+    resultPath = tmpPath.remove(slashPos, tmpPath.length() - slashPos);
+    dir.setPath(resultPath);
+  }
+  return resultPath;
+}
+
 void GetDirectoryDialog::getDirectory(const QString& serviceName, const QString& defaultDir)
 {
-  QFileDialog *dialog = new QFileDialog(qobject_cast<QWidget*>(this->parent()), tr("CAPTION_OPEN_DIR"), defaultDir);
+  QFileDialog *dialog = new QFileDialog(qobject_cast<QWidget*>(this->parent()), tr("CAPTION_OPEN_DIR"), this->removeNotExisting(defaultDir));
   dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
   dialog->setFileMode(QFileDialog::Directory);
 

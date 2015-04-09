@@ -25,6 +25,7 @@ signals:
 
 private:
   QString getFolderName(int type);
+  QString removeNotExisting(const QString &);
 
   bool isDeniedFolder(const QString &newDirectory, QString *folder = 0);
   bool isAcceptedFolder(const QString &newDirectory, QString *folder = 0);
