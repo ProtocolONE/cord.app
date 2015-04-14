@@ -252,7 +252,7 @@ QString SettingsViewModel::updateArea()
   case 2:
     return QString("tst");
   case 3:
-    return QString("2live");     
+    return QString("2live");
   }
 
   return QString("live");

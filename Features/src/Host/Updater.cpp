@@ -98,6 +98,10 @@ namespace GameNet {
 
       switch(area)
       {
+      case 0:
+        updateArea = QString("live");
+        this->_applicationArea = Service::Live;
+        break;
       case 1:
         updateArea = QString("pts");
         this->_applicationArea = Service::Pts;
@@ -106,12 +110,14 @@ namespace GameNet {
         updateArea = QString("tst");
         this->_applicationArea = Service::Tst;
         break;
-      case 3:
-        updateArea = QString("2live");
-        this->_applicationArea = Service::Live;
-        break;
+      // HACK Раскоментирвать крайне аккуратно и только для выливки реально на 3ью зону.
+      //case 3:
+      //  updateArea = QString("2live");
+      //  this->_applicationArea = Service::Live;
+      //  break;
       default:
-        updateArea = QString("live");  
+        settings.setValue("Repository", 0);
+        updateArea = QString("live");
         this->_applicationArea = Service::Live;
       }
 
