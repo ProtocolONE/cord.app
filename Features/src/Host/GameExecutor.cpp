@@ -177,6 +177,10 @@ namespace GameNet {
       }
 
       QUrl result(service->urlTemplate());
+
+      QUrlQuery exe64Query(result);
+      QString exe64Path = exe64Query.queryItemValue("exe64", QUrl::FullyDecoded);
+
       QString path = result.path();
       QString gamePath = QString("%1/%2").arg(service->installPath(), service->areaString());
       path.replace("%gamePath%", gamePath, Qt::CaseInsensitive);
