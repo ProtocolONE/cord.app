@@ -4,7 +4,7 @@
 #include <Host/ServiceSettings.h>
 
 #include <Features/PremiumExecutor.h>
-#include <Features/Marketing/SystemInfo/Hardware/OsInfo.h>
+#include <Helper/SystemInfo.h>
 
 #include <GameExecutor/ServiceInfoCounter.h>
 
@@ -179,10 +179,8 @@ namespace GameNet {
 
       QUrl result(service->urlTemplate());
 
-      Features::Marketing::SystemInfo::Hardware::OsInfo wow64;
-
       QUrlQuery exe64Query(result);
-      bool use64 = exe64Query.hasQueryItem("exe64") && wow64.isWow64();
+      bool use64 = exe64Query.hasQueryItem("exe64") && Features::isWow64();
       QString path = use64 ? exe64Query.queryItemValue("exe64", QUrl::FullyDecoded) : result.path();
 
       QString gamePath = QString("%1/%2").arg(service->installPath(), service->areaString());
