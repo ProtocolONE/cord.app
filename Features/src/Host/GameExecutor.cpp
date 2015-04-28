@@ -4,6 +4,7 @@
 #include <Host/ServiceSettings.h>
 
 #include <Features/PremiumExecutor.h>
+#include <Features/Marketing/SystemInfo/Hardware/OsInfo.h>
 
 #include <GameExecutor/ServiceInfoCounter.h>
 
@@ -167,29 +168,6 @@ namespace GameNet {
       return this->_mainExecutor;
     }
 
-    bool IsWow64()
-    {
-      BOOL bIsWow64 = FALSE;
-
-      typedef BOOL (APIENTRY *LPFN_ISWOW64PROCESS)
-        (HANDLE, PBOOL);
-
-      LPFN_ISWOW64PROCESS fnIsWow64Process;
-
-      HMODULE module = GetModuleHandleA("kernel32");
-      const char funcName[] = "IsWow64Process";
-      fnIsWow64Process = (LPFN_ISWOW64PROCESS)
-        GetProcAddress(module, funcName);
-
-      if(NULL != fnIsWow64Process)
-      {
-        if (!fnIsWow64Process(GetCurrentProcess(),
-          &bIsWow64))
-          throw std::exception("Unknown error");
-      }
-      return bIsWow64 != FALSE;
-    }
-
     void GameExecutor::prepairExecuteUrl(GGS::Core::Service *service)
     {
       Q_ASSERT(this->_serviceSettings);
@@ -201,8 +179,10 @@ namespace GameNet {
 
       QUrl result(service->urlTemplate());
 
+      Features::Marketing::SystemInfo::Hardware::OsInfo wow64;
+
       QUrlQuery exe64Query(result);
-      bool use64 = exe64Query.hasQueryItem("exe64") && IsWow64();
+      bool use64 = exe64Query.hasQueryItem("exe64") && wow64.isWow64();
       QString path = use64 ? exe64Query.queryItemValue("exe64", QUrl::FullyDecoded) : result.path();
 
       QString gamePath = QString("%1/%2").arg(service->installPath(), service->areaString());

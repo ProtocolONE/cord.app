@@ -16,11 +16,10 @@ namespace Features {
           virtual ~OsInfo();
 
           void write(QXmlStreamWriter *writer);
+          bool isWow64();
 
         private:
           void writeWmiVersion(QXmlStreamWriter *writer);
-
-          bool isWow64();
         };
 
       }
