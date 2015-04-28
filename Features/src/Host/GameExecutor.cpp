@@ -167,6 +167,29 @@ namespace GameNet {
       return this->_mainExecutor;
     }
 
+    bool IsWow64()
+    {
+      BOOL bIsWow64 = FALSE;
+
+      typedef BOOL (APIENTRY *LPFN_ISWOW64PROCESS)
+        (HANDLE, PBOOL);
+
+      LPFN_ISWOW64PROCESS fnIsWow64Process;
+
+      HMODULE module = GetModuleHandleA("kernel32");
+      const char funcName[] = "IsWow64Process";
+      fnIsWow64Process = (LPFN_ISWOW64PROCESS)
+        GetProcAddress(module, funcName);
+
+      if(NULL != fnIsWow64Process)
+      {
+        if (!fnIsWow64Process(GetCurrentProcess(),
+          &bIsWow64))
+          throw std::exception("Unknown error");
+      }
+      return bIsWow64 != FALSE;
+    }
+
     void GameExecutor::prepairExecuteUrl(GGS::Core::Service *service)
     {
       Q_ASSERT(this->_serviceSettings);
@@ -179,9 +202,9 @@ namespace GameNet {
       QUrl result(service->urlTemplate());
 
       QUrlQuery exe64Query(result);
-      QString exe64Path = exe64Query.queryItemValue("exe64", QUrl::FullyDecoded);
+      bool use64 = exe64Query.hasQueryItem("exe64") && IsWow64();
+      QString path = use64 ? exe64Query.queryItemValue("exe64", QUrl::FullyDecoded) : result.path();
 
-      QString path = result.path();
       QString gamePath = QString("%1/%2").arg(service->installPath(), service->areaString());
       path.replace("%gamePath%", gamePath, Qt::CaseInsensitive);
       result.setPath(path);
@@ -192,6 +215,13 @@ namespace GameNet {
 
       urlQuery.removeAllQueryItems("workingDir");
       urlQuery.addQueryItem("workingDir", workingDir);
+
+      QString start64 = "0";
+
+      if (use64)
+        start64 = "1";
+
+      urlQuery.addQueryItem("start64", start64);
 
       if (urlQuery.hasQueryItem("injectOverlay")) {
         urlQuery.removeAllQueryItems("injectOverlay");
