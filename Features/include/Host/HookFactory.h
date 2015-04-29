@@ -18,6 +18,7 @@ namespace GameNet {
   namespace Host {
 
     class ServiceSettings;
+    class ServiceHandle;
 
     namespace ServiceProcess {
       class ServiceLoader;
@@ -33,6 +34,7 @@ namespace GameNet {
       void setServiceSettings(ServiceSettings *value);
       void setServiceLoader(ServiceProcess::ServiceLoader *value);
       void setZzimaConnection(::GameNet::Integration::ZZima::ZZimaConnection *value);
+      void setServiceHandle(ServiceHandle *value);
 
       GGS::GameDownloader::HookBase* create(const QString& guid);
 
@@ -41,6 +43,7 @@ namespace GameNet {
       ServiceSettings *_serviceSettings;
       ServiceProcess::ServiceLoader *_serviceLoader;
       ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
+      ServiceHandle *_serviceHandle;
     };
 
   }

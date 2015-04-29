@@ -1,4 +1,7 @@
 #include <Host/HookFactory.h>
+#include <Host/Connection.h>
+#include <Host/ServiceHandle.h>
+
 #include <GameDownloader/HookBase.h>
 #include <GameDownloader/Hooks/InstallDependency.h>
 
@@ -9,6 +12,8 @@
 
 #include <Integration/ZZima/DADownloaderHook.h>
 #include <Integration/ZZima/ZZimaConnection.h>
+
+#include <RestApi/GameNetCredential.h>
 
 #include <Windows.h>
 
@@ -26,6 +31,7 @@ namespace GameNet {
       , _serviceSettings(nullptr)
       , _serviceLoader(nullptr)
       , _zzimaConnection(nullptr)
+      , _serviceHandle(nullptr)
     {
     }
 
@@ -54,11 +60,16 @@ namespace GameNet {
         result = hook;
       } else if (guid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
         CheckDownload *hook = new CheckDownload(this);
-        hook->setServiceSettings(this->_serviceSettings);
-        hook->setServiceLoader(this->_serviceLoader);
-        result = hook;
+        hook->setCredential([this](const QString& serviceId)-> GGS::RestApi::GameNetCredential {
+          Connection* connection = this->_serviceHandle->connectionLockedService(serviceId);
+          if (!connection) {
+            return GGS::RestApi::GameNetCredential();
+          }
 
-        MessageBoxA(NULL, "Creating CheckDownload", "Log", MB_OK);
+          return connection->credential();
+        });
+
+        result = hook;
 
       } else if (guid == "9F6083BB-D03D-45A9-89FE-2D6EF098544A") {
         GameNet::Integration::ZZima::DADownloaderHook *hook = new GameNet::Integration::ZZima::DADownloaderHook(this);
@@ -79,6 +90,12 @@ namespace GameNet {
       return result;
     }
 
+    void HookFactory::setServiceHandle(ServiceHandle *value)
+    {
+      Q_ASSERT(value);
+      this->_serviceHandle = value;
+    }
+
     void HookFactory::setServiceSettings(ServiceSettings *value)
     {
       Q_ASSERT(value);
@@ -96,6 +113,7 @@ namespace GameNet {
       Q_ASSERT(value);
       this->_zzimaConnection = value;
     }
+
 
   }
 }

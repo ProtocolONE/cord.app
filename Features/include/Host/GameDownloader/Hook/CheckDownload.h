@@ -1,21 +1,17 @@
 #pragma once
 #include <GameDownloader/HookBase.h>
+#include <RestApi/GameNetCredential.h>
+#include <functional>
 
 namespace GGS {
   namespace GameDownloader {
     class GameDownloadService;
     class ServiceState;
-
   }
 }
 
 namespace GameNet {
   namespace Host {
-    class ServiceSettings;
-
-    namespace ServiceProcess {
-      class ServiceLoader;
-    }
 
     namespace GameDownloader {
       namespace Hook {
@@ -34,12 +30,11 @@ namespace GameNet {
             GGS::GameDownloader::GameDownloadService *gameDownloader, 
             GGS::GameDownloader::ServiceState *state) override;
 
-          void setServiceSettings(ServiceSettings *value);
-          void setServiceLoader(ServiceProcess::ServiceLoader *value);
+          void setCredential(std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > value);
 
         private:
-          ServiceSettings *_settings;
-          ServiceProcess::ServiceLoader *_services;
+          std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > _credential;
+
         };
 
       }

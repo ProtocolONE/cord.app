@@ -212,6 +212,7 @@ namespace GameNet {
       this->_executor->mainExecutor()->registerExecutor(zzimaExecutor);
 
       this->_downloaderHookFactory->setServiceLoader(this->_serviceLoader);
+      this->_downloaderHookFactory->setServiceHandle(this->_serviceHandle);
       this->_downloaderHookFactory->setServiceSettings(this->_serviceSettings);
       this->_downloaderHookFactory->setZzimaConnection(this->_zzimaConnection);
 

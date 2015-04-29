@@ -18,6 +18,7 @@ using GGS::GameDownloader::ServiceState;
 using GGS::GameDownloader::HookBase;
 using GameNet::Host::ServiceProcess::ServiceLoader;
 using GGS::Core::Service;
+using GGS::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {
@@ -26,8 +27,6 @@ namespace GameNet {
 
         CheckDownload::CheckDownload(QObject *parent /*= 0*/)
           : HookBase("81F2D0B8-298E-4041-83B0-EA5D417F580A", parent)
-          , _settings(nullptr)
-          , _services(nullptr)
         {
         }
 
@@ -37,11 +36,20 @@ namespace GameNet {
 
         HookBase::HookResult CheckDownload::beforeDownload(GameDownloadService *gameDownloader, ServiceState *state)
         {
+          Q_ASSERT(this->_credential);
+
+          GameNetCredential credential = this->_credential(state->id());
+          if (credential.isEmpty())
+            return HookBase::Abort;
+
           QEventLoop loop;
           int hasAccess = 0;
 
           ServiceHasAccess *command = new ServiceHasAccess(this);
           command->setServiceId(state->id());
+          command->setAuthRequire(false);
+          command->appendParameter("userId", credential.userId());
+          command->appendParameter("appKey", credential.appKey());
 
           QObject::connect(command, &ServiceHasAccess::result, [command, &hasAccess]() {
             hasAccess = command->hasAccess();
@@ -53,8 +61,6 @@ namespace GameNet {
           command->execute();
           loop.exec();
 
-          MessageBoxA(NULL, "Before download", "Log", MB_OK);
-
           return hasAccess == 1 ? HookBase::Continue : HookBase::Abort;
         }
 
@@ -63,16 +69,9 @@ namespace GameNet {
           return HookBase::Continue;
         }
 
-        void CheckDownload::setServiceSettings(ServiceSettings *value)
+        void CheckDownload::setCredential(std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > value)
         {
-          Q_ASSERT(value);
-          this->_settings = value;
-        }
-
-        void CheckDownload::setServiceLoader(ServiceProcess::ServiceLoader *value)
-        {
-          Q_ASSERT(value);
-          this->_services = value;
+          this->_credential = value;
         }
 
       }
