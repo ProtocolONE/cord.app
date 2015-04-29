@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef DOWNLOADERBRIDGEPROXY_H_1409823367
-#define DOWNLOADERBRIDGEPROXY_H_1409823367
+#ifndef DOWNLOADERBRIDGEPROXY_H_1430379091
+#define DOWNLOADERBRIDGEPROXY_H_1430379091
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -21,7 +21,6 @@
 #include <QtDBus/QtDBus>
 
 #include <Host/Bridge/DownloaderBridge.h>
-
 /*
  * Proxy class for interface com.gamenet.dbus.Downloader
  */
@@ -85,6 +84,7 @@ public Q_SLOTS: // METHODS
     }
 
 Q_SIGNALS: // SIGNALS
+    void accessRequired(const QString &serviceId);
     void downloadProgress(const QString &serviceId, int progress, GameNet::Host::Bridge::DownloadProgressArgs args);
     void failed(const QString &serviceId);
     void finished(const QString &serviceId);

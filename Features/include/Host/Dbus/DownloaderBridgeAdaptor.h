@@ -9,8 +9,8 @@
  * before re-generating it.
  */
 
-#ifndef DOWNLOADERBRIDGEADAPTOR_H_1409823369
-#define DOWNLOADERBRIDGEADAPTOR_H_1409823369
+#ifndef DOWNLOADERBRIDGEADAPTOR_H_1430379092
+#define DOWNLOADERBRIDGEADAPTOR_H_1430379092
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
@@ -24,7 +24,6 @@ class QVariant;
 QT_END_NAMESPACE
 
 #include <Host/Bridge/DownloaderBridge.h>
-
 /*
  * Adaptor class for interface com.gamenet.dbus.Downloader
  */
@@ -63,6 +62,9 @@ class DownloaderBridgeAdaptor: public QDBusAbstractAdaptor
 "    <signal name=\"totalProgress\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"out\" type=\"i\" name=\"progress\"/>\n"
+"    </signal>\n"
+"    <signal name=\"accessRequired\">\n"
+"      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "    </signal>\n"
 "    <method name=\"isInProgress\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
@@ -106,6 +108,7 @@ public Q_SLOTS: // METHODS
     void start(const QString &serviceId, int startType);
     void stop(const QString &serviceId);
 Q_SIGNALS: // SIGNALS
+    void accessRequired(const QString &serviceId);
     void downloadProgress(const QString &serviceId, int progress, GameNet::Host::Bridge::DownloadProgressArgs args);
     void failed(const QString &serviceId);
     void finished(const QString &serviceId);

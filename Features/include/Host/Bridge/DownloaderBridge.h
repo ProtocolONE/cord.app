@@ -371,7 +371,9 @@ namespace GameNet {
           const QString& serviceId,
           int progress, 
           const GameNet::Host::Bridge::DownloadProgressArgs& args);
-      
+
+        void accessRequired(const QString & serviceId);
+
       private:
         Proxy::DownloaderProxy *_downloader;
         ServiceProcess::ServiceLoader *_serviceLoader;
@@ -392,8 +394,8 @@ namespace GameNet {
           const GGS::Core::Service *service, 
           qint8 progress, 
           const GGS::Libtorrent::EventArgs::ProgressEventArgs& args);
+        void onAccessRequired(const GGS::Core::Service *service);
       };
-
     }
   }
 }

@@ -9,7 +9,6 @@
  */
 
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
-
 #include <QtCore/QMetaObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>

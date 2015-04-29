@@ -189,6 +189,12 @@ namespace GameNet {
         emit this->totalProgress(service->id(), progress);
       }
 
+      void DownloaderBridge::onAccessRequired(const Service *service)
+      {
+        Q_ASSERT(service);
+        emit this->accessRequired(service->id());
+      }
+
       void DownloaderBridge::onDownloadProgress(
         const Service *service, qint8 progress, const GGS::Libtorrent::EventArgs::ProgressEventArgs& args)
       {

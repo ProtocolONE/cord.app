@@ -45,7 +45,7 @@ namespace GameNet {
           QEventLoop loop;
           int hasAccess = 0;
 
-          ServiceHasAccess *command = new ServiceHasAccess(this);
+          ServiceHasAccess *command = new ServiceHasAccess();
           command->setServiceId(state->id());
           command->setAuthRequire(false);
           command->appendParameter("userId", credential.userId());
@@ -62,7 +62,7 @@ namespace GameNet {
           loop.exec();
 
           if (hasAccess != 1) {
-            emit this->accessRequired();
+            gameDownloader->accessRequired(state->service());
           }
 
           return hasAccess == 1 ? HookBase::Continue : HookBase::Abort;
