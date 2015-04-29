@@ -70,7 +70,6 @@ namespace GameNet {
           serviceDist.setId(data["serviceId"]);
 
           if (serviceDist.id() == "30000000000") {
-            MessageBoxA(NULL, "Start BD", "Log", MB_OK);
             data["isBrowserGame"] = "0";
             data["downloadHooks"] = "999:0:81F2D0B8-298E-4041-83B0-EA5D417F580A";
             //data["executeUrl"] = "exe:%gamePath%/bin/BlackDesert32.exe?workingDir=%gamePath%/bin/&args=%userId% %appKey% %token%&executorHelper=0&injectOverlay=0&authsdk=1";

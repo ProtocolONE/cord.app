@@ -70,7 +70,6 @@ namespace GameNet {
         });
 
         result = hook;
-
       } else if (guid == "9F6083BB-D03D-45A9-89FE-2D6EF098544A") {
         GameNet::Integration::ZZima::DADownloaderHook *hook = new GameNet::Integration::ZZima::DADownloaderHook(this);
         hook->setZzimaConnection(this->_zzimaConnection);

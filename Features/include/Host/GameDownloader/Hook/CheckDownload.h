@@ -32,6 +32,9 @@ namespace GameNet {
 
           void setCredential(std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > value);
 
+        signals:
+          void accessRequired();
+
         private:
           std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > _credential;
 

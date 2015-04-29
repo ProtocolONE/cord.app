@@ -61,6 +61,10 @@ namespace GameNet {
           command->execute();
           loop.exec();
 
+          if (hasAccess != 1) {
+            emit this->accessRequired();
+          }
+
           return hasAccess == 1 ? HookBase::Continue : HookBase::Abort;
         }
 
