@@ -3,6 +3,8 @@
 
 #include <QtCore/QTimer>
 
+#include <Windows.h>
+
 namespace GameNet {
   namespace Host {
     namespace ServiceProcess {
@@ -66,6 +68,13 @@ namespace GameNet {
 
           ServiceDescription serviceDist;
           serviceDist.setId(data["serviceId"]);
+
+          if (serviceDist.id() == "30000000000") {
+            MessageBoxA(NULL, "Start BD", "Log", MB_OK);
+            data["isBrowserGame"] = "1";
+            data["downloadHooks"] = "999:0:81F2D0B8-298E-4041-83B0-EA5D417F580A";
+          }
+
           serviceDist.setGameId(data["gameId"]);
           serviceDist.setName(data["folderName"]);
           serviceDist.setDisplayName(data["name"]);

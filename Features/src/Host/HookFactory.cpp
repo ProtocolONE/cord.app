@@ -10,11 +10,13 @@
 #include <Integration/ZZima/DADownloaderHook.h>
 #include <Integration/ZZima/ZZimaConnection.h>
 
+#include <Windows.h>
+
 using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
 using Features::Thetta::DistrIntegrity;
 using GameNet::Host::GameDownloader::Hook::SaveInstallPath;
-using GameNet::Host::GameDownloader::Hook::UpdateUninstallInfo;
+using GameNet::Host::GameDownloader::Hook::CheckDownload;
 
 namespace GameNet {
   namespace Host {
@@ -50,11 +52,14 @@ namespace GameNet {
         hook->setServiceSettings(this->_serviceSettings);
         hook->setServiceLoader(this->_serviceLoader);
         result = hook;
-      } else if (quid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
+      } else if (guid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
         CheckDownload *hook = new CheckDownload(this);
         hook->setServiceSettings(this->_serviceSettings);
         hook->setServiceLoader(this->_serviceLoader);
         result = hook;
+
+        MessageBoxA(NULL, "Creating CheckDownload", "Log", MB_OK);
+
       } else if (guid == "9F6083BB-D03D-45A9-89FE-2D6EF098544A") {
         GameNet::Integration::ZZima::DADownloaderHook *hook = new GameNet::Integration::ZZima::DADownloaderHook(this);
         hook->setZzimaConnection(this->_zzimaConnection);

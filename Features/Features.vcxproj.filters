@@ -570,6 +570,13 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp" />
+    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Host\CredentialConverter.h" />
@@ -771,6 +778,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\RestApi\ServiceHasAccess.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

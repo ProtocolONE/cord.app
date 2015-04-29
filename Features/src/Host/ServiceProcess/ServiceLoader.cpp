@@ -201,6 +201,9 @@ namespace GameNet {
           this->_downloader->registerHook(description.id(), info.second.first, info.second.second, hook);
         }
 
+        HookBase* hook = this->_factory->create("81F2D0B8-298E-4041-83B0-EA5D417F580A");
+        this->_downloader->registerHook("81F2D0B8-298E-4041-83B0-EA5D417F580A", 999, 0, hook);
+
         if (description.isDownloadable()) {
           HookBase *saveInstallPath = this->_factory->create(QLatin1String("D4D358CD-DFF5-4B56-AF30-349CCAE86EED"));
           Q_ASSERT(saveInstallPath);

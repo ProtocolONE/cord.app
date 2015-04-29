@@ -53,6 +53,8 @@ namespace GameNet {
           command->execute();
           loop.exec();
 
+          MessageBoxA(NULL, "Before download", "Log", MB_OK);
+
           return hasAccess == 1 ? HookBase::Continue : HookBase::Abort;
         }
 
