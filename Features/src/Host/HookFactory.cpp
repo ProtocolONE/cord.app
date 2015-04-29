@@ -5,7 +5,7 @@
 #include <Features/Thetta/DistrIntegrity.h>
 
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
-#include <Host/GameDownloader/Hook/UpdateUninstallInfo.h>
+#include <Host/GameDownloader/Hook/CheckDownload.h>
 
 #include <Integration/ZZima/DADownloaderHook.h>
 #include <Integration/ZZima/ZZimaConnection.h>
@@ -47,6 +47,11 @@ namespace GameNet {
         result = new DistrIntegrity(this);
       } else if (guid == "D4D358CD-DFF5-4B56-AF30-349CCAE86EED") {
         SaveInstallPath *hook = new SaveInstallPath(this);
+        hook->setServiceSettings(this->_serviceSettings);
+        hook->setServiceLoader(this->_serviceLoader);
+        result = hook;
+      } else if (quid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
+        CheckDownload *hook = new CheckDownload(this);
         hook->setServiceSettings(this->_serviceSettings);
         hook->setServiceLoader(this->_serviceLoader);
         result = hook;

@@ -569,6 +569,7 @@
     <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Host\CredentialConverter.h" />
@@ -590,9 +591,7 @@
     <ClInclude Include="include\Features\ComInitialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Helper\SystemInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="include\Host\GameDownloader\Hook\CheckDownload.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
