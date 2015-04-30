@@ -1171,9 +1171,3 @@ void MainWindow::switchClientVersion()
 {
   this->_applicationProxy->switchClientVersion();
 }
-
-void MainWindow::gameDownloaderAccessRequired(const QString& serviceId )
-{
-
-}
-

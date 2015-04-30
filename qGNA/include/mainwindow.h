@@ -135,8 +135,6 @@ public slots:
 
   bool isDownloading(QString serviceId);  
 
-  void gameDownloaderAccessRequired(const QString& serviceId);
-
   void commandRecieved(QString name, QStringList arguments);       
   void updateFinishedSlot();
   void activateWindow();
@@ -233,7 +231,7 @@ signals:
   void quit();
   void wrongCredential(const QString& userId);
 
-  void uninstallServiceRequest(QString serviceId);
+  void gameDownloaderAccessRequired(const QString& serviceId);
 
 private slots:
   void restartUIRequestSlot();
