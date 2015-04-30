@@ -48,12 +48,23 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../src/mainwindow.cpp" line="260"/>
         <location filename="../src/mainwindow.cpp" line="695"/>
         <location filename="../src/mainwindow.cpp" line="702"/>
         <location filename="../src/mainwindow.cpp" line="727"/>
         <location filename="../src/mainwindow.cpp" line="730"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="272"/>
+        <source>CLOSE_APP_CAPTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="273"/>
+        <source>CLOSE_APP_TEXT</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="695"/>

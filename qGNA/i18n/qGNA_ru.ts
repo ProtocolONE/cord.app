@@ -91,6 +91,7 @@
         <translation type="obsolete">Выход</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="260"/>
         <location filename="../src/mainwindow.cpp" line="695"/>
         <location filename="../src/mainwindow.cpp" line="702"/>
         <location filename="../src/mainwindow.cpp" line="727"/>
