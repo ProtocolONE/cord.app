@@ -64,6 +64,7 @@ namespace GameNet {
         QObject::connect(this->_downloader, &DownloaderProxy::statusMessageChanged, this, &DownloaderBridge::onStatusMessageChanged);
         QObject::connect(this->_downloader, &DownloaderProxy::totalProgressChanged, this, &DownloaderBridge::onTotalProgress);
         QObject::connect(this->_downloader, &DownloaderProxy::downloadProgressChanged, this, &DownloaderBridge::onDownloadProgress);
+        QObject::connect(this->_downloader, &DownloaderProxy::accessRequired, this, &DownloaderBridge::onAccessRequired);
       }
 
       void DownloaderBridge::setServiceLoader(ServiceProcess::ServiceLoader *serviceLoader)

@@ -66,6 +66,8 @@ namespace GameNet {
           
         void finishedDownloading(const GGS::Core::Service *service);
 
+        void accessRequired(const GGS::Core::Service *service);
+
       private:
         void onStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
         void onFinished(const GGS::Core::Service *service);
@@ -83,6 +85,7 @@ namespace GameNet {
           GGS::Libtorrent::EventArgs::ProgressEventArgs args);
 
         void onFinishedDownloading(const GGS::Core::Service *service);
+        void onAccessRequired(const GGS::Core::Service *service);
 
         bool isConnectionLockedService(const GGS::Core::Service *service);
 

@@ -522,11 +522,11 @@ void MainWindow::prepairGameDownloader()
     this, &MainWindow::windowCloseInfo);
 
   QObject::connect(
-    this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::connected, 
-    this, &MainWindow::thettaConnected);
-  
-  this->_downloadStatistics.init(&this->_gameDownloader);
-  this->_gameDownloadInitialized = true;
+    &this->_rememberGameFeature, &RememberGameDownloading::startGameRequest,
+    this, &MainWindow::downloadButtonStart);
+
+  QObject::connect(this->_downloader, &DownloaderBridgeProxy::accessRequired,
+    this, &MainWindow::gameDownloaderAccessRequired);
 }
 
 void MainWindow::downloadGameTotalProgressChanged(const QString& serviceId, int progress)
@@ -1171,3 +1171,9 @@ void MainWindow::switchClientVersion()
 {
   this->_applicationProxy->switchClientVersion();
 }
+
+void MainWindow::gameDownloaderAccessRequired(const QString& serviceId )
+{
+
+}
+

@@ -45,6 +45,7 @@ namespace GameNet {
         QObject::connect(this->_downloader, &GameDownloadService::totalProgressChanged, this, &DownloaderProxy::onTotalProgressChanged);
         QObject::connect(this->_downloader, &GameDownloadService::downloadProgressChanged, this, &DownloaderProxy::onDownloadProgressChanged);
         QObject::connect(this->_downloader, &GameDownloadService::finishedDownloading, this, &DownloaderProxy::finishedDownloading);
+        QObject::connect(this->_downloader, &GameDownloadService::accessRequired, this, &DownloaderProxy::onAccessRequired);
       }
 
       void DownloaderProxy::setConnection(Connection *value)
@@ -233,6 +234,13 @@ namespace GameNet {
         return this->_credentialMap[serviceId];
       }
 
+      void DownloaderProxy::onAccessRequired( const Service *service )
+      {
+        if (!this->isConnectionLockedService(service))
+          return;
+
+        emit this->accessRequired(service);
+      }
     }
   }
 }

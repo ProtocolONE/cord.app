@@ -135,6 +135,8 @@ public slots:
 
   bool isDownloading(QString serviceId);  
 
+  void gameDownloaderAccessRequired(const QString& serviceId);
+
   void commandRecieved(QString name, QStringList arguments);       
   void updateFinishedSlot();
   void activateWindow();
