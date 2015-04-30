@@ -82,6 +82,8 @@ public:
   MOCK_METHOD2(onStatusMessageChanged, void(const QString&, const QString&));
   MOCK_METHOD2(onTotalProgressChanged, void(const QString&, int));
   MOCK_METHOD3(onDownloadProgressChanged, void(const QString&, int, const GameNet::Host::Bridge::DownloadProgressArgs&));
+
+  MOCK_METHOD1(onAccessRequired, void(const QString&));
 };
 
 class DownloadBridgeTest : public ::testing::Test 
@@ -130,6 +132,9 @@ public:
 
     QObject::connect(&this->_downloadBridge, &DownloaderBridge::downloadProgress, 
       &this->_downloadServiceFixture, &GameDownloadServiceMock::onDownloadProgressChanged);
+
+    QObject::connect(&this->_downloadBridge, &DownloaderBridge::accessRequired,
+      &this->_downloadServiceFixture, &GameDownloadServiceMock::onAccessRequired);
   }
     
   GGS::Core::Service _service;
@@ -288,4 +293,10 @@ TEST_F(DownloadBridgeTest, resumeSession)
   EXPECT_CALL(_downloadServiceFixture, resumeSession()).Times(1);
 
   _downloadBridge.resumeSession();
+}
+
+TEST_F(DownloadBridgeTest, EmitAccessRequiredSignal)
+{
+  EXPECT_CALL(_downloadServiceFixture, onAccessRequired(_service.id())).Times(1);
+  _downloadServiceFixture.accessRequired(&_service);
 }

@@ -15,8 +15,6 @@
 
 #include <RestApi/GameNetCredential.h>
 
-#include <Windows.h>
-
 using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
 using Features::Thetta::DistrIntegrity;
