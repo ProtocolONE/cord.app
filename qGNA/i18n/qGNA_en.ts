@@ -11,29 +11,29 @@
 <context>
     <name>GetDirectoryDialog</name>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="27"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="48"/>
         <source>CAPTION_OPEN_DIR</source>
         <translation type="unfinished">Open directory</translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="60"/>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="69"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="81"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="90"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="61"/>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="70"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="82"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="91"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="83"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="104"/>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="84"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="105"/>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
         <translation type="unfinished"></translation>
     </message>
