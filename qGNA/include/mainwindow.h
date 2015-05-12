@@ -161,12 +161,16 @@ public slots:
 
   bool silent();
   void onWindowClose();
+  void restartUISlot(bool minimized);
+  void shutdownUISlot();
 
 signals:
   /*
     Вызывается когда хост закончил инициализацию и обновление
   */
   void initCompleted();
+  void restartUIRequest();
+  void shutdownUIRequest();
 
   void nickNameChanged();
   void nickNameValueChanged(QString &value);
@@ -234,9 +238,6 @@ signals:
   void gameDownloaderAccessRequired(const QString& serviceId);
 
 private slots:
-  void restartUIRequestSlot();
-  void shutdownUIRequestSlot();
-
   void onServiceStarted(const QString &serviceId);
   void onServiceFinished(const QString &serviceId, int state);
 

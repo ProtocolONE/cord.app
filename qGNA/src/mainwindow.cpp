@@ -109,10 +109,10 @@ void MainWindow::initialize()
     this, &MainWindow::initCompleted);
 
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::restartUIRequest,
-                    this, &MainWindow::restartUIRequestSlot);
+    this, &MainWindow::restartUIRequest);
 
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::shutdownUIRequest,
-    this, &MainWindow::shutdownUIRequestSlot);
+    this, &MainWindow::shutdownUIRequest);
 
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::uninstallServiceRequest,
     this, &MainWindow::uninstallServiceRequest);
@@ -255,30 +255,13 @@ void MainWindow::initialize()
   this->_keyboardLayoutHelper.update();
 }
 
-void MainWindow::restartUIRequestSlot() 
+void MainWindow::restartUISlot(bool minimized) 
 {
-  if (this->isVisible()) {
-    GGS::Core::UI::Message::information(tr("INFO_CAPTION"), tr("UPDATE_FOUND_MESSAGE"), GGS::Core::UI::Message::Ok);
-    this->_applicationProxy->restartApplication(false);
-    return;
-  }
-
-  this->_applicationProxy->restartApplication(true);
+  this->_applicationProxy->restartApplication(minimized);
 }
 
-void MainWindow::shutdownUIRequestSlot()
+void MainWindow::shutdownUISlot()
 {
-  if (this->_executor->isAnyGameStarted()) {
-    auto result = GGS::Core::UI::Message::information(
-      tr("CLOSE_APP_CAPTION"), 
-      tr("CLOSE_APP_TEXT"), 
-      static_cast<GGS::Core::UI::Message::StandardButton>(
-        GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Cancel));
-
-    if (result != GGS::Core::UI::Message::Ok) 
-      return;
-  }
-
   this->_applicationProxy->shutdownUIResult();
   this->onWindowClose();
 }
