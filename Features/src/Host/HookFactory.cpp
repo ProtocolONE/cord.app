@@ -4,6 +4,7 @@
 
 #include <GameDownloader/HookBase.h>
 #include <GameDownloader/Hooks/InstallDependency.h>
+#include <GameDownloader/Hooks/PreventWinXpDownload.h>
 
 #include <Features/Thetta/DistrIntegrity.h>
 
@@ -17,6 +18,7 @@
 
 using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
+using GGS::GameDownloader::Hooks::PreventWinXpDownload;
 using Features::Thetta::DistrIntegrity;
 using GameNet::Host::GameDownloader::Hook::SaveInstallPath;
 using GameNet::Host::GameDownloader::Hook::CheckDownload;
@@ -76,6 +78,8 @@ namespace GameNet {
       } else if (guid == "65CE6F6B-B21A-4d8b-8FD4-B5B750D556CD") {
         UpdateUninstallInfo *hook = new UpdateUninstallInfo(this);
         result = hook;
+      } else if (guid == "F9FD8276-2FEA-4F99-A2AA-1B37627216F5") {
+        result = new PreventWinXpDownload(this);
       }
 
       Q_ASSERT(result);
