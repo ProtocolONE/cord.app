@@ -131,6 +131,10 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\Gam
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
 
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX64%D%.map" "$(TargetDir)"
+
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
@@ -230,6 +234,10 @@ xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\Gam
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
+
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.vmp" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX64%D%.map" "$(TargetDir)"
 
 xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
 
