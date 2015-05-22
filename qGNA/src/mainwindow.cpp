@@ -133,7 +133,7 @@ void MainWindow::initialize()
     this->_gameArea = GGS::Core::Service::Tst;
 
   this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
-  this->setWindowTitle("qGNA " + this->_fileVersion);
+  this->setWindowTitle("GameNet " + this->_fileVersion);
 
   this->setWindowFlags(Qt::Window 
     | Qt::FramelessWindowHint 
