@@ -24,7 +24,7 @@ GetDirectoryDialog::~GetDirectoryDialog()
 
 QString GetDirectoryDialog::removeNotExisting(const QString & inputPath)
 {
-  QString resultPath;
+  QString resultPath = inputPath;
   QDir dir(inputPath);
 
   while (!dir.exists()) {
