@@ -497,6 +497,7 @@ namespace GameNet {
         QObject::connect(connection, &Connection::disconnected, qgnaLogout);
         QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
           this->_systemInfoManager->setCredential(connection->credential());
+          this->_thetta->setCredential(connection->credential());
         });
       }
     }
