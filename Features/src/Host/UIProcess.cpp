@@ -1,6 +1,7 @@
 
 #include <Host/UIProcess.h>
 #include <Helper/DebugLog.h>
+#include <Helper/TerminateProcess.h>
 
 #include <QtCore/QWinEventNotifier>
 #include <QtCore/QDir>
@@ -202,55 +203,7 @@ namespace GameNet {
       if (!this->isStarted())
         return;
 
-      this->executeAndWait("taskkill.exe", "/f /im " + name);
-      this->executeAndWait("tskill.exe", name);
-
-      DWORD processes[1024];
-      DWORD count;
-      wchar_t file_w[255];
-
-      name.toWCharArray(file_w);
-      file_w[name.count()] = '\0';
-
-      DWORD count;
-      DWORD processes[1024];
-      if (!EnumProcesses(processes, sizeof(processes), &count))
-        return;
-
-      count /= sizeof(DWORD);
-
-      for (unsigned int i = 0; i < count; i++) {
-        if (processes[i] == 0) 
-          continue;
-
-        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION, FALSE, processes[i]);
-
-        if (hProcess == NULL)
-          continue;
-
-        wchar_t processFileName[255];
-
-        if (GetProcessImageFileName(hProcess, processFileName, 255) == 0)
-          continue;
-
-        if (wcsstr(processFileName, file_w) != 0) {
-          DWORD result = WAIT_OBJECT_0;
-
-          while(result == WAIT_OBJECT_0) {
-            result = WaitForSingleObject(hProcess, 100);
-            TerminateProcess(hProcess, 0);
-          }
-        }
-
-        CloseHandle(hProcess);
-      }
-    }
-
-    void UIProcess::executeAndWait(const QString& file, const QString& params)
-    {
-      QProcess process;
-      process.start(file + " " + params);
-      process.waitForFinished(-1);
+      Features::terminateProcessByName(name);
     }
 
     void UIProcess::destroyProcess()
@@ -309,7 +262,7 @@ namespace GameNet {
 
         CloseHandle(hProcess);
       }
-#include <QtCore/QProcess>
-#include <QtCore/QMutex>
-#include <QtCore/QMutexLocker>
+#include <QtCore/QProcess>
+#include <QtCore/QMutex>
+#include <QtCore/QMutexLocker>
 

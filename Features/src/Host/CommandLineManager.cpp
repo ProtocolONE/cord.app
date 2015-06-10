@@ -50,10 +50,12 @@ namespace GameNet {
         return;
       }
 
-      if (name == "uninstall") {
+      if (name == "uninstall" && !arguments.empty()) {
         QString serviceId = arguments.at(0);
-        emit this->uninstallService(serviceId);
-        return;
+        if (!serviceId.isEmpty()) {
+          emit this->uninstallService(serviceId);
+          return;
+        }
       }
 
       emit this->uiCommand(name, arguments);

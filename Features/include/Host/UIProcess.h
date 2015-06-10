@@ -104,7 +104,6 @@ namespace GameNet {
 
     private:
       bool isStarted();
-      void executeAndWait(const QString& file, const QString& params);
       void destroyRunningApplication(const QString& name);
       void processFinished();
 

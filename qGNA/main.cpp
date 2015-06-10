@@ -79,20 +79,6 @@ void initBugTrap(const QString &path)
   BT_InstallSehFilter();
 }
 
-bool isAboutToUninstallGameNet()
-{
-  if (QCoreApplication::arguments().contains("uninstall")) {
-    GGS::Application::ArgumentParser argumentsParser;
-    argumentsParser.parse(QCoreApplication::arguments());
-
-    if (argumentsParser.commandArguments("uninstall").empty()) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 int main(int argc, char *argv[]) 
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
@@ -170,6 +156,18 @@ int main(int argc, char *argv[])
   }
 #endif
 
+  if (!initDatabase()) {
+    MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
+    LogManager::qtLogger()->removeAllAppenders(); 
+    return -1;
+  }
+
+  if (app.containsCommand("uninstall") && app.getCommandArguments("uninstall").empty()) {
+    Uninstall::run(app.arguments());
+    LogManager::qtLogger()->removeAllAppenders();
+    return 0;
+  }
+
   qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
 
   DBusConnectionCheck dbusConnectionCheck("com.gamenet.dbus");
@@ -192,18 +190,6 @@ int main(int argc, char *argv[])
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));
-
-  if (!initDatabase()) {
-    MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
-    LogManager::qtLogger()->removeAllAppenders(); 
-    return -1;
-  }
-
-  if (isAboutToUninstallGameNet()) {
-    Uninstall::run(app.arguments());
-    LogManager::qtLogger()->removeAllAppenders();
-    return 0;
-  }
 
   MainWindow w;
   QObject::connect(&dbusConnectionCheck, &DBusConnectionCheck::serviceDisconnected, &w, &MainWindow::quit);

@@ -1,8 +1,113 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner_p.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_RegisterSessionNotificationFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_SaveInstallPath.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_UninstallResult.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateUninstallInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_WorkStationLockHook.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_CASettingsFix.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner_p.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_RegisterSessionNotificationFilter.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_SaveInstallPath.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_UninstallResult.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_UpdateUninstallInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_WorkStationLockHook.cpp" />
+    <ClCompile Include="src\Features\CASettingsFix.cpp" />
+    <ClCompile Include="src\Features\ComInitialize.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Antivirus.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_CpuInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Hdd.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_OsInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Ram.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Screen.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Video.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Antivirus.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_CpuInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Hdd.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_OsInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Ram.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Screen.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Video.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Hdd.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\OsInfo.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Ram.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\CpuInfo.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_SystemInfoManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_SystemInfoManager.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Screen.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Video.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Antivirus.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_MailRu.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Nikita.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Origin.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Steam.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Ubisoft.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_VendorBase.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZZima.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_MailRu.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Nikita.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Origin.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Steam.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Ubisoft.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_VendorBase.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZZima.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Nikita.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\MailRu.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Origin.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_FourGame.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_GameVendorBase.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_FourGame.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_GameVendorBase.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\FourGame.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SystemInfoManager.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_AutoRunManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_BlackDesertDefaultSettings.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DADownloader.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DADownloaderHook.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_IPCBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_TimeOut.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZZimaConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor_p.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaLauncher.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_AutoRunManager.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_BlackDesertDefaultSettings.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DADownloader.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DADownloaderHook.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_IPCBridgeProxy.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_TimeOut.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZZimaConnection.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor_p.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaLauncher.cpp" />
+    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp" />
+    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp" />
+    <ClCompile Include="src\Features\Thetta\ModuleScanner.cpp" />
+    <ClCompile Include="src\Features\Thetta\ModuleScanner_p.cpp" />
+    <ClCompile Include="src\Features\WorkStationLock\RegisterSessionNotificationFilter.cpp" />
+    <ClCompile Include="src\Features\WorkStationLock\WorkStationLockHook.cpp" />
+    <ClCompile Include="src\Host\GameDownloader\Hook\UpdateUninstallInfo.cpp" />
+    <ClCompile Include="src\Host\Installer\Migration.cpp" />
+    <ClCompile Include="src\Host\Installer\UninstallInfo.cpp" />
+    <ClCompile Include="src\Host\Installer\UninstallResult.cpp" />
+    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp" />
+    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp" />
+    <ClCompile Include="src\Features\BlackDesertDefaultSettings.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Ubisoft.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\ZZima.cpp" />
     <ClCompile Include="src\Host\AutoRunManager.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GameNetDownloader.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_GameNetDownloader.cpp" />
@@ -203,14 +308,12 @@
     <ClCompile Include="src\Features\Thetta\Protector.cpp" />
     <ClCompile Include="src\Features\PremiumExecutor.cpp" />
     <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_DownloadStats.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadStatistics.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_RememberGameDownloading.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_RemouteStartGame.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThronInstaller.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_CASettingsFix.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_DownloadStats.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadStatistics.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_RememberGameDownloading.cpp" />
@@ -253,6 +356,8 @@
     <ClCompile Include="src\Host\ExecutorHookFactory.cpp" />
     <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp" />
     <ClCompile Include="src\Host\HookFactory.cpp" />
+    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp" />
+    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp" />
     <ClCompile Include="src\Host\ServiceSettings.cpp" />
     <ClCompile Include="src\Host\ShutdownManager.cpp" />
     <ClCompile Include="src\Host\StopDownloadOnExecuteInit.cpp" />
@@ -260,327 +365,30 @@
     <ClCompile Include="src\Host\UIProcess.cpp" />
     <ClCompile Include="src\Host\Updater.cpp" />
     <ClCompile Include="src\Host\Translation.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_IPCBridgeProxy.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_IPCBridgeProxy.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_TimeOut.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_TimeOut.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DADownloader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DADownloader.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DADownloaderHook.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DADownloaderHook.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZZimaConnection.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZZimaConnection.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZzimaLauncher.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZzimaLauncher.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\Dbus\IPCBridgeProxy.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\DADownloader.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\DADownloaderHook.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\ZZimaConnection.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\ZzimaLauncher.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\TimeOut.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor_p.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\BlackDesertDefaultSettings.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_BlackDesertDefaultSettings.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_BlackDesertDefaultSettings.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\BlackDesertDefaultSettings.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_BlackDesertDefaultSettings.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_BlackDesertDefaultSettings.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp" />
-    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp" />
-    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
+    <ClCompile Include="src\Integration\TimeOut.cpp" />
+    <ClCompile Include="src\Integration\ZZima\DADownloader.cpp" />
+    <ClCompile Include="src\Integration\ZZima\DADownloaderHook.cpp" />
+    <ClCompile Include="src\Integration\ZZima\Dbus\IPCBridgeProxy.cpp" />
+    <ClCompile Include="src\Integration\ZZima\ZZimaConnection.cpp" />
+    <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor.cpp" />
+    <ClCompile Include="src\Integration\ZZima\ZzimaGameExecutor_p.cpp" />
+    <ClCompile Include="src\Integration\ZZima\ZzimaLauncher.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\VendorBase.cpp" />
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Steam.cpp" />
+    <ClCompile Include="src\Features\WmiQuery.cpp" />
+    <ClCompile Include="src\Helper\TerminateProcess.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ModuleScanner.cpp" />
-    <ClCompile Include="src\Features\Thetta\ModuleScanner_p.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner_p.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Ram.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Video.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Video.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Video.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Screen.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Screen.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Screen.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Hdd.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Hdd.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Hdd.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_OsInfo.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_OsInfo.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\OsInfo.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\ComInitialize.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Installer\Migration.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\GameDownloader\Hook\UpdateUninstallInfo.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateUninstallInfo.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateUninstallInfo.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SaveInstallPath.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SaveInstallPath.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Installer\UninstallResult.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_UninstallResult.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_UninstallResult.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Installer\UninstallInfo.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner_p.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ModuleScanner_p.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ModuleScanner.cpp" />
-    <ClCompile Include="src\Features\Thetta\ModuleScanner_p.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CASettingsFix.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\CASettingsFix.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\WorkStationLock\RegisterSessionNotificationFilter.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_RegisterSessionNotificationFilter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_RegisterSessionNotificationFilter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_WorkStationLockHook.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_WorkStationLockHook.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\WorkStationLock\WorkStationLockHook.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp" />
-    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Features\ComInitialize.h" />
+    <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h" />
+    <ClInclude Include="include\Helper\SystemInfo.h" />
+    <ClInclude Include="include\Features\Thetta\ModuleSignatures.h" />
     <ClInclude Include="include\Host\CredentialConverter.h" />
     <ClInclude Include="include\Host\Bridge\Credential.h" />
+    <ClInclude Include="include\Host\GameDownloader\Hook\CheckDownload.h" />
+    <ClInclude Include="include\Host\Installer\UninstallInfo.h" />
     <ClInclude Include="include\Host\MarketingStatistic.h" />
     <ClInclude Include="include\Helper\DebugLog.h" />
     <ClInclude Include="include\Helper\ElevateRights.hpp" />
@@ -592,13 +400,9 @@
     <ClInclude Include="include\Features\Thetta\TlsInitializer.h" />
     <ClInclude Include="include\Features\Thetta\Json.h" />
     <ClInclude Include="include\Features\Thetta\Protector.h" />
-    <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h">
+    <ClInclude Include="include\Helper\TerminateProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Features\ComInitialize.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\GameDownloader\Hook\CheckDownload.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -609,6 +413,29 @@
     <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
     <CustomBuild Include="include\Features\GameDownloader\ExternalIpAddress.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaMonitor.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Ram.h" />
+    <CustomBuild Include="include\Features\WmiQuery.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Nikita.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Origin.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\MailRu.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\CpuInfo.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Antivirus.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Video.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Screen.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Hdd.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\OsInfo.h" />
+    <CustomBuild Include="include\Features\CASettingsFix.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Steam.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\VendorBase.h" />
+    <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h" />
+    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor_p.h" />
+    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor.h" />
+    <CustomBuild Include="include\Integration\ZZima\ZZimaConnection.h" />
+    <CustomBuild Include="include\Integration\ZZima\DADownloaderHook.h" />
+    <CustomBuild Include="include\Integration\ZZima\DADownloader.h" />
+    <CustomBuild Include="include\Integration\TimeOut.h" />
+    <CustomBuild Include="include\Integration\ZZima\Dbus\IPCBridgeProxy.h" />
     <CustomBuild Include="include\Host\Proxy\ServiceHandleProxy.h" />
     <CustomBuild Include="include\Host\Bridge\ServiceHandleBridge.h" />
     <CustomBuild Include="include\Host\ServiceHandle.h" />
@@ -630,12 +457,26 @@
     <CustomBuild Include="include\Features\Integration\Zzima\Dbus\ZzimaExecutorBridgeAdaptor.h" />
     <CustomBuild Include="include\Features\GameNetDownloader.h" />
     <CustomBuild Include="include\Host\AutoRunManager.h" />
+    <CustomBuild Include="include\Features\BlackDesertDefaultSettings.h" />
+    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\FourGame.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Ubisoft.h" />
+    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\ZZima.h" />
+    <CustomBuild Include="include\Features\RestApi\ServiceHasAccess.h" />
+    <CustomBuild Include="include\Features\Thetta\ModuleScanner.h" />
+    <CustomBuild Include="include\Features\Thetta\ModuleScanner_p.h" />
+    <CustomBuild Include="include\Features\WorkStationLock\RegisterSessionNotificationFilter.h" />
+    <CustomBuild Include="include\Features\WorkStationLock\WorkStationLockHook.h" />
     <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h" />
     <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeProxy.h" />
     <CustomBuild Include="include\Host\Dbus\ConnectionBridgeAdaptor.h" />
     <CustomBuild Include="include\Host\Dbus\ConnectionBridgeProxy.h" />
     <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeAdaptor.h" />
     <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeProxy.h" />
+    <CustomBuild Include="include\Host\Installer\Migration.h" />
+    <CustomBuild Include="include\Host\GameDownloader\Hook\UpdateUninstallInfo.h" />
+    <CustomBuild Include="include\Host\Installer\UninstallResult.h" />
     <CustomBuild Include="include\Host\Dbus\DbusConnection.h" />
     <CustomBuild Include="include\Host\Dbus\DBusServer.h" />
     <CustomBuild Include="include\Host\ApplicationStatistic.h" />
@@ -654,16 +495,20 @@
     <CustomBuild Include="include\Host\Dbus\ApplicationBridgeProxy.h" />
     <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeAdaptor.h" />
     <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeProxy.h" />
+    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h" />
     <CustomBuild Include="include\Host\Updater.h" />
     <CustomBuild Include="include\Host\UIProcess.h" />
     <CustomBuild Include="include\Host\Thetta.h" />
     <CustomBuild Include="include\Host\ShutdownManager.h" />
     <CustomBuild Include="include\Host\ServiceSettings.h" />
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h" />
+    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h" />
     <CustomBuild Include="include\Host\HookFactory.h" />
     <CustomBuild Include="include\Host\Application.h" />
     <CustomBuild Include="include\Host\ApplicationRestarter.h" />
     <CustomBuild Include="include\Host\DownloaderSettings.h" />
     <CustomBuild Include="include\Host\ExecutorHookFactory.h" />
+    <CustomBuild Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
     <CustomBuild Include="include\Host\Bridge\UpdateManagerBridge.h" />
     <CustomBuild Include="include\Host\Bridge\ServiceSettingsBridge.h" />
     <CustomBuild Include="include\Host\Bridge\ExecutorBridge.h" />
@@ -682,128 +527,12 @@
     <CustomBuild Include="include\features\taskbarprogresshelper.h" />
     <CustomBuild Include="include\Features\PremiumExecutor.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h" />
-    <CustomBuild Include="include\Integration\ZZima\Dbus\IPCBridgeProxy.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\TimeOut.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\DADownloader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\DADownloaderHook.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZZimaConnection.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaGameExecutor_p.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Integration\ZZima\ZzimaLauncher.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\BlackDesertDefaultSettings.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\BlackDesertDefaultSettings.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h" />
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h" />
-    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\VendorBase.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\ZZima.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Nikita.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\CpuInfo.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\WmiQuery.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Antivirus.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Ram.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Video.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Screen.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Hdd.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\OsInfo.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\RestApi\ServiceHasAccess.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h</Extensions>
       <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>moc;h;cpp</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{53885873-6e78-41ee-8b60-bc70d3cb90ab}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{bbc9a11a-acd7-46fd-9213-98a88ad5476d}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
