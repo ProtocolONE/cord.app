@@ -37,9 +37,14 @@ namespace Features {
       void workStationLocked();
       void workStationUnlocked();
 
+    private slots:
+      void tryInit();
+
     private:
       HWND _hwnd;
       bool _isLocked;
+      int _retryCount;
+
 
     };
   }

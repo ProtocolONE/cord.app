@@ -1,6 +1,9 @@
 #include <Features/WorkStationLock/RegisterSessionNotificationFilter.h>
 
+#include <Helper/DebugLog.h>
+
 #include <QtCore/QDebug>
+#include <QtCore/QTimer>
 #include <Wtsapi32.h>
 
 namespace Features {
@@ -10,14 +13,31 @@ namespace Features {
       : QObject(parent)
       , _hwnd(hwnd)
       , _isLocked(false)
+      , _retryCount(120)
     {
-      BOOL result = WTSRegisterSessionNotification(this->_hwnd, NOTIFY_FOR_THIS_SESSION);
-      Q_ASSERT(result);
+      this->tryInit();
     }
 
     RegisterSessionNotificationFilter::~RegisterSessionNotificationFilter()
     {
       BOOL result = WTSUnRegisterSessionNotification(this->_hwnd);
+      Q_ASSERT(result);
+    }
+
+    void RegisterSessionNotificationFilter::tryInit()
+    {
+      this->_retryCount--;
+      BOOL result = WTSRegisterSessionNotification(this->_hwnd, NOTIFY_FOR_THIS_SESSION);
+      if (!result && this->_retryCount > 0) {
+        DWORD errorCode = GetLastError();
+        if (errorCode == RPC_S_INVALID_BINDING) {
+          QTimer::singleShot(1000, this, SLOT(tryInit()));
+          return;
+        }
+
+        DEBUG_LOG << "WTSRegisterSessionNotification error" << errorCode;
+      }
+
       Q_ASSERT(result);
     }
 
