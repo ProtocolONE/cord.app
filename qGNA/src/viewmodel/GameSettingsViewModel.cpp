@@ -108,7 +108,9 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
   object.setPath(QString("gamenet://startservice/%1").arg(serviceId));
 
-  QString iconPath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath(), serviceId);
+  QString iconPath = QString("%1/icons/%2.ico")
+    .arg(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).arg(serviceId);
+
   iconPath = QFile::exists(iconPath) ? iconPath : QCoreApplication::applicationFilePath();
   object.setIconLocation(iconPath);
   object.setIconIndex(0);

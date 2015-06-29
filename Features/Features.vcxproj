@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Helper\FileUtils.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -784,6 +785,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -DZZIMA_INTEGRATION -DQT_XML_LIB -D_UNICODE  "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtWinExtras" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I." "-I.\include\Integration\ZZima\Dbus" "-I.\include\Host" "-I$(QTDIR)\include\QtXml" "-I.\include\Features"</Command>
     </CustomBuild>
+    <ClInclude Include="include\Helper\FileUtils.h" />
     <ClInclude Include="include\Features\ComInitialize.h" />
     <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h" />
     <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Steam.h">
@@ -1228,6 +1230,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DNOMINMAX -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DFEATURES_LIB -DQT_NETWORK_LIB -DZZIMA_INTEGRATION -DQT_XML_LIB -D_UNICODE  "-I$(ProjectDir)\." "-I$(ProjectDir)include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtDBus" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtScript" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtWinExtras" "-I$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include" "-I$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include" "-I$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include" "-I$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include" "-I$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include" "-I$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include" "-I$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include" "-I$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include" "-I$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include" "-I$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include" "-I$(SolutionDir)Features\include" "-I.\include\Helper" "-I." "-I.\include\Integration\ZZima\Dbus" "-I.\include\Host" "-I$(QTDIR)\include\QtXml" "-I.\include\Features"</Command>
     </CustomBuild>
     <ClInclude Include="include\Helper\TerminateProcess.h" />
+    <ClInclude Include="include\Helper\UserInfoMigration.hpp" />
     <ClInclude Include="include\Host\CredentialConverter.h" />
     <ClInclude Include="include\Host\Bridge\Credential.h" />
     <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h">

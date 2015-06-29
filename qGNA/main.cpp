@@ -27,6 +27,8 @@
 #include <QtCore/QThreadPool>
 #include <QtCore/QProcess>
 #include <QtCore/QTime>
+#include <QtCore/QFileInfo>
+#include <QtCore/QDir>
 
 #include <QtWidgets/QApplication>
 #include <QResource>
@@ -39,6 +41,7 @@
 #include <BugTrap/BugTrap.h>
 
 #include <Helper/DBusConnectionCheck.h>
+#include <Helper/FileUtils.h>
 
 using namespace Log4Qt; 
 using namespace GameNet;
@@ -50,7 +53,12 @@ using GGS::Application::SingleApplication;
 bool initDatabase()
 {
   GGS::Settings::InitializeHelper helper;
-  helper.setFileName(QString("%1/settings.sql").arg(QCoreApplication::applicationDirPath()));
+  QString settingsPath = QString("%1/settings/settings.sql")
+    .arg(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+
+  FileUtils::createDirectoryForFile(settingsPath);
+
+  helper.setFileName(settingsPath);
   if (!helper.init())
     return false;
 
@@ -82,6 +90,8 @@ void initBugTrap(const QString &path)
 int main(int argc, char *argv[]) 
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+  QCoreApplication::setOrganizationName("Vebanaul");
+  QCoreApplication::setApplicationName("GameNet");
   QString path = QCoreApplication::applicationDirPath();
   
   QStringList plugins;
@@ -129,7 +139,7 @@ int main(int argc, char *argv[])
   TTCCLayout layout(TTCCLayout::ISO8601);
   layout.retain();
 
-  RollingFileAppender appender(&layout, path + "/qgna.log", true);
+  RollingFileAppender appender(&layout, QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/logs/qgna.log", true);
   appender.setMaximumFileSize(1000000);
   appender.setMaxBackupIndex(1);
   appender.retain();

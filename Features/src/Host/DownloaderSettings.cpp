@@ -4,6 +4,7 @@
 #include <GameDownloader/GameDownloadService.h>
 #include <Settings/Settings.h>
 
+#include <QtCore/QStandardPaths>
 #include <QtCore/QCoreApplication>
 
 using GGS::GameDownloader::GameDownloadService;
@@ -34,7 +35,7 @@ namespace GameNet {
     {
       Q_ASSERT(this->_downloader);
       this->_downloader->setListeningPort(this->listeningPort());
-      QString torrentConfigPath = QCoreApplication::applicationDirPath();
+      QString torrentConfigPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
       torrentConfigPath.append("/torrents");
       this->_downloader->setTorrentConfigDirectoryPath(torrentConfigPath);
       this->_downloader->setTimeoutForResume(600);

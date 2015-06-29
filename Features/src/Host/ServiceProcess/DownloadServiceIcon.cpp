@@ -6,6 +6,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
 #include <QtCore/QDebug>
+#include <QtCore/QStandardPaths>
 
 namespace GameNet {
   namespace Host {
@@ -43,7 +44,9 @@ namespace GameNet {
             return;
 
           QString lastModified = QString::fromLatin1(reply->rawHeader(QByteArray("Last-Modified")));
-          QString filePath = QString("%1/Assets/Images/icons/%2.ico").arg(QCoreApplication::applicationDirPath()).arg(serviceId);
+          QString filePath = QString("%1/icons/%2.ico")
+            .arg(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).arg(serviceId);
+
           bool changed = !QFile::exists(filePath) || httpCode == 200;
           if (!changed)
             return;

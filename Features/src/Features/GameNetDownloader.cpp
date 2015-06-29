@@ -9,6 +9,7 @@
 ****************************************************************************/
 
 #include <Features/GameNetDownloader.h>
+#include <Helper/FileUtils.h>
 
 #include <QtCore/QByteArray>
 #include <QtCore/QFile>
@@ -65,9 +66,7 @@ namespace GameNet {
 
     QByteArray data = reply->readAll();
 
-    QFileInfo info(this->_targetFilePath);
-    QDir dir;
-    dir.mkpath(info.absolutePath());
+    Features::FileUtils::createDirectoryForFile(this->_targetFilePath);
 
     QFile file(this->_targetFilePath);
     if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {

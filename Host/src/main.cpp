@@ -12,6 +12,7 @@
 #include <Helper/Database.hpp>
 #include <Helper/Logger.hpp>
 #include <Helper/ElevateRights.hpp>
+#include <Helper/UserInfoMigration.hpp>
 
 #include <Core/System/Shell/UrlProtocolHelper.h>
 
@@ -21,6 +22,8 @@
 #include <QtCore/QThreadPool>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
+#include <QtCore/QStandardPaths>
+#include <QtCore/QFile>
 
 #include <QtGui/QIcon>
 
@@ -41,9 +44,15 @@ Application *createApplication(SingleApplication *app)
   return application;
 }
 
+
+
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
+  QCoreApplication::setOrganizationName("Vebanaul");
+  QCoreApplication::setApplicationName("GameNet");
+  migrateUserInfo();
+
   QString path = QCoreApplication::applicationDirPath();
   initBugTrap(path);
 
@@ -82,7 +91,7 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  LoggerHelper logger(path + "/host.log");
+  LoggerHelper logger(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/logs/host.log");
   if (!requireAdminRights())
     return -1;
 

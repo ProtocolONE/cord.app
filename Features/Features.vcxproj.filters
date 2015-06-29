@@ -379,6 +379,9 @@
     <ClCompile Include="src\Helper\TerminateProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Helper\FileUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -401,6 +404,12 @@
     <ClInclude Include="include\Features\Thetta\Json.h" />
     <ClInclude Include="include\Features\Thetta\Protector.h" />
     <ClInclude Include="include\Helper\TerminateProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\FileUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\UserInfoMigration.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
