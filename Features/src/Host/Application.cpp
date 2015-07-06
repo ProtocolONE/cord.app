@@ -55,6 +55,8 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/QCryptographicHash>
 
+#include <Windows.h>
+
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
 using ::GameNet::Integration::ZZima::ZZimaConnection;
@@ -205,6 +207,9 @@ namespace GameNet {
       this->_executor->setThetta(this->_thetta);
       this->_executor->init();
 
+      QObject::connect(this->_executor, &GameNet::Host::GameExecutor::dataCorrupted,
+        this, &Application::dataCorruptedRequest);
+      
       GameNet::Integration::ZZima::ZzimaGameExecutor * zzimaExecutor = 
         new GameNet::Integration::ZZima::ZzimaGameExecutor(this);
       zzimaExecutor->setZzimaConnection(this->_zzimaConnection);
@@ -527,6 +532,12 @@ namespace GameNet {
       Q_FOREACH(const QString& serviceId, lockedGames) {
         this->_executor->terminateAll(serviceId);
       }
+    }
+
+    void Application::dataCorruptedRequest()
+    {
+      MessageBox(NULL, L"Restarting", L"Log", MB_OK);
+      this->internalRestartApplication(true, false);
     }
   }
 }
