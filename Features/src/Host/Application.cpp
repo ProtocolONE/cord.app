@@ -536,7 +536,6 @@ namespace GameNet {
 
     void Application::dataCorruptedRequest()
     {
-      MessageBox(NULL, L"Restarting", L"Log", MB_OK);
       this->internalRestartApplication(true, false);
     }
   }
