@@ -37,6 +37,7 @@
 #include <Features/Thetta/ThettaInstaller.h>
 #include <Features/Marketing/SystemInfo/SystemInfoManager.h>
 #include <Features/Thetta/ModuleScanner.h>
+#include <Features/Thetta/AppDistrIntegrity.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -99,6 +100,7 @@ namespace GameNet {
       , _initFinished(false)
       , _updateFinished(false)
       , _closing(false)
+      , _applicationDistrMon(new Features::Thetta::AppDistrIntegrity(this))
       , QObject(parent)
     {
     }
@@ -155,6 +157,9 @@ namespace GameNet {
 
       QObject::connect(this, &Application::initCompleted, 
         value, &SingleApplication::initializeFinished);
+
+      QObject::connect(this, &Application::initCompleted,
+        this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::onAppStarted);
     }
 
     void Application::init()

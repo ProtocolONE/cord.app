@@ -7,6 +7,11 @@
 class QTranslator;
 
 namespace Features {
+
+  namespace Thetta {
+    class AppDistrIntegrity;
+  }
+
   namespace GameDownloader {
     class GameDownloadStatistics;
   }
@@ -176,6 +181,8 @@ namespace GameNet {
       ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
       AutoRunManager *_autoRunManager;
       DBus::DBusServer *_dbusServer;
+      Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
+      Features::Thetta::AppDistrIntegrity * _applicationDistrMon;
 
       bool _initFinished;
       bool _updateFinished;
