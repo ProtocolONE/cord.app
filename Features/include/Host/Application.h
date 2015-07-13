@@ -108,7 +108,6 @@ namespace GameNet {
       virtual bool isInitCompleted();
       virtual void switchClientVersion();
       virtual void cancelUninstallServiceRequest(const QString &serviceId);
-      void dataCorruptedRequest();
 
     private slots:
       void updateCompletedSlot(bool needRestart);

@@ -157,9 +157,6 @@ namespace GameNet {
 
       QObject::connect(this, &Application::initCompleted, 
         value, &SingleApplication::initializeFinished);
-
-      QObject::connect(this, &Application::initCompleted,
-        this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::onAppStarted);
     }
 
     void Application::init()
@@ -212,9 +209,6 @@ namespace GameNet {
       this->_executor->setThetta(this->_thetta);
       this->_executor->init();
 
-      QObject::connect(this->_executor, &GameNet::Host::GameExecutor::dataCorrupted,
-        this, &Application::dataCorruptedRequest);
-      
       GameNet::Integration::ZZima::ZzimaGameExecutor * zzimaExecutor = 
         new GameNet::Integration::ZZima::ZzimaGameExecutor(this);
       zzimaExecutor->setZzimaConnection(this->_zzimaConnection);
@@ -265,6 +259,9 @@ namespace GameNet {
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
       this->_uiProcess->setFileName("gamenet.ui.exe");
 
+      this->_applicationDistrMon->setExecutor(this->_executor->mainExecutor());
+      this->_applicationDistrMon->setArea(this->_updater->applicationArea());
+
       QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished,
         this, &Application::setInitFinished);
 
@@ -279,6 +276,9 @@ namespace GameNet {
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::openBrowser, 
         this->_thetta, &Thetta::openBrowser);
+
+      QObject::connect(this, &Application::initCompleted,
+        this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::onAppStarted);
 
       this->_commandLineManager->setExecutedGameCredential(
         std::bind(&Application::executedGameCredential, this, std::placeholders::_1, std::placeholders::_2));
@@ -537,11 +537,6 @@ namespace GameNet {
       Q_FOREACH(const QString& serviceId, lockedGames) {
         this->_executor->terminateAll(serviceId);
       }
-    }
-
-    void Application::dataCorruptedRequest()
-    {
-      this->internalRestartApplication(true, false);
     }
   }
 }

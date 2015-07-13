@@ -87,9 +87,6 @@ namespace GameNet {
       
       QObject::connect(this->_mainExecutor, &GameExecutorService::finished,
         this->_gameExecutorServiceInfoCounter, &ServiceInfoCounter::finished);
-
-      QObject::connect(this->_mainExecutor, &GameExecutorService::dataCorrupted,
-        this, &GameExecutor::dataCorrupted);
     }
 
     void GameExecutor::shutdown()

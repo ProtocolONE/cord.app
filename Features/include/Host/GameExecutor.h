@@ -85,7 +85,6 @@ namespace GameNet {
       void serviceFinished(const QString& serviceId, int finishState);
       void secondServiceStarted(const QString& serviceId);
       void secondServiceFinished(const QString& serviceId, int finishState);
-      void dataCorrupted();
 
     private:
       void onServiceStarted(const GGS::Core::Service &service);
