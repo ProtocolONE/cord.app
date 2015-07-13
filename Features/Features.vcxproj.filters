@@ -376,9 +376,13 @@
     <ClCompile Include="src\Helper\TerminateProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Helper\FileUtils.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AppDistrIntegrity.cpp">
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AppDistrIntegrity.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\AppDistrIntegrity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -532,6 +536,7 @@
     <CustomBuild Include="include\features\taskbarprogresshelper.h" />
     <CustomBuild Include="include\Features\PremiumExecutor.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h" />
+    <CustomBuild Include="include\Features\Thetta\AppDistrIntegrity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -543,6 +548,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;cxx;c;def</Extensions>
       <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{9ad61681-1efd-480c-b01c-c94b32fadd08}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{e2a875b5-0842-4ffb-8cdc-05338553f074}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
     </Filter>
   </ItemGroup>
 </Project>

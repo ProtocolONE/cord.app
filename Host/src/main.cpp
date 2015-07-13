@@ -7,6 +7,7 @@
 
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
+#include <Features/Thetta/AppDistrIntegrity.h>
 
 #include <Helper/BugTrap.hpp>
 #include <Helper/Database.hpp>
