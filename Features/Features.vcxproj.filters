@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_CASettingsFix.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ModuleScanner_p.cpp" />
@@ -376,13 +375,17 @@
     <ClCompile Include="src\Helper\TerminateProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_AppDistrIntegrity.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_AppDistrIntegrity.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="src\Helper\FileUtils.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Features\Thetta\AppDistrIntegrity.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AppDistrIntegrity.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_AppDistrIntegrity.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_AppDistrIntegrity.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
