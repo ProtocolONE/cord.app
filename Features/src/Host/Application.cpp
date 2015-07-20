@@ -56,8 +56,6 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/QCryptographicHash>
 
-#include <Windows.h>
-
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
 using ::GameNet::Integration::ZZima::ZZimaConnection;
@@ -279,6 +277,9 @@ namespace GameNet {
 
       QObject::connect(this, &Application::initCompleted,
         this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::onAppStarted);
+
+      QObject::connect(this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::restartRequest,
+        this, &Application::restartApplicationRequest);
 
       this->_commandLineManager->setExecutedGameCredential(
         std::bind(&Application::executedGameCredential, this, std::placeholders::_1, std::placeholders::_2));
