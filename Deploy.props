@@ -14,17 +14,17 @@
     <CoreArea>trunk</CoreArea>
     <LibtorrentWrapperArea>trunk</LibtorrentWrapperArea>
     <GameDownloaderArea>trunk</GameDownloaderArea>
-    <GameExecutorArea>1.0.442</GameExecutorArea>
+    <GameExecutorArea>1.0.450</GameExecutorArea>
     <ApplicationArea>trunk</ApplicationArea>
     <OpenSSLArea>1.0.2d</OpenSSLArea>
     <QmlExtensionArea>trunk</QmlExtensionArea>
     <MarketingArea>trunk</MarketingArea>
     <CASettingsArea>trunk</CASettingsArea>
     <OverlayArea>trunk</OverlayArea>
-    <HookEngineArea>1.2.vc13</HookEngineArea>
-    <ThettaArea>trunk</ThettaArea>
-    <QxmppArea>0.8.5</QxmppArea>
-    <QxmppDeclarativeArea>1.1.4</QxmppDeclarativeArea>
+    <HookEngineArea>1.0</HookEngineArea>
+    <ThettaArea>1.0.228</ThettaArea>
+    <QxmppArea>0.8.4</QxmppArea>
+    <QxmppDeclarativeArea>1.1.3</QxmppDeclarativeArea>
 </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
