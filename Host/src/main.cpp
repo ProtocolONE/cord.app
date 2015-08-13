@@ -44,8 +44,6 @@ Application *createApplication(SingleApplication *app)
   return application;
 }
 
-
-
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");

@@ -39,9 +39,17 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QSysInfo>
 #include <QtCore/QFlags>
-#include <QtGui/QBoxLayout>
-#include <QtGui/QDesktopWidget>
-#include <QtDeclarative/QDeclarativeProperty>
+#include <QtCore/QStringList>
+
+#include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QDesktopWidget>
+
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QQuickItem>
+#include <QQmlError>
+
+#include <QMetaType>
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -52,8 +60,8 @@ using GameNet::Host::ClientConnection;
 using GameNet::Host::Bridge::createDbusCredential;
 using GameNet::Host::Bridge::createGameNetCredential;
 
-MainWindow::MainWindow(QWidget *parent) 
-  : QMainWindow(parent)
+MainWindow::MainWindow(QWindow *parent)
+  : QQuickView(parent)
   , _gameArea(GGS::Core::Service::Live)
   , _downloader(nullptr)
   , _downloaderSettings(nullptr)
@@ -75,30 +83,30 @@ void MainWindow::initialize()
 {
   qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
   qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
-
+  
   qRegisterMetaType<GameNet::Host::Bridge::Credential>("GameNet::Host::Bridge::Credential");
   qDBusRegisterMetaType<GameNet::Host::Bridge::Credential>();
-
+  
   // DBUS...
   QDBusConnection &connection = DBusConnection::bus();
   QString dbusService("com.gamenet.dbus");
-
+  
   this->_clientConnection = new ClientConnection("QGNA", this);
   this->_clientConnection->init();
-
+  
   QObject::connect(this->_clientConnection, &ClientConnection::disconnected,
     this, &MainWindow::onWindowClose);
-
+  
   QObject::connect(this->_clientConnection, &ClientConnection::wrongCredential,
     this, &MainWindow::wrongCredential);
-
+  
   this->_applicationProxy = new ApplicationBridgeProxy(dbusService, "/application", connection, this);
   this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", connection, this);
   this->_downloaderSettings = new DownloaderSettingsBridgeProxy(dbusService, "/downloader/settings", connection, this);
   this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", connection, this);
   this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", connection, this);
   this->_applicationStatistic = new ApplicationStatisticBridgeProxy(dbusService, "/applicationStatistic", connection, this);
-  
+    
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::languageChanged,
     this, &MainWindow::languageChanged);
 
@@ -122,123 +130,126 @@ void MainWindow::initialize()
 
   new HostMessageAdapter(this);
 
-  this->initRestApi(); 
-
+  this->initRestApi();
+  
   this->_commandLineArguments.parse(QCoreApplication::arguments());
-
+  
   if (this->_commandLineArguments.contains("gamepts"))
     this->_gameArea = GGS::Core::Service::Pts;
-
+  
   if (this->_commandLineArguments.contains("gametest"))
     this->_gameArea = GGS::Core::Service::Tst;
-
+  
   this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
-  this->setWindowTitle("GameNet " + this->_fileVersion);
+  
+  this->setTitle("GameNet " + this->_fileVersion);
+  this->setColor(QColor(0, 0, 0, 0));
 
-  this->setWindowFlags(Qt::Window 
+  this->setFlags(Qt::Window
     | Qt::FramelessWindowHint 
     | Qt::WindowMinimizeButtonHint 
     | Qt::WindowSystemMenuHint); //Этот код уберет все внешние элементы формы
-
+  
   GameNet::Host::Translation::load(this->translators, this);
   this->selectLanguage(this->_applicationProxy->language());
-
+  
   this->checkDesktopDepth();
-
+  
   this->settingsViewModel = new SettingsViewModel(this);
   this->settingsViewModel->setDownloaderSettings(this->_downloaderSettings);
   this->settingsViewModel->setApplicationProxy(this->_applicationProxy);
-
-
+  
   qmlRegisterType<UpdateViewModel>("qGNA.Library", 1, 0, "UpdateViewModel");
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");
   qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");
   qmlRegisterType<ApplicationStatisticViewModel>("qGNA.Library", 1, 0, "ApplicationStatistic");
   qmlRegisterType<ServiceHandleViewModel>("qGNA.Library", 1, 0, "ServiceHandle");
-
+  
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
-
-  qRegisterMetaType<Features::Thetta::ThettaInstaller::Result>("Features::Thetta::ThettaInstaller::Result");
-
-  this->initMarketing();
   
+  qRegisterMetaType<Features::Thetta::ThettaInstaller::Result>("Features::Thetta::ThettaInstaller::Result");
+  
+  this->initMarketing();
+
   //next 2 lines QGNA-60
-  this->nQMLContainer = new MQDeclarativeView(this);
-  connect(nQMLContainer, &MQDeclarativeView::leftMousePress, this, &MainWindow::leftMousePress);
-  connect(nQMLContainer, &MQDeclarativeView::leftMouseRelease, this, &MainWindow::leftMouseRelease);
-
-  QStringList importPaths;
-  importPaths << ":/";
-  importPaths << (QCoreApplication::applicationDirPath() + "/plugins/");
-  this->nQMLContainer->engine()->setImportPathList(importPaths);
-
-  QStringList pluginsPath;
-  pluginsPath << (QCoreApplication::applicationDirPath() + "/plugins/");
-  pluginsPath << "./plugins";
-  pluginsPath << QCoreApplication::applicationDirPath() + "/plugins/QtWebKit";
-  this->nQMLContainer->engine()->setPluginPathList(pluginsPath);
-
-  this->loadPlugin("QmlExtensionX86");
-  this->loadPlugin("QmlOverlayX86");
-  this->loadPlugin("qxmpp-declarative");
-
-  this->nQMLContainer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+  //this->nQMLContainer = new MQDeclarativeView(this);
+  //connect(nQMLContainer, &MQDeclarativeView::leftMousePress, this, &MainWindow::leftMousePress);
+  //connect(nQMLContainer, &MQDeclarativeView::leftMouseRelease, this, &MainWindow::leftMouseRelease);
+  
+  this->engine()->addImportPath(":/");
+  this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins/"));
+  this->engine()->addPluginPath(QCoreApplication::applicationDirPath() + "/plugins/");
 
   QObject::connect(&this->_restapiManager, &GGS::RestApi::RestApiManager::genericErrorEx,
     this, &MainWindow::restApiGenericError);
-
-  messageAdapter = new QmlMessageAdapter(this);
   
+  messageAdapter = new QmlMessageAdapter(this);
+    
   this->_gameSettingsViewModel = new GameSettingsViewModel(this);
   this->_gameSettingsViewModel->setDownloader(this->_downloader);
   this->_gameSettingsViewModel->setServiceSettings(this->_serviceSettings);
-  
+    
   // HACK - уточнить что это полезно и зачем это
-  nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
-  nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
-  nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
-  nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
+  //nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
+  //nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
+  //nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+  //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
   // END of HACK
+    
+  this->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
+  this->rootContext()->setContextProperty("mainWindow", this);
+  this->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
+  this->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
+  this->rootContext()->setContextProperty("messageBox", messageAdapter);
+  this->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
+
+  this->setSource(QUrl("qrc:/Main.qml"));
+
+  if (this->status() == QQuickView::Status::Error) {
+    Q_FOREACH(const QQmlError& error, this->errors()) {
+      DEBUG_LOG << error;
+    }
+
+    // UNDONE решить что делать в случаи фейла верстки
+  }
   
-  nQMLContainer->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
-  nQMLContainer->rootContext()->setContextProperty("mainWindow", this);
-  nQMLContainer->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
-  nQMLContainer->rootContext()->setContextProperty("settingsViewModel", settingsViewModel);
-  nQMLContainer->rootContext()->setContextProperty("messageBox", messageAdapter);
-  nQMLContainer->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
-
-  nQMLContainer->setSource(QUrl("qrc:/Main.qml"));
-  nQMLContainer->setAlignment(Qt::AlignCenter);
-  nQMLContainer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
-
-  QObject *item = nQMLContainer->rootObject();
-  QDeclarativeItem *rootItem = qobject_cast<QDeclarativeItem*>(item);
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPressed(int,int)), this, SLOT(onSystemBarPressed(int,int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowReleased(int,int)), this, SLOT(onSystemBarReleased(int,int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(item, SIGNAL(dragWindowPositionChanged(int,int)), this, SLOT(onSystemBarPositionChanged(int,int))));
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->nQMLContainer->engine(), SIGNAL(quit()), this, SLOT(onWindowClose())));
+  this->setResizeMode(QQuickView::SizeRootObjectToView);
+  
+  SIGNAL_CONNECT_CHECK(QObject::connect(this->engine(), SIGNAL(quit()), this, SLOT(onWindowClose())));
   connect(this, &MainWindow::quit, this, &MainWindow::onWindowClose);
 
-
-
-  this->setCentralWidget(nQMLContainer);
-  this->setAttribute(Qt::WA_TranslucentBackground); //Эти две строчки позволят форме становиться прозрачной 
-  this->setStyleSheet("background:transparent;");
-  this->setFixedSize(rootItem->width(), rootItem->height()); 
-
   Message::setAdapter(messageAdapter);
-
-  if (!this->_commandLineArguments.contains("minimized")) 
+  
+  if (this->_commandLineArguments.contains("minimized")) {
+    //this->showMinimized();
+    this->hide();
+  }
+  else {
+    DEBUG_LOG;
     this->activateWindow();
+  }
 
+  //if (!this->_commandLineArguments.contains("minimized"))
+  //  this->activateWindow();
+  
   if (!this->_commandLineArguments.contains("startservice")) {
     QObject::connect(this, &MainWindow::updateFinished,
       &this->_rememberGameFeature, &RememberGameDownloading::update);
   }
+  
+  this->sendStartingMarketing();
+  
+  QObject::connect(this, &MainWindow::windowActivated, &this->_keyboardLayoutHelper, &GGS::KeyboardLayoutHelper::update);
+  
+  this->_keyboardLayoutHelper.update();
 
+  // new code
+  //this->show();
+}
+
+void MainWindow::sendStartingMarketing()
+{
   DWORD verion = GetVersion();
   int dwMajorVersion = (int)(LOBYTE(LOWORD(verion)));
   int dwMinorVersion = (int)(HIBYTE(LOWORD(verion)));
@@ -249,13 +260,9 @@ void MainWindow::initialize()
 
   GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna, params);
   GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
-
-  QObject::connect(this, &MainWindow::windowActivated, &this->_keyboardLayoutHelper, &GGS::KeyboardLayoutHelper::update);
-
-  this->_keyboardLayoutHelper.update();
 }
 
-void MainWindow::restartUISlot(bool minimized) 
+void MainWindow::restartUISlot(bool minimized)
 {
   this->_applicationProxy->restartApplication(minimized);
 }
@@ -289,25 +296,24 @@ bool MainWindow::nativeEvent(const QByteArray & eventType, void * message, long 
   if (message->message == WM_KEYUP) 
     this->_keyboardLayoutHelper.update();
 
-  return QMainWindow::winEvent(message, result);
+  return QWindow::nativeEvent(eventType, message, result);
 }
 
 void MainWindow::activateWindow()
 {
   DEBUG_LOG << "activateWindow";
+  this->show();
   // Это нам покажет окно
-  this->setFocusPolicy(Qt::StrongFocus);
-  this->setWindowState(Qt::WindowActive); 
+  //this->setFocusPolicy(Qt::StrongFocus);
+  //this->setWindowState(Qt::WindowActive); 
   this->showNormal();
 
   // Эта функция активирует окно и поднмиает его повех всех окон
   GGS::Application::WindowHelper::activate(this->winId());
 
   this->_taskBarHelper.restore();
-
-  this->_taskBarHelper.restore();
-
-  this->repaint();
+  
+  //this->repaint();
 }
 
 bool MainWindow::isDownloading(QString serviceId)
@@ -333,25 +339,11 @@ void MainWindow::selectLanguage(const QString& language)
   emit languageChanged();
 }
 
-void MainWindow::onSystemBarPressed(int MouseX, int MouseY)
-{
-  mLastMousePosition = QPoint(MouseX,MouseY);
-}
-
-void MainWindow::onSystemBarReleased(int MouseX, int MouseY)  
-{
-}
-
-void MainWindow::onSystemBarPositionChanged(int MouseX, int MouseY) 
-{
-  move(pos() + (QPoint(MouseX,MouseY) - mLastMousePosition));
-}
-
 void MainWindow::onWindowClose()
 {
   DEBUG_LOG << "Shutting down";
 
-  this->repaint();
+  //this->repaint();
   this->hide();
   this->_clientConnection->close();
   QCoreApplication::quit();
@@ -499,7 +491,7 @@ void MainWindow::downloadGameTotalProgressChanged(const QString& serviceId, int 
 }
 
 void MainWindow::downloadGameProgressChanged(
-  const QString& serviceId, 
+  const QString& serviceId,
   int progress, 
   GameNet::Host::Bridge::DownloadProgressArgs args)
 {
@@ -537,7 +529,7 @@ void MainWindow::gameDownloaderFinished(const QString& serviceId)
   emit this->downloaderFinished(serviceId);
 }
 
-bool MainWindow::executeService(QString id) 
+bool MainWindow::executeService(QString id)
 {
   if (this->_executor->isGameStarted(id))
     return false;
@@ -552,16 +544,8 @@ bool MainWindow::executeService(QString id)
     return false;
   }
 
-  if (id == "300002010000000000" || 
-    id == "300003010000000000" || 
-    id == "300005010000000000" || 
-    id == "300009010000000000" || 
-    id == "100009010000000000" ||
-    id == "100003010000000000" ||
-    id == "300012010000000000" ||
-    id == "30000000000") {
-      this->_premiumExecutor.executeMain(service);
-  }
+  GGS::RestApi::GameNetCredential baseCredential =
+    GGS::RestApi::RestApiManager::commonInstance()->credential();
 
   this->_executor->execute(id, createDbusCredential(baseCredential));
   return true;
@@ -621,6 +605,7 @@ void MainWindow::downloadButtonStart(QString serviceId)
     return;
   }
 
+  DEBUG_LOG;
   this->activateWindow();
   emit showLicense(serviceId);
 }
@@ -739,6 +724,7 @@ void MainWindow::startGame(const QString& serviceId)
 
 void MainWindow::commandRecieved(QString name, QStringList arguments)
 {
+  DEBUG_LOG << name << arguments;
   if (name == "quit") {
     this->onWindowClose();
     return;
@@ -750,7 +736,8 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
   } 
 
   if (name == "activate") {
-    this->activateWindow();
+    DEBUG_LOG;
+   // this->activateWindow();
     return;
   } 
 
@@ -836,12 +823,6 @@ void MainWindow::onSecondServiceFinished(const QString &serviceId, int state)
   }
 }
 
-void MainWindow::closeEvent(QCloseEvent* event)
-{
-  this->hide();
-  event->ignore();
-}
-
 void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message)
 {
   emit this->downloaderServiceStatusMessageChanged(serviceId, message);
@@ -874,18 +855,25 @@ void MainWindow::restApiGenericError(
 
 void MainWindow::showEvent(QShowEvent* event)
 {
-  this->_taskBarHelper.prepare(this->effectiveWinId());
+  //this->_taskBarHelper.prepare(reinterpret_cast<HWND>(this->effectiveWinId()));
+  this->_taskBarHelper.prepare(reinterpret_cast<HWND>(this->winId()));
   emit this->taskBarButtonMsgRegistered(this->_taskBarHelper.getTaskbarCreatedMessageId());
-  
-  this->repaint();
+
+  // UNDONE  !!!!!!!!!!!!!!!!Next one overloaded due to QGNA-128
+  // посмотреть надо ли теперь форсированно репейнтить при разворачивани
+  //this->repaint();
+
+  QQuickView::showEvent(event);
 }
 
 bool MainWindow::isWindowVisible()
 {
-  return this->isVisible() && !this->isMinimized();
+  return this->isVisible() && this->windowState() != Qt::WindowMinimized;
 }
 
-void MainWindow::loadPlugin(QString pluginName)
+
+// UNDONE Больше мы не грузим руками плагины - удлить функцию
+void MainWindow::loadPlugin(QString pluginName, QString uri)
 {
   QString message = QString("Couldn't load plugin %1").arg(pluginName);
 
@@ -895,7 +883,12 @@ void MainWindow::loadPlugin(QString pluginName)
   QString pluginPath = QString("%1/%2.dll").arg(QCoreApplication::applicationDirPath(), pluginName);
 #endif
 
-  nQMLContainer->engine()->importPlugin(pluginPath, "Tulip", &message);
+  QList<QQmlError> errors;
+  this->engine()->importPlugin(pluginPath, uri, &errors);
+
+  Q_FOREACH(const QQmlError& error, errors) {
+    DEBUG_LOG << error.toString() << "\n" << error.description();
+  }
 }
 
 void MainWindow::gameDownloaderServiceInstalled(const QString& serviceId)
@@ -905,6 +898,7 @@ void MainWindow::gameDownloaderServiceInstalled(const QString& serviceId)
 
 void MainWindow::gameDownloaderServiceUpdated(const QString& serviceId)
 {
+  DEBUG_LOG;
   this->activateWindow();
   emit this->selectService(serviceId);
 }
@@ -977,14 +971,14 @@ QString MainWindow::getExpectedInstallPath(const QString& serviceId)
 void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& path)
 {
   this->_serviceSettings->setInstallPath(serviceId, path);
-  
+
   if (!this->_serviceSettings->hasDownloadPath(serviceId)) {
     this->_serviceSettings->setDownloadPath(serviceId, path);
     return;
   }
-  
+
   QString downloadPath = this->_serviceSettings->isDefaultDownloadPath(serviceId)
-    ? QString("%1/dist").arg(path) 
+    ? QString("%1/dist").arg(path)
     : this->_serviceSettings->downloadPath(serviceId);
 
   this->_serviceSettings->setDownloadPath(serviceId, downloadPath);
@@ -1025,7 +1019,7 @@ void MainWindow::initRestApi()
   GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
 }
 
-bool MainWindow::event(QEvent* event) 
+bool MainWindow::event(QEvent* event)
 {
   switch(event->type()) {
   case QEvent::WindowActivate:
@@ -1034,9 +1028,13 @@ bool MainWindow::event(QEvent* event)
   case QEvent::WindowDeactivate:
     emit this->windowDeactivated();
     break;
+  case QEvent::Close:
+    this->hide();
+    event->ignore();
+    break;
   }
 
-  return QMainWindow::event(event);
+  return QWindow::event(event);
 }
 
 void MainWindow::initMarketing()
@@ -1078,18 +1076,18 @@ void MainWindow::terminateSecondService()
   this->_executor->shutdownSecond();
 }
 
-void MQDeclarativeView::mousePressEvent(QMouseEvent* event) {
+void MainWindow::mousePressEvent(QMouseEvent* event) {
   if (event->button() & Qt::LeftButton)
-    emit this->leftMousePress(event->x(), event->y()); 
+    emit this->leftMousePress(event->x(), event->y());
 
-  QDeclarativeView::mousePressEvent(event);
+  QQuickView::mousePressEvent(event);
 }
 
-void MQDeclarativeView::mouseReleaseEvent(QMouseEvent* event) {
+void MainWindow::mouseReleaseEvent(QMouseEvent* event) {
   if (event->button() & Qt::LeftButton)
-    emit this->leftMouseRelease(event->x(), event->y()); 
+    emit this->leftMouseRelease(event->x(), event->y());
 
-  QDeclarativeView::mouseReleaseEvent(event);
+  QQuickView::mouseReleaseEvent(event);
 }
 
 void MainWindow::onTaskbarButtonCreated()
@@ -1102,9 +1100,11 @@ void MainWindow::onProgressUpdated(int progressValue, const QString &status)
   TaskBarHelper::Status newStatus = TaskBarHelper::StatusUnknown;
   if (status == "Normal") {
     newStatus = TaskBarHelper::StatusNormal;
-  } else if (status == "Paused") {
+  }
+  else if (status == "Paused") {
     newStatus = TaskBarHelper::StatusPaused;
-  } else if (status == "Error") {
+  }
+  else if (status == "Error") {
     newStatus = TaskBarHelper::StatusError;
   }
 

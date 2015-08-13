@@ -43,7 +43,7 @@
 #include <Helper/DBusConnectionCheck.h>
 #include <Helper/FileUtils.h>
 
-using namespace Log4Qt; 
+using namespace Log4Qt;
 using namespace GameNet;
 using GGS::Application::SingleApplication;
 
@@ -92,8 +92,9 @@ int main(int argc, char *argv[])
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   QCoreApplication::setOrganizationName("Vebanaul");
   QCoreApplication::setApplicationName("GameNet");
-  QString path = QCoreApplication::applicationDirPath();
   
+  QString path = QCoreApplication::applicationDirPath();
+ 
   QStringList plugins;
   plugins << path + "/plugins";
   app.setLibraryPaths(plugins);
@@ -196,12 +197,13 @@ int main(int argc, char *argv[])
 
   GGS::ResourceHelper::ResourceLoader loader;
   loader.load(path + "/qGNA.rcc"); 
-  loader.load(path + "/smiles.rcc"); 
+  loader.load(path + "/smiles.rcc");
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));
 
   MainWindow w;
+
   QObject::connect(&dbusConnectionCheck, &DBusConnectionCheck::serviceDisconnected, &w, &MainWindow::quit);
   if (!dbusConnectionCheck.checkConnection()) {
     emit w.quit();

@@ -1,5 +1,5 @@
 ﻿#include <QtCore/QTimer>
-#include <QtDeclarative/QDeclarativeContext>
+//#include <QtDeclarative/QDeclarativeContext>
 #include <QtCore/QDebug>
 #include <QmlMessageAdapter.h>
 

@@ -11,7 +11,7 @@ SingleShotFunctor::SingleShotFunctor(int ms, std::tr1::function<void ()> f, QObj
 SingleShotFunctor::SingleShotFunctor(QObject *parent)
   : QObject(parent)
 {
-  this->_functor = 0;
+  this->_functor = nullptr;
 }
 
 SingleShotFunctor::~SingleShotFunctor()

@@ -1,11 +1,8 @@
 #include <Player.h>
 #include <QDebug>
 
-#ifdef _DEBUG
-//#define DISABLE_PHONONE 1
-#endif
-Player::Player(QDeclarativeItem *parent) 
-  : QDeclarativeItem(parent)
+Player::Player(QObject *parent) 
+  : QObject(parent)
   , _autoPlay(true)   
 {
 #ifndef DISABLE_PHONONE

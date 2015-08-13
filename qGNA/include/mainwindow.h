@@ -26,9 +26,13 @@
 #include <QtCore/QScopedPointer>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtDeclarative/QDeclarativeEngine>
+
+//#include <QtDeclarative/QDeclarativeContext>
+//#include <QtDeclarative/QDeclarativeView>
+//#include <QtDeclarative/QDeclarativeEngine>
+
+#include <QQuickView>
+
 #include <QDesktopServices>
 #include <QMouseEvent>
 
@@ -44,24 +48,6 @@ http://qt-project.org/forums/viewthread/1468
 */
 
 using namespace Features;
-
-class MQDeclarativeView: public QDeclarativeView    
-{
-  Q_OBJECT
-public:
-  MQDeclarativeView(QWidget *parent = 0) 
-    : QDeclarativeView(parent)
-  {
-  }
-
-protected:
-  void mousePressEvent(QMouseEvent* event) override;
-  void mouseReleaseEvent(QMouseEvent* event) override;
-
-signals:
-  void leftMousePress(int globalX, int globalY); 
-  void leftMouseRelease(int globalX, int globalY); 
-};
 
 class BestInstallPath;
 
@@ -83,20 +69,16 @@ namespace GameNet {
   }
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QQuickView
 {
   Q_OBJECT
-
   Q_PROPERTY(QString language READ language NOTIFY languageChanged)
   Q_PROPERTY(QString fileVersion READ fileVersion NOTIFY fileVersionChanged) 
 
-protected:
-  //Next one overloaded due to QGNA-128
-  virtual void showEvent(QShowEvent* event);
 
 public:
-  MainWindow(QWidget *parent = 0);
-  ~MainWindow();
+  explicit MainWindow(QWindow *parent = 0);
+  virtual ~MainWindow();
 
   const QString& installUpdateGnaPath() { return this->_installUpdateGnaPath; }
   const QString& updateArea() { return this->_updateArea; }
@@ -153,6 +135,7 @@ public slots:
   void acceptFirstLicense(const QString& serviceId);
   void initFinished();
   void initialize();
+
 
   void onTaskbarButtonCreated();
   void onProgressUpdated(int progressValue, const QString &status);
@@ -244,10 +227,6 @@ private slots:
   void onSecondServiceStarted(const QString &serviceId);
   void onSecondServiceFinished(const QString &serviceId, int state);
 
-  void onSystemBarPressed(int MouseX, int MouseY);
-  void onSystemBarReleased(int MouseX, int MouseY);
-  void onSystemBarPositionChanged(int MouseX, int MouseY);
-
   void downloadGameTotalProgressChanged(const QString& serviceId, int progress);
   void downloadGameProgressChanged(
     const QString& serviceId, 
@@ -270,11 +249,12 @@ private slots:
     GGS::RestApi::CommandBase *command);
 
 private:
-  void loadPlugin(QString pluginName);
+  void sendStartingMarketing();
+
+  void loadPlugin(QString pluginName, QString uri);
 
   void initRestApi();
   void initMarketing();
-  bool isUseOpenGLrender();
 
   void checkDesktopDepth();
 
@@ -292,9 +272,8 @@ private:
   QString _language;
   QString _fileVersion;
 
-  MQDeclarativeView *nQMLContainer;
+  //MQDeclarativeView *nQMLContainer;
 
-  QPoint mLastMousePosition;
   bool m_WindowState; // false - normal size, true - max size  
   GGS::Application::ArgumentParser _commandLineArguments;
   GGS::Core::Service::Area _gameArea;
@@ -322,7 +301,13 @@ private:
   BestInstallPath *_bestInstallPath;
 
 protected:
-  void closeEvent(QCloseEvent* event);
   bool event(QEvent* event);
   bool nativeEvent(const QByteArray & eventType, void * message, long * result) override;
+
+  //Next one overloaded due to QGNA-128
+  virtual void showEvent(QShowEvent* event);
+
+  void mousePressEvent(QMouseEvent * event) override;
+  void mouseReleaseEvent(QMouseEvent * event) override;
+
 };

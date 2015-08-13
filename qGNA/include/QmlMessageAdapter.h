@@ -4,7 +4,7 @@
 #include <Core/UI/Message.h>
 #include <Core/UI/MessageAdapter.h>
 
-#include <QtDeclarative/QDeclarativeView>
+//#include <QtDeclarative/QDeclarativeView>
 #include <QSignalMapper>
 
 using namespace GGS::Core::UI;

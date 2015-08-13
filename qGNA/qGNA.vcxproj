@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,10 +18,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -54,8 +56,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>QGNA_NO_UPDATE;_WINDOWS;UNICODE;WIN32;NOMINMAX;QT_DLL;QT_HAVE_MMX;QT_HAVE_3DNOW;QT_HAVE_SSE;QT_HAVE_MMXEXT;QT_HAVE_SSE2;QT_THREAD_SUPPORT;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_DECLARATIVE_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Host\include\;.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtDeclarative;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtWebkitWidgets;$(QTDIR)\include\QtDBus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QGNA_NO_UPDATE;_WINDOWS;UNICODE;WIN32;NOMINMAX;QT_DLL;QT_HAVE_MMX;QT_HAVE_3DNOW;QT_HAVE_SSE;QT_HAVE_MMXEXT;QT_HAVE_SSE2;QT_THREAD_SUPPORT;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;QT_QML_LIB;QT_QUICK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Host\include\;.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtWebkitWidgets;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtANGLE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -68,12 +70,13 @@
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)lib\;$(VLDDIR)\lib\Win32;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystemViewModel\$(UpdateSystemViewModelArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>version.lib;qtmaind.lib;UpdateSystemX86d.lib;UpdateSystemViewModelX86d.lib;RestApiX86d.lib;AutoRunHelperX86d.lib;BugTrap.lib;SettingsX86d.lib;LibtorrentWrapperX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;ApplicationX86d.lib;FeaturesX86d.lib;QmlExtensionX86d.lib;ResourceHelperX86d.lib;MarketingX86d.lib;HookEngined.lib;Log4Qtd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5WebKitd.lib;Qt5Declaratived.lib;Qt5Scriptd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;Qt5Concurrentd.lib;Qt5Widgetsd.lib;Qt5Multimediad.lib;Qt5WebkitWidgetsd.lib;Qt5DBusd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>version.lib;qtmaind.lib;UpdateSystemX86d.lib;UpdateSystemViewModelX86d.lib;RestApiX86d.lib;AutoRunHelperX86d.lib;BugTrap.lib;SettingsX86d.lib;LibtorrentWrapperX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;ApplicationX86d.lib;FeaturesX86d.lib;QmlExtensionX86d.lib;ResourceHelperX86d.lib;MarketingX86d.lib;HookEngineMDd.lib;Log4Qtd.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5WebKitd.lib;Qt5Scriptd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;Qt5Concurrentd.lib;Qt5Widgetsd.lib;Qt5Multimediad.lib;Qt5WebkitWidgetsd.lib;Qt5DBusd.lib;Qt5Qmld.lib;Qt5Quickd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <Profile>true</Profile>
       <GenerateMapFile>true</GenerateMapFile>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PreBuildEvent>
       <Command>IF "$(QGNACOMMONDIR)"=="" (
@@ -93,13 +96,23 @@ call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
+      <Command>@REM Creating a Newline variable (the two blank lines are required!)
+@set NLM=^
+
+
+@set NL=^^^%NLM%%NLM%^%NLM%%NLM%
+
+@set COPY_CHANGED=xcopy /Y /I /R /E
+@set COPY_DIR=xcopy /Y /I /R /S 
+
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wav" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -110,19 +123,19 @@ IF "$(Configuration)"=="Debug" (
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
-xcopy /Y /I /R /E "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(SolutionDir)\Host\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(SolutionDir)\Host\i18n\*.ts" "$(TargetDir)"
 
-xcopy /Y /I /R /E  "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(SolutionDir)\Features\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(SolutionDir)\Features\i18n\*.ts" "$(TargetDir)"
 
 mkdir "$(TargetDir)languages"
 CALL "$(SolutionDir)\Etc\tsmerge.cmd" ru "$(TargetDir)languages\qgna" "$(TargetDir)."
@@ -131,108 +144,136 @@ CALL "$(SolutionDir)\Etc\tsmerge.cmd" en "$(TargetDir)languages\qgna" "$(TargetD
 del /F /Q "$(TargetDir)*.ts"
 
 @REM vs_redist
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\Microsoft\vc_redist_2013\bin\msvcp120%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\Microsoft\vc_redist_2013\bin\msvcr120%D%.dll" "$(TargetDir)"
 
 @REM Our binaries
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.vmp" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX64%D%.map" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
+
+%COPY_CHANGED% "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
 
 IF "$(Configuration)"=="Debug" (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp_d0.dll" "$(TargetDir)"
+     %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp_d0.dll" "$(TargetDir)"
 )  ELSE (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp0.dll" "$(TargetDir)"
+     %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp0.dll" "$(TargetDir)"
 )
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)plugins\QXmpp\"
+echo module QXmpp%NL%plugin qxmpp-declarative &gt; "$(TargetDir)plugins\QXmpp\qmldir"
+@rem %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qmldir" "$(TargetDir)plugins\QXmpp\"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)plugins\Tulip\"
+echo module Tulip%NL%plugin QmlExtensionX86 &gt; "$(TargetDir)plugins\Tulip\qmldir"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)plugins\Tulip\Overlay\"
+echo module Tulip.Overlay%NL%plugin QmlOverlayX86 &gt; "$(TargetDir)plugins\Tulip\Overlay\qmldir"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\GameExecutorHelperX64%D%.exe" "$(TargetDir)Thetta\"
 
 @REM QT binaries
+set ICU_AREA=53.vc13
+%COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icudt53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuin53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuuc53.dll" "$(TargetDir)"
 
-xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuuc53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%4.dll" "$(TargetDir)imageformats\"
+%COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%4.dll" "$(TargetDir)sqldrivers\"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Multimedia%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Qml%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Quick%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5DBus%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5WinExtras%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Multimedia%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5MultimediaQuick_p%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\pluginsphonon_backend\phonon_ds9%D%4.dll" "$(TargetDir)phonon_backend\"
+@rem Этот файл вроде бы нужен, хотя и не особо используется
+%COPY_CHANGED% "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Multimedia%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5MultimediaWidgets%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Positioning%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5PrintSupport%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Qml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Quick%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sensors%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Svg%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKitWidgets%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WinExtras%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5DBus%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5MultimediaWidgets%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5Positioning%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5PrintSupport%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5Sensors%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5Svg%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebKitWidgets%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
 
-xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
-echo plugin qmlwebkitplugin%D% &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
+@rem %COPY_CHANGED% "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
+@rem echo plugin qmlwebkitplugin &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
 
-@REM DBus
-xcopy /Y /I /R /E "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
+@rem PLUGINS
+%COPY_CHANGED% "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
 
-del "$(TargetDir)\*.ilk"</Command>
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+
+%COPY_CHANGED% "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
+%COPY_CHANGED% "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\windowplugin%D%.dll" "$(TargetDir)plugins\QtQuick\Window.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\qmldir" "$(TargetDir)plugins\QtQuick\Window.2\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmlxmllistmodelplugin%D%.dll" "$(TargetDir)plugins\QtQuick\XmlListModel\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmldir" "$(TargetDir)plugins\QtQuick\XmlListModel\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qtquick2plugin%D%.dll" "$(TargetDir)plugins\QtQuick.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qmldir" "$(TargetDir)plugins\QtQuick.2\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins\QtWebEngine\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins\QtWebEngine\"
+del "$(TargetDir)\*.ilk"
+
+</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
     <CustomBuildStep>
@@ -245,8 +286,8 @@ del "$(TargetDir)\*.ilk"</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;QT_NO_DEBUG;NOMINMAX;NDEBUG;QT_WEBKIT_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_DECLARATIVE_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtDeclarative;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtWebkitWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QGNA_NO_UPDATE;UNICODE;WIN32;QT_NO_DEBUG;NOMINMAX;NDEBUG;QT_WEBKIT_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;QT_DLL;QT_QML_LIB;QT_QUICK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Host\include\;.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtWebkitWidgets;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtANGLE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -258,10 +299,11 @@ del "$(TargetDir)\*.ilk"</Command>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)lib\;$(VLDDIR)\lib\Win32;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystemViewModel\$(UpdateSystemViewModelArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>version.lib;qtmain.lib;UpdateSystemX86.lib;UpdateSystemViewModelX86.lib;RestApiX86.lib;AutoRunHelperX86.lib;Log4Qt.lib;SettingsX86.lib;BugTrap.lib;LibtorrentWrapperX86.lib;GameDownloaderX86.lib;GameExecutorX86.lib;ApplicationX86.lib;FeaturesX86.lib;QmlExtensionX86.lib;ResourceHelperX86.lib;MarketingX86.lib;HookEngine.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Network.lib;Qt5Sql.lib;Qt5WebKit.lib;Qt5Declarative.lib;Qt5Script.lib;Qt5Xml.lib;Qt5XmlPatterns.lib;Qt5Concurrent.lib;Qt5Widgets.lib;Qt5Multimedia.lib;Qt5WebkitWidgets.lib;Qt5DBus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>version.lib;qtmain.lib;UpdateSystemX86.lib;UpdateSystemViewModelX86.lib;RestApiX86.lib;AutoRunHelperX86.lib;Log4Qt.lib;SettingsX86.lib;BugTrap.lib;LibtorrentWrapperX86.lib;GameDownloaderX86.lib;GameExecutorX86.lib;ApplicationX86.lib;FeaturesX86.lib;QmlExtensionX86.lib;ResourceHelperX86.lib;MarketingX86.lib;HookEngineMD.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Network.lib;Qt5Sql.lib;Qt5WebKit.lib;Qt5Script.lib;Qt5Xml.lib;Qt5XmlPatterns.lib;Qt5Concurrent.lib;Qt5Widgets.lib;Qt5Multimedia.lib;Qt5WebkitWidgets.lib;Qt5DBus.lib;Qt5Qml.lib;Qt5Quick.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PreBuildEvent>
       <Command>IF "$(QGNACOMMONDIR)"=="" (
@@ -281,13 +323,23 @@ call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
-xcopy /Y /I /R /S "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
+      <Command>@REM Creating a Newline variable (the two blank lines are required!)
+@set NLM=^
+
+
+@set NL=^^^%NLM%%NLM%^%NLM%%NLM%
+
+@set COPY_CHANGED=xcopy /Y /I /R /E
+@set COPY_DIR=xcopy /Y /I /R /S 
+
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wav" "$(TargetDir)Assets\"
+%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -298,19 +350,19 @@ IF "$(Configuration)"=="Debug" (
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
-xcopy /Y /I /R /E "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(SolutionDir)\Host\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(ProjectDir)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(SolutionDir)\Host\i18n\*.ts" "$(TargetDir)"
 
-xcopy /Y /I /R /E  "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\i18n\*.ts" "$(TargetDir)"
-xcopy /Y /I /R /E "$(SolutionDir)\Features\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "$(SolutionDir)\Features\i18n\*.ts" "$(TargetDir)"
 
 mkdir "$(TargetDir)languages"
 CALL "$(SolutionDir)\Etc\tsmerge.cmd" ru "$(TargetDir)languages\qgna" "$(TargetDir)."
@@ -319,108 +371,136 @@ CALL "$(SolutionDir)\Etc\tsmerge.cmd" en "$(TargetDir)languages\qgna" "$(TargetD
 del /F /Q "$(TargetDir)*.ts"
 
 @REM vs_redist
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcp100%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Microsoft\vc_redist_2010\bin\msvcr100%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\Microsoft\vc_redist_2013\bin\msvcp120%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\Microsoft\vc_redist_2013\bin\msvcr120%D%.dll" "$(TargetDir)"
 
 @REM Our binaries
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\7za.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\bin\UpdateSystemX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\bin\RestApiX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\OpenSSL\$(OpenSSLArea)\bin\*.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\bin\AutoRunHelperX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\bin\SettingsX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\bin\CoreX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\bin\LibtorrentWrapperX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\bin\GameDownloaderX86%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorX86%D%.vmp" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorX86%D%.map" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX86%D%.vmp" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX86%D%.map" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\bin\GameExecutorHelperX64%D%.vmp" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\pdb\GameExecutorHelperX64%D%.map" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\bin\CASettingsX86%D%.dll" "$(TargetDir)"
+
+%COPY_CHANGED% "$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\bin\Log4Qt%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"
 
 IF "$(Configuration)"=="Debug" (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp_d0.dll" "$(TargetDir)"
+     %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp_d0.dll" "$(TargetDir)"
 )  ELSE (
-     xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp0.dll" "$(TargetDir)"
+     %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp0.dll" "$(TargetDir)"
 )
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)plugins\QXmpp\"
+echo module QXmpp%NL%plugin qxmpp-declarative &gt; "$(TargetDir)plugins\QXmpp\qmldir"
+@rem %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qmldir" "$(TargetDir)plugins\QXmpp\"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)plugins\Tulip\"
+echo module Tulip%NL%plugin QmlExtensionX86 &gt; "$(TargetDir)plugins\Tulip\qmldir"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)plugins\Tulip\Overlay\"
+echo module Tulip.Overlay%NL%plugin QmlOverlayX86 &gt; "$(TargetDir)plugins\Tulip\Overlay\qmldir"
 
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
-xcopy /Y /I /R /E "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta64.sys" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix64%D%.exe" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\ix32%D%.exe" "$(TargetDir)Thetta\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\GameExecutorHelperX64%D%.exe" "$(TargetDir)Thetta\"
 
 @REM QT binaries
+set ICU_AREA=53.vc13
+%COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icudt53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuin53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuuc53.dll" "$(TargetDir)"
 
-xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icudt53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuin53.dll" "$(TargetDir)"
-xcopy /Y /I /R "$(QGNACOMMONDIR)\icu\53\bin\icuuc53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%4.dll" "$(TargetDir)imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%4.dll" "$(TargetDir)imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%4.dll" "$(TargetDir)imageformats\"
+%COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%4.dll" "$(TargetDir)sqldrivers\"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Multimedia%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Qml%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Quick%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5DBus%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5WinExtras%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5Multimedia%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5MultimediaQuick_p%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\pluginsphonon_backend\phonon_ds9%D%4.dll" "$(TargetDir)phonon_backend\"
+@rem Этот файл вроде бы нужен, хотя и не особо используется
+%COPY_CHANGED% "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Declarative%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Multimedia%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5MultimediaWidgets%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Network%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Positioning%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5PrintSupport%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Qml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Quick%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sensors%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Svg%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WebKitWidgets%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5WinExtras%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5XmlPatterns%D%.dll" "$(TargetDir)"
-xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5DBus%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5MultimediaWidgets%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5OpenGL%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5Positioning%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5PrintSupport%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5Sensors%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5Svg%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebKit%D%.dll" "$(TargetDir)"
+@rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebKitWidgets%D%.dll" "$(TargetDir)"
 
-xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
-xcopy /Y /I /R /E "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
 
-xcopy /Y /I /R /E "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
-echo plugin qmlwebkitplugin%D% &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
+@rem %COPY_CHANGED% "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
+@rem echo plugin qmlwebkitplugin &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
 
-@REM DBus
-xcopy /Y /I /R /E "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
+@rem PLUGINS
+%COPY_CHANGED% "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
 
-del "$(TargetDir)\*.ilk"</Command>
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+
+%COPY_CHANGED% "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
+%COPY_CHANGED% "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\windowplugin%D%.dll" "$(TargetDir)plugins\QtQuick\Window.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\qmldir" "$(TargetDir)plugins\QtQuick\Window.2\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmlxmllistmodelplugin%D%.dll" "$(TargetDir)plugins\QtQuick\XmlListModel\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmldir" "$(TargetDir)plugins\QtQuick\XmlListModel\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qtquick2plugin%D%.dll" "$(TargetDir)plugins\QtQuick.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qmldir" "$(TargetDir)plugins\QtQuick.2\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins\QtWebEngine\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins\QtWebEngine\"
+del "$(TargetDir)\*.ilk"
+
+</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
     <Manifest>

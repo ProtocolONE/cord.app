@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QDeclarativeItem>
+//#include <QDeclarativeItem>
 #include <QtMultimedia/QAudioOutput>
 #include <QtMultimedia/QMediaPlayer>
 
-class Player: public QDeclarativeItem
+class Player: public QObject
 {
   Q_OBJECT
   Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged) 
@@ -12,7 +12,7 @@ class Player: public QDeclarativeItem
   Q_PROPERTY(bool autoPlay READ autoPlay WRITE setAutoPlay NOTIFY autoPlayChanged) 
 
 public:
-  explicit Player(QDeclarativeItem *parent = 0);
+  explicit Player(QObject *parent = 0);
   virtual ~Player();
 
   QString source() const;

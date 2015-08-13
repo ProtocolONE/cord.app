@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -1851,10 +1851,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -1897,7 +1899,7 @@
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CASettingsX86d.lib;ThettaX86d.lib;MarketingX86d.lib;AutoRunHelperX86d.lib;CoreX86d.lib;HookEngined.lib;crypt32.lib;Qt5WinExtrasd.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>CASettingsX86d.lib;ThettaX86d.lib;MarketingX86d.lib;AutoRunHelperX86d.lib;CoreX86d.lib;HookEngineMDd.lib;crypt32.lib;Qt5WinExtrasd.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
@@ -1907,7 +1909,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;NOMINMAX;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;ZZIMA_INTEGRATION;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QGNA_NO_UPDATE;UNICODE;WIN32;NOMINMAX;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;ZZIMA_INTEGRATION;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(SolutionDir)Features\include;.\include\Helper;.\;.\include\Integration\ZZima\Dbus;.\include\Host;$(QTDIR)\include\QtXml;.\include\Features;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
@@ -1921,7 +1923,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CASettingsX86.lib;ThettaX86.lib;MarketingX86.lib;AutoRunHelperX86.lib;CoreX86.lib;HookEngine.lib;crypt32.lib;Qt5WinExtras.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>CASettingsX86.lib;ThettaX86.lib;MarketingX86.lib;AutoRunHelperX86.lib;CoreX86.lib;HookEngineMD.lib;crypt32.lib;Qt5WinExtras.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
