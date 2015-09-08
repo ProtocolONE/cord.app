@@ -937,7 +937,8 @@ bool MainWindow::anyLicenseAccepted()
     << "300004010000000000"
     << "300005010000000000"
     << "300009010000000000"
-    << "300012010000000000";
+    << "300012010000000000"
+    << "30000000000";
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   Q_FOREACH(QString id, ids) {
