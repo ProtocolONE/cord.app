@@ -322,7 +322,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ThronInstaller.cpp" />
     <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
     <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
-    <ClCompile Include="src\Features\RememberGameDownloading.cpp" />
     <ClCompile Include="src\Features\RemouteStartGame.cpp" />
     <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp" />
     <ClCompile Include="src\Features\TaskBarProgressHelper.cpp" />
@@ -415,7 +414,6 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
-    <CustomBuild Include="include\Features\RememberGameDownloading.h" />
     <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h" />
     <CustomBuild Include="include\Features\ThronInstaller.h" />
     <CustomBuild Include="include\Features\GameDownloader\DownloadStats.h" />

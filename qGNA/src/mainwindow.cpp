@@ -233,11 +233,6 @@ void MainWindow::initialize()
   //if (!this->_commandLineArguments.contains("minimized"))
   //  this->activateWindow();
   
-  if (!this->_commandLineArguments.contains("startservice")) {
-    QObject::connect(this, &MainWindow::updateFinished,
-      &this->_rememberGameFeature, &RememberGameDownloading::update);
-  }
-  
   this->sendStartingMarketing();
   
   QObject::connect(this, &MainWindow::windowActivated, &this->_keyboardLayoutHelper, &GGS::KeyboardLayoutHelper::update);
@@ -464,22 +459,6 @@ void MainWindow::prepairGameDownloader()
   
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::serviceUpdated, 
     this, &MainWindow::gameDownloaderServiceUpdated);
-
-  QObject::connect(this->_downloader, &DownloaderBridgeProxy::started,
-    &this->_rememberGameFeature, &RememberGameDownloading::started);
-
-  QObject::connect(this->_downloader, &DownloaderBridgeProxy::finished,
-    &this->_rememberGameFeature, &RememberGameDownloading::finished);
-
-  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameDownloader, SIGNAL(serviceUpdated(const GGS::Core::Service *)), 
-    this, SLOT(gameDownloaderServiceUpdated(const GGS::Core::Service *))));
-
-  QObject::connect(this->_serviceLoader.thettaInstaller(), &Features::Thetta::ThettaInstaller::compromised,
-    this, &MainWindow::windowCloseInfo);
-
-  QObject::connect(
-    &this->_rememberGameFeature, &RememberGameDownloading::startGameRequest,
-    this, &MainWindow::downloadButtonStart);
 
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::accessRequired,
     this, &MainWindow::gameDownloaderAccessRequired);

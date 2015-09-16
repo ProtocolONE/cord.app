@@ -5,7 +5,6 @@
 #include <version.h>
 
 #include <Features/RemouteStartGame.h>
-#include <Features/RememberGameDownloading.h>
 #include <Features/SilentMode.h>
 
 #include <Features/TaskBarEventFilter.h>

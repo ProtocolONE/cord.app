@@ -2,7 +2,6 @@
 
 #include <QmlMessageAdapter.h>
 
-#include <Features/RememberGameDownloading.h>
 #include <Features/SilentMode.h>
 #include <Features/TaskBarProgressHelper.h>
 
@@ -284,7 +283,6 @@ private:
 
   GGS::Core::Service::Area _applicationArea;
 
-  RememberGameDownloading _rememberGameFeature;
   GGS::Marketing::MarketingTarget _marketingTargetFeatures;
 
   Features::TaskBarHelper _taskBarHelper;
