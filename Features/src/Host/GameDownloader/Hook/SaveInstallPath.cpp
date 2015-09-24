@@ -2,7 +2,6 @@
 #include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
 #include <GameDownloader/GameDownloadService.h>
-#include <GameDownloader/GameDownloader.h>
 #include <GameDownloader/ServiceState.h>
 
 #include <Core/Service.h>
