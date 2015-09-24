@@ -2,6 +2,7 @@
 #include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
 #include <GameDownloader/GameDownloadService.h>
+#include <GameDownloader/GameDownloader.h>
 #include <GameDownloader/ServiceState.h>
 
 #include <Core/Service.h>
@@ -11,6 +12,7 @@
 using GGS::GameDownloader::GameDownloadService;
 using GGS::GameDownloader::ServiceState;
 using GGS::GameDownloader::HookBase;
+using GGS::GameDownloader::StartType;
 using GameNet::Host::ServiceProcess::ServiceLoader;
 using GGS::Core::Service;
 
@@ -35,15 +37,22 @@ namespace GameNet {
           Q_ASSERT(this->_settings);
           QString id(state->id());
           
-          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-          settings.beginGroup(id);
-          settings.setValue("DownloadPath", this->_settings->downloadPath(id));
-          settings.setValue("InstallPath", this->_settings->installPath(id));
-
           GGS::Core::Service *service = this->_services->getService(id);
           Q_ASSERT(service);
-          service->setIsDefaultInstallPath(false);
-          
+
+          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+          settings.beginGroup(id);
+          if (state->startType() != StartType::Uninstall) {
+            settings.setValue("DownloadPath", this->_settings->downloadPath(id));
+            settings.setValue("InstallPath", this->_settings->installPath(id));
+            service->setIsDefaultInstallPath(false);
+          } else {
+            //INFO QGNA-1371
+            settings.remove("DownloadPath");
+            settings.remove("InstallPath");
+            service->setIsDefaultInstallPath(true);
+          }
+                              
           return HookBase::Continue;
         }
 
