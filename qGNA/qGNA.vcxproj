@@ -18,12 +18,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -271,6 +271,10 @@ set ICU_AREA=53.vc13
 
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins\QtWebEngine\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins\QtWebEngine\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins\QtMultimedia\"
+
 del "$(TargetDir)\*.ilk"
 
 </Command>
@@ -498,6 +502,10 @@ set ICU_AREA=53.vc13
 
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins\QtWebEngine\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins\QtWebEngine\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins\QtMultimedia\"
+
 del "$(TargetDir)\*.ilk"
 
 </Command>

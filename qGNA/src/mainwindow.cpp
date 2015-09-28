@@ -190,13 +190,6 @@ void MainWindow::initialize()
   this->_gameSettingsViewModel->setDownloader(this->_downloader);
   this->_gameSettingsViewModel->setServiceSettings(this->_serviceSettings);
     
-  // HACK - уточнить что это полезно и зачем это
-  //nQMLContainer->setAttribute(Qt::WA_OpaquePaintEvent);
-  //nQMLContainer->setAttribute(Qt::WA_NoSystemBackground);
-  //nQMLContainer->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
-  //nQMLContainer->viewport()->setAttribute(Qt::WA_NoSystemBackground);
-  // END of HACK
-    
   this->rootContext()->setContextProperty("keyboardHook", &this->_keyboardLayoutHelper);
   this->rootContext()->setContextProperty("mainWindow", this);
   this->rootContext()->setContextProperty("installPath", "file:///" + QCoreApplication::applicationDirPath() + "/");
@@ -204,6 +197,7 @@ void MainWindow::initialize()
   this->rootContext()->setContextProperty("messageBox", messageAdapter);
   this->rootContext()->setContextProperty("gameSettingsModel", this->_gameSettingsViewModel);
 
+  this->setResizeMode(QQuickView::SizeRootObjectToView);
   this->setSource(QUrl("qrc:/Main.qml"));
 
   if (this->status() == QQuickView::Status::Error) {
@@ -214,13 +208,11 @@ void MainWindow::initialize()
     // UNDONE решить что делать в случаи фейла верстки
   }
   
-  this->setResizeMode(QQuickView::SizeRootObjectToView);
-  
   SIGNAL_CONNECT_CHECK(QObject::connect(this->engine(), SIGNAL(quit()), this, SLOT(onWindowClose())));
   connect(this, &MainWindow::quit, this, &MainWindow::onWindowClose);
 
   Message::setAdapter(messageAdapter);
-  
+
   if (this->_commandLineArguments.contains("minimized")) {
     //this->showMinimized();
     this->hide();
@@ -291,13 +283,14 @@ bool MainWindow::nativeEvent(const QByteArray & eventType, void * message, long 
   if (message->message == WM_KEYUP) 
     this->_keyboardLayoutHelper.update();
 
-  return QWindow::nativeEvent(eventType, message, result);
+  return QQuickView::nativeEvent(eventType, message, result);
 }
 
 void MainWindow::activateWindow()
 {
   DEBUG_LOG << "activateWindow";
   this->show();
+  
   // Это нам покажет окно
   //this->setFocusPolicy(Qt::StrongFocus);
   //this->setWindowState(Qt::WindowActive); 
@@ -716,7 +709,7 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
 
   if (name == "activate") {
     DEBUG_LOG;
-   // this->activateWindow();
+    this->activateWindow();
     return;
   } 
 
@@ -841,7 +834,8 @@ void MainWindow::showEvent(QShowEvent* event)
   // UNDONE  !!!!!!!!!!!!!!!!Next one overloaded due to QGNA-128
   // посмотреть надо ли теперь форсированно репейнтить при разворачивани
   //this->repaint();
-
+  //this->requestUpdate();
+  //QApplication::postEvent(this, new QEvent(QEvent::UpdateRequest), Qt::LowEventPriority);
   QQuickView::showEvent(event);
 }
 
@@ -849,7 +843,6 @@ bool MainWindow::isWindowVisible()
 {
   return this->isVisible() && this->windowState() != Qt::WindowMinimized;
 }
-
 
 // UNDONE Больше мы не грузим руками плагины - удлить функцию
 void MainWindow::loadPlugin(QString pluginName, QString uri)
@@ -1013,7 +1006,7 @@ bool MainWindow::event(QEvent* event)
     break;
   }
 
-  return QWindow::event(event);
+  return QQuickView::event(event);
 }
 
 void MainWindow::initMarketing()
@@ -1055,14 +1048,16 @@ void MainWindow::terminateSecondService()
   this->_executor->shutdownSecond();
 }
 
-void MainWindow::mousePressEvent(QMouseEvent* event) {
+void MainWindow::mousePressEvent(QMouseEvent* event) 
+{
   if (event->button() & Qt::LeftButton)
     emit this->leftMousePress(event->x(), event->y());
 
   QQuickView::mousePressEvent(event);
 }
 
-void MainWindow::mouseReleaseEvent(QMouseEvent* event) {
+void MainWindow::mouseReleaseEvent(QMouseEvent* event) 
+{
   if (event->button() & Qt::LeftButton)
     emit this->leftMouseRelease(event->x(), event->y());
 

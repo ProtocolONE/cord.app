@@ -310,13 +310,11 @@
     <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_DownloadStats.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadStatistics.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_RememberGameDownloading.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_RemouteStartGame.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ThronInstaller.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_DownloadStats.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadStatistics.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_RememberGameDownloading.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_RemouteStartGame.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ThronInstaller.cpp" />
