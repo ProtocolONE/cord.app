@@ -52,8 +52,8 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
 #include <QtCore/QUrl>
-#include <QtCore/QCoreApplication>
 #include <QtCore/QMutexLocker>
+#include <QtCore/QCryptographicHash>
 
 using GGS::Application::SingleApplication;
 using GGS::GameDownloader::GameDownloadService;
@@ -491,6 +491,7 @@ namespace GameNet {
 
         auto qgnaLogout = [this]() {
           this->_systemInfoManager->setCredential(GGS::RestApi::GameNetCredential());
+          this->_gameDownloader->resetCredentials();
         };
 
         QObject::connect(connection, &Connection::logoutMain, qgnaLogout);
@@ -498,8 +499,22 @@ namespace GameNet {
         QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
           this->_systemInfoManager->setCredential(connection->credential());
           this->_thetta->setCredential(connection->credential());
+          this->setDownloaderCredential(connection->credential());
         });
       }
+    }
+
+    void Application::setDownloaderCredential(const GGS::RestApi::GameNetCredential &creds)
+    {
+      QString userId = creds.userId();
+
+      QCryptographicHash hash(QCryptographicHash::Sha1);
+      hash.addData(userId.toLocal8Bit());
+      hash.addData("t5mPWw25K8FIpZaQ"); //INFO QGNA-1319
+      
+      QString authHash(hash.result().toHex());
+
+      this->_gameDownloader->setCredentials(userId, authHash);
     }
 
     void Application::onConnectionLogoutMain()
