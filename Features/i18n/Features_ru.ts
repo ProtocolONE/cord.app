@@ -13,6 +13,17 @@
     </message>
 </context>
 <context>
+    <name>Features::Thetta::AppDistrIntegrity</name>
+    <message>
+        <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
+        <translation type="unfinished">Неизвестная ошибка</translation>
+    </message>
+    <message>
+        <source>INVALID_CA_GAME_DISTRIBUTIVE_TEXT</source>
+        <translation type="unfinished">Произошла неизвестная ошибка в клиенте игры. Попробуйте запустить игру ещё раз или воспользуйтесь опцией восстановления клиента в настройках игры.</translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::DistrIntegrityExecutorHook</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>

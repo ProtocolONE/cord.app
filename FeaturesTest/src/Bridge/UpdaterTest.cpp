@@ -31,7 +31,7 @@ public:
 class UpdaterBridgeTest : public ::testing::Test 
 {
 public:
-  UpdaterBridgeTest() 
+  UpdaterBridgeTest()
   {
     bridge.setUpdateManager(&updaterMock);
 

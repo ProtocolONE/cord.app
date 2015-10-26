@@ -13,6 +13,17 @@
     </message>
 </context>
 <context>
+    <name>Features::Thetta::AppDistrIntegrity</name>
+    <message>
+        <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>INVALID_CA_GAME_DISTRIBUTIVE_TEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::DistrIntegrityExecutorHook</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>

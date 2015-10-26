@@ -1056,7 +1056,7 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
   QQuickView::mousePressEvent(event);
 }
 
-void MainWindow::mouseReleaseEvent(QMouseEvent* event) 
+void MainWindow::mouseReleaseEvent(QMouseEvent* event)
 {
   if (event->button() & Qt::LeftButton)
     emit this->leftMouseRelease(event->x(), event->y());

@@ -1900,7 +1900,7 @@
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CASettingsX86d.lib;ThettaX86d.lib;MarketingX86d.lib;AutoRunHelperX86d.lib;CoreX86d.lib;HookEngineMDd.lib;crypt32.lib;Qt5WinExtrasd.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>CASettingsX86d.lib;ThettaX86d.lib;MarketingX86d.lib;AutoRunHelperX86d.lib;CoreX86d.lib;crypt32.lib;Qt5WinExtrasd.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
@@ -1924,7 +1924,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CASettingsX86.lib;ThettaX86.lib;MarketingX86.lib;AutoRunHelperX86.lib;CoreX86.lib;HookEngineMD.lib;crypt32.lib;Qt5WinExtras.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>CASettingsX86.lib;ThettaX86.lib;MarketingX86.lib;AutoRunHelperX86.lib;CoreX86.lib;crypt32.lib;Qt5WinExtras.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>$(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_ru.ts"
