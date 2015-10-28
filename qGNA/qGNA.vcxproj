@@ -212,6 +212,7 @@ set ICU_AREA=53.vc13
 %COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\opengl32sw.dll" "$(TargetDir)"
 
 %COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
@@ -290,7 +291,7 @@ del "$(TargetDir)\*.ilk"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>QGNA_NO_UPDATE;UNICODE;WIN32;QT_NO_DEBUG;NOMINMAX;NDEBUG;QT_WEBKIT_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;QT_DLL;QT_QML_LIB;QT_QUICK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;WIN32;QT_NO_DEBUG;NOMINMAX;NDEBUG;QT_WEBKIT_LIB;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_SCRIPT_LIB;QT_XML_LIB;QT_XMLPATTERNS_LIB;QT_CONCURRENT_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WEBKITWIDGETS_LIB;QT_DLL;QT_QML_LIB;QT_QUICK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Host\include\;.\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\include\RestApi;$(ProjectDir)include;$(VLDDIR)\include;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include\AutoRunHelper;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\include;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\include;$(QGNACOMMONDIR)\Haxx\Curl\7.24.0\include;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include\Settings;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\include\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\include;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\include;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\include;.\include\declarative;.\include;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\include;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWebKit;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtWebkitWidgets;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtANGLE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -443,6 +444,7 @@ set ICU_AREA=53.vc13
 %COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\opengl32sw.dll" "$(TargetDir)"
 
 %COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
