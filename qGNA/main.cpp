@@ -89,6 +89,8 @@ void initBugTrap(const QString &path)
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+  app.setQuitOnLastWindowClosed(false);
+
   qputenv("QSG_RENDER_LOOP", "threaded");
   if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
     qputenv("QT_OPENGL", "software");
