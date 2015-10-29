@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
   QString path = QCoreApplication::applicationDirPath();
  
   QStringList plugins;
-  plugins << path + "/plugins";
+  plugins << path + "/plugins5";
   app.setLibraryPaths(plugins);
 
   if (app.containsCommand("silent")) {

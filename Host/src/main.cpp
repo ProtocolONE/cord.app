@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     return 0;
   }
 
-  app.setLibraryPaths(QStringList() << path + "/plugins");
+  app.setLibraryPaths(QStringList() << path + "/plugins5");
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 

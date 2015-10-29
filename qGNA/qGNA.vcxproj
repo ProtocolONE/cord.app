@@ -185,16 +185,16 @@ IF "$(Configuration)"=="Debug" (
 )  ELSE (
      %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp0.dll" "$(TargetDir)"
 )
-%COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)plugins\QXmpp\"
-echo module QXmpp%NL%plugin qxmpp-declarative &gt; "$(TargetDir)plugins\QXmpp\qmldir"
-@rem %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qmldir" "$(TargetDir)plugins\QXmpp\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)plugins5\QXmpp\"
+echo module QXmpp%NL%plugin qxmpp-declarative &gt; "$(TargetDir)plugins5\QXmpp\qmldir"
+@rem %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qmldir" "$(TargetDir)plugins5\QXmpp\"
 
-%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)plugins\Tulip\"
-echo module Tulip%NL%plugin QmlExtensionX86 &gt; "$(TargetDir)plugins\Tulip\qmldir"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)plugins5\Tulip\"
+echo module Tulip%NL%plugin QmlExtensionX86 &gt; "$(TargetDir)plugins5\Tulip\qmldir"
 
 %COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
-%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)plugins\Tulip\Overlay\"
-echo module Tulip.Overlay%NL%plugin QmlOverlayX86 &gt; "$(TargetDir)plugins\Tulip\Overlay\qmldir"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)plugins5\Tulip\Overlay\"
+echo module Tulip.Overlay%NL%plugin QmlOverlayX86 &gt; "$(TargetDir)plugins5\Tulip\Overlay\qmldir"
 
 %COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
 %COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
@@ -248,33 +248,33 @@ set ICU_AREA=53.vc13
 @rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebKitWidgets%D%.dll" "$(TargetDir)"
 
 
-@rem %COPY_CHANGED% "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
-@rem echo plugin qmlwebkitplugin &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
+@rem %COPY_CHANGED% "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins5\QtWebKit\"
+@rem echo plugin qmlwebkitplugin &gt; "$(TargetDir)plugins5\QtWebKit\qmldir"
 
 @rem PLUGINS
 %COPY_CHANGED% "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
 
-%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
-%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
-%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins5\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins5\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins5\imageformats\"
 
-%COPY_CHANGED% "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
-%COPY_CHANGED% "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
+%COPY_CHANGED% "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins5\sqldrivers\"
+%COPY_CHANGED% "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins5\mediaservice\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\windowplugin%D%.dll" "$(TargetDir)plugins\QtQuick\Window.2\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\qmldir" "$(TargetDir)plugins\QtQuick\Window.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\windowplugin%D%.dll" "$(TargetDir)plugins5\QtQuick\Window.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\qmldir" "$(TargetDir)plugins5\QtQuick\Window.2\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmlxmllistmodelplugin%D%.dll" "$(TargetDir)plugins\QtQuick\XmlListModel\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmldir" "$(TargetDir)plugins\QtQuick\XmlListModel\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmlxmllistmodelplugin%D%.dll" "$(TargetDir)plugins5\QtQuick\XmlListModel\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmldir" "$(TargetDir)plugins5\QtQuick\XmlListModel\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qtquick2plugin%D%.dll" "$(TargetDir)plugins\QtQuick.2\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qmldir" "$(TargetDir)plugins\QtQuick.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qtquick2plugin%D%.dll" "$(TargetDir)plugins5\QtQuick.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qmldir" "$(TargetDir)plugins5\QtQuick.2\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins\QtWebEngine\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins\QtWebEngine\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins5\QtWebEngine\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins5\QtWebEngine\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins\QtMultimedia\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins5\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins5\QtMultimedia\"
 
 del "$(TargetDir)\*.ilk"
 
@@ -417,16 +417,16 @@ IF "$(Configuration)"=="Debug" (
 )  ELSE (
      %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp\$(QxmppArea)\bin\qxmpp0.dll" "$(TargetDir)"
 )
-%COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)plugins\QXmpp\"
-echo module QXmpp%NL%plugin qxmpp-declarative &gt; "$(TargetDir)plugins\QXmpp\qmldir"
-@rem %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qmldir" "$(TargetDir)plugins\QXmpp\"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qxmpp-declarative%D%.dll" "$(TargetDir)plugins5\QXmpp\"
+echo module QXmpp%NL%plugin qxmpp-declarative &gt; "$(TargetDir)plugins5\QXmpp\qmldir"
+@rem %COPY_CHANGED% "$(QGNACOMMONDIR)\GameNet\qxmpp-declarative\$(QxmppDeclarativeArea)\bin\qmldir" "$(TargetDir)plugins5\QXmpp\"
 
-%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)plugins\Tulip\"
-echo module Tulip%NL%plugin QmlExtensionX86 &gt; "$(TargetDir)plugins\Tulip\qmldir"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\QmlExtension\$(QmlExtensionArea)\bin\QmlExtensionX86%D%.dll" "$(TargetDir)plugins5\Tulip\"
+echo module Tulip%NL%plugin QmlExtensionX86 &gt; "$(TargetDir)plugins5\Tulip\qmldir"
 
 %COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\OverlayX86%D%.dll" "$(TargetDir)"
-%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)plugins\Tulip\Overlay\"
-echo module Tulip.Overlay%NL%plugin QmlOverlayX86 &gt; "$(TargetDir)plugins\Tulip\Overlay\qmldir"
+%COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Overlay\$(OverlayArea)\bin\QmlOverlayX86%D%.dll" "$(TargetDir)plugins5\Tulip\Overlay\"
+echo module Tulip.Overlay%NL%plugin QmlOverlayX86 &gt; "$(TargetDir)plugins5\Tulip\Overlay\qmldir"
 
 %COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta.inf" "$(TargetDir)Thetta\"
 %COPY_CHANGED% "$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\bin\Thetta32.sys" "$(TargetDir)Thetta\"
@@ -480,33 +480,33 @@ set ICU_AREA=53.vc13
 @rem %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebKitWidgets%D%.dll" "$(TargetDir)"
 
 
-@rem %COPY_CHANGED% "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins\QtWebKit\"
-@rem echo plugin qmlwebkitplugin &gt; "$(TargetDir)plugins\QtWebKit\qmldir"
+@rem %COPY_CHANGED% "$(QTDIR)\imports\QtWebKit\qmlwebkitplugin%D%.dll" "$(TargetDir)plugins5\QtWebKit\"
+@rem echo plugin qmlwebkitplugin &gt; "$(TargetDir)plugins5\QtWebKit\qmldir"
 
 @rem PLUGINS
 %COPY_CHANGED% "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
 
-%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins\imageformats\"
-%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins\imageformats\"
-%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qjpeg%D%.dll" "$(TargetDir)plugins5\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qgif%D%.dll" "$(TargetDir)plugins5\imageformats\"
+%COPY_CHANGED% "$(QTDIR)\plugins\imageformats\qico%D%.dll" "$(TargetDir)plugins5\imageformats\"
 
-%COPY_CHANGED% "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins\sqldrivers\"
-%COPY_CHANGED% "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins\mediaservice\"
+%COPY_CHANGED% "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plugins5\sqldrivers\"
+%COPY_CHANGED% "$(QTDIR)\plugins\mediaservice\wmfengine%D%.dll" "$(TargetDir)plugins5\mediaservice\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\windowplugin%D%.dll" "$(TargetDir)plugins\QtQuick\Window.2\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\qmldir" "$(TargetDir)plugins\QtQuick\Window.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\windowplugin%D%.dll" "$(TargetDir)plugins5\QtQuick\Window.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\Window.2\qmldir" "$(TargetDir)plugins5\QtQuick\Window.2\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmlxmllistmodelplugin%D%.dll" "$(TargetDir)plugins\QtQuick\XmlListModel\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmldir" "$(TargetDir)plugins\QtQuick\XmlListModel\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmlxmllistmodelplugin%D%.dll" "$(TargetDir)plugins5\QtQuick\XmlListModel\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick\XmlListModel\qmldir" "$(TargetDir)plugins5\QtQuick\XmlListModel\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qtquick2plugin%D%.dll" "$(TargetDir)plugins\QtQuick.2\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qmldir" "$(TargetDir)plugins\QtQuick.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qtquick2plugin%D%.dll" "$(TargetDir)plugins5\QtQuick.2\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtQuick.2\qmldir" "$(TargetDir)plugins5\QtQuick.2\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins\QtWebEngine\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins\QtWebEngine\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qtwebengineplugin%D%.dll" "$(TargetDir)plugins5\QtWebEngine\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebEngine\qmldir" "$(TargetDir)plugins5\QtWebEngine\"
 
-%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins\QtMultimedia\"
-%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins5\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins5\QtMultimedia\"
 
 del "$(TargetDir)\*.ilk"
 

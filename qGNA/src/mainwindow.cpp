@@ -178,8 +178,8 @@ void MainWindow::initialize()
   //connect(nQMLContainer, &MQDeclarativeView::leftMouseRelease, this, &MainWindow::leftMouseRelease);
   
   this->engine()->addImportPath(":/");
-  this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins/"));
-  this->engine()->addPluginPath(QCoreApplication::applicationDirPath() + "/plugins/");
+  this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins5/"));
+  this->engine()->addPluginPath(QCoreApplication::applicationDirPath() + "/plugins5/");
 
   QObject::connect(&this->_restapiManager, &GGS::RestApi::RestApiManager::genericErrorEx,
     this, &MainWindow::restApiGenericError);
