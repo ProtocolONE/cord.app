@@ -171,11 +171,6 @@ void MainWindow::initialize()
   qRegisterMetaType<Features::Thetta::ThettaInstaller::Result>("Features::Thetta::ThettaInstaller::Result");
   
   this->initMarketing();
-
-  //next 2 lines QGNA-60
-  //this->nQMLContainer = new MQDeclarativeView(this);
-  //connect(nQMLContainer, &MQDeclarativeView::leftMousePress, this, &MainWindow::leftMousePress);
-  //connect(nQMLContainer, &MQDeclarativeView::leftMouseRelease, this, &MainWindow::leftMouseRelease);
   
   this->engine()->addImportPath(":/");
   this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins5/"));
@@ -221,18 +216,10 @@ void MainWindow::initialize()
     DEBUG_LOG;
     this->activateWindow();
   }
-
-  //if (!this->_commandLineArguments.contains("minimized"))
-  //  this->activateWindow();
   
   this->sendStartingMarketing();
   
-  QObject::connect(this, &MainWindow::windowActivated, &this->_keyboardLayoutHelper, &GGS::KeyboardLayoutHelper::update);
-  
   this->_keyboardLayoutHelper.update();
-
-  // new code
-  //this->show();
 }
 
 void MainWindow::sendStartingMarketing()
@@ -994,12 +981,6 @@ void MainWindow::initRestApi()
 bool MainWindow::event(QEvent* event)
 {
   switch(event->type()) {
-  case QEvent::WindowActivate:
-    emit this->windowActivated();
-    break;
-  case QEvent::WindowDeactivate:
-    emit this->windowDeactivated();
-    break;
   case QEvent::Close:
     this->hide();
     event->ignore();

@@ -198,8 +198,6 @@ signals:
   void leftMouseRelease(int globalX, int globalY);  
 
   void closeMainWindow();
-  void windowDeactivated();
-  void windowActivated();
 
   void serviceStarted(QString service);
   void serviceFinished(QString service, int serviceState);
