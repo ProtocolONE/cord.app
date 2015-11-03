@@ -13,11 +13,12 @@ namespace GameNet {
         , QObject(parent)
       {
         this->_retryIntervals << 5000 << 15000 << 30000 << 60000 << 90000;
+        QObject::connect(&this->_downloadIconHelper, &DownloadServiceIcon::finished,
+          this, &ServicesListRequest::additionalResourcesReady);
       }
 
       ServicesListRequest::~ServicesListRequest()
       {
-
       }
 
       void ServicesListRequest::setServiceLoader(ServiceLoader* loader)
@@ -46,6 +47,7 @@ namespace GameNet {
 
         if (result == GGS::RestApi::CommandBase::NoError) {
           this->registerServices(cmd->servicesData());
+          this->_downloadIconHelper.start();
           emit this->finished();
           cmd->deleteLater();
           return;

@@ -39,6 +39,9 @@ namespace GameNet {
 
         QObject::connect(this->_application, &Application::uninstallServiceRequest,
           this, &ApplicationBridge::uninstallServiceRequest);
+
+        QObject::connect(this->_application, &Application::additionalResourcesReady,
+          this, &ApplicationBridge::additionalResourcesReady);
       }
 
       void ApplicationBridge::setThetta(Thetta *value)

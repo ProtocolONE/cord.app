@@ -216,6 +216,8 @@ signals:
   void wrongCredential(const QString& userId);
 
   void gameDownloaderAccessRequired(const QString& serviceId);
+  void uninstallServiceRequest(QString serviceId);
+  void additionalResourcesReady();
 
 private slots:
   void onServiceStarted(const QString &serviceId);

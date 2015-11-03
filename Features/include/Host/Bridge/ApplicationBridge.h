@@ -66,6 +66,8 @@ namespace GameNet {
 
         void setTranslation(Translation *value);
 
+        void setAutoRunManager(AutoRunManager *value);
+
         QString language() const;
         void setLanguage(const QString& value);
 
@@ -189,6 +191,14 @@ namespace GameNet {
 
         */
         void uninstallServiceRequest(const QString& serviceId);
+
+        /*!
+        \fn additionalResourcesReady();
+
+        This signal is emitted when host application download all additional resources.
+
+        */
+        void additionalResourcesReady();
 
       private:
         Application* _application;

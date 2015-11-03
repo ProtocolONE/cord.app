@@ -31,6 +31,7 @@ public:
    MOCK_METHOD0(onRestartUIRequest, void());
    MOCK_METHOD0(onShutdownUIRequest, void());
    MOCK_METHOD1(onUninstallServiceRequest, void(const QString&));
+   MOCK_METHOD0(onAdditionalResourcesReady, void());
 };
 
 class ThettaMock : public GameNet::Host::Thetta
@@ -83,6 +84,9 @@ public:
      QObject::connect(&bridge, &ApplicationBridge::uninstallServiceRequest,
       &appMock, &ApplicationMock::onUninstallServiceRequest);
      
+     QObject::connect(&bridge, &ApplicationBridge::additionalResourcesReady,
+       &appMock, &ApplicationMock::onAdditionalResourcesReady);
+
      QObject::connect(&bridge, &ApplicationBridge::languageChanged,
       &translationMock, &TranslationMock::onLanguageChanged);
 
@@ -120,6 +124,12 @@ TEST_F(ApplicationBridgeTest, uninstallServiceRequest)
 {
   EXPECT_CALL(appMock, onUninstallServiceRequest(serviceId)).Times(1);
   appMock.uninstallServiceRequest(serviceId);
+}
+
+TEST_F(ApplicationBridgeTest, additionalResourcesReady)
+{
+  EXPECT_CALL(appMock, onAdditionalResourcesReady()).Times(1);
+  appMock.additionalResourcesReady();
 }
 
 TEST_F(ApplicationBridgeTest, switchClientVersion)

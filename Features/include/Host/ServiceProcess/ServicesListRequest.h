@@ -29,6 +29,7 @@ namespace GameNet {
 
     signals:
         void finished();
+        void additionalResourcesReady();
 
       private:
         void registerServices(const QList<QMap<QString, QString>>& servicesData);

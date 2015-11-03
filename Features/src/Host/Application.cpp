@@ -263,6 +263,9 @@ namespace GameNet {
       QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished,
         this, &Application::setInitFinished);
 
+      QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::additionalResourcesReady,
+        this, &Application::additionalResourcesReady);
+
       QObject::connect(this->_commandLineManager, &CommandLineManager::shutdown,
         this, &Application::shutdown);
 
@@ -302,6 +305,7 @@ namespace GameNet {
     void Application::updateCompletedSlot(bool needRestart)
     {
       if (needRestart) {
+        this->_applicationDistrMon->disable();
         if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
           this->restartApplication(true, false);
           return;

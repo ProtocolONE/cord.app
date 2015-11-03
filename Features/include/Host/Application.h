@@ -119,6 +119,7 @@ namespace GameNet {
       void shutdownUIRequest();
       void restartApplicationRequest(bool shouldStartWithSameArguments, bool isMinimized);
       void uninstallServiceRequest(const QString &service);
+      void additionalResourcesReady();
 
       // INFO Необходим для реимита результата из dbus.
       // в Версии Qt 5.4 можно будет заменитьна QTimer::singleShot

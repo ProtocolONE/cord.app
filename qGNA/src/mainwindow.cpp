@@ -125,6 +125,9 @@ void MainWindow::initialize()
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::uninstallServiceRequest,
     this, &MainWindow::uninstallServiceRequest);
 
+  QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::additionalResourcesReady,
+    this, &MainWindow::additionalResourcesReady);
+
   qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
   qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
 
