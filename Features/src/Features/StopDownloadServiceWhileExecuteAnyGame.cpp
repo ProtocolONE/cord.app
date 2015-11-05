@@ -42,6 +42,7 @@ namespace Features {
     if (this->_ignoreList.contains(id))
       return;
 
+    emit this->disableDownloadUnlock();
     Q_FOREACH(const GGS::Core::Service* service, this->_downloadingServices.keys()) {
       emit this->downloadStopRequest(service);
       this->_stoppedServices[service] = this->_downloadingServices[service];
@@ -56,8 +57,11 @@ namespace Features {
     if (this->_ignoreList.contains(id))
       return;
 
-    Q_FOREACH(const GGS::Core::Service* service, this->_stoppedServices.keys())
+    emit this->enableDownloadUnlock();
+
+    Q_FOREACH(const GGS::Core::Service* service, this->_stoppedServices.keys()) {
       emit this->downloadStartRequest(service, this->_stoppedServices[service]);
+    }
 
     this->_stoppedServices.clear();
     emit this->torrentSessionResumeRequest();

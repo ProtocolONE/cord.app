@@ -21,6 +21,7 @@ namespace GameNet {
         , _connection(nullptr)
         , _downloader(nullptr)
         , _serviceHandle(nullptr)
+        , _unlockDisabled(false)
       {
       }
 
@@ -79,7 +80,9 @@ namespace GameNet {
         if (!this->isConnectionLockedService(service))
           return;
 
-        this->_serviceHandle->unlock(service->id(), this->_connection);
+        if (!this->_unlockDisabled)
+          this->_serviceHandle->unlock(service->id(), this->_connection);
+          
         emit this->finished(service);
       }
 
@@ -88,8 +91,10 @@ namespace GameNet {
         Q_ASSERT(this->_serviceHandle);
         if (!this->isConnectionLockedService(service))
           return;
+        
+        if (!this->_unlockDisabled)
+          this->_serviceHandle->unlock(service->id(), this->_connection);
 
-        this->_serviceHandle->unlock(service->id(), this->_connection);
         emit this->stopped(service);
       }
 
@@ -107,7 +112,9 @@ namespace GameNet {
         if (!this->isConnectionLockedService(service))
           return;
 
-        this->_serviceHandle->unlock(service->id(), this->_connection);
+        if (!this->_unlockDisabled)
+          this->_serviceHandle->unlock(service->id(), this->_connection);
+
         emit this->failed(service);
       }
 
@@ -240,6 +247,16 @@ namespace GameNet {
           return;
 
         emit this->accessRequired(service);
+      }
+
+      void DownloaderProxy::onDisableDownloadUnlock()
+      {
+        this->_unlockDisabled = true;
+      }
+
+      void DownloaderProxy::onEnableDownloadUnlock()
+      {
+        this->_unlockDisabled = false;
       }
     }
   }

@@ -4,6 +4,10 @@
 #include <QtCore/QString>
 #include <QtCore/QMap>
 
+namespace Features {
+  class StopDownloadServiceWhileExecuteAnyGame;
+}
+
 namespace GameNet {
   namespace Host {
 
@@ -24,6 +28,7 @@ namespace GameNet {
 
       void setApplication(Application *value);
       void setDbusServer(DBus::DBusServer* value);
+      void setStopDownloadServiceWhileExecuteAnyGame(Features::StopDownloadServiceWhileExecuteAnyGame* value);
 
       bool init();
       void shutdown();
@@ -62,7 +67,7 @@ namespace GameNet {
       QMap<QString, Connection*> _connections;
       MutexHandle *_sharedMutex;
       DBus::DBusServer* _server;
-
+      Features::StopDownloadServiceWhileExecuteAnyGame *_stopDownloadServiceOnExecuteGame;
     };
 
   }

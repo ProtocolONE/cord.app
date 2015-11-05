@@ -45,6 +45,9 @@ namespace Features {
     void torrentSessionPauseRequest();
     void torrentSessionResumeRequest();
 
+    void disableDownloadUnlock();
+    void enableDownloadUnlock();
+
   private:
     QMutex _mutex;
     QHash<const GGS::Core::Service *, GGS::GameDownloader::StartType> _downloadingServices;

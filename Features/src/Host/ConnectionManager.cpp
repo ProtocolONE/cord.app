@@ -40,6 +40,8 @@
 #include <Features/Integration/Zzima/Dbus/ZzimaExecutorBridgeAdaptor.h>
 #endif
 
+#include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
+
 #include <RestApi/RestApiManager.h>
 
 #include <QtDBus/QDBusConnection>
@@ -99,6 +101,7 @@ namespace GameNet {
       , _application(nullptr)
       , _sharedMutex(new MutexHandle("Global\\GameNet_{832D7C60-7B55-4e5d-99F6-1CC18A59F86B}"))
       , _server(nullptr)
+      , _stopDownloadServiceOnExecuteGame(nullptr)
     {
     }
 
@@ -118,6 +121,7 @@ namespace GameNet {
     bool ConnectionManager::init()
     {
       Q_ASSERT(this->_application);
+      Q_ASSERT(this->_stopDownloadServiceOnExecuteGame);
 
 #ifndef USE_SESSION_DBUS
       Q_ASSERT(this->_server);
@@ -248,6 +252,12 @@ namespace GameNet {
 
       QObject::connect(downloader, &Proxy::DownloaderProxy::finishedDownloading,
         this->_application->_marketingStatistic, &MarketingStatistic::onGameTorrentDownloadFinished);
+        
+      using Features::StopDownloadServiceWhileExecuteAnyGame;
+      QObject::connect(this->_stopDownloadServiceOnExecuteGame, &StopDownloadServiceWhileExecuteAnyGame::enableDownloadUnlock,
+        downloader, &Proxy::DownloaderProxy::onEnableDownloadUnlock, Qt::DirectConnection);
+      QObject::connect(this->_stopDownloadServiceOnExecuteGame, &StopDownloadServiceWhileExecuteAnyGame::disableDownloadUnlock,
+        downloader, &Proxy::DownloaderProxy::onDisableDownloadUnlock, Qt::DirectConnection);
 
       Bridge::DownloaderBridge *downloaderBridge = new Bridge::DownloaderBridge(connection);
       downloaderBridge->setServiceLoader(this->_application->_serviceLoader);
@@ -404,6 +414,12 @@ namespace GameNet {
     {
       Q_ASSERT(value);
       this->_server = value;
+    }
+
+    void ConnectionManager::setStopDownloadServiceWhileExecuteAnyGame(Features::StopDownloadServiceWhileExecuteAnyGame* value)
+    {
+      Q_ASSERT(value);
+      this->_stopDownloadServiceOnExecuteGame = value;
     }
 
 #endif

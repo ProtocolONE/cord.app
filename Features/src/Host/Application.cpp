@@ -170,6 +170,8 @@ namespace GameNet {
       }
 #endif
 
+      this->_connectionManager->setStopDownloadServiceWhileExecuteAnyGame(this->_stopDownloadServiceOnExecuteGame);
+
       this->_messageAdapter->setHasUiProcess(std::bind(&ConnectionManager::hasQGNA, this->_connectionManager));
       QObject::connect(this->_uiProcess, &UIProcess::closed, this->_messageAdapter, 
         &MessageAdapter::uiProcessClosed);

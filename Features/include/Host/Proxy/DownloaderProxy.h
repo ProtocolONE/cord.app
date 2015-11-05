@@ -47,7 +47,11 @@ namespace GameNet {
 
         virtual void pauseSession();
         virtual void resumeSession();
-
+        
+      public slots:
+        void onDisableDownloadUnlock();
+        void onEnableDownloadUnlock();
+        
       signals:
         void started(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
         void finished(const GGS::Core::Service *service);
@@ -93,6 +97,7 @@ namespace GameNet {
         GGS::GameDownloader::GameDownloadService *_downloader;
         QHash<QString, GGS::RestApi::GameNetCredential> _credentialMap;
         ServiceHandle *_serviceHandle;
+        bool _unlockDisabled;
       };
 
     }
