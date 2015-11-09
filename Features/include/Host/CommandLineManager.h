@@ -79,6 +79,8 @@ namespace GameNet {
        */
       void uninstallService(const QString& serviceId);
 
+      void updateRequested();
+
     private:
       GGS::Application::ArgumentParser* _commandLineArguments;
 

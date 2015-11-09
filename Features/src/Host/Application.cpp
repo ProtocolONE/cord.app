@@ -101,6 +101,7 @@ namespace GameNet {
       , _applicationDistrMon(new Features::Thetta::AppDistrIntegrity(this))
       , QObject(parent)
     {
+
     }
 
     Application::~Application()
@@ -110,6 +111,9 @@ namespace GameNet {
 
     void Application::setInitFinished() 
     {
+      if (this->_initFinished)
+        return;
+
       this->_initFinished = true;
 
       this->sendInitFinished();
@@ -280,6 +284,19 @@ namespace GameNet {
       QObject::connect(this->_commandLineManager, &CommandLineManager::openBrowser, 
         this->_thetta, &Thetta::openBrowser);
 
+      QObject::connect(this->_commandLineManager, &CommandLineManager::updateRequested,
+        [this](){
+        QString updateArea = QString("live");
+        QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
+        bool ok = false;
+        int area = settings.value("Repository", 0).toInt(&ok);
+        if (!ok)
+          area = 0;
+
+        this->_applicationDistrMon->setArea((GGS::Core::Service::Area)area);
+        this->updateCompletedSlot(true);
+      });
+
       QObject::connect(this, &Application::initCompleted,
         this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::onAppStarted);
 
@@ -316,9 +333,10 @@ namespace GameNet {
         emit this->restartUIRequest();
       }
 
-      this->_servicesListRequest->request();
-
-      this->setUpdateFinished();
+      if (!this->_initFinished) {
+        this->_servicesListRequest->request();
+        this->setUpdateFinished();
+      }
     }
 
     void Application::onUninstallRequestSlot(const QString &serviceId)

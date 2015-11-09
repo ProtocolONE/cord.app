@@ -42,6 +42,8 @@
 #include <Helper/DBusConnectionCheck.h>
 #include <Helper/FileUtils.h>
 
+#include <QtWebEngine/QtWebEngine>
+
 using namespace Log4Qt;
 using namespace GameNet;
 using GGS::Application::SingleApplication;
@@ -91,7 +93,9 @@ int main(int argc, char *argv[])
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setQuitOnLastWindowClosed(false);
 
+  qputenv("QT_OPENGL_BUGLIST", "render.json");
   qputenv("QSG_RENDER_LOOP", "threaded");
+
   if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
     qputenv("QT_OPENGL", "software");
     qputenv("QT_QPA_UPDATE_IDLE_TIME", "100");
@@ -218,6 +222,8 @@ int main(int argc, char *argv[])
   if (!dbusConnectionCheck.checkConnection()) {
     emit w.quit();
   }
+
+  QtWebEngine::initialize();
 
   QTimer::singleShot(0, &w, SLOT(initialize()));
 

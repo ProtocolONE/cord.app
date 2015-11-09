@@ -50,6 +50,11 @@ namespace GameNet {
         return;
       }
 
+      if (name == "update") {
+        this->updateRequested();
+        return;
+      }
+
       if (name == "uninstall" && !arguments.empty()) {
         QString serviceId = arguments.at(0);
         if (!serviceId.isEmpty()) {
