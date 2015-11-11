@@ -284,6 +284,8 @@ IF "$(Configuration)"=="Debug" (
 
 %COPY_CHANGED% "$(QTDIR)\icudtl.dat" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\qtwebengine_resources.pak" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\qtwebengine_resources_100p.pak" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\qtwebengine_resources_200p.pak" "$(TargetDir)"
 
 %COPY_CHANGED% "$(QTDIR)\translations\qtwebengine_locales\ru.pak" "$(TargetDir)languages\qtwebengine_locales\"
 %COPY_CHANGED% "$(QTDIR)\translations\qtwebengine_locales\en-US.pak" "$(TargetDir)languages\qtwebengine_locales\"
@@ -531,6 +533,8 @@ IF "$(Configuration)"=="Debug" (
 
 %COPY_CHANGED% "$(QTDIR)\icudtl.dat" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\qtwebengine_resources.pak" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\qtwebengine_resources_100p.pak" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\qtwebengine_resources_200p.pak" "$(TargetDir)"
 
 %COPY_CHANGED% "$(QTDIR)\translations\qtwebengine_locales\ru.pak" "$(TargetDir)languages\qtwebengine_locales\"
 %COPY_CHANGED% "$(QTDIR)\translations\qtwebengine_locales\en-US.pak" "$(TargetDir)languages\qtwebengine_locales\"
