@@ -3,6 +3,10 @@
 #include <BestInstallPath.h>
 #include <HostMessageAdapter.h>
 
+#include <Helper/CacheNetworkManagerFactory.h>
+
+#include <Features/RestApi/ServiceHasAccess.h>
+
 #include <viewmodel/UpdateViewModel.h>
 #include <viewmodel/ApplicationStatisticViewModel.h>
 #include <viewmodel/SettingsViewModel.h>
@@ -86,7 +90,7 @@ void MainWindow::initialize()
   
   qRegisterMetaType<GameNet::Host::Bridge::Credential>("GameNet::Host::Bridge::Credential");
   qDBusRegisterMetaType<GameNet::Host::Bridge::Credential>();
-  
+
   // DBUS...
   QDBusConnection &connection = DBusConnection::bus();
   QString dbusService("com.gamenet.dbus");
@@ -175,6 +179,7 @@ void MainWindow::initialize()
   
   this->initMarketing();
   
+  this->engine()->setNetworkAccessManagerFactory(new CacheNetworkManagerFactory(this));
   this->engine()->addImportPath(":/");
   this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins5/"));
   this->engine()->addPluginPath(QCoreApplication::applicationDirPath() + "/plugins5/");
