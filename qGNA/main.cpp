@@ -88,21 +88,67 @@ void initBugTrap(const QString &path)
   BT_InstallSehFilter();
 }
 
+void initOpenglRender(SingleApplication& app) 
+{
+  qputenv("QT_OPENGL_BUGLIST", "render.json");
+
+  bool hasRender = app.containsCommand("render");
+  if (hasRender) {
+    QStringList args = app.getCommandArguments("render");
+    if (args.length() > 0) {
+      QString render = args[0];
+      if (render == "angle" || render == "desktop" || render == "software") {
+        qDebug() << "Override QT_OPENGL: " << render;
+        qputenv("QT_OPENGL", render.toLatin1());
+        if (render == "software") {
+          qDebug() << "Set QT_QPA_UPDATE_IDLE_TIME 100";
+          qputenv("QT_QPA_UPDATE_IDLE_TIME", "100");
+        }
+      }
+      else {
+        hasRender = false;
+      }
+    }
+    else {
+      hasRender = false;
+    }
+  }
+
+  bool hasRenderLoop = app.containsCommand("renderloop");
+  if (hasRenderLoop) {
+    QStringList args = app.getCommandArguments("renderloop");
+    if (args.length() > 0) {
+      QString renderloop = args[0];
+      if (renderloop == "threaded" || renderloop == "basic" || renderloop == "windows") {
+        qDebug() << "Override QSG_RENDER_LOOP: " << renderloop;
+        qputenv("QSG_RENDER_LOOP", renderloop.toLatin1());
+      }
+      else {
+        hasRenderLoop = false;
+      }
+    }
+    else {
+      hasRenderLoop = false;
+    }
+  }
+
+  if (!hasRender && !hasRenderLoop) {
+    if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
+      qputenv("QT_OPENGL", "software");
+      qputenv("QT_QPA_UPDATE_IDLE_TIME", "100");
+      qputenv("QSG_RENDER_LOOP", "threaded");
+    }
+    else {
+      // INFO задает интервал для перерисовки кадров.
+      qputenv("QT_QPA_UPDATE_IDLE_TIME", "33");
+    }
+  }
+}
+
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setQuitOnLastWindowClosed(false);
-
-  qputenv("QT_OPENGL_BUGLIST", "render.json");
-  qputenv("QSG_RENDER_LOOP", "threaded");
-
-  if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
-    qputenv("QT_OPENGL", "software");
-    qputenv("QT_QPA_UPDATE_IDLE_TIME", "100");
-  } else {
-    // INFO задает интервал для перерисовки кадров.
-    qputenv("QT_QPA_UPDATE_IDLE_TIME", "33");
-  }
 
   QCoreApplication::setOrganizationName("Vebanaul");
   QCoreApplication::setApplicationName("GameNet");
@@ -142,7 +188,6 @@ int main(int argc, char *argv[])
   } else {
     app.startListen();
   }
-
   
   // HACK В приложении активно используются QtConcurrent и другие сущности использующие QThreadPool
   // Так как некоторые задачи критичны для запуска, а в случаи переполнение пула они будут положены в очередь,
@@ -166,6 +211,8 @@ int main(int argc, char *argv[])
 #ifndef _DEBUG
   LogManager::setHandleQtMessages(true);
 #endif
+
+  initOpenglRender(app);
 
 #ifndef QGNA_NO_ADMIN_REQUIRED
   if (!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {

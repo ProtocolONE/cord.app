@@ -278,9 +278,6 @@ namespace GameNet {
       QObject::connect(this->_commandLineManager, &CommandLineManager::uninstallService, 
         this, &Application::onUninstallRequestSlot);
 
-      QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand, 
-        this->_uiProcess, &UIProcess::sendCommand);
-
       QObject::connect(this->_commandLineManager, &CommandLineManager::openBrowser, 
         this->_thetta, &Thetta::openBrowser);
 
@@ -448,8 +445,10 @@ namespace GameNet {
 
     void Application::startUi()
     {
-      if (this->_commandLineManager->skipUi())
+      if (this->_commandLineManager->skipUi()) {
+        this->setUiCommandConnection();
         return;
+      }
 
       qDebug() << "Starting qGNA UI";
       QStringList args = QCoreApplication::arguments();
@@ -520,6 +519,7 @@ namespace GameNet {
         this, &Application::onConnectionLogoutMain);
 
       if (connection->applicationName() == "QGNA") {
+        this->setUiCommandConnection();
 
         if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
           this->_thetta->installer()->connectToDriver();
@@ -550,6 +550,12 @@ namespace GameNet {
       QString authHash(hash.result().toHex());
 
       this->_gameDownloader->setCredentials(userId, authHash);
+    }
+
+    void Application::setUiCommandConnection()
+    {
+      QObject::connect(this->_commandLineManager, &CommandLineManager::uiCommand,
+        this->_uiProcess, &UIProcess::sendCommand, Qt::UniqueConnection);
     }
 
     void Application::onConnectionLogoutMain()

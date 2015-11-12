@@ -148,6 +148,8 @@ namespace GameNet {
       void onConnectionLogoutMain();
 
       void setDownloaderCredential(const GGS::RestApi::GameNetCredential &creds);
+
+      void setUiCommandConnection();
       
       GGS::Application::SingleApplication *_singleApplication;
       ServiceProcess::ServiceLoader *_serviceLoader;
