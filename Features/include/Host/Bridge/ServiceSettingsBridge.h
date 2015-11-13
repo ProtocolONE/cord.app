@@ -139,6 +139,34 @@ namespace GameNet {
 
         void setOverlayEnabled(const QString& serviceId, bool enabled);
 
+        /*!
+         \fn  bool ServiceSettingsBridge::isPrefer32Bit(const QString& serviceId) const;
+         
+         \brief Query settings, and return is prefer 32bit client for serviceId is enabled.
+         
+         \author  "Ilya Tkachenko"
+         \date  13.11.2015
+         
+         \param serviceId Identifier for the service.
+         
+         \return  true if prefer 32 bit, false if not.
+         */
+
+        bool isPrefer32Bit(const QString& serviceId) const;
+
+        /*!
+        \fn void ServiceSettingsBridge::setPrefer32Bit(const QString& serviceId, bool value);
+        
+        \brief  Sets a prefer 32 bit game with sericeId.
+        
+        \author "Ilya Tkachenko"
+        \date 13.11.2015
+        
+        \param  serviceId Identifier for the service.
+        \param  value     true to value.
+         */
+        void setPrefer32Bit(const QString& serviceId, bool value);
+
       private:
         ServiceSettings *_settings;
       };

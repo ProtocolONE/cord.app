@@ -176,5 +176,23 @@ namespace GameNet {
       settings.setValue("overlayEnabled", enabled ? 1 : 0);
     }
 
+    bool ServiceSettings::isPrefer32Bit(const QString& serviceId) const
+    {
+      Settings settings;
+      settings.beginGroup("gameExecutor");
+      settings.beginGroup("serviceInfo");
+      settings.beginGroup(serviceId);
+      return settings.value("Prefer32Bit", 0).toInt() == 1;
+    }
+
+    void ServiceSettings::setPrefer32Bit(const QString& serviceId, bool value)
+    {
+      Settings settings;
+      settings.beginGroup("gameExecutor");
+      settings.beginGroup("serviceInfo");
+      settings.beginGroup(serviceId);
+      settings.setValue("Prefer32Bit", value ? 1 : 0);
+    }
+
   }
 }

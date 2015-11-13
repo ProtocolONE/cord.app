@@ -46,6 +46,9 @@ namespace GameNet {
       virtual bool isOverlayEnabled(const QString& serviceId) const;
       virtual void setOverlayEnabled(const QString& serviceId, bool enabled);
 
+      virtual bool isPrefer32Bit(const QString& serviceId) const;
+      virtual void setPrefer32Bit(const QString& serviceId, bool value);
+
     private:
       ServiceProcess::ServiceLoader *_services;
       GGS::GameDownloader::GameDownloadService *_downloader;

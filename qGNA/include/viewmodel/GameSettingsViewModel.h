@@ -60,7 +60,10 @@ public slots:
 
   bool isOverlayEnabled(const QString& serviceId);
   void setOverlayEnabled(const QString& serviceId, bool enabled);
-  
+
+  bool isPrefer32Bit(const QString& serviceId);
+  void setPrefer32Bit(const QString& serviceId, bool enabled);
+
 signals:
   void installPathChanged();
   void downloadPathChanged();

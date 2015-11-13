@@ -264,3 +264,13 @@ void GameSettingsViewModel::setOverlayEnabled(const QString& serviceId, bool ena
 {
   this->_serviceSettings->setOverlayEnabled(serviceId, enabled);
 }
+
+bool GameSettingsViewModel::isPrefer32Bit(const QString& serviceId)
+{
+  return this->_serviceSettings->isPrefer32Bit(serviceId);
+}
+
+void GameSettingsViewModel::setPrefer32Bit(const QString& serviceId, bool enabled)
+{
+  this->_serviceSettings->setPrefer32Bit(serviceId, enabled);
+}

@@ -28,6 +28,10 @@ public:
 
   MOCK_CONST_METHOD1(isOverlayEnabled, bool(const QString&));
   MOCK_METHOD2(setOverlayEnabled, void(const QString&, bool));
+
+  MOCK_CONST_METHOD1(isPrefer32Bit, bool(const QString&));
+  MOCK_METHOD2(setPrefer32Bit, void(const QString&, bool));
+
 };
 
 class ServiceSettingsBridgeTest : public ::testing::Test 
@@ -172,4 +176,34 @@ TEST_F(ServiceSettingsBridgeTest, setOverlayEnabled)
 
   bridge.setOverlayEnabled(serviceId, value2);
   ASSERT_EQ(value2, bridge.isOverlayEnabled(serviceId));
+}
+
+
+TEST_F(ServiceSettingsBridgeTest, isPrefer32Bit)
+{
+  EXPECT_CALL(settings, isPrefer32Bit(serviceId))
+    .WillOnce(Return(true))
+    .WillOnce(Return(false));
+
+  ASSERT_TRUE(bridge.isPrefer32Bit(serviceId));
+  ASSERT_FALSE(bridge.isPrefer32Bit(serviceId));
+}
+
+TEST_F(ServiceSettingsBridgeTest, setPrefer32Bit)
+{
+  bool value = true;
+  bool value2 = false;
+
+  EXPECT_CALL(settings, setPrefer32Bit(serviceId, value)).Times(1);
+  EXPECT_CALL(settings, setPrefer32Bit(serviceId, value2)).Times(1);
+
+  EXPECT_CALL(settings, isPrefer32Bit(serviceId))
+    .WillOnce(Return(value))
+    .WillOnce(Return(value2));
+
+  bridge.setPrefer32Bit(serviceId, value);
+  ASSERT_EQ(value, bridge.isPrefer32Bit(serviceId));
+
+  bridge.setPrefer32Bit(serviceId, value2);
+  ASSERT_EQ(value2, bridge.isPrefer32Bit(serviceId));
 }

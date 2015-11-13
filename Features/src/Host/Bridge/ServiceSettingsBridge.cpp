@@ -93,6 +93,18 @@ namespace GameNet {
         this->_settings->setOverlayEnabled(serviceId, enabled);
       }
 
+      bool ServiceSettingsBridge::isPrefer32Bit(const QString& serviceId) const
+      {
+        Q_ASSERT(this->_settings);
+        return this->_settings->isPrefer32Bit(serviceId);
+      }
+
+      void ServiceSettingsBridge::setPrefer32Bit(const QString& serviceId, bool value)
+      {
+        Q_ASSERT(this->_settings);
+        this->_settings->setPrefer32Bit(serviceId, value);
+      }
+
     }
   }
 }

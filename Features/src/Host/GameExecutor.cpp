@@ -177,10 +177,14 @@ namespace GameNet {
         return;
       }
 
+      const QString& serviceId(service->id());
       QUrl result(service->urlTemplate());
 
+      bool force32 = this->_serviceSettings->isPrefer32Bit(serviceId);
+
       QUrlQuery exe64Query(result);
-      bool use64 = exe64Query.hasQueryItem("exe64") && Features::isWow64();
+      bool use64 = exe64Query.hasQueryItem("exe64") && Features::isWow64() && !force32;
+      
       QString path = use64 ? exe64Query.queryItemValue("exe64", QUrl::FullyDecoded) : result.path();
 
       QString gamePath = QString("%1/%2").arg(service->installPath(), service->areaString());
@@ -204,7 +208,7 @@ namespace GameNet {
       if (urlQuery.hasQueryItem("injectOverlay")) {
         urlQuery.removeAllQueryItems("injectOverlay");
 
-        bool overlayEnabled = this->_serviceSettings->isOverlayEnabled(service->id());
+        bool overlayEnabled = this->_serviceSettings->isOverlayEnabled(serviceId);
         if (overlayEnabled) {
 #ifdef _DEBUG
           QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
