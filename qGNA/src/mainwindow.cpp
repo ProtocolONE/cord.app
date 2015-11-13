@@ -239,6 +239,8 @@ void MainWindow::sendStartingMarketing()
   QVariantMap params;
   params["windowsMajorVersion"] = dwMajorVersion;
   params["windowsMinorVersion"] = dwMinorVersion;
+  params["updateArea"] = this->settingsViewModel->updateArea();
+  params["version"] = this->_fileVersion;    
 
   GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna, params);
   GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
