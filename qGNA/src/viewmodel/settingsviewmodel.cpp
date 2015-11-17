@@ -216,6 +216,17 @@ void SettingsViewModel::setUploadSpeed(const QString& _speed)
   this->_downloaderSettings->setUploadRate(rate);
 }
 
+
+void SettingsViewModel::setTorrentProfile(int value)
+{
+  this->_downloaderSettings->setTorrentProfile(value);
+}
+
+int SettingsViewModel::torrentProfile()
+{
+  return this->_downloaderSettings->torrentProfile();
+}
+
 void SettingsViewModel::setDownloaderSettings(DownloaderSettingsBridgeProxy *value)
 {
   Q_ASSERT(value);
@@ -235,6 +246,9 @@ void SettingsViewModel::setDownloaderSettings(DownloaderSettingsBridgeProxy *val
 
   QObject::connect(value, &DownloaderSettingsBridgeProxy::seedEnabledChanged,
     this, &SettingsViewModel::seedEnabledChanged);
+
+  QObject::connect(value, &DownloaderSettingsBridgeProxy::torrentProfileChanged,
+    this, &SettingsViewModel::torrentProfileChanged);
 }
 
 QString SettingsViewModel::updateArea()

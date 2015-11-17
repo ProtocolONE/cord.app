@@ -61,6 +61,18 @@ namespace GameNet {
         return this->_settings->downloadRate();
       }
 
+      int DownloaderSettingsBridge::torrentProfile() const
+      {
+        Q_ASSERT(this->_settings);
+        return this->_settings->torrentProfile();
+      }
+
+      void DownloaderSettingsBridge::setTorrentProfile(int val)
+      {
+        Q_ASSERT(this->_settings);
+        this->_settings->setTorrentProfile(val);
+      }
+
       void DownloaderSettingsBridge::setDownloadRate(int val)
       {
         Q_ASSERT(this->_settings);

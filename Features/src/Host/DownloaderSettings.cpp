@@ -4,6 +4,7 @@
 #include <GameDownloader/GameDownloadService.h>
 #include <Settings/Settings.h>
 
+#include <QtCore/QDebug>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QCoreApplication>
 
@@ -34,12 +35,16 @@ namespace GameNet {
     void DownloaderSettings::init()
     {
       Q_ASSERT(this->_downloader);
-      this->_downloader->setListeningPort(this->listeningPort());
+
       QString torrentConfigPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
       torrentConfigPath.append("/torrents");
+      
       this->_downloader->setTorrentConfigDirectoryPath(torrentConfigPath);
       this->_downloader->setTimeoutForResume(600);
       this->_downloader->setSeedEnabled(this->seedEnabled());
+      this->_downloader->setDownloadRateLimit(this->downloadRate() * 1024);
+      this->_downloader->setUploadRateLimit(this->uploadRate() * 1024);
+      this->internalSetTorrentProfile(this->torrentProfile());
     }
 
     int DownloaderSettings::listeningPort() const
@@ -135,6 +140,44 @@ namespace GameNet {
       GGS::Settings::Settings settings;
       settings.setValue("qGNA/seedEnabled", val);
       emit this->seedEnabledChanged();
+    }
+
+    int DownloaderSettings::torrentProfile() const
+    {
+      return this->readInt("qGNA/torrentProfile", 1);
+    }
+
+    void DownloaderSettings::setTorrentProfile(int val)
+    {
+      int current = this->torrentProfile();
+      if (current == val)
+        return;
+
+      this->internalSetTorrentProfile(val);
+      
+      GGS::Settings::Settings settings;
+      settings.setValue("qGNA/torrentProfile", QString::number(val));
+
+      emit this->torrentProfileChanged();
+    }
+    
+    void DownloaderSettings::internalSetTorrentProfile(int val)
+    {
+      switch (val)
+      {
+      case 1:
+        qDebug() << "Use HIGH_PERFORMANCE_SEED torrent profile";
+        this->_downloader->setTorrentProfile(GameDownloadService::HIGH_PERFORMANCE_SEED);
+        break;
+      case 2:
+        qDebug() << "Use MIN_MEMORY_USAGE torrent profile";
+        this->_downloader->setTorrentProfile(GameDownloadService::MIN_MEMORY_USAGE);
+        break;
+      default:
+        qDebug() << "Use DEFAULT_PROFILE torrent profile";
+        this->_downloader->setTorrentProfile(GameDownloadService::DEFAULT_PROFILE);
+        break;
+      }
     }
 
     int DownloaderSettings::readInt(const QString& key, int defaultValue) const

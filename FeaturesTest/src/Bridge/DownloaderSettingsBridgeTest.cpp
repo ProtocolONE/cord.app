@@ -23,6 +23,9 @@ public:
 
   MOCK_METHOD1(setSeedEnabled, void(bool));
   MOCK_CONST_METHOD0(seedEnabled, bool());
+
+  MOCK_METHOD1(setTorrentProfile, void(int));
+  MOCK_CONST_METHOD0(torrentProfile, int());
 };
 
 class DownloaderSettingsBridgeTest : public ::testing::Test 
@@ -46,7 +49,7 @@ TEST_F(DownloaderSettingsBridgeTest, ListeningPort)
   EXPECT_CALL(_downloaderSettingsMock, listeningPort())
     .WillOnce(Return(port));
   
-  _downloaderSettingsMock.setListeningPort(port);
+  _downloaderSettingsBridge.setListeningPort(port);
   ASSERT_EQ(port, _downloaderSettingsBridge.listeningPort());
 }
 
@@ -59,7 +62,7 @@ TEST_F(DownloaderSettingsBridgeTest, UploadRate)
   EXPECT_CALL(_downloaderSettingsMock, uploadRate())
     .WillOnce(Return(rate));
 
-  _downloaderSettingsMock.setUploadRate(rate);
+  _downloaderSettingsBridge.setUploadRate(rate);
   ASSERT_EQ(rate, _downloaderSettingsBridge.uploadRate());
 }
 
@@ -72,7 +75,7 @@ TEST_F(DownloaderSettingsBridgeTest, DownloadRate)
   EXPECT_CALL(_downloaderSettingsMock, downloadRate())
     .WillOnce(Return(rate));
 
-  _downloaderSettingsMock.setDownloadRate(rate);
+  _downloaderSettingsBridge.setDownloadRate(rate);
   ASSERT_EQ(rate, _downloaderSettingsBridge.downloadRate());
 }
 
@@ -85,7 +88,7 @@ TEST_F(DownloaderSettingsBridgeTest, MaxConnection)
   EXPECT_CALL(_downloaderSettingsMock, maxConnection())
     .WillOnce(Return(connections));
 
-  _downloaderSettingsMock.setMaxConnection(connections);
+  _downloaderSettingsBridge.setMaxConnection(connections);
   ASSERT_EQ(connections, _downloaderSettingsBridge.maxConnection());
 }
 
@@ -96,7 +99,7 @@ TEST_F(DownloaderSettingsBridgeTest, DisableSeedEnabled)
   EXPECT_CALL(_downloaderSettingsMock, seedEnabled())
     .WillOnce(Return(false));
 
-  _downloaderSettingsMock.setSeedEnabled(false);
+  _downloaderSettingsBridge.setSeedEnabled(false);
   ASSERT_EQ(false, _downloaderSettingsBridge.seedEnabled());
 }
 
@@ -107,6 +110,17 @@ TEST_F(DownloaderSettingsBridgeTest, EnableSeedEnabled)
   EXPECT_CALL(_downloaderSettingsMock, seedEnabled())
     .WillOnce(Return(true));
 
-  _downloaderSettingsMock.setSeedEnabled(true);
+  _downloaderSettingsBridge.setSeedEnabled(true);
   ASSERT_EQ(true, _downloaderSettingsBridge.seedEnabled());
+}
+
+TEST_F(DownloaderSettingsBridgeTest, TorrentProfile)
+{
+  int profile = 1;
+
+  EXPECT_CALL(_downloaderSettingsMock, setTorrentProfile(profile)).Times(1);
+  EXPECT_CALL(_downloaderSettingsMock, torrentProfile()).WillOnce(Return(profile));
+
+  _downloaderSettingsBridge.setTorrentProfile(profile);
+  ASSERT_EQ(profile, _downloaderSettingsBridge.torrentProfile());
 }

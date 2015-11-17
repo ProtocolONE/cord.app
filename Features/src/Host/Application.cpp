@@ -367,14 +367,12 @@ namespace GameNet {
 
     void Application::initGameDownloader()
     {
+      this->_gameDownloader->setListeningPort(this->_downloaderSettings->listeningPort());
+      this->_gameDownloader->init();
+      
       this->_downloaderSettings->setDownloader(this->_gameDownloader);
       this->_downloaderSettings->init();
-
-      this->_gameDownloader->init();
-
-      this->_gameDownloader->setDownloadRateLimit(this->_downloaderSettings->downloadRate() * 1024);
-      this->_gameDownloader->setUploadRateLimit(this->_downloaderSettings->uploadRate() * 1024);
-
+      
       this->_downloadStatistics->init(this->_gameDownloader);
       this->_shutdown->setGameDownloadInitialized();
     }

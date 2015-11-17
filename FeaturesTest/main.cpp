@@ -24,6 +24,17 @@ void checkProtector()
 
 #pragma optimize("", on)
 
+bool initDatabase()
+{
+  GGS::Settings::InitializeHelper helper;
+  helper.setFileName(QString("%1/featureTest.sql").arg(QCoreApplication::applicationDirPath()));
+  if (!helper.init())
+    return false;
+
+  GGS::Settings::Settings::setCacheEnabled(true);
+  return true;
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

@@ -63,6 +63,15 @@ namespace GameNet {
 
         \sa seedEnabled() setSeedEnabled()
         */Q_PROPERTY(bool seedEnabled READ seedEnabled WRITE setSeedEnabled NOTIFY seedEnabledChanged)
+
+        /*!
+        \property DownloaderSettingsBridge::torrentProfile
+
+        Setup torrent session profile used in Downloader.
+
+        \sa torrentProfile() setMaxConnection()
+        */
+        Q_PROPERTY(int torrentProfile READ torrentProfile WRITE setTorrentProfile NOTIFY torrentProfileChanged)
       public:
         /*!
         \fn explicit DownloaderSettingsBridge(QObject *parent = 0);
@@ -120,6 +129,23 @@ namespace GameNet {
 
         */
         int downloadRate() const;
+
+        /*!
+        \fn int DownloaderSettingsBridge::torrentProfile() const;
+
+        Method returns Downloader torrent session profile.
+
+        */
+        int torrentProfile() const;
+
+        /*!
+        \fn void DownloaderSettingsBridge::setTorrentProfile(int val);
+
+        Method sets Downloader torrent session profile.
+
+        */
+        void setTorrentProfile(int val);
+
         /*!
         \fn void DownloaderSettingsBridge::setDownloadRate(int val);
 
@@ -203,6 +229,15 @@ namespace GameNet {
         \sa downloadRate() setDownloadRate()
         */
         void seedEnabledChanged();
+        
+        /*!
+        \fn void DownloaderSettingsBridge::torrentProfileChanged()
+
+        This signal is emitted when torrentProfile changed
+
+        \sa torrentProfile() setTorrentProfile()
+        */
+        void torrentProfileChanged();
 
       private:
         DownloaderSettings *_settings;

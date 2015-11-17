@@ -15,6 +15,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString numConnections READ numConnections WRITE setNumConnections NOTIFY numConnectionsChanged)
     Q_PROPERTY(QString downloadSpeed READ downloadSpeed WRITE setDownloadSpeed NOTIFY downloadSpeedChanged)
     Q_PROPERTY(QString uploadSpeed READ uploadSpeed WRITE setUploadSpeed NOTIFY uploadSpeedChanged)
+    Q_PROPERTY(int torrentProfile READ torrentProfile WRITE setTorrentProfile NOTIFY torrentProfileChanged)
 
     Q_PROPERTY(bool notifyWhenStartedGameNet READ notifyWhenStartedGameNet WRITE setNotifyWhenStartedGameNet NOTIFY notifyWhenStartedGameNetChanged)
     Q_PROPERTY(bool notifyStartEndGameDownload READ notifyStartEndGameDownload WRITE setNotifyStartEndGameDownload NOTIFY notifyStartEndGameDownloadChanged)
@@ -72,6 +73,9 @@ public slots:
     void setDownloaderSettings(DownloaderSettingsBridgeProxy *value);
     void setApplicationProxy(ApplicationBridgeProxy *value);
 
+    void setTorrentProfile(int value);
+    int torrentProfile(); 
+
 private:
     bool _instantlySave;
     DownloaderSettingsBridgeProxy* _downloaderSettings;
@@ -94,6 +98,7 @@ signals:
 
     void seedEnabledChanged();
     void updateAreaChanged();
+    void torrentProfileChanged();
 };
 
 #endif // SETTINGSVIEWMODEL_H
