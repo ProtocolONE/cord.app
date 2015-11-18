@@ -6,7 +6,7 @@
             "id": 1,
             "description": "Desktop OpenGL is unreliable on some Intel HD laptops (QTBUG-43263, QTBUG-42240)",
             "vendor_id": "0x8086",
-            "device_id": [ "0x0A16", "0x2A02", "0x29C2" ],
+            "device_id": [ "0x0A16", "0x2A02", "0x29C2","0x2E32", "0x2A42", "0x0116", "0x0126", "0x0FDF" ],
             "os": {
                 "type": "win"
             },
