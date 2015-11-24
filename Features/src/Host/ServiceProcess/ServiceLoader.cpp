@@ -239,6 +239,14 @@ namespace GameNet {
           Q_ASSERT(thetta);
           this->_executor->addHook(*service, thetta, 99);
 
+          thetta = this->_executorHookFactory->create(ThettaMonitor::id());
+          Q_ASSERT(thetta);
+          this->_secondExecutor->addHook(*service, thetta, 99);
+
+          thetta = this->_executorHookFactory->create(ThettaMonitor::id());
+          Q_ASSERT(thetta);
+          this->_simpleMainExecutor->addHook(*service, thetta, 99);
+
           HookInterface *playing = this->_executorHookFactory->create(SendPlayingInfo::id());
           Q_ASSERT(playing);
           this->_executor->addHook(*service, playing, 0);
