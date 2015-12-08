@@ -17,6 +17,38 @@
             "features": [
                 "disable_desktopgl"
             ]
+        },
+        {
+            "id": 1,
+            "description": "Desktop OpenGL is unreliable on some Nvidia GeForce GT/GTX cards",
+            "vendor_id": "0x10DE",
+            "device_id": [ "0x0F01", "0x13C2", "0x1617"],
+            "os": {
+                "type": "win"
+            },
+            "driver_version": {
+                "op": "<=",
+                "value": "10.18.13.5850"
+            },
+            "features": [
+                "disable_desktopgl"
+            ]
+        },
+        {
+            "id": 1,
+            "description": "Desktop OpenGL is unreliable on some ATI Mobility Radeon cards",
+            "vendor_id": "0x1002",
+            "device_id": [ "0x7188"],
+            "os": {
+                "type": "win"
+            },
+            "driver_version": {
+                "op": "<=",
+                "value": "8.475.0.0"
+            },
+            "features": [
+                "disable_desktopgl"
+            ]
         }
     ]
 }
