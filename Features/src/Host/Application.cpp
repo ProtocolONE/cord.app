@@ -154,6 +154,9 @@ namespace GameNet {
       Q_ASSERT(value);
       this->_singleApplication = value;
 
+      QObject::connect(value, &SingleApplication::forceQuit, 
+        this, &Application::internalShutdown, Qt::DirectConnection);
+      
       QObject::connect(value, &SingleApplication::commandRecieved, 
         this->_commandLineManager, &CommandLineManager::commandRecieved, Qt::QueuedConnection);
 

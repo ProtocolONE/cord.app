@@ -112,6 +112,7 @@ namespace GameNet {
     private slots:
       void updateCompletedSlot(bool needRestart);
       void onUninstallRequestSlot(const QString &serviceId);
+      void internalShutdown();
 
     signals:
       void initCompleted();
@@ -143,7 +144,7 @@ namespace GameNet {
 
       bool executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name);
       void internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized);
-      void internalShutdown();
+
       void onNewConnection(Connection *connection);
       void onConnectionLogoutMain();
 
