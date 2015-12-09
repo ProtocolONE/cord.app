@@ -57,6 +57,7 @@ namespace GameNet {
       void registerExecutor(Connection* connection);
       void registerUpdateManager(Connection * connection);
       void registerServiceHandle(Connection * connection);
+      void registerLicenseManager(Connection * connection);
 
 #ifdef ZZIMA_INTEGRATION
       void registerServicesForZzima(Connection * connection);

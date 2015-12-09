@@ -1,5 +1,5 @@
-@set cpp2xml="D:\Qt\521b\bin\qdbuscpp2xml.exe"
-@set xml2cpp="D:\Qt\521b\bin\qdbusxml2cpp.exe"
+@set cpp2xml="%QTDIR%\bin\qdbuscpp2xml.exe"
+@set xml2cpp="%QTDIR%\bin\qdbusxml2cpp.exe"
 
 @set Target=%1
 @set ClassName=%~n1%

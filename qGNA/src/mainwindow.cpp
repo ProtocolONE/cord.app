@@ -24,6 +24,7 @@
 #include <Host/Dbus/ExecutorBridgeProxy.h>
 #include <Host/Dbus/ApplicationBridgeProxy.h>
 #include <Host/Dbus/ApplicationStatisticBridgeProxy.h>
+#include <Host/Dbus/LicenseManagerBridgeProxy.h>
 
 #include <Core/UI/Message>
 #include <Core/Marketing.h>
@@ -110,6 +111,7 @@ void MainWindow::initialize()
   this->_serviceSettings = new ServiceSettingsBridgeProxy(dbusService, "/serviceSettings", connection, this);
   this->_executor = new ExecutorBridgeProxy(dbusService, "/executor", connection, this);
   this->_applicationStatistic = new ApplicationStatisticBridgeProxy(dbusService, "/applicationStatistic", connection, this);
+  this->_licenseManager = new LicenseManagerBridgeProxy(dbusService, "/licenseManager", connection, this);
     
   QObject::connect(this->_applicationProxy, &ApplicationBridgeProxy::languageChanged,
     this, &MainWindow::languageChanged);
@@ -640,18 +642,7 @@ void MainWindow::cancelServiceUninstall(const QString serviceId)
 
 bool MainWindow::isLicenseAccepted(const QString& serviceId)
 {
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  settings.beginGroup(serviceId);
-  QString hash = settings.value("LicenseHash", "").toString();
-
-  if (serviceId == "100009010000000000" || serviceId == "100003010000000000")  // TMP
-    hash = "fake_hash";
-
-  if (!hash.isEmpty()) {
-    return true;
-  }
-
-  return false;
+  return this->_licenseManager->hasAcceptedLicense(serviceId);
 }
 
 void MainWindow::startGame(const QString& serviceId)
@@ -894,30 +885,7 @@ void MainWindow::postUpdateInit()
 
 bool MainWindow::anyLicenseAccepted()
 {
-  QStringList ids;
-  ids << "300002010000000000"
-    << "300003010000000000"
-    << "300004010000000000"
-    << "300005010000000000"
-    << "300009010000000000"
-    << "300012010000000000"
-    << "30000000000";
-
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  Q_FOREACH(QString id, ids) {
-    settings.beginGroup(id);
-    QString license = settings.value("LicenseHash").toString();
-    settings.endGroup();
-
-    if (!license.isEmpty()) 
-      return true;
-  }
-
-  QString license = settings.value("LicenseHash").toString();
-  if (!license.isEmpty())
-    return true;
-
-  return false;
+  return this->_licenseManager->hasAcceptedLicense();
 }
 
 QString MainWindow::startingService()
@@ -955,12 +923,7 @@ void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& 
 
 void MainWindow::acceptFirstLicense(const QString& serviceId)
 {
-  using GGS::Core::Marketing;
-
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
-  settings.beginGroup(serviceId);
-  Marketing::sendInstallerStepOnce(Marketing::InstallAcceptLicense);
-  settings.setValue("LicenseHash", "1");
+  this->_licenseManager->acceptLicense(serviceId, "1");
 }
 
 void MainWindow::initFinished()

@@ -58,6 +58,7 @@ class UpdateManagerBridgeProxy;
 class ApplicationBridgeProxy;
 class ApplicationStatisticBridgeProxy;
 class ConnectionBridgeProxy;
+class LicenseManagerBridgeProxy;
 
 class SettingsViewModel;
 class GameSettingsViewModel;
@@ -294,7 +295,11 @@ private:
   ExecutorBridgeProxy *_executor;
   ApplicationBridgeProxy* _applicationProxy;
   ApplicationStatisticBridgeProxy* _applicationStatistic;
+  LicenseManagerBridgeProxy* _licenseManager;
   GameNet::Host::ClientConnection *_clientConnection;
+
+
+
 
   BestInstallPath *_bestInstallPath;
 

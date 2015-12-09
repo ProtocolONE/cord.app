@@ -386,6 +386,42 @@
     <ClCompile Include="GeneratedFiles\Release\moc_AppDistrIntegrity.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_AppDistrIntegrity.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManager.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\LicenseManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManagerBridge.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridge.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\LicenseManagerBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManagerBridgeAdaptor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeAdaptor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManagerBridgeProxy.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeProxy.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -540,6 +576,18 @@
     <CustomBuild Include="include\Features\PremiumExecutor.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h" />
     <CustomBuild Include="include\Features\Thetta\AppDistrIntegrity.h" />
+    <CustomBuild Include="include\Host\LicenseManager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\Bridge\LicenseManagerBridge.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\Dbus\LicenseManagerBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\Dbus\LicenseManagerBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

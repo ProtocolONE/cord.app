@@ -22,6 +22,7 @@
 #include <Host/Bridge/ApplicationStatisticBridge.h>
 #include <Host/Bridge/MessageAdapterBridge.h>
 #include <Host/Bridge/ServiceHandleBridge.h>
+#include <Host/Bridge/LicenseManagerBridge.h>
 
 #include <Host/Dbus/DBusServer.h>
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
@@ -33,6 +34,7 @@
 #include <Host/Dbus/ApplicationStatisticBridgeAdaptor.h>
 #include <Host/Dbus/MessageAdapterBridgeAdaptor.h>
 #include <Host/Dbus/ServiceHandleBridgeAdaptor.h>
+#include <Host/Dbus/LicenseManagerBridgeAdaptor.h>
 
 #ifdef ZZIMA_INTEGRATION
 #include <Features/Integration/Zzima/ZzimaGameExecutorAdapter.h>
@@ -205,6 +207,7 @@ namespace GameNet {
       this->registerExecutor(connection);
       this->registerUpdateManager(connection);
       this->registerServiceHandle(connection);
+      this->registerLicenseManager(connection);
     }
 
     void ConnectionManager::registerApplicationStatistic(Connection* connection)
@@ -331,6 +334,15 @@ namespace GameNet {
 
       new ServiceHandleBridgeAdaptor(serviceHandleBridge);
       connection->registerObject("/serviceHandle", serviceHandleBridge);
+    }
+
+    void ConnectionManager::registerLicenseManager(Connection * connection)
+    {
+      Bridge::LicenseManagerBridge *licenseManagerBridge = new Bridge::LicenseManagerBridge(connection);
+      licenseManagerBridge->setLicenseManager(this->_application->_licenseManager);
+
+      new LicenseManagerBridgeAdaptor(licenseManagerBridge);
+      connection->registerObject("/licenseManager", licenseManagerBridge);
     }
 
     void ConnectionManager::shutdown()

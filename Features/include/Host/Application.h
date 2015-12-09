@@ -78,6 +78,7 @@ namespace GameNet {
     class ServiceHandle;
     class AutoRunManager;
     class Connection;
+    class LicenseManager;
 
     namespace DBus {
       class DBusServer;
@@ -156,6 +157,7 @@ namespace GameNet {
       ServiceProcess::ServiceLoader *_serviceLoader;
       ServiceProcess::ServicesListRequest *_servicesListRequest;
       GGS::GameDownloader::GameDownloadService *_gameDownloader;
+      LicenseManager *_licenseManager;
 
       DownloaderSettings *_downloaderSettings;
       ServiceSettings *_serviceSettings;

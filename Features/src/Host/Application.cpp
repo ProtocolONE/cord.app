@@ -26,6 +26,7 @@
 #include <Host/ServiceProcess/ServicesListRequest.h>
 #include <Host/Installer/Migration.h>
 #include <Host/Installer/UninstallResult.h>
+#include <Host/LicenseManager.h>
 
 #include <Host/Dbus/DBusServer.h>
 
@@ -99,6 +100,7 @@ namespace GameNet {
       , _updateFinished(false)
       , _closing(false)
       , _applicationDistrMon(new Features::Thetta::AppDistrIntegrity(this))
+      , _licenseManager(new LicenseManager(this))
       , QObject(parent)
     {
 
@@ -115,7 +117,7 @@ namespace GameNet {
         return;
 
       this->_initFinished = true;
-
+     
       this->sendInitFinished();
     }
 
@@ -131,16 +133,17 @@ namespace GameNet {
 
     void Application::sendInitFinished()
     {
-      if (this->_initFinished && this->_updateFinished) {
-        emit this->initCompleted();
+      if (!this->_initFinished || !this->_updateFinished)
+        return;
 
-        if (!GameNet::Host::Installer::Migration::isMigrated()) {
-          GameNet::Host::Installer::Migration installerMigration;
-          installerMigration.setServices(this->_serviceLoader);
-          installerMigration.setDownloader(this->_gameDownloader);
+      this->_licenseManager->setServices(this->_serviceLoader->servicesMap().keys());
+      emit this->initCompleted();
 
-          installerMigration.migrate();
-        }
+      if (!GameNet::Host::Installer::Migration::isMigrated()) {
+        GameNet::Host::Installer::Migration installerMigration;
+        installerMigration.setServices(this->_serviceLoader);
+        installerMigration.setDownloader(this->_gameDownloader);
+        installerMigration.migrate();
       }
     }
 
