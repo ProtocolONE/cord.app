@@ -3,6 +3,8 @@
 #include <Features/WmiQuery.h>
 #include <Windows.h>
 
+#include <QtCore/QSysInfo>
+
 namespace Features {
   namespace Marketing {
     namespace SystemInfo {
@@ -26,8 +28,7 @@ namespace Features {
 
         bool Antivirus::queryAntivirus(QString& name)
         {
-          DWORD osVersion = GetVersion();
-          bool isXP = (DWORD)(LOBYTE(LOWORD(osVersion))) == 5;
+          bool isXP = QSysInfo::windowsVersion() == QSysInfo::WV_XP;
           
           std::wstring serviceName(isXP ? L"root\\securitycenter" : L"root\\securitycenter2");
           std::wstring tableName(L"AntivirusProduct");

@@ -12,6 +12,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QtWin>
+#include <QtCore/QSysInfo>
 
 #include <Windows.h>
 
@@ -57,11 +58,7 @@ namespace Features {
 
   bool TaskBarHelper::isPlatformSupported() const
   {
-    DWORD dwMajor = LOBYTE(LOWORD(GetVersion()));
-    DWORD dwMinor = HIBYTE(LOWORD(GetVersion()));
-
-    // Check that the OS is Win 7 or later (Win 7 is v6.1).
-    if (dwMajor > 6 || (dwMajor == 6 && dwMinor > 0))
+    if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
       return true;
 
     return false;

@@ -27,9 +27,19 @@ namespace Features {
           osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
           GetVersionEx(&osvi);
 
-          QString version = QString("%1.%2.%3")
-            .arg(osvi.dwMajorVersion)
-            .arg(osvi.dwMinorVersion)
+          QString winVersion;
+          switch (QSysInfo::windowsVersion()) {
+          case QSysInfo::WV_5_1: winVersion = "5.1"; break;
+          case QSysInfo::WV_6_0: winVersion = "6.0"; break;
+          case QSysInfo::WV_6_1: winVersion = "6.1"; break;
+          case QSysInfo::WV_6_2: winVersion = "6.2"; break;
+          case QSysInfo::WV_6_3: winVersion = "6.3"; break;
+          case QSysInfo::WV_10_0: winVersion = "10.0"; break;
+          default: winVersion = "6.1"; break;
+          }
+
+          QString version = QString("%1.%2")
+            .arg(winVersion)
             .arg(osvi.dwBuildNumber);
 
           writer->writeTextElement("Version", version);

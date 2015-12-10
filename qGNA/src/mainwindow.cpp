@@ -45,6 +45,7 @@
 #include <QtCore/QSysInfo>
 #include <QtCore/QFlags>
 #include <QtCore/QStringList>
+#include <QtCore/QSysInfo>
 
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDesktopWidget>
@@ -234,13 +235,22 @@ void MainWindow::initialize()
 
 void MainWindow::sendStartingMarketing()
 {
-  DWORD verion = GetVersion();
-  int dwMajorVersion = (int)(LOBYTE(LOWORD(verion)));
-  int dwMinorVersion = (int)(HIBYTE(LOWORD(verion)));
+  int dwMajorVersion = 6;
+  int dwMinorVersion = 1;
+
+  switch (QSysInfo::windowsVersion()) {
+  case QSysInfo::WV_5_1: dwMajorVersion = 5; dwMinorVersion = 1; break;
+  case QSysInfo::WV_6_0: dwMajorVersion = 6; dwMinorVersion = 0; break;
+  case QSysInfo::WV_6_1: dwMajorVersion = 6; dwMinorVersion = 1; break;
+  case QSysInfo::WV_6_2: dwMajorVersion = 6; dwMinorVersion = 2; break;
+  case QSysInfo::WV_6_3: dwMajorVersion = 6; dwMinorVersion = 3; break;
+  case QSysInfo::WV_10_0: dwMajorVersion = 10; dwMinorVersion = 0; break;
+  }
 
   QVariantMap params;
   params["windowsMajorVersion"] = dwMajorVersion;
   params["windowsMinorVersion"] = dwMinorVersion;
+  params["windowsVersion"] = QSysInfo::productVersion();
   params["updateArea"] = this->settingsViewModel->updateArea();
   params["version"] = this->_fileVersion;    
 
