@@ -50,6 +50,10 @@
 &lt;li&gt;Обратитесь к специалистам нашей службы поддержки.&lt;/li&gt;
 &lt;/ul&gt;</translation>
     </message>
+    <message>
+        <source>DRIVER_INSTALL_ERROR_TEST_MODE_TEXT</source>
+        <translation>В вашей операционной системе выключена &lt;b&gt;обязательная проверка цифровых подписей драйверов&lt;/b&gt;. Игра %1 не может быть запущена.</translation>
+    </message>
 </context>
 <context>
     <name>GameNet::Host::AutoRunManager</name>
