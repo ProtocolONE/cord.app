@@ -213,6 +213,9 @@ namespace GameNet {
       //Connect service termination
       QObject::connect(this->_thetta->scanner(), &Features::Thetta::ModuleScanner::scannerFoundModule,
         this->_executor, &GameNet::Host::GameExecutor::terminateAll);
+      
+      QObject::connect(this->_thetta, &Thetta::closeGamesRequest, 
+        this->_executor, &GameNet::Host::GameExecutor::terminateAll);
 
       this->_executor->setServices(this->_serviceLoader);
       this->_executor->setServiceSettings(this->_serviceSettings);

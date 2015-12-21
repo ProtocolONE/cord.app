@@ -1,6 +1,7 @@
 #include <Host/ExecutorHookFactory.h>
 #include <Host/HookFactory.h>
 #include <Host/Thetta.h>
+#include <Host/Application.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -41,6 +42,7 @@ namespace GameNet {
     ExecutorHookFactory::ExecutorHookFactory(QObject *parent /*= 0*/)
       : QObject(parent)
       , _downloader(nullptr)
+      , _executor(nullptr)
       , _downloaderHookFactory(nullptr)
       , _thetta(nullptr)
       , _saveUserInfo(new SaveUserInfo(this))
@@ -109,6 +111,9 @@ namespace GameNet {
 
         QObject::connect(this->_thetta->scanner(), &Features::Thetta::ModuleScanner::needSendHash,
           h, &Features::Thetta::ThettaMonitor::processQueue);
+
+        QObject::connect(h, &Features::Thetta::ThettaMonitor::sendTimeout,
+          this->_thetta, &Thetta::onTettaMonitorSendTimeout, Qt::QueuedConnection);
       });
 
       this->reg<CASettingsFix>([this](CASettingsFix *h) {
@@ -143,5 +148,6 @@ namespace GameNet {
       Q_ASSERT(value);
       this->_thetta = value;
     }
+
   }
 }

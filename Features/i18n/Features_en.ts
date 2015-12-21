@@ -67,4 +67,15 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>GameNet::Host::Thetta</name>
+    <message>
+        <source>DRIVER_INSTALL_ERROR_TITLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>THETTA_SEND_TIMEOUT_ERROR</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

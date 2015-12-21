@@ -35,6 +35,7 @@ namespace GameNet {
     
     class HookFactory;
     class Thetta;
+    class Application;
 
     class ExecutorHookFactory 
       : public QObject, public Factory<GGS::GameExecutor::HookInterface, QString>
@@ -48,6 +49,7 @@ namespace GameNet {
       void setExecutor(GGS::GameExecutor::GameExecutorService *value);
       void setDownloaderHookFactory(HookFactory *value);
       void setThetta(Thetta *value);
+      void setApplication(Application *value);
 
       void init();
 

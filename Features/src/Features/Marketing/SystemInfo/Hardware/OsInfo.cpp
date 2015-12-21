@@ -2,6 +2,7 @@
 #include <Features/WmiQuery.h>
 
 #include <Helper/DebugLog.h>
+#include <Helper/SystemInfo.h>
 
 #include <Windows.h>
 
@@ -79,23 +80,7 @@ namespace Features {
 
         bool OsInfo::isWow64()
         {
-          typedef BOOL (APIENTRY *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
-          LPFN_ISWOW64PROCESS fnIsWow64Process;
-
-          fnIsWow64Process = reinterpret_cast<LPFN_ISWOW64PROCESS>(
-            GetProcAddress(GetModuleHandleW(L"kernel32"), "IsWow64Process"));
-
-          if (!fnIsWow64Process)
-            return false;
-
-          BOOL bIsWow64 = FALSE;
-          if (!fnIsWow64Process(GetCurrentProcess(), &bIsWow64)) {
-            DWORD error = GetLastError();
-            DEBUG_LOG << "Fail to call IsWow64Process: " << error;
-            return false;
-          }
-
-          return bIsWow64 != FALSE;
+          return Features::isWow64();
         }
 
       }

@@ -16,7 +16,7 @@
     <name>Features::Thetta::AppDistrIntegrity</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
-        <translation type="unfinished">Неизвестная ошибка</translation>
+        <translation>Неизвестная ошибка</translation>
     </message>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TEXT</source>
@@ -42,7 +42,7 @@
     </message>
     <message>
         <source>DRIVER_INSTALL_ERROR_TEXT</source>
-        <translation>&lt;p&gt;Приложению не удалось подключиться к системе безопасности и игра не может быть запущена. &lt;/p&gt;
+        <translation>&lt;p&gt;Приложению не удалось подключиться к системе безопасности и игра не может быть запущена. Подробнее в статье службы поддержки &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/kb/articles/785-view&quot;&gt;КБ-785&lt;/a&gt;&lt;/b&gt; &lt;/p&gt;
 
 &lt;p&gt;Что делать?&lt;/p&gt;
 
@@ -52,7 +52,7 @@
     </message>
     <message>
         <source>DRIVER_INSTALL_ERROR_TEST_MODE_TEXT</source>
-        <translation>В вашей операционной системе выключена &lt;b&gt;обязательная проверка цифровых подписей драйверов&lt;/b&gt;. Игра %1 не может быть запущена.</translation>
+        <translation>В вашей операционной системе выключена &lt;b&gt;обязательная проверка цифровых подписей драйверов&lt;/b&gt;. Игра %1 не может быть запущена. Подробнее в статье службы поддержки &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/kb/articles/894-view&quot;&gt;КБ-894&lt;/a&gt;&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
@@ -71,6 +71,27 @@
     <message>
         <source>DBUS_DISCONNECTED_TEXT</source>
         <translation>Произошла ошибка. Мы вынуждены закрыть приложение. Пожалуйста, запустите его снова чтобы продолжить.</translation>
+    </message>
+</context>
+<context>
+    <name>GameNet::Host::Thetta</name>
+    <message>
+        <source>DRIVER_INSTALL_ERROR_TITLE</source>
+        <translation>Внимание</translation>
+    </message>
+    <message>
+        <source>DRIVER_INSTALL_ERROR_TEXT</source>
+        <translation type="obsolete">&lt;p&gt;Приложению не удалось подключиться к системе безопасности и игра не может быть запущена. &lt;/p&gt;
+
+&lt;p&gt;Что делать?&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Проверьте, не блокирует ли ваш антивирус компоненты приложения GameNet.&lt;/li&gt;
+&lt;li&gt;Обратитесь к специалистам нашей службы поддержки.&lt;/li&gt;
+&lt;/ul&gt;</translation>
+    </message>
+    <message>
+        <source>THETTA_SEND_TIMEOUT_ERROR</source>
+        <translation>Приложение не смогло связаться с сервером безопасности Thetta и будет закрыто через 30 секунд. Подробнее в статье службы поддержки &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/kb/articles/895-thetta&quot;&gt;КБ-895&lt;/a&gt;&lt;/b&gt;.</translation>
     </message>
 </context>
 </TS>

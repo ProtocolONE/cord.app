@@ -4,23 +4,26 @@
 
 namespace Features {
 
-  bool isWow64()
+  inline bool isWow64()
   {
-    typedef BOOL (APIENTRY *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
-    LPFN_ISWOW64PROCESS fnIsWow64Process;
+    typedef NTSTATUS(WINAPI *fnNtQueryInformationProcess)(
+      _In_      HANDLE           ProcessHandle,
+      _In_      DWORD            ProcessInformationClass,
+      _Out_     PVOID            ProcessInformation,
+      _In_      ULONG            ProcessInformationLength,
+      _Out_opt_ PULONG           ReturnLength
+      );
 
-    fnIsWow64Process = reinterpret_cast<LPFN_ISWOW64PROCESS>(
-                         GetProcAddress(GetModuleHandleW(L"kernel32"), "IsWow64Process"));
-
-    if (!fnIsWow64Process)
+    fnNtQueryInformationProcess queryProcessInfo = reinterpret_cast<fnNtQueryInformationProcess>(
+      GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtQueryInformationProcess"));
+    if (!queryProcessInfo)
       return false;
 
-    BOOL bIsWow64 = FALSE;
-    if (!fnIsWow64Process(GetCurrentProcess(), &bIsWow64)) {
-      DWORD error = GetLastError();
-      return false;
-    }
-    return bIsWow64 != FALSE;
+    DWORD ProcessInformation = 0;
+    DWORD infoType = 0x1A; // ProcessPriorityClass | ProcessExceptionPort
+    NTSTATUS res = queryProcessInfo(GetCurrentProcess(), infoType, &ProcessInformation, 4u, 0);
+
+    return (res >= 0) && (ProcessInformation != 0);
   }
 
 }
