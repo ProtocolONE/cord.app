@@ -169,7 +169,9 @@ int main(int argc, char *argv[])
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
-  initBugTrap(path);
+  QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
+  initBugTrap(logPath); 
+
   QThread::currentThread()->setObjectName("Main thread");
 
   if (app.isAlreadyRunning()) {
@@ -199,7 +201,7 @@ int main(int argc, char *argv[])
   TTCCLayout layout(TTCCLayout::ISO8601);
   layout.retain();
 
-  RollingFileAppender appender(&layout, QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/logs/qgna.log", true);
+  RollingFileAppender appender(&layout, logPath + "qgna.log", true);
   appender.setMaximumFileSize(1000000);
   appender.setMaxBackupIndex(1);
   appender.retain();

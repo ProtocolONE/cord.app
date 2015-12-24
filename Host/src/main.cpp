@@ -52,14 +52,15 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationName("GameNet");
   migrateUserInfo();
 
-  QString path = QCoreApplication::applicationDirPath();
-  initBugTrap(path);
+  QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
+  initBugTrap(logPath);
 
   if (app.containsCommand("uninstall") && app.getCommandArguments("uninstall").empty()) {
     Uninstall::run(app.arguments());
     return 0;
   }
 
+  QString path = QCoreApplication::applicationDirPath();
   app.setLibraryPaths(QStringList() << path + "/plugins5");
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  LoggerHelper logger(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/logs/host.log");
+  LoggerHelper logger(logPath + "host.log");
   if (!requireAdminRights())
     return -1;
 
