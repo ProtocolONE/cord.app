@@ -21,7 +21,7 @@ namespace GameNet {
 
     ClientConnection::ClientConnection(const QString &name, QObject* parent /*= 0*/)
       : QObject(parent)
-      , _maxTimeoutFail(10) // 10 * 5000 = 50 sec
+      , _maxTimeoutFail(30) // 3 * 10 * 5000 = 3 * 50 sec
       , _timeoutFail(0)
       , _connection(nullptr)
       , _appName(name)

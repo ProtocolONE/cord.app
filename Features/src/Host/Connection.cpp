@@ -14,7 +14,7 @@ namespace GameNet {
     Connection::Connection(const QDBusConnection& connection, QObject *parent /*= 0*/)
       : QObject(parent)
       , _dbusConnection(connection)
-      , _maxTimeoutFail(10) // 10 * 5000 = 50 sec
+      , _maxTimeoutFail(30) // 3 * 10 * 5000 = 3 * 50 sec
       , _timeoutFail(0)
     {
       Bridge::ConnectionBridge *bridge = new Bridge::ConnectionBridge(this);
