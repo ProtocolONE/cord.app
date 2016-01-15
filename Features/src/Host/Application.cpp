@@ -539,6 +539,7 @@ namespace GameNet {
         QObject::connect(connection, &Connection::logoutMain, qgnaLogout);
         QObject::connect(connection, &Connection::disconnected, qgnaLogout);
         QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
+          GGS::RestApi::RestApiManager::commonInstance()->setCridential(connection->credential());
           this->_systemInfoManager->setCredential(connection->credential());
           this->_thetta->setCredential(connection->credential());
           this->setDownloaderCredential(connection->credential());
