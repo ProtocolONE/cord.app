@@ -428,6 +428,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ForbiddenCertificateTester.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\Features\Thetta\InputDefender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -455,6 +458,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Helper\UserInfoMigration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Thetta\InputDefender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
