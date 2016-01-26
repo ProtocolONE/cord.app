@@ -24,6 +24,7 @@
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/SaveUserInfo.h>
 #include <Features/Thetta/ModuleScanner.h>
+#include <Features/Thetta/Certificate/ModuleSender.h>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
@@ -114,6 +115,15 @@ namespace GameNet {
 
         QObject::connect(h, &Features::Thetta::ThettaMonitor::sendTimeout,
           this->_thetta, &Thetta::onTettaMonitorSendTimeout, Qt::QueuedConnection);
+
+
+        using Features::Thetta::Certificate::ModuleSender;
+        ModuleSender* driverScanner(this->_thetta->driverScanner());
+
+        QObject::connect(h, &Features::Thetta::ThettaMonitor::preExecuteCompleted,
+          driverScanner, &ModuleSender::onPreExecuteCompleted, Qt::QueuedConnection);
+        QObject::connect(h, &Features::Thetta::ThettaMonitor::postExecuteCompleted,
+          driverScanner, &ModuleSender::onPostExecuteCompleted, Qt::QueuedConnection);
       });
 
       this->reg<CASettingsFix>([this](CASettingsFix *h) {

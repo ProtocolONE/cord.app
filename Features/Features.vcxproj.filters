@@ -303,7 +303,6 @@
     <ClCompile Include="src\Features\TaskBarEventFilter.cpp" />
     <ClCompile Include="src\Features\Thetta\DistrIntegrity.cpp" />
     <ClCompile Include="src\Features\Thetta\DistrIntegrityExecutorHook.cpp" />
-    <ClCompile Include="src\Features\Thetta\ForbiddenCertificateTester.cpp" />
     <ClCompile Include="src\Features\Thetta\Protector.cpp" />
     <ClCompile Include="src\Features\PremiumExecutor.cpp" />
     <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
@@ -422,14 +421,47 @@
     <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeProxy.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ForbiddenCertificateTester.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleMonitor.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ForbiddenCertificateTester.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ModuleMonitor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\Thetta\InputDefender.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_SessionInfo.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SessionInfo.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Certificate\DriverListHelper.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Certificate\FileCertificate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Certificate\ModuleMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Certificate\SessionInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleSender.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModuleSender.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Certificate\ModuleSender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\Certificate\ServiceMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceMonitor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ServiceMonitor.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,7 +492,10 @@
     <ClInclude Include="include\Helper\UserInfoMigration.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Features\Thetta\InputDefender.h">
+    <ClInclude Include="include\Features\Thetta\Certificate\DriverListHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Thetta\Certificate\FileCertificate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -599,7 +634,18 @@
     <CustomBuild Include="include\Host\Dbus\LicenseManagerBridgeProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
+    <CustomBuild Include="include\Features\Thetta\Certificate\ModuleMonitor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\Certificate\SessionInfo.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\Certificate\ModuleSender.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\Certificate\ServiceMonitor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
