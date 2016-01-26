@@ -427,42 +427,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ModuleMonitor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SessionInfo.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SessionInfo.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Certificate\DriverListHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Certificate\FileCertificate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Certificate\ModuleMonitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Certificate\SessionInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleSender.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ModuleSender.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Certificate\ModuleSender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\Certificate\ServiceMonitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceMonitor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceMonitor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\ThettaImageChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -492,12 +457,7 @@
     <ClInclude Include="include\Helper\UserInfoMigration.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Features\Thetta\Certificate\DriverListHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Features\Thetta\Certificate\FileCertificate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="include\Features\Thetta\ThettaImageChecker.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
