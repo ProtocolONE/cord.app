@@ -39,6 +39,7 @@
 #include <Features/Marketing/SystemInfo/SystemInfoManager.h>
 #include <Features/Thetta/ModuleScanner.h>
 #include <Features/Thetta/AppDistrIntegrity.h>
+#include <Features/Thetta/ThettaImageChecker.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -101,6 +102,7 @@ namespace GameNet {
       , _closing(false)
       , _applicationDistrMon(new Features::Thetta::AppDistrIntegrity(this))
       , _licenseManager(new LicenseManager(this))
+      , _selfScanner(new Features::Thetta::ThettaImageChecker(this))
       , QObject(parent)
     {
 
@@ -327,6 +329,9 @@ namespace GameNet {
       });
 
       this->_updater->startCheckUpdate();
+
+      if (this->_selfScanner->loadFileInfo())
+        this->_selfScanner->startCheck();
     }
 
     void Application::updateCompletedSlot(bool needRestart)

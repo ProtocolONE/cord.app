@@ -10,6 +10,7 @@ namespace Features {
 
   namespace Thetta {
     class AppDistrIntegrity;
+    class ThettaImageChecker;
   }
 
   namespace GameDownloader {
@@ -79,6 +80,7 @@ namespace GameNet {
     class AutoRunManager;
     class Connection;
     class LicenseManager;
+    class ThettaImageChecker;
 
     namespace DBus {
       class DBusServer;
@@ -188,6 +190,7 @@ namespace GameNet {
       DBus::DBusServer *_dbusServer;
       Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
       Features::Thetta::AppDistrIntegrity * _applicationDistrMon;
+      Features::Thetta::ThettaImageChecker * _selfScanner;
 
       bool _initFinished;
       bool _updateFinished;

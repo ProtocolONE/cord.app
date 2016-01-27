@@ -428,6 +428,12 @@
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="src\Features\Thetta\ThettaImageChecker.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaImageChecker.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaImageChecker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -457,7 +463,6 @@
     <ClInclude Include="include\Helper\UserInfoMigration.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Features\Thetta\ThettaImageChecker.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -594,18 +599,8 @@
     <CustomBuild Include="include\Host\Dbus\LicenseManagerBridgeProxy.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\Certificate\ModuleMonitor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\Certificate\SessionInfo.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\Certificate\ModuleSender.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\Features\Thetta\Certificate\ServiceMonitor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
+    <CustomBuild Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaImageChecker.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
