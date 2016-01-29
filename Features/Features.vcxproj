@@ -29,28 +29,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ForbiddenCertificateTester.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridge.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeAdaptor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeProxy.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThettaImageChecker.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ThettaImageChecker.cpp" />
-    <ClCompile Include="src\Host\Bridge\LicenseManagerBridge.cpp" />
-    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\LicenseManager.cpp" />
-    <ClCompile Include="src\Helper\FileUtils.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModuleMonitor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ModuleSender.cpp">
