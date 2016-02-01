@@ -14,7 +14,7 @@
     <CoreArea>trunk</CoreArea>
     <LibtorrentWrapperArea>trunk</LibtorrentWrapperArea>
     <GameDownloaderArea>trunk</GameDownloaderArea>
-    <GameExecutorArea>trunk</GameExecutorArea>
+    <GameExecutorArea>1.0.491</GameExecutorArea>
     <ApplicationArea>trunk</ApplicationArea>
     <OpenSSLArea>1.0.2d</OpenSSLArea>
     <QmlExtensionArea>trunk</QmlExtensionArea>
