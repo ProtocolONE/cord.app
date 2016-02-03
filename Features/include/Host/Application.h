@@ -79,7 +79,6 @@ namespace GameNet {
     class AutoRunManager;
     class Connection;
     class LicenseManager;
-    class ThettaImageChecker;
 
     namespace DBus {
       class DBusServer;
