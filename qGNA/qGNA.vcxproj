@@ -291,7 +291,9 @@ IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\translations\qtwebengine_locales\en-US.pak" "$(TargetDir)languages\qtwebengine_locales\"
 
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins5\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\*.qml" "$(TargetDir)plugins5\QtMultimedia\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins5\QtMultimedia\"
+
 
 del "$(TargetDir)\*.ilk"
 
@@ -540,7 +542,9 @@ IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\translations\qtwebengine_locales\en-US.pak" "$(TargetDir)languages\qtwebengine_locales\"
 
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins5\QtMultimedia\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\*.qml" "$(TargetDir)plugins5\QtMultimedia\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins5\QtMultimedia\"
+
 
 del "$(TargetDir)\*.ilk"
 
