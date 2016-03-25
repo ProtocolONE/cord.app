@@ -294,6 +294,10 @@ IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\*.qml" "$(TargetDir)plugins5\QtMultimedia\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins5\QtMultimedia\"
 
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\declarative_qmlwebsockets%D%.dll" "$(TargetDir)plugins5\QtWebSockets\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\qmldir" "$(TargetDir)plugins5\QtWebSockets\"
+
+
 
 del "$(TargetDir)\*.ilk"
 
@@ -544,6 +548,10 @@ IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\declarative_multimedia%D%.dll" "$(TargetDir)plugins5\QtMultimedia\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\*.qml" "$(TargetDir)plugins5\QtMultimedia\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtMultimedia\qmldir" "$(TargetDir)plugins5\QtMultimedia\"
+
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\declarative_qmlwebsockets%D%.dll" "$(TargetDir)plugins5\QtWebSockets\"
+%COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\qmldir" "$(TargetDir)plugins5\QtWebSockets\"
+
 
 
 del "$(TargetDir)\*.ilk"
