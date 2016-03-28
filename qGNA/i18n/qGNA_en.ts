@@ -11,29 +11,29 @@
 <context>
     <name>GetDirectoryDialog</name>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="48"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="49"/>
         <source>CAPTION_OPEN_DIR</source>
         <translation type="unfinished">Open directory</translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="81"/>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="90"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="82"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="91"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="82"/>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="91"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="83"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="92"/>
         <source>DIRECTORY_NOT_ACCEPTED_TO_INSTALL_BODY_INFORMATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="104"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="110"/>
         <source>DIRECTORY_NOT_EMPTY_INFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="105"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="111"/>
         <source>DIRECTORY_NOT_EMPTY_QUESTION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -86,6 +86,16 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="281"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="206"/>
+        <source>Недостаточно места на диске &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="207"/>
+        <source>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2 мб&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3 мб&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

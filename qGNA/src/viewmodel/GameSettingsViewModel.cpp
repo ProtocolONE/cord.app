@@ -9,6 +9,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QSettings>
 #include <QDirIterator>
@@ -189,13 +190,19 @@ void GameSettingsViewModel::browseInstallPath(const QString &preferedPath)
     : this->_serviceSettings->installPath(this->_currentServiceId);
   
   GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
-  dialog->getDirectory(this->_serviceSettings->name(this->_currentServiceId), defaultPath);
+  dialog->getDirectory(
+    this->_serviceSettings->name(this->_currentServiceId), 
+    this->_serviceSettings->gameSize(this->_currentServiceId), 
+    defaultPath
+  );
 
   QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
     dialog->deleteLater();
 
-    if (!newDirectory.isEmpty()) 
-      this->setInstallPath(newDirectory);
+    if (newDirectory.isEmpty())
+      return;
+
+    this->setInstallPath(newDirectory);
   });
 }
 
@@ -206,15 +213,18 @@ void GameSettingsViewModel::browseDownloadPath()
 
   QString name = this->_serviceSettings->name(this->_currentServiceId);
   QString downloadPath = this->_serviceSettings->downloadPath(this->_currentServiceId);
+  int gameSize = this->_serviceSettings->gameSize(this->_currentServiceId);
 
   GetDirectoryDialog *dialog = new GetDirectoryDialog(qobject_cast<QWidget*>(this->parent()));
-  dialog->getDirectory(name, downloadPath);
+  dialog->getDirectory(name, gameSize, downloadPath);
 
   QObject::connect(dialog, &GetDirectoryDialog::directoryEntered, [dialog, this](const QString& newDirectory) {
     dialog->deleteLater();
 
-    if (!newDirectory.isEmpty()) 
-      this->setDownloadPath(newDirectory);
+    if (newDirectory.isEmpty())
+      return;
+
+    this->setDownloadPath(newDirectory);
   });
 }
 

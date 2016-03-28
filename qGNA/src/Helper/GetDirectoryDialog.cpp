@@ -5,6 +5,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QDebug>
 #include <QtCore/QDirIterator>
+#include <QtCore/QStorageInfo>
 
 #include <QtWidgets/QFileDialog>
 
@@ -43,7 +44,7 @@ QString GetDirectoryDialog::removeNotExisting(const QString & inputPath)
   return resultPath;
 }
 
-void GetDirectoryDialog::getDirectory(const QString& serviceName, const QString& defaultDir)
+void GetDirectoryDialog::getDirectory(const QString& serviceName, const int size, const QString& defaultDir)
 {
   QFileDialog *dialog = new QFileDialog(qobject_cast<QWidget*>(this->parent()), tr("CAPTION_OPEN_DIR"), this->removeNotExisting(defaultDir));
   dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -99,6 +100,11 @@ void GetDirectoryDialog::getDirectory(const QString& serviceName, const QString&
       return;
     }
 
+    if (!this->checkFreeSpace(newDirectory, serviceName, size))  {
+        this->directoryEntered(QString());
+        return;
+    } 
+
     if (!this->isEmptyFolder(newDirectory)) {
       bool dontUseFolder = Message::Cancel == Message::question(
         tr("DIRECTORY_NOT_EMPTY_INFO"), 
@@ -113,8 +119,8 @@ void GetDirectoryDialog::getDirectory(const QString& serviceName, const QString&
     this->directoryEntered(newDirectory);
   });
 
-  dialog->open();
-}
+  dialog->open(); 
+} 
 
 QString GetDirectoryDialog::getFolderName(int type) {
   wchar_t tmp[MAX_PATH];
@@ -184,4 +190,24 @@ bool GetDirectoryDialog::isAcceptedFolder(const QString &newDirectory, QString *
   }
 
   return true;
+}
+
+bool GetDirectoryDialog::checkFreeSpace(const QString &newDirectory, const QString &serviceName, const int size)
+{
+  using GGS::Core::UI::Message;
+
+  QStorageInfo info = QStorageInfo(newDirectory);
+
+  int freeMBytes = info.bytesAvailable() / 1048576;
+  
+  if (size < freeMBytes)
+    return true;
+
+  QString title = QObject::tr("Недостаточно места на диске \"%1\"").arg(info.rootPath());
+  QString message = QObject::tr("Для установки \"%1\" требуется не менее <b>%2 мб</b>. На выбранном вами диске доступно <b>%3 мб</b>. Выберите другой каталог или освободите место на диске.")
+    .arg(serviceName)
+    .arg(size)
+    .arg(freeMBytes);
+
+  return Message::Ignore == Message::warning(title, message, static_cast<Message::StandardButton>(Message::Ignore | Message::Cancel));
 }

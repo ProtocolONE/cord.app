@@ -72,7 +72,7 @@ signals:
 private:
   ServiceSettingsBridgeProxy* _serviceSettings;
   DownloaderBridgeProxy * _downloader;
-
+  
   QString _currentServiceId;
   QString _installPath;
   QString _downloadPath;

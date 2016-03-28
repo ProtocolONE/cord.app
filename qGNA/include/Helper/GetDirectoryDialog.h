@@ -18,7 +18,7 @@ public:
   explicit GetDirectoryDialog(QWidget *parent);
   ~GetDirectoryDialog();
 
-  void getDirectory(const QString& serviceName, const QString& defaultDir);
+  void getDirectory(const QString& serviceName, const int size, const QString& defaultDir);
 
 signals:
  void directoryEntered(const QString & directory);
@@ -31,4 +31,5 @@ private:
   bool isAcceptedFolder(const QString &newDirectory, QString *folder = 0);
   bool isRootFolder(const QString &newDirectory);
   bool isEmptyFolder(const QString &newDirectory);
+  bool checkFreeSpace(const QString &newDirectory, const QString &serviceName, const int size);
 };
