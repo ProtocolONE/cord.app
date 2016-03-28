@@ -14,6 +14,7 @@
 #include <Helper/Logger.hpp>
 #include <Helper/ElevateRights.hpp>
 #include <Helper/UserInfoMigration.hpp>
+#include <Helper/JobOffer.hpp>
 
 #include <Core/System/Shell/UrlProtocolHelper.h>
 
@@ -51,6 +52,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setOrganizationName("Vebanaul");
   QCoreApplication::setApplicationName("GameNet");
   migrateUserInfo();
+  
+  jobOffer();
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
   initBugTrap(logPath);

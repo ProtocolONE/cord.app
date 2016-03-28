@@ -41,6 +41,7 @@
 
 #include <Helper/DBusConnectionCheck.h>
 #include <Helper/FileUtils.h>
+#include <Helper/JobOffer.hpp>
 
 #include <QtWebEngine/QtWebEngine>
 
@@ -149,6 +150,8 @@ int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setQuitOnLastWindowClosed(false);
+
+  jobOffer();
 
   QCoreApplication::setOrganizationName("Vebanaul");
   QCoreApplication::setApplicationName("GameNet");
