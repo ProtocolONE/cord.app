@@ -241,6 +241,7 @@ set ICU_AREA=53.vc13
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebEngine%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebEngineCore%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\QtWebEngineProcess.exe" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5WebSockets%D%.dll" "$(TargetDir)"
 
 IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5Core.dll" "$(TargetDir)"
@@ -496,6 +497,7 @@ set ICU_AREA=53.vc13
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebEngine%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebEngineCore%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\QtWebEngineProcess.exe" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\Qt5WebSockets%D%.dll" "$(TargetDir)"
 
 IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5Core.dll" "$(TargetDir)"
