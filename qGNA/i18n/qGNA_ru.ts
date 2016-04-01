@@ -110,7 +110,7 @@
         <location filename="../src/mainwindow.cpp" line="664"/>
         <location filename="../src/mainwindow.cpp" line="699"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
-        <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;http://support.gamenet.ru&lt;/font&gt;&lt;/a&gt;  </translation>
+        <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;http://support.gamenet.ru&lt;/a&gt; Подробности в &lt;a href=&quot;https://support.gamenet.ru/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>SERVICE_AUTHORIZATION_IMPOSSIBLE_INFO</source>
