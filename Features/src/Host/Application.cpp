@@ -253,13 +253,6 @@ namespace GameNet {
 
       this->initMarketing();
 
-      StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
-      stopDownloadOnExecuteInit.setDownloader(this->_gameDownloader);
-      stopDownloadOnExecuteInit.setServices(this->_serviceLoader);
-      stopDownloadOnExecuteInit.setTarget(this->_stopDownloadServiceOnExecuteGame);
-      stopDownloadOnExecuteInit.setExecutor(this->_executor);
-      stopDownloadOnExecuteInit.init();
-
       this->_shutdown->setApplication(this);
       this->_shutdown->setDownloader(this->_gameDownloader);
       this->_shutdown->setExecutor(this->_executor);
@@ -274,6 +267,15 @@ namespace GameNet {
 
       this->_applicationDistrMon->setExecutor(this->_executor->mainExecutor());
       this->_applicationDistrMon->setArea(this->_updater->applicationArea());
+
+      QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished, [this](){
+        StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
+        stopDownloadOnExecuteInit.setDownloader(this->_gameDownloader);
+        stopDownloadOnExecuteInit.setServices(this->_serviceLoader);
+        stopDownloadOnExecuteInit.setTarget(this->_stopDownloadServiceOnExecuteGame);
+        stopDownloadOnExecuteInit.setExecutor(this->_executor);
+        stopDownloadOnExecuteInit.init();
+      });
 
       QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished,
         this, &Application::setInitFinished);
