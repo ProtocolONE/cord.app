@@ -77,6 +77,7 @@ namespace GameNet {
           serviceDist.setExtractorType(data["extractorType"]);
           serviceDist.setExecuteUrl(data["executeUrl"]);
           serviceDist.setGameSize(data["gameSize"].toInt());
+          serviceDist.setDependencyList(data["dependencyList"]);
 
           if (!data["iconInApp"].isEmpty())
             this->_downloadIconHelper.downloadIconRequest(data["iconInApp"], data["serviceId"]);
