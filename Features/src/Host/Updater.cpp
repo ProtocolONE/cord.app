@@ -127,7 +127,7 @@ namespace GameNet {
       installUpdateGnaPath = QString("tst");
 #endif
 
-      QString updateUrl = QString("https://fs0.gamenet.ru/update/qgna/%1/").arg(updateArea);
+      QString updateUrl = QString("https://fs0.gnfiles.com/update/qgna/%1/").arg(updateArea);
       QString updateCrc = QString("%1update.crc.7z").arg(updateUrl);
       this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 
