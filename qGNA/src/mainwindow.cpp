@@ -6,6 +6,7 @@
 #include <Helper/CacheNetworkManagerFactory.h>
 
 #include <Features/RestApi/ServiceHasAccess.h>
+#include <Features/RenderRateHack.h>
 
 #include <viewmodel/UpdateViewModel.h>
 #include <viewmodel/ApplicationStatisticViewModel.h>
@@ -77,8 +78,16 @@ MainWindow::MainWindow(QWindow *parent)
   , _applicationStatistic(nullptr)
   , _clientConnection(nullptr)
   , _bestInstallPath(nullptr)
+  , _renderRateHack(nullptr)
 {
   this->hide();
+
+  if (QString::fromLatin1(qgetenv("QT_OPENGL")) == "software") {
+    this->_renderRateHack = new Features::RenderRateHack(this);
+    this->_renderRateHack->init(this);
+    QObject::connect(qApp, &QGuiApplication::applicationStateChanged, this, &MainWindow::onApplicationStateChanged);
+
+  }
 }
 
 MainWindow::~MainWindow()
@@ -891,6 +900,15 @@ void MainWindow::postUpdateInit()
 
   QObject::connect(this->_executor, &ExecutorBridgeProxy::serviceStarted,
     &this->_silentMode, &Features::SilentMode::gameStarted);
+}
+
+void MainWindow::onApplicationStateChanged(Qt::ApplicationState state)
+{
+  if (!this->_renderRateHack)
+    return;
+
+  bool active = state == Qt::ApplicationActive;
+  this->_renderRateHack->setVsyncDelay(active ? 40 : 200);
 }
 
 bool MainWindow::anyLicenseAccepted()

@@ -63,6 +63,10 @@ class LicenseManagerBridgeProxy;
 class SettingsViewModel;
 class GameSettingsViewModel;
 
+namespace Features {
+  class RenderRateHack;
+}
+
 namespace GameNet {
   namespace Host {
     class ClientConnection;
@@ -262,6 +266,8 @@ private:
 
   void prepairGameDownloader();
   void postUpdateInit();
+  void onApplicationStateChanged(Qt::ApplicationState state);
+
 
   GGS::Core::Service* getService(const QString& id);
 
@@ -297,9 +303,7 @@ private:
   ApplicationStatisticBridgeProxy* _applicationStatistic;
   LicenseManagerBridgeProxy* _licenseManager;
   GameNet::Host::ClientConnection *_clientConnection;
-
-
-
+  Features::RenderRateHack *_renderRateHack;
 
   BestInstallPath *_bestInstallPath;
 
