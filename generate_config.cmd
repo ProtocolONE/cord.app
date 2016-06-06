@@ -1,6 +1,7 @@
 Set BuildFolder=%~1
-
 echo %BuildFolder%
+
+Set PATH=%PATH%;%~2
 
 Set OutConfig="%BuildFolder%\Thetta\description.dat"
 Set Hasher="%QGNACOMMONDIR%\GGS\SectionHasher\trunk\bin\SectionHasher.exe"
@@ -44,9 +45,13 @@ Set libeayout="%BuildFolder%\libeay32.json"
 Set ssleay="%BuildFolder%\ssleay32.dll"
 Set ssleayout="%BuildFolder%\ssleay32.json"
 
+
+del %OutConfig%
+
 :: Generating jsons
 
 call %Hasher% -c=%qgnapath% -o=%qgnapathout%
+
 call %Hasher% -c=%gamedownloader% -o=%gamedownloaderout%
 call %Hasher% -c=%gameexecutor% -o=%gameexecutorout%
 call %Hasher% -c=%corex% -o=%corexout%
@@ -75,4 +80,7 @@ del %qtnetworkout%
 del %libeayout%
 del %ssleayout%
 
+if NOT EXIST %OutConfig% (
+ exit /B -1
+)
 

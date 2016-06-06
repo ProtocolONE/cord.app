@@ -122,7 +122,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 
 @rem del /F /Q "$(TargetDir)*.ts"
 
-CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)"
+CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)" "$(QTDIR)\bin\"
 </Command>
     </PostBuildEvent>
     <Manifest>
