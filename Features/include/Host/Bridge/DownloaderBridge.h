@@ -7,6 +7,7 @@
 #include <QtCore/QMetaType>
 
 #include <QtDBus/QDBusArgument>
+#include <QtDBus/QDBusAbstractAdaptor>
 
 namespace GGS {
   namespace Core {
@@ -222,7 +223,7 @@ namespace GameNet {
         </ul>
 
         */
-        void start(const QString& serviceId, int startType);
+        Q_NOREPLY void start(const QString& serviceId, int startType);
 
         /*!
         \fn void stop(const QString& serviceId);
@@ -232,7 +233,7 @@ namespace GameNet {
         \param serviceId  service identification number
 
         */
-        void stop(const QString& serviceId);
+        Q_NOREPLY void stop(const QString& serviceId);
 
         /*!
         \fn void pauseSession();
@@ -240,7 +241,7 @@ namespace GameNet {
         Pauses all downloader activity.
 
         */
-        void pauseSession();
+        Q_NOREPLY void pauseSession();
 
         /*!
         \fn bool void resumeSession();
@@ -248,7 +249,7 @@ namespace GameNet {
         Resumes downloader activity.
 
         */
-        void resumeSession();
+        Q_NOREPLY void resumeSession();
         
       signals:
         /*!

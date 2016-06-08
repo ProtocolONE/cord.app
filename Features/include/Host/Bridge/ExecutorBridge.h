@@ -5,6 +5,7 @@
 #include <QtCore/QMetaType>
 
 #include <QtDBus/QDBusArgument>
+#include <QtDBus/QDBusAbstractAdaptor>
 
 #include <Host/Bridge/Credential.h>
 
@@ -38,7 +39,7 @@ namespace GameNet {
           <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="GameNet::Host::Bridge::Credential"/>
         </method>
         */
-        void execute(const QString& serviceId, const Credential& credential);
+        Q_NOREPLY void execute(const QString& serviceId, const Credential& credential);
         
         /*
         <method name="executeSecond">
@@ -49,7 +50,7 @@ namespace GameNet {
           <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="GameNet::Host::Bridge::Credential"/>
         </method>
         */
-        void executeSecond(const QString& serviceId, const Credential& credential, const Credential& secondCredential);
+        Q_NOREPLY void executeSecond(const QString& serviceId, const Credential& credential, const Credential& secondCredential);
 
         bool isGameStarted(const QString& serviceId) const;
         bool isAnyGameStarted() const;

@@ -2,6 +2,8 @@
 
 #include <QtCore/QObject>
 
+#include <QtDBus/QDBusAbstractAdaptor>
+
 namespace GameNet {
   namespace Host {
 
@@ -84,7 +86,7 @@ namespace GameNet {
         Method sets download destination path for a service with identification number specified in serviceId parameter.
 
         */
-        void setDownloadPath(const QString& serviceId, const QString& path);
+        Q_NOREPLY void setDownloadPath(const QString& serviceId, const QString& path);
 
         /*!
         \fn QString installPath(const QString& serviceId) const;
@@ -99,7 +101,7 @@ namespace GameNet {
         Method sets installation destination path for a service with identification number specified in serviceId parameter.
 
         */
-        void setInstallPath(const QString& serviceId, const QString& path);
+        Q_NOREPLY void setInstallPath(const QString& serviceId, const QString& path);
 
         /*!
         \fn int gameSize(const QString& serviceId) const;
@@ -137,7 +139,7 @@ namespace GameNet {
          * \param enabled   true to enable, false to disable.
          */
 
-        void setOverlayEnabled(const QString& serviceId, bool enabled);
+        Q_NOREPLY void setOverlayEnabled(const QString& serviceId, bool enabled);
 
         /*!
          \fn  bool ServiceSettingsBridge::isPrefer32Bit(const QString& serviceId) const;
@@ -165,7 +167,7 @@ namespace GameNet {
         \param  serviceId Identifier for the service.
         \param  value     true to value.
          */
-        void setPrefer32Bit(const QString& serviceId, bool value);
+        Q_NOREPLY void setPrefer32Bit(const QString& serviceId, bool value);
 
       private:
         ServiceSettings *_settings;

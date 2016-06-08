@@ -5,6 +5,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
+#include <QtDbus/QDBusAbstractAdaptor>
+
 namespace GameNet {
   namespace Host {
 
@@ -36,7 +38,7 @@ namespace GameNet {
          * \param applicationName Name of the application.
          */
 
-        void setApplicationName(const QString& applicationName);
+        Q_NOREPLY void setApplicationName(const QString& applicationName);
 
         /*
         <method name="setCredential">
@@ -55,7 +57,7 @@ namespace GameNet {
          *
          * \param credential  The credential.
          */
-        void setCredential(const Credential& credential);
+        Q_NOREPLY void setCredential(const Credential& credential);
 
 
         /*
@@ -76,7 +78,7 @@ namespace GameNet {
          * \param credential  The credential.
          */
 
-        void setSecondCredential(const Credential& credential);
+        Q_NOREPLY void setSecondCredential(const Credential& credential);
 
         /**
          * \fn  void ConnectionBridge::ping();
@@ -88,7 +90,7 @@ namespace GameNet {
          * \date  28.10.2014
          */
 
-        void ping();
+        Q_NOREPLY void ping();
 
         /**
          * \fn  void ConnectionBridge::close();
@@ -99,7 +101,7 @@ namespace GameNet {
          * \date  02.12.2014
          */
 
-        void close();
+        Q_NOREPLY void close();
 
       signals:
 
