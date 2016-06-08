@@ -3,6 +3,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
+#include <QtDBus/QDBusAbstractAdaptor>
 
 namespace GameNet {
   namespace Host {
@@ -99,7 +100,7 @@ namespace GameNet {
          * \param isMinimized true if is minimized.
          */
 
-        void restartApplication(bool isMinimized);
+        Q_NOREPLY void restartApplication(bool isMinimized);
 
         /**
          * \fn  void ApplicationBridge::shutdownUIResult();
@@ -110,7 +111,7 @@ namespace GameNet {
          * \date  15.01.2015
          */
 
-        void shutdownUIResult();
+        Q_NOREPLY void shutdownUIResult();
 
         /**
          * \fn  void ApplicationBridge::switchClientVersion();
@@ -168,7 +169,7 @@ namespace GameNet {
          * \date  26.09.2014
          */
 
-        void restartUIRequest();
+        Q_NOREPLY void restartUIRequest();
 
         /**
          * \fn  void ApplicationBridge::shutdownUIRequest();
@@ -178,7 +179,7 @@ namespace GameNet {
          * \author  Ilya Tkachenko
          * \date  15.01.2015
          */
-        void shutdownUIRequest();
+        Q_NOREPLY void shutdownUIRequest();
 
         void languageChanged();
         void autoStartModeChanged();
