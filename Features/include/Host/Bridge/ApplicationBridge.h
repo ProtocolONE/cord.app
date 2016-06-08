@@ -122,7 +122,7 @@ namespace GameNet {
          * \date  26.09.2014
          */
 
-        void switchClientVersion();
+        Q_NOREPLY void switchClientVersion();
 
         /**
          * \fn  void ApplicationBridge::openBrowser(const QString& url);
@@ -135,7 +135,7 @@ namespace GameNet {
          *
          * \param url URL of the document.
          */
-        void openBrowser(const QString& url);
+        Q_NOREPLY void openBrowser(const QString& url);
 
         /**
          * \fn  void ApplicationBridge::cancelUninstallServiceRequest(const QString &serviceId);
@@ -145,7 +145,7 @@ namespace GameNet {
          * \author  Nikita Gorbunov
          * \date  24.02.2015
          */
-        void cancelUninstallServiceRequest(const QString &serviceId);
+        Q_NOREPLY void cancelUninstallServiceRequest(const QString &serviceId);
 
     signals:
 
@@ -169,7 +169,7 @@ namespace GameNet {
          * \date  26.09.2014
          */
 
-        Q_NOREPLY void restartUIRequest();
+        void restartUIRequest();
 
         /**
          * \fn  void ApplicationBridge::shutdownUIRequest();
@@ -179,7 +179,7 @@ namespace GameNet {
          * \author  Ilya Tkachenko
          * \date  15.01.2015
          */
-        Q_NOREPLY void shutdownUIRequest();
+        void shutdownUIRequest();
 
         void languageChanged();
         void autoStartModeChanged();

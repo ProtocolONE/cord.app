@@ -55,7 +55,7 @@ namespace GameNet {
         bool isGameStarted(const QString& serviceId) const;
         bool isAnyGameStarted() const;
         bool canExecuteSecond(const QString& serviceId) const;
-        void shutdownSecond();
+        Q_NOREPLY void shutdownSecond();
 
       signals:
         void serviceStarted(const QString& serviceId);
