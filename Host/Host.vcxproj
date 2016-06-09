@@ -83,8 +83,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
 @rem del /F /Q "$(TargetDir)*.ts"
-
-CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)"</Command>
+</Command>
     </PostBuildEvent>
     <Manifest>
       <AdditionalManifestFiles>Host.manifest</AdditionalManifestFiles>
@@ -121,8 +120,6 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName)_en.ts"
 
 @rem del /F /Q "$(TargetDir)*.ts"
-
-CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)" "$(QTDIR)\bin\"
 </Command>
     </PostBuildEvent>
     <Manifest>

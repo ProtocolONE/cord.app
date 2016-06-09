@@ -6,9 +6,10 @@ Set PATH=%PATH%;%~2
 Set OutConfig="%BuildFolder%\Thetta\description.dat"
 Set Hasher="%QGNACOMMONDIR%\GGS\SectionHasher\trunk\bin\SectionHasher.exe"
 
-:: qGna
-Set qgnapath="%BuildFolder%\qGNA.exe"
-Set qgnapathout="%BuildFolder%\qgna.json"
+:: qGna 
+:: We are not processing this file because of vmprot
+:: Set qgnapath="%BuildFolder%\qGNA.exe"
+:: Set qgnapathout="%BuildFolder%\qgna.json"
 
 :: GameDownloaderx86d.dll
 
@@ -16,9 +17,9 @@ Set gamedownloader="%BuildFolder%GameDownloaderx86.dll"
 Set gamedownloaderout="%BuildFolder%\gamedownloader.json"
 
 :: GameExecutorX86d.dll
-
-Set gameexecutor="%BuildFolder%\GameExecutorX86.dll"
-Set gameexecutorout="%BuildFolder%\gameexecutor.json"
+:: We are not processing this file because of vmprot
+:: Set gameexecutor="%BuildFolder%\GameExecutorX86.dll"
+:: Set gameexecutorout="%BuildFolder%\gameexecutor.json"
 
 :: CoreX86d.dll
 
@@ -65,15 +66,14 @@ call %Hasher% -c=%libeay% -o=%libeayout%
 call %Hasher% -c=%ssleay% -o=%ssleayout%
 
 :: Merge all configs
-:: With qtcore
-:: call SectionHasher.exe -m=qgna.json,gamedownloader.json,gameexecutor.json,core.json,qt5core.json,updatesystem.json,qt5network.json,libeay32.json,ssleay32.json -o=description.dat
-call %Hasher% -m=%qgnapathout%,%gamedownloaderout%,%gameexecutorout%,%corexout%,%updatesystemout%,%qtnetworkout%,%libeayout%,%ssleayout% -o=%OutConfig%
+:: Without qtcore, qgna, executor
+call %Hasher% -m=%gamedownloaderout%,%corexout%,%updatesystemout%,%qtnetworkout%,%libeayout%,%ssleayout% -o=%OutConfig%
 
 :: Delete all files
 
-del %qgnapathout%
+:: del %qgnapathout%
 del %gamedownloaderout%
-del %gameexecutorout%
+:: del %gameexecutorout%
 del %corexout%
 del %updatesystemout%
 del %qtnetworkout%

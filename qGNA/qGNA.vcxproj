@@ -298,9 +298,11 @@ IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\declarative_qmlwebsockets%D%.dll" "$(TargetDir)plugins5\QtWebSockets\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\qmldir" "$(TargetDir)plugins5\QtWebSockets\"
 
-
-
 del "$(TargetDir)\*.ilk"
+
+IF NOT "$(Configuration)" == "Debug" (
+  CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)" "$(QTDIR)\bin\"
+)
 
 </Command>
       <Message>Copy binary and QML files. </Message>
@@ -555,9 +557,11 @@ IF "$(Configuration)"=="Debug" (
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\declarative_qmlwebsockets%D%.dll" "$(TargetDir)plugins5\QtWebSockets\"
 %COPY_CHANGED% "$(QTDIR)\qml\QtWebSockets\qmldir" "$(TargetDir)plugins5\QtWebSockets\"
 
-
-
 del "$(TargetDir)\*.ilk"
+
+IF NOT "$(Configuration)" == "Debug" (
+  CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)" "$(QTDIR)\bin\"
+)
 
 </Command>
       <Message>Copy binary and QML files. </Message>
