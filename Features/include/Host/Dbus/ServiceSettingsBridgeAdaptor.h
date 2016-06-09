@@ -55,6 +55,7 @@ class ServiceSettingsBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"setDownloadPath\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"path\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
 "    <method name=\"installPath\">\n"
 "      <arg direction=\"out\" type=\"s\"/>\n"
@@ -63,6 +64,7 @@ class ServiceSettingsBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"setInstallPath\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"path\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
 "    <method name=\"gameSize\">\n"
 "      <arg direction=\"out\" type=\"t\"/>\n"
@@ -79,6 +81,7 @@ class ServiceSettingsBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"setOverlayEnabled\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"in\" type=\"b\" name=\"enabled\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
 "    <method name=\"isPrefer32Bit\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
@@ -87,6 +90,7 @@ class ServiceSettingsBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"setPrefer32Bit\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"in\" type=\"b\" name=\"value\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
 "  </interface>\n"
         "")
@@ -106,10 +110,10 @@ public Q_SLOTS: // METHODS
     bool isOverlayEnabled(const QString &serviceId);
     bool isPrefer32Bit(const QString &serviceId);
     QString name(const QString &serviceId);
-    void setDownloadPath(const QString &serviceId, const QString &path);
-    void setInstallPath(const QString &serviceId, const QString &path);
-    void setOverlayEnabled(const QString &serviceId, bool enabled);
-    void setPrefer32Bit(const QString &serviceId, bool value);
+    Q_NOREPLY void setDownloadPath(const QString &serviceId, const QString &path);
+    Q_NOREPLY void setInstallPath(const QString &serviceId, const QString &path);
+    Q_NOREPLY void setOverlayEnabled(const QString &serviceId, bool enabled);
+    Q_NOREPLY void setPrefer32Bit(const QString &serviceId, bool value);
 Q_SIGNALS: // SIGNALS
 };
 

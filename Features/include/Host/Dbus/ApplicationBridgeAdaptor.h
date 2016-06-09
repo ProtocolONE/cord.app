@@ -48,14 +48,21 @@ class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
 "    </method>\n"
 "    <method name=\"restartApplication\">\n"
 "      <arg direction=\"in\" type=\"b\" name=\"isMinimized\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
-"    <method name=\"shutdownUIResult\"/>\n"
-"    <method name=\"switchClientVersion\"/>\n"
+"    <method name=\"shutdownUIResult\">\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
+"    </method>\n"
+"    <method name=\"switchClientVersion\">\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
+"    </method>\n"
 "    <method name=\"openBrowser\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"url\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
 "    <method name=\"cancelUninstallServiceRequest\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
 "  </interface>\n"
         "")
@@ -73,12 +80,12 @@ public: // PROPERTIES
     void setLanguage(const QString &value);
 
 public Q_SLOTS: // METHODS
-    void cancelUninstallServiceRequest(const QString &serviceId);
+    Q_NOREPLY void cancelUninstallServiceRequest(const QString &serviceId);
     bool isInitCompleted();
-    void openBrowser(const QString &url);
-    void restartApplication(bool isMinimized);
-    void shutdownUIResult();
-    void switchClientVersion();
+    Q_NOREPLY void openBrowser(const QString &url);
+    Q_NOREPLY void restartApplication(bool isMinimized);
+    Q_NOREPLY void shutdownUIResult();
+    Q_NOREPLY void switchClientVersion();
 Q_SIGNALS: // SIGNALS
     void additionalResourcesReady();
     void autoStartModeChanged();

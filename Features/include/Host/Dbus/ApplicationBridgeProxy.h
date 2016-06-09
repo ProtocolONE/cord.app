@@ -48,11 +48,11 @@ public:
     { setProperty("language", QVariant::fromValue(value)); }
 
 public Q_SLOTS: // METHODS
-    inline QDBusPendingReply<> cancelUninstallServiceRequest(const QString &serviceId)
+    inline Q_NOREPLY void cancelUninstallServiceRequest(const QString &serviceId)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId);
-        return asyncCallWithArgumentList(QStringLiteral("cancelUninstallServiceRequest"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("cancelUninstallServiceRequest"), argumentList);
     }
 
     inline QDBusPendingReply<bool> isInitCompleted()
@@ -61,30 +61,30 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("isInitCompleted"), argumentList);
     }
 
-    inline QDBusPendingReply<> openBrowser(const QString &url)
+    inline Q_NOREPLY void openBrowser(const QString &url)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(url);
-        return asyncCallWithArgumentList(QStringLiteral("openBrowser"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("openBrowser"), argumentList);
     }
 
-    inline QDBusPendingReply<> restartApplication(bool isMinimized)
+    inline Q_NOREPLY void restartApplication(bool isMinimized)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(isMinimized);
-        return asyncCallWithArgumentList(QStringLiteral("restartApplication"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("restartApplication"), argumentList);
     }
 
-    inline QDBusPendingReply<> shutdownUIResult()
+    inline Q_NOREPLY void shutdownUIResult()
     {
         QList<QVariant> argumentList;
-        return asyncCallWithArgumentList(QStringLiteral("shutdownUIResult"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("shutdownUIResult"), argumentList);
     }
 
-    inline QDBusPendingReply<> switchClientVersion()
+    inline Q_NOREPLY void switchClientVersion()
     {
         QList<QVariant> argumentList;
-        return asyncCallWithArgumentList(QStringLiteral("switchClientVersion"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("switchClientVersion"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS

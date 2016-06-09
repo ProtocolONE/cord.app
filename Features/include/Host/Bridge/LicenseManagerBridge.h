@@ -5,6 +5,7 @@
 #include <QtCore/QMetaType>
 
 #include <QtDBus/QDBusArgument>
+#include <QtDBus/QDBusAbstractAdaptor>
 
 namespace GameNet {
   namespace Host {
@@ -27,7 +28,7 @@ namespace GameNet {
       public slots:
         bool hasAcceptedLicense();
         bool hasAcceptedLicense(const QString &serviceId);
-        void acceptLicense(const QString &serviceId, const QString &hash);
+        Q_NOREPLY void acceptLicense(const QString &serviceId, const QString &hash);
       
       private:
         LicenseManager *_licenseManager;

@@ -36,11 +36,11 @@ public:
     ~LicenseManagerBridgeProxy();
 
 public Q_SLOTS: // METHODS
-    inline QDBusPendingReply<> acceptLicense(const QString &serviceId, const QString &hash)
+    inline Q_NOREPLY void acceptLicense(const QString &serviceId, const QString &hash)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(hash);
-        return asyncCallWithArgumentList(QStringLiteral("acceptLicense"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("acceptLicense"), argumentList);
     }
 
     inline QDBusPendingReply<bool> hasAcceptedLicense(const QString &serviceId)

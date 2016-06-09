@@ -106,32 +106,32 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("name"), argumentList);
     }
 
-    inline QDBusPendingReply<> setDownloadPath(const QString &serviceId, const QString &path)
+    inline Q_NOREPLY void setDownloadPath(const QString &serviceId, const QString &path)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(path);
-        return asyncCallWithArgumentList(QStringLiteral("setDownloadPath"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("setDownloadPath"), argumentList);
     }
 
-    inline QDBusPendingReply<> setInstallPath(const QString &serviceId, const QString &path)
+    inline Q_NOREPLY void setInstallPath(const QString &serviceId, const QString &path)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(path);
-        return asyncCallWithArgumentList(QStringLiteral("setInstallPath"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("setInstallPath"), argumentList);
     }
 
-    inline QDBusPendingReply<> setOverlayEnabled(const QString &serviceId, bool enabled)
+    inline Q_NOREPLY void setOverlayEnabled(const QString &serviceId, bool enabled)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(enabled);
-        return asyncCallWithArgumentList(QStringLiteral("setOverlayEnabled"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("setOverlayEnabled"), argumentList);
     }
 
-    inline QDBusPendingReply<> setPrefer32Bit(const QString &serviceId, bool value)
+    inline Q_NOREPLY void setPrefer32Bit(const QString &serviceId, bool value)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(value);
-        return asyncCallWithArgumentList(QStringLiteral("setPrefer32Bit"), argumentList);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("setPrefer32Bit"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS
