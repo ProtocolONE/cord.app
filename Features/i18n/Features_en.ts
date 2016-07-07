@@ -13,6 +13,17 @@
     </message>
 </context>
 <context>
+    <name>CheckDownload</name>
+    <message>
+        <source>RESTAPI_ERROR_CAPTION</source>
+        <translation type="obsolete">Error</translation>
+    </message>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="obsolete">Error. Try later.</translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::AppDistrIntegrity</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
@@ -68,6 +79,28 @@
     </message>
 </context>
 <context>
+    <name>GameNet::Host::GameDownloader::Hook::CheckDownload</name>
+    <message>
+        <source>RESTAPI_ERROR_CAPTION</source>
+        <translation type="obsolete">Error</translation>
+    </message>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="obsolete">Error. Try later.</translation>
+    </message>
+</context>
+<context>
+    <name>GameNet::Host::HookFactory</name>
+    <message>
+        <source>RESTAPI_ERROR_CAPTION</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="unfinished">Error. Try later.</translation>
+    </message>
+</context>
+<context>
     <name>GameNet::Host::Thetta</name>
     <message>
         <source>DRIVER_INSTALL_ERROR_TITLE</source>
@@ -76,6 +109,13 @@
     <message>
         <source>THETTA_SEND_TIMEOUT_ERROR</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GameNet::Host::Translation</name>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="obsolete">Error. Try later.</translation>
     </message>
 </context>
 </TS>

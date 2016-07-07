@@ -13,6 +13,17 @@
     </message>
 </context>
 <context>
+    <name>CheckDownload</name>
+    <message>
+        <source>RESTAPI_ERROR_CAPTION</source>
+        <translation type="vanished">Внимание</translation>
+    </message>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="vanished">Произошла ошибка. Попробуйте позже.</translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::AppDistrIntegrity</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>
@@ -74,6 +85,28 @@
     </message>
 </context>
 <context>
+    <name>GameNet::Host::GameDownloader::Hook::CheckDownload</name>
+    <message>
+        <source>RESTAPI_ERROR_CAPTION</source>
+        <translation type="vanished">Внимание</translation>
+    </message>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="vanished">Произошла ошибка. Попробуйте позже.</translation>
+    </message>
+</context>
+<context>
+    <name>GameNet::Host::HookFactory</name>
+    <message>
+        <source>RESTAPI_ERROR_CAPTION</source>
+        <translation>Внимание</translation>
+    </message>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation>Произошла ошибка. Попробуйте позже.</translation>
+    </message>
+</context>
+<context>
     <name>GameNet::Host::Thetta</name>
     <message>
         <source>DRIVER_INSTALL_ERROR_TITLE</source>
@@ -92,6 +125,13 @@
     <message>
         <source>THETTA_SEND_TIMEOUT_ERROR</source>
         <translation>Приложение не смогло связаться с сервером безопасности Thetta и будет закрыто через 30 секунд. Подробнее в статье службы поддержки &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/kb/articles/895-thetta&quot;&gt;КБ-895&lt;/a&gt;&lt;/b&gt;.</translation>
+    </message>
+</context>
+<context>
+    <name>GameNet::Host::Translation</name>
+    <message>
+        <source>HAS_ACCESS_INTERNAL_ERROR</source>
+        <translation type="vanished">Произошла ошибка. Попробуйте позже.</translation>
     </message>
 </context>
 </TS>

@@ -16,6 +16,10 @@
 
 #include <RestApi/GameNetCredential.h>
 
+#include <Core/UI/Message.h>
+
+using GGS::Core::UI::Message;
+
 using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
 using GGS::GameDownloader::Hooks::PreventWinXpDownload;
@@ -67,6 +71,13 @@ namespace GameNet {
           }
 
           return connection->credential();
+        });
+
+        QObject::connect(hook, &CheckDownload::internalError, []() {
+          // INFO HACK перевод не работает в Checkdownload 
+          QString title = tr("RESTAPI_ERROR_CAPTION");
+          QString msg = tr("HAS_ACCESS_INTERNAL_ERROR");
+          Message::warning(title, msg);
         });
 
         result = hook;

@@ -12,12 +12,12 @@ namespace GGS {
 
 namespace GameNet {
   namespace Host {
-
     namespace GameDownloader {
       namespace Hook {
 
         class CheckDownload : public GGS::GameDownloader::HookBase
         {
+          Q_OBJECT
         public:
           explicit CheckDownload(QObject *parent = 0);
           virtual ~CheckDownload();
@@ -34,6 +34,8 @@ namespace GameNet {
 
         signals:
           void accessRequired();
+
+          void internalError();
 
         private:
           std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > _credential;

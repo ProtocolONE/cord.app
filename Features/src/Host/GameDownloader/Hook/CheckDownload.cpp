@@ -10,6 +10,7 @@
 #include <Features/RestApi/ServiceHasAccess.h>
 
 #include <Core/Service.h>
+#include <Core/UI/Message.h>
 
 #include <QtCore/QSettings>
 
@@ -19,6 +20,7 @@ using GGS::GameDownloader::HookBase;
 using GameNet::Host::ServiceProcess::ServiceLoader;
 using GGS::Core::Service;
 using GGS::RestApi::GameNetCredential;
+using GGS::Core::UI::Message;
 
 namespace GameNet {
   namespace Host {
@@ -51,8 +53,11 @@ namespace GameNet {
           command->appendParameter("userId", credential.userId());
           command->appendParameter("appKey", credential.appKey());
 
-          QObject::connect(command, &ServiceHasAccess::result, [command, &hasAccess]() {
+          GGS::RestApi::CommandBase::CommandResults requestResult = GGS::RestApi::CommandBase::GenericError;
+
+          QObject::connect(command, &ServiceHasAccess::result, [command, &hasAccess, &requestResult](GGS::RestApi::CommandBase::CommandResults result) {
             hasAccess = command->hasAccess();
+            requestResult = result;
             command->deleteLater();
           });
 
@@ -60,6 +65,11 @@ namespace GameNet {
 
           command->execute();
           loop.exec();
+          
+          if (requestResult != GGS::RestApi::CommandBase::NoError ) {
+            emit this->internalError();
+            return HookBase::Abort;
+          }
 
           if (hasAccess != 1) {
             gameDownloader->accessRequired(state->service());
