@@ -9,6 +9,8 @@
 #include <Features/Thetta/Protector.h>
 #include <Features/Thetta/AppDistrIntegrity.h>
 
+#include <Features/Marketing/MarketingIntegrationMarker.h>
+
 #include <Helper/BugTrap.hpp>
 #include <Helper/Database.hpp>
 #include <Helper/Logger.hpp>
@@ -104,6 +106,9 @@ int main(int argc, char *argv[])
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
     return -1;
   }
+
+  Features::Marketing::MarketingIntegrationMarker marketingIntegrationMarker;
+  marketingIntegrationMarker.init();
 
   GGS::Settings::SettingsSaver saver; 
   GGS::Settings::Settings::setSettingsSaver(&saver); 

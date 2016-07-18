@@ -56,6 +56,11 @@
     <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeProxy.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaImageChecker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp" />
+    <ClCompile Include="src\Features\Thetta\ThettaImageChecker.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_RenderRateHack.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -714,6 +719,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Features\Marketing\MarketingIntegrationMarker.h" />
     <CustomBuild Include="include\Features\RenderRateHack.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing RenderRateHack.h...</Message>
