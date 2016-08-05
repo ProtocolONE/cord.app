@@ -8,6 +8,7 @@
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
 #include <Features/Thetta/AppDistrIntegrity.h>
+#include <Features/SilentMode.h>
 
 #include <Features/Marketing/MarketingIntegrationMarker.h>
 
@@ -100,15 +101,21 @@ int main(int argc, char *argv[])
   if (!requireAdminRights())
     return -1;
 
+
+  if (app.containsCommand("silent")) {
+    Features::SilentMode mode;
+    mode.activate();
+  }
+
+  Features::Marketing::MarketingIntegrationMarker marketingIntegrationMarker;
+  marketingIntegrationMarker.init();
+
   qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
 
   if (!initDatabase()) {
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
     return -1;
   }
-
-  Features::Marketing::MarketingIntegrationMarker marketingIntegrationMarker;
-  marketingIntegrationMarker.init();
 
   GGS::Settings::SettingsSaver saver; 
   GGS::Settings::Settings::setSettingsSaver(&saver); 

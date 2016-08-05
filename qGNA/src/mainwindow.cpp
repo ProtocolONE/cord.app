@@ -8,6 +8,8 @@
 #include <Features/RestApi/ServiceHasAccess.h>
 #include <Features/RenderRateHack.h>
 
+#include <Features/Marketing/MarketingIntegrationMarker.h>
+
 #include <viewmodel/UpdateViewModel.h>
 #include <viewmodel/ApplicationStatisticViewModel.h>
 #include <viewmodel/SettingsViewModel.h>
@@ -563,6 +565,11 @@ void MainWindow::gameDownloaderFailed(const QString& serviceId)
 
 void MainWindow::removeStartGame(QString serviceId)
 {
+  if (this->_silentMode.isEnabled()){
+    this->downloadButtonStart(serviceId);
+    return;
+  }
+
   int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
   if (totalCount > 0) {
     this->selectService(serviceId);

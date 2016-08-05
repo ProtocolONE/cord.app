@@ -10,6 +10,8 @@
 #include <Features/TaskBarEventFilter.h>
 #include <Features/LanguageChangeEventFilter.h>
 
+#include <Features/Marketing/MarketingIntegrationMarker.h>
+
 #include <Core/System/Shell/UrlProtocolHelper.h>
 #include <Core/Marketing.h>
 
@@ -162,13 +164,6 @@ int main(int argc, char *argv[])
   plugins << path + "/plugins5";
   app.setLibraryPaths(plugins);
 
-  if (app.containsCommand("silent")) {
-    Features::SilentMode mode;
-    mode.activate();
-  }
-
-  QString path = QCoreApplication::applicationDirPath();
-
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
@@ -182,7 +177,13 @@ int main(int argc, char *argv[])
 
     QStringList arguments;
 
-    if (!app.containsCommand("gogamenetmoney")) {
+    bool skipActivation = false;
+
+    skipActivation |= app.containsCommand("gogamenetmoney");
+    skipActivation |= app.containsCommand("minimized");
+    skipActivation |= app.containsCommand("silent");
+
+    if (!skipActivation) {
       arguments << "-activate"; 
     }
 

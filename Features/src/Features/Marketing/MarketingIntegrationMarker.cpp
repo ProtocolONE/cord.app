@@ -22,5 +22,15 @@ namespace Features {
       settings.setValue("IMV", "3.8");
     }
 
+    bool MarketingIntegrationMarker::isActiveUser()
+    {
+      bool result = true;
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA\\Integration", QSettings::NativeFormat);
+
+      result &= settings.value("IMV", QString()).toString() == "3.8";
+
+      return result;
+    }
+
   }
 }

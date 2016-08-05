@@ -10,6 +10,8 @@ namespace Features {
       virtual ~MarketingIntegrationMarker();
 
       void init();
+
+      bool isActiveUser();
     };
 
   }

@@ -268,8 +268,9 @@ private:
   void postUpdateInit();
   void onApplicationStateChanged(Qt::ApplicationState state);
 
-
-  GGS::Core::Service* getService(const QString& id);
+  GGS::RestApi::FakeCache _fakeCache;
+  GGS::RestApi::GameNetCredential _credential;
+  GGS::RestApi::RestApiManager _restapiManager;
 
   QmlMessageAdapter* messageAdapter;
   SettingsViewModel* settingsViewModel;

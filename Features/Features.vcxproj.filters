@@ -485,6 +485,12 @@
     <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CheckDownload.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CheckDownload.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -493,7 +499,6 @@
     <ClInclude Include="include\Features\Thetta\ModuleSignatures.h" />
     <ClInclude Include="include\Host\CredentialConverter.h" />
     <ClInclude Include="include\Host\Bridge\Credential.h" />
-    <ClInclude Include="include\Host\GameDownloader\Hook\CheckDownload.h" />
     <ClInclude Include="include\Host\Installer\UninstallInfo.h" />
     <ClInclude Include="include\Host\MarketingStatistic.h" />
     <ClInclude Include="include\Helper\DebugLog.h" />
@@ -665,6 +670,9 @@
     <CustomBuild Include="include\Features\Thetta\ForbiddenCertificateTester.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaImageChecker.h" />
     <CustomBuild Include="include\Features\RenderRateHack.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\GameDownloader\Hook\CheckDownload.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

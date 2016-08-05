@@ -6,9 +6,14 @@
 #include <QtCore/QWinEventNotifier>
 #include <QtCore/QDir>
 #include <QtCore/QProcess>
+#include <QtCore/QMutex>
+#include <QtCore/QMutexLocker>
+#include <QtCore/QSet>
 
 #include <Windows.h>
 #include <psapi.h>
+
+#include <Application/ArgumentParser.h>
 
 namespace GameNet {
   namespace Host {
@@ -52,6 +57,14 @@ namespace GameNet {
 
       bool start(const QStringList& args)
       {
+        GGS::Application::ArgumentParser uiSendedArgs;
+        uiSendedArgs.parse(args);
+
+        QStringList cmds = uiSendedArgs.cachedCommands();
+        Q_FOREACH(const QString& cmd, cmds) {
+          this->_onetimeIgnoreCommands.insert(cmd);
+        }
+
         QString nativePath = QDir::toNativeSeparators(this->_directory);
         QString commandLineArgs = QString();
         if (args.size() > 0) {
@@ -132,12 +145,24 @@ namespace GameNet {
         this->_processHandle = INVALID_HANDLE_VALUE;
       }
 
+      bool checkOnetimeIgnoreCommand(const QString& name)
+      {
+        if (!this->_onetimeIgnoreCommands.contains(name))
+          return false;
+
+        qDebug() << "Ignore one time command " << name;
+        this->_onetimeIgnoreCommands.remove(name);
+        return true;
+      }
+
       UIProcess *_parent;
       QString _directory;
       QString _filename;
       HANDLE _processHandle;
       HANDLE _threadHandle;
       QMutex _mutex;
+
+      QSet<QString> _onetimeIgnoreCommands;
     };
 
     UIProcess::UIProcess(QObject* parent) 
@@ -173,6 +198,9 @@ namespace GameNet {
 
     void UIProcess::sendCommand(const QString& name, const QStringList& args)
     {
+      if (this->_d->checkOnetimeIgnoreCommand(name))
+        return;
+
       QString arg = args.join('/');
       QString commandLine = QString("/uri:gamenet://%1/%2").arg(name, arg);
       QStringList processArgs;
