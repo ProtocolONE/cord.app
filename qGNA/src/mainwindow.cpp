@@ -565,9 +565,14 @@ void MainWindow::gameDownloaderFailed(const QString& serviceId)
 
 void MainWindow::removeStartGame(QString serviceId)
 {
-  if (this->_silentMode.isEnabled()){
-    this->downloadButtonStart(serviceId);
-    return;
+  if (this->_silentMode.isEnabled()) {
+    static bool firstCall = true;
+
+    if (firstCall) {
+      firstCall = false;
+      this->forceDownload(serviceId);
+      return;
+    }
   }
 
   int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
@@ -604,7 +609,14 @@ void MainWindow::downloadButtonStart(QString serviceId)
 
   DEBUG_LOG;
   this->activateWindow();
-  emit showLicense(serviceId);
+  emit this->showLicense(serviceId);
+}
+
+void MainWindow::forceDownload(QString serviceId)
+{
+  if (this->_serviceSettings->isDownloadable(serviceId)) {
+    this->_downloader->start(serviceId, static_cast<int>(GGS::GameDownloader::Normal));
+  }
 }
 
 void MainWindow::downloadButtonPause(QString serviceId)
@@ -885,6 +897,15 @@ void MainWindow::gameDownloaderServiceInstalled(const QString& serviceId)
 void MainWindow::gameDownloaderServiceUpdated(const QString& serviceId)
 {
   DEBUG_LOG;
+  if (this->_silentMode.isEnabled()) {
+    static bool firstTime = true;
+    if (firstTime) {
+      firstTime = false;
+      emit this->selectService(serviceId);
+      return;
+    }
+  }
+
   this->activateWindow();
   emit this->selectService(serviceId);
 }
