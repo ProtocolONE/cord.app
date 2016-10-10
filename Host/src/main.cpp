@@ -3,8 +3,6 @@
 #include <Application/SingleApplication.h>
 #include <Application/ArgumentParser.h>
 
-#include <Features/ThronInstaller.h>
-
 #include <Features/Thetta/TlsInitializer.h>
 #include <Features/Thetta/Protector.h>
 #include <Features/Thetta/AppDistrIntegrity.h>
@@ -33,7 +31,6 @@
 #include <QtGui/QIcon>
 
 using namespace GameNet::Host;
-using Features::ThronInstaller;
 using GGS::Application::SingleApplication;
 
 Application *createApplication(SingleApplication *app) 
@@ -41,11 +38,6 @@ Application *createApplication(SingleApplication *app)
   Application *application = new Application(0);
   application->setSingleApplication(app);
 
-  QObject::connect(application, &Application::initCompleted, [application]() {
-    ThronInstaller *installer = new ThronInstaller(application);
-    installer->downloadAndInstall();
-  });
-    
   return application;
 }
 

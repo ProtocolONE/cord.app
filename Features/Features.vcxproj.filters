@@ -327,7 +327,6 @@
     <ClCompile Include="src\Features\Thetta\ThettaMonitor.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaSender.cpp" />
     <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp" />
-    <ClCompile Include="src\Features\ThronInstaller.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaMonitorApp.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaHashSender.cpp" />
     <ClCompile Include="src\Host\Application.cpp" />
@@ -535,7 +534,6 @@
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
     <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h" />
-    <CustomBuild Include="include\Features\ThronInstaller.h" />
     <CustomBuild Include="include\Features\GameDownloader\DownloadStats.h" />
     <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
     <CustomBuild Include="include\Features\GameDownloader\ExternalIpAddress.h" />
