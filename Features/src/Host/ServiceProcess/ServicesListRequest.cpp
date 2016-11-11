@@ -121,6 +121,16 @@ namespace GameNet {
               downloadHooks << hook;
           }
 
+          {
+          // HACK 
+            DownloadHookDescription hook;
+            hook.first = "B963B92F-17D5-4DA3-A5C0-942776CE680A";
+            hook.second.first = 0;
+            hook.second.second = 0;
+
+            downloadHooks << hook;
+          }
+
           serviceDist.setDownloadHooks(downloadHooks);
 
           this->_serviceLoader->registerService(serviceDist);

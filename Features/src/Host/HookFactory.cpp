@@ -5,6 +5,7 @@
 #include <GameDownloader/HookBase.h>
 #include <GameDownloader/Hooks/InstallDependency.h>
 #include <GameDownloader/Hooks/PreventWinXpDownload.h>
+#include <GameDownloader/Hooks/RemoveFileHook.h>
 
 #include <Features/Thetta/DistrIntegrity.h>
 
@@ -91,6 +92,8 @@ namespace GameNet {
         result = hook;
       } else if (guid == "F9FD8276-2FEA-4F99-A2AA-1B37627216F5") {
         result = new PreventWinXpDownload(this);
+      } else if (guid == "B963B92F-17D5-4DA3-A5C0-942776CE680A") {
+        result = new GGS::GameDownloader::Hooks::RemoveFileHook(this);
       }
 
       Q_ASSERT(result);
