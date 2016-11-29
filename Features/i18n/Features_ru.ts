@@ -24,6 +24,23 @@
     </message>
 </context>
 <context>
+    <name>Features::GameExecutor::Hook::CheckAsciiPath</name>
+    <message>
+        <source>CHECK_ASCII_PATH_MESSAGE</source>
+        <translation>&lt;p&gt;В пути установки клиента обнаружены запрещенные символы. Это может привести к проблемам запуска игры. В пути установки клиента игры должны содержаться только латинские буквы и цифры. Подробнее в статье службы поддержки: &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/kb/articles/1193-failed-to-load-file-data-meta-dat&quot;&gt;ссылка&lt;/a&gt;&lt;/b&gt; &lt;/p&gt;
+
+&lt;p&gt;Что делать?&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Измените название папки, в которую установлена игра. Например, &lt;br /&gt;C:\Games\BattleCarnival&lt;/li&gt;
+&lt;li&gt;После этого измените путь установки игры в настройках приложения, слева от кнопки &quot;Начать игру&quot;. Это необходимо сделать для того, чтобы не перекачивать клиент игры заново.&lt;/li&gt;
+&lt;/ul&gt;</translation>
+    </message>
+    <message>
+        <source>CHECK_ASCII_PATH_ERROR_TITLE</source>
+        <translation>Внимание</translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::AppDistrIntegrity</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>

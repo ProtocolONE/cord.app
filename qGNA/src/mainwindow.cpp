@@ -961,6 +961,11 @@ QString MainWindow::getExpectedInstallPath(const QString& serviceId)
   return this->_bestInstallPath->expectedPath(serviceId);
 }
 
+QString MainWindow::getBestInstallPath(const QString& serviceId)
+{
+  return this->_bestInstallPath->bestInstallPath(serviceId);
+}
+
 void MainWindow::setServiceInstallPath(const QString& serviceId, const QString& path)
 {
   this->_serviceSettings->setInstallPath(serviceId, path);

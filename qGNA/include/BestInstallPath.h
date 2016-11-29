@@ -28,6 +28,8 @@ public:
    */
   QString expectedPath(const QString& serviceId) const;
 
+  QString bestInstallPath(const QString& serviceId) const;
+
 private:
   QString getBestDrive(const QString& serviceId) const;
   int getDiskFreeSpaceInMb(const wchar_t* drive) const;

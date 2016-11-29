@@ -24,6 +24,17 @@
     </message>
 </context>
 <context>
+    <name>Features::GameExecutor::Hook::CheckAsciiPath</name>
+    <message>
+        <source>CHECK_ASCII_PATH_MESSAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHECK_ASCII_PATH_ERROR_TITLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Features::Thetta::AppDistrIntegrity</name>
     <message>
         <source>INVALID_CA_GAME_DISTRIBUTIVE_TITLE</source>

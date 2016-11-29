@@ -310,12 +310,10 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadStatistics.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_RemouteStartGame.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThronInstaller.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_DownloadStats.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadStatistics.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_RemouteStartGame.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ThronInstaller.cpp" />
     <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
     <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
     <ClCompile Include="src\Features\RemouteStartGame.cpp" />
@@ -489,6 +487,15 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_CheckDownload.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\GameExecutor\Hook\CheckAsciiPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CheckAsciiPath.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CheckAsciiPath.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -671,6 +678,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Host\GameDownloader\Hook\CheckDownload.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Features\GameExecutor\Hook\CheckAsciiPath.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

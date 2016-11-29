@@ -138,6 +138,7 @@ public slots:
   bool isLicenseAccepted(const QString& serviceId);
   QString startingService();
   QString getExpectedInstallPath(const QString& serviceId);
+  QString getBestInstallPath(const QString& serviceId);
   void setServiceInstallPath(const QString& serviceId, const QString& path);
   void acceptFirstLicense(const QString& serviceId);
   void initFinished();

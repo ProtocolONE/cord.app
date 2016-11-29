@@ -39,7 +39,9 @@ IF /I "%QTDIR%" == "" (
     EXIT /B 1;
 )
 
+echo %QTDIR%\bin\lconvert.exe %args% -o %out%_%lang%.qm
 %QTDIR%\bin\lconvert.exe %args% -o %out%_%lang%.qm
+
 GOTO :EOF
 
 :concat

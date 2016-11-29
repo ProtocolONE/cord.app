@@ -26,6 +26,8 @@
 #include <Features/Thetta/ModuleScanner.h>
 #include <Features/Thetta/Certificate/ModuleSender.h>
 
+#include <Features/GameExecutor/Hook/CheckAsciiPath.h>
+
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 
@@ -87,6 +89,7 @@ namespace GameNet {
       using namespace GGS::GameExecutor::Hook;
       using namespace Features;
       using namespace Features::Thetta;
+      using namespace Features::GameExecutor::Hook;
 
       this->reg<ActivateWindow>([this](ActivateWindow* a){
         a->setWidget(&this->_window);
@@ -103,6 +106,7 @@ namespace GameNet {
       this->reg<DefaultAikaSettings>();
       this->reg<DisableAeroHook>();
       this->reg<PreventWinXpLaunch>();
+      this->reg<CheckAsciiPath>();
       this->reg<ThettaMonitor>([this](ThettaMonitor* h){
         h->setDriverInstaller(this->_thetta->installer());
         h->setSaveUserInfo(this->_saveUserInfo);

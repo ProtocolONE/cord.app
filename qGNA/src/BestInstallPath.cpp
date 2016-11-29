@@ -26,6 +26,11 @@ QString BestInstallPath::expectedPath(const QString& serviceId) const
   if (!this->_serviceSettings->isDefaultInstallPath(serviceId))
     return this->_serviceSettings->installPath(serviceId);
 
+  return this->bestInstallPath(serviceId);
+}
+
+QString BestInstallPath::bestInstallPath(const QString& serviceId) const
+{
   QString defaultDownloadPath = QString("%1Games").arg(this->getBestDrive(serviceId));
   QString name = this->_serviceSettings->name(serviceId);
   return QDir::cleanPath(QString("%1/%2/").arg(defaultDownloadPath, name));
