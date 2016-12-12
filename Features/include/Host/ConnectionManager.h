@@ -37,6 +37,8 @@ namespace GameNet {
 
     signals:
       void newConnection(Connection *connection);
+
+      void zzimaDisabled();
       
     private slots:
       void onInitCompleted();

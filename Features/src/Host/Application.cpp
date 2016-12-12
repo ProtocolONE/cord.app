@@ -373,6 +373,10 @@ namespace GameNet {
       QObject::connect(this->_connectionManager, &ConnectionManager::newConnection, 
         this, &Application::onNewConnection);
 
+      QObject::connect(this->_connectionManager, &ConnectionManager::zzimaDisabled, [this](){
+        this->_thetta->openBrowser("https://support.gamenet.ru/kb/articles/1188-reborn-zzima");
+      });
+
       return true;
     }
 

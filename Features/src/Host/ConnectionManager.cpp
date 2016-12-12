@@ -182,8 +182,16 @@ namespace GameNet {
       if (applicationName == "QGNA"){
         this->registerServicesForQGNA(connection);
       }
+
+      if (applicationName == "zzima") {
+        // INFO https://jira.gamenet.ru/browse/QGNA-1613
+        emit this->zzimaDisabled();
+        connection->close();
+        return;
+      }
+
 #ifdef ZZIMA_INTEGRATION
-      else if (applicationName == "zzima"){
+      else if (applicationName == "zzima") {
         this->registerServicesForZzima(connection);
       }
 #endif
@@ -421,7 +429,8 @@ namespace GameNet {
       new ZzimaExecutorBridgeAdaptor(executorBridge);
       connection->registerObject("/zzimaexecutor", executorBridge);
     }
-        
+#endif
+
     void ConnectionManager::setDbusServer(DBus::DBusServer* value)
     {
       Q_ASSERT(value);
@@ -434,7 +443,6 @@ namespace GameNet {
       this->_stopDownloadServiceOnExecuteGame = value;
     }
 
-#endif
 
   }
 }
