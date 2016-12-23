@@ -50,14 +50,15 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="692"/>
         <location filename="../src/mainwindow.cpp" line="699"/>
-        <location filename="../src/mainwindow.cpp" line="724"/>
-        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="710"/>
+        <location filename="../src/mainwindow.cpp" line="729"/>
+        <location filename="../src/mainwindow.cpp" line="732"/>
         <source>INFO_CAPTION</source>
         <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="692"/>
-        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="732"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -67,7 +68,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="724"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
+        <translation>Not available in your country.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="729"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished"></translation>
     </message>

@@ -93,8 +93,9 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="692"/>
         <location filename="../src/mainwindow.cpp" line="699"/>
-        <location filename="../src/mainwindow.cpp" line="724"/>
-        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="710"/>
+        <location filename="../src/mainwindow.cpp" line="729"/>
+        <location filename="../src/mainwindow.cpp" line="732"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
@@ -108,7 +109,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="692"/>
-        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="732"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href=&quot;http://support.gamenet.ru&quot;&gt;http://support.gamenet.ru&lt;/a&gt; Подробности в &lt;a href=&quot;https://support.gamenet.ru/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
     </message>
@@ -122,7 +123,12 @@
         <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="724"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
+        <translation>Эта игра недоступна в вашей стране.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="729"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>

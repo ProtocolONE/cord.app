@@ -794,6 +794,11 @@ void MainWindow::onServiceFinished(const QString &serviceId, int state)
   case GGS::GameExecutor::GuestAccountExpired:
     emit this->authGuestConfirmRequest(serviceId);
     break;
+  case GGS::GameExecutor::PakkanenGeoIpBlocked:
+    GGS::Core::UI::Message::warning(
+      tr("INFO_CAPTION"),
+      tr("SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO").arg(this->_serviceSettings->name(serviceId)));
+    break;
   }
 }
 
