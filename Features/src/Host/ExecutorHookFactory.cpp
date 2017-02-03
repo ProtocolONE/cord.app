@@ -138,11 +138,6 @@ namespace GameNet {
       });
 
       this->reg<DistrIntegrityExecutorHook>([this](DistrIntegrityExecutorHook *h) {
-        using GameNet::Host::HookFactory;
-        using GGS::GameDownloader::HookBase;
-
-        HookBase *hook = this->_downloaderHookFactory->create("36003110-6DC9-4D16-8076-D84FFAFC36B8");
-        h->setDistrIntegrity(qobject_cast<Features::Thetta::DistrIntegrity*>(hook));
         h->setGameExecutor(this->_executor);
       });
     }
