@@ -74,8 +74,8 @@
 
 &lt;p&gt;Что делать?&lt;/p&gt;
 
-&lt;ul&gt;&lt;li&gt;Проверьте, не блокирует ли ваш антивирус компоненты приложения GameNet.&lt;/li&gt;
-&lt;li&gt;Обратитесь к специалистам нашей службы поддержки.&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;Воспользоваться инструкцией из статьи &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/kb/articles/785-view&quot;&gt;КБ-785&lt;/a&gt;&lt;/b&gt;.&lt;/li&gt;
+&lt;li&gt;При необходимости &lt;b&gt;&lt;a href=&quot;https://support.gamenet.ru/new-ticket&quot;&gt;обратиться за помощью&lt;/a&gt;&lt;/b&gt; к специалистам нашей службы поддержки.&lt;/li&gt;
 &lt;/ul&gt;</translation>
     </message>
     <message>
