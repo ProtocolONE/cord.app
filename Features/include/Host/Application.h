@@ -10,6 +10,7 @@ namespace Features {
 
   namespace Thetta {
     class AppDistrIntegrity;
+    class KernelStatistics;
   }
 
   namespace GameDownloader {
@@ -188,6 +189,7 @@ namespace GameNet {
       DBus::DBusServer *_dbusServer;
       Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
       Features::Thetta::AppDistrIntegrity * _applicationDistrMon;
+      Features::Thetta::KernelStatistics * _kernelStat;
 
       bool _initFinished;
       bool _updateFinished;

@@ -85,6 +85,7 @@ namespace GameNet {
       QVariantMap params;
       this->setCredential(params, downloader->credential(serviceId));
       Marketing::send(Marketing::StartDownloadService, serviceId, params);
+      Marketing::sendOnceByService(Marketing::FirstStartDownloadService, serviceId, params);
     }
 
     void MarketingStatistic::onGameTorrentDownloadFinished(const Service *service)

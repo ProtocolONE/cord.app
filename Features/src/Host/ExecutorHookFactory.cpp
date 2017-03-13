@@ -24,7 +24,6 @@
 #include <Features/Thetta/ThettaMonitor.h>
 #include <Features/Thetta/SaveUserInfo.h>
 #include <Features/Thetta/ModuleScanner.h>
-#include <Features/Thetta/KernelDetectHook.h>
 #include <Features/Thetta/Certificate/ModuleSender.h>
 
 #include <Features/GameExecutor/Hook/CheckAsciiPath.h>
@@ -141,7 +140,6 @@ namespace GameNet {
       this->reg<DistrIntegrityExecutorHook>([this](DistrIntegrityExecutorHook *h) {
         h->setGameExecutor(this->_executor);
       });
-      this->reg<KernelDetectHook>();
     }
 
     HookInterface* ExecutorHookFactory::create(const QString& id)

@@ -504,13 +504,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DistrIntegrityWorker.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\Thetta\KernelDetectHook.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_KernelDetectHook.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_KernelExaminer.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_KernelDetectHook.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_KernelExaminer.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="src\Features\Thetta\KernelExaminer.cpp" />
+    <ClCompile Include="src\Features\Thetta\KernelStatistics.cpp" />
+    <ClCompile Include="src\Features\Thetta\WowRedirect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -551,6 +553,8 @@
     <ClInclude Include="include\Features\Marketing\MarketingIntegrationMarker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Features\Thetta\KernelStatistics.h" />
+    <ClInclude Include="include\Features\Thetta\WowRedirect.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />
@@ -698,7 +702,7 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\Thetta\DistrIntegrityWorker.h" />
-    <CustomBuild Include="include\Features\Thetta\KernelDetectHook.h" />
+    <CustomBuild Include="include\Features\Thetta\KernelExaminer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

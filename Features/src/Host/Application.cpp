@@ -39,6 +39,7 @@
 #include <Features/Marketing/SystemInfo/SystemInfoManager.h>
 #include <Features/Thetta/ModuleScanner.h>
 #include <Features/Thetta/AppDistrIntegrity.h>
+#include <Features/Thetta/KernelStatistics.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -101,6 +102,7 @@ namespace GameNet {
       , _closing(false)
       , _applicationDistrMon(new Features::Thetta::AppDistrIntegrity(this))
       , _licenseManager(new LicenseManager(this))
+      , _kernelStat(new Features::Thetta::KernelStatistics(this))
       , QObject(parent)
     {
 
@@ -549,6 +551,11 @@ namespace GameNet {
           this->_systemInfoManager->setCredential(connection->credential());
           this->_thetta->setCredential(connection->credential());
           this->setDownloaderCredential(connection->credential());
+        });
+
+        // Kernel patch detect
+        QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
+          this->_kernelStat->execute(connection->credential());
         });
       }
     }

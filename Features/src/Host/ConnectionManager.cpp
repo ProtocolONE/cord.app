@@ -36,6 +36,8 @@
 #include <Host/Dbus/ServiceHandleBridgeAdaptor.h>
 #include <Host/Dbus/LicenseManagerBridgeAdaptor.h>
 
+#include <Features/Thetta/KernelStatistics.h>
+
 #ifdef ZZIMA_INTEGRATION
 #include <Features/Integration/Zzima/ZzimaGameExecutorAdapter.h>
 #include <Features/Integration/Zzima/ZzimaExecutorBridge.h>
