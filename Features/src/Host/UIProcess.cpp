@@ -55,14 +55,16 @@ namespace GameNet {
         this->closeHandle();
       }
 
-      bool start(const QStringList& args)
+      bool start(const QStringList& args, bool skipIgnore = false)
       {
         GGS::Application::ArgumentParser uiSendedArgs;
         uiSendedArgs.parse(args);
 
-        QStringList cmds = uiSendedArgs.cachedCommands();
-        Q_FOREACH(const QString& cmd, cmds) {
-          this->_onetimeIgnoreCommands.insert(cmd);
+        if (!skipIgnore) {
+          QStringList cmds = uiSendedArgs.cachedCommands();
+          Q_FOREACH(const QString& cmd, cmds) {
+            this->_onetimeIgnoreCommands.insert(cmd);
+          }
         }
 
         QString nativePath = QDir::toNativeSeparators(this->_directory);
@@ -205,7 +207,7 @@ namespace GameNet {
       QString commandLine = QString("/uri:gamenet://%1/%2").arg(name, arg);
       QStringList processArgs;
       processArgs << commandLine;
-      this->start(processArgs);
+      this->_d->start(processArgs, true);
     }
 
     void UIProcess::processFinished()
