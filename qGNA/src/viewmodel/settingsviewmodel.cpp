@@ -14,6 +14,9 @@
 
 SettingsViewModel::SettingsViewModel(QObject *parent)
   : QObject(parent)
+  , _downloaderSettings(nullptr)
+  , _updaterProxy(nullptr)
+  , _applicationProxy(nullptr)
 {
   this->_instantlySave = true;
 }

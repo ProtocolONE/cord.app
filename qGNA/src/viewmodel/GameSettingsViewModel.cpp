@@ -27,6 +27,8 @@ using GGS::Core::Service;
 GameSettingsViewModel::GameSettingsViewModel(QObject *parent)
   : QObject(parent)
   , _serviceSettings(nullptr)
+  , _downloader(nullptr)
+  , _hasDownloadPath(false)
 {
 }
 

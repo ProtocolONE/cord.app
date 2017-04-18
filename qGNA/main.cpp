@@ -263,7 +263,12 @@ int main(int argc, char *argv[])
   app.installNativeEventFilter(languageChangeEventFilter);
 
   GGS::ResourceHelper::ResourceLoader loader;
-  loader.load(path + "/qGNA.rcc"); 
+
+  QString altConfigPth = path + "/Config.rcc";
+  if (QFile::exists(altConfigPth)) 
+    loader.load(altConfigPth);
+
+  loader.load(path + "/qGNA.rcc");
   loader.load(path + "/smiles.rcc");
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);

@@ -989,6 +989,7 @@
     </CustomBuild>
     <ClInclude Include="include\Features\Thetta\KernelStatistics.h" />
     <ClInclude Include="include\Features\Thetta\WowRedirect.h" />
+    <ClInclude Include="include\Helper\ConfigLoader.hpp" />
     <ClInclude Include="include\Helper\FileUtils.h" />
     <ClInclude Include="include\Features\ComInitialize.h" />
     <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h" />

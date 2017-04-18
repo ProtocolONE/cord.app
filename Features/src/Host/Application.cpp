@@ -30,6 +30,8 @@
 
 #include <Host/Dbus/DBusServer.h>
 
+#include <Helper/ConfigLoader.hpp>
+
 #include <Integration/ZZima/ZzimaGameExecutor.h>
 #include <Integration/ZZima/ZZimaConnection.h>
 
@@ -396,19 +398,28 @@ namespace GameNet {
     
     void Application::initRestApi()
     {
+      QString overrideApiUrl;
+      bool overrideApi = Features::Helper::checkDebugApiConfig(overrideApiUrl);
+
+      QString apiUrl;
+
+      if (overrideApi) {
+        apiUrl = overrideApiUrl;
+      } else {
         QStringList ports;
         ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
         QString randomPort = ports.takeAt(qrand() % ports.count());
-        QString apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+        apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+      }
 
-        GGS::Settings::Settings settings;
-        settings.setValue("qGNA/restApi/url", apiUrl);
-        qDebug() << "Using rest api url " << apiUrl;
+      GGS::Settings::Settings settings;
+      settings.setValue("qGNA/restApi/url", apiUrl);
+      qDebug() << "Using rest api url " << apiUrl;
 
-        this->_restApiManager->setUri(apiUrl);
-        this->_restApiManager->setRequest(GGS::RestApi::RequestFactory::Http);
-        this->_restApiManager->setCache(this->_restApiCache);
-        GGS::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
+      this->_restApiManager->setUri(apiUrl);
+      this->_restApiManager->setRequest(GGS::RestApi::RequestFactory::Http);
+      this->_restApiManager->setCache(this->_restApiCache);
+      GGS::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
     }
 
     void Application::switchClientVersion()

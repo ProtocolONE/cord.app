@@ -4,6 +4,7 @@
 #include <HostMessageAdapter.h>
 
 #include <Helper/CacheNetworkManagerFactory.h>
+#include <Helper/ConfigLoader.hpp>
 
 #include <Features/RestApi/ServiceHasAccess.h>
 #include <Features/RenderRateHack.h>
@@ -1001,10 +1002,19 @@ void MainWindow::initRestApi()
 {
   //Port selection due to https://jira.gamenet.ru:8443/browse/QGNA-285
 
-  QStringList ports;
-  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-  QString randomPort = ports.takeAt(qrand() % ports.count());
-  QString apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+  QString overrideApiUrl;
+  bool overrideApi = Features::Helper::checkDebugApiConfig(overrideApiUrl);
+
+  QString apiUrl;
+
+  if (overrideApi) {
+    apiUrl = overrideApiUrl;
+  } else {
+    QStringList ports;
+    ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
+    QString randomPort = ports.takeAt(qrand() % ports.count());
+    apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+  }
 
   GGS::Settings::Settings settings;
   settings.setValue("qGNA/restApi/url", apiUrl);
