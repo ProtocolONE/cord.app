@@ -54,6 +54,9 @@
 
 #include <Marketing/MarketingTarget.h>
 
+#include <Helper/TerminateProcess.h>
+#include <Helper/SystemInfo.h>
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
 #include <QtCore/QUrl>
@@ -330,11 +333,14 @@ namespace GameNet {
           !this->_gameDownloader->isAnyServiceInProgress();
       });
 
+      closeThettaService();
       this->_updater->startCheckUpdate();
     }
 
     void Application::updateCompletedSlot(bool needRestart)
     {
+      closeThettaService();
+
       if (needRestart) {
         this->_applicationDistrMon->disable();
         if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
@@ -450,6 +456,7 @@ namespace GameNet {
 
     void Application::finalize()
     {
+      closeThettaService();
       this->_shutdown->finalize();
     }
 
@@ -600,6 +607,16 @@ namespace GameNet {
       Q_FOREACH(const QString& serviceId, lockedGames) {
         this->_executor->terminateAll(serviceId);
       }
+    }
+
+    void Application::closeThettaService()
+    {
+      // terminate Thetta Service process
+      QString name = "ThettaService";
+      name += (Features::isWow64() ? "x64" : "x86");
+      name += ".exe";
+
+      Features::terminateProcessByName(name, false, 0);
     }
   }
 }

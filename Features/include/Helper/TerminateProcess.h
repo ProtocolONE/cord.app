@@ -13,4 +13,5 @@
 
 namespace Features {
   void terminateProcessByName(const QString &procName);
+  void terminateProcessByName(const QString &procName, bool trySoft, int timeout);
 }

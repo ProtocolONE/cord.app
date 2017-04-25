@@ -153,7 +153,9 @@ namespace GameNet {
       void setDownloaderCredential(const GGS::RestApi::GameNetCredential &creds);
 
       void setUiCommandConnection();
-      
+
+      void closeThettaService();
+
       GGS::Application::SingleApplication *_singleApplication;
       ServiceProcess::ServiceLoader *_serviceLoader;
       ServiceProcess::ServicesListRequest *_servicesListRequest;
