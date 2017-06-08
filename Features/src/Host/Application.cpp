@@ -28,6 +28,8 @@
 #include <Host/Installer/UninstallResult.h>
 #include <Host/LicenseManager.h>
 
+#include <Host/GameDownloader/DownloaderSettingsRoulette.h>
+
 #include <Host/Dbus/DBusServer.h>
 
 #include <Helper/ConfigLoader.hpp>
@@ -186,6 +188,8 @@ namespace GameNet {
         return;
       }
 #endif
+      // INFO Необходимо инициализировать первым. Там определяется первый ли раз запукается приложение.
+      this->_applicationStatistic->init();
 
       this->_connectionManager->setStopDownloadServiceWhileExecuteAnyGame(this->_stopDownloadServiceOnExecuteGame);
 
@@ -212,7 +216,8 @@ namespace GameNet {
 
       this->_applicationStatistic->setDownloader(this->_gameDownloader);
       this->_applicationStatistic->setStartingGame(this->_commandLineManager->startingService());
-      this->_applicationStatistic->init();
+      QObject::connect(this, &Application::initCompleted,
+        this->_applicationStatistic, &ApplicationStatistic::applcationStarted);
 
       this->_thetta->setApplication(this);
       this->_thetta->init();
@@ -392,6 +397,12 @@ namespace GameNet {
 
     void Application::initGameDownloader()
     {
+      if (this->_applicationStatistic->isFirstStart()) {
+        // INFO QGNA-1667 init downloader settings preset
+        GameDownloader::DownloaderSettingsRoulette roulette;
+        roulette.chooseYourDestiny();
+      }
+
       this->_gameDownloader->setListeningPort(this->_downloaderSettings->listeningPort());
       this->_gameDownloader->init();
       
@@ -404,8 +415,11 @@ namespace GameNet {
     
     void Application::initRestApi()
     {
+      Features::Helper::DebugConfigLoader debugConfig;
+      debugConfig.init();
+
       QString overrideApiUrl;
-      bool overrideApi = Features::Helper::checkDebugApiConfig(overrideApiUrl);
+      bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
 
       QString apiUrl;
 
@@ -425,6 +439,11 @@ namespace GameNet {
       this->_restApiManager->setUri(apiUrl);
       this->_restApiManager->setRequest(GGS::RestApi::RequestFactory::Http);
       this->_restApiManager->setCache(this->_restApiCache);
+      
+      bool debugLogEnabled = false;
+      if (debugConfig.debugApiEnabled(debugLogEnabled))
+        this->_restApiManager->setDebugLogEnabled(debugLogEnabled);
+
       GGS::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
     }
 

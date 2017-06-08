@@ -513,6 +513,9 @@
     <ClCompile Include="src\Features\Thetta\KernelExaminer.cpp" />
     <ClCompile Include="src\Features\Thetta\KernelStatistics.cpp" />
     <ClCompile Include="src\Features\Thetta\WowRedirect.cpp" />
+    <ClCompile Include="src\Host\GameDownloader\DownloaderSettingsRoulette.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -555,6 +558,10 @@
     </ClInclude>
     <ClInclude Include="include\Features\Thetta\KernelStatistics.h" />
     <ClInclude Include="include\Features\Thetta\WowRedirect.h" />
+    <ClInclude Include="include\Helper\ConfigLoader.hpp" />
+    <ClInclude Include="include\Host\GameDownloader\DownloaderSettingsRoulette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\Features\RemouteStartGame.h" />

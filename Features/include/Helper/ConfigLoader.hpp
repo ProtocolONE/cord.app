@@ -8,52 +8,88 @@
 namespace Features {
   namespace Helper {
 
-    inline bool checkDebugApiConfig(QString& result)
+    class DebugConfigLoader
     {
-      QString path = QCoreApplication::applicationDirPath();
-      QString altConfigPth = path + "/Config.rcc";
-      if (!QFile::exists(altConfigPth))
-        return false;
+    public:
+      DebugConfigLoader()
+        : _isValid(false)
+        , _debugLogEnabled(false)
+      {
+      }
 
-      if (!QResource::registerResource(altConfigPth))
-        return false;
+      void init()
+      {
+        if (this->load())
+          this->_isValid = true;
+      }
 
-      QString fileName = ":/ExternalConfig/Config.js";
-      QFile scriptFile(fileName);
-      if (!scriptFile.open(QIODevice::ReadOnly))
-        return false;
+      bool apiConfig(QString& result)
+      {
+        if (!this->_isValid || this->_apiUrl.isEmpty())
+          return false;
 
-      QTextStream stream(&scriptFile);
+        result = this->_apiUrl;
+        return true;
+      }
 
-      QString contents = stream.readAll();
-      scriptFile.close();
+      bool debugApiEnabled(bool& result)
+      {
+        if (!this->_isValid)
+          return false;
 
-      QScriptEngine engine;
-      engine.evaluate(contents);
+        result = this->_debugLogEnabled;
+        return true;
+      }
 
-      QScriptValue getAltConfig = engine.globalObject().property("getAltConfig");
-      if (getAltConfig.isError() || !getAltConfig.isFunction())
-        return false;
+    private:
+      bool load() {
+        QString path = QCoreApplication::applicationDirPath();
+        QString altConfigPth = path + "/Config.rcc";
+        if (!QFile::exists(altConfigPth))
+          return false;
 
-      QScriptValueList args;
-      QScriptValue config = getAltConfig.call(QScriptValue(), args);
-      if (config.isError() || !config.isObject())
-        return false;
+        if (!QResource::registerResource(altConfigPth))
+          return false;
 
-      QScriptValue overrideApi = config.property("overrideApi");
-      if (overrideApi.isError() || !overrideApi.isBool())
-        return false;
+        QString fileName = ":/ExternalConfig/Config.js";
+        QFile scriptFile(fileName);
+        if (!scriptFile.open(QIODevice::ReadOnly))
+          return false;
 
-      if (!overrideApi.toBool())
-        return false;
+        QTextStream stream(&scriptFile);
 
-      QScriptValue apiUrl = config.property("apiUrl");
-      if (apiUrl.isError() || !apiUrl.isString())
-        return false;
+        QString contents = stream.readAll();
+        scriptFile.close();
 
-      result = apiUrl.toString();
-      return !result.isEmpty();
-    }
+        QScriptEngine engine;
+        engine.evaluate(contents);
 
+        QScriptValue getAltConfig = engine.globalObject().property("getAltConfig");
+        if (getAltConfig.isError() || !getAltConfig.isFunction())
+          return false;
+
+        QScriptValueList args;
+        QScriptValue config = getAltConfig.call(QScriptValue(), args);
+        if (config.isError() || !config.isObject())
+          return false;
+
+        QScriptValue overrideApi = config.property("overrideApi");
+        if (!overrideApi.isError() && overrideApi.isBool() && overrideApi.toBool()) {
+          QScriptValue apiUrl = config.property("apiUrl");
+          if (!apiUrl.isError() && apiUrl.isString())
+            this->_apiUrl = apiUrl.toString();
+        }
+
+        QScriptValue debugApi = config.property("debugApi");
+        if (!debugApi.isError() && debugApi.isBool())
+          this->_debugLogEnabled = debugApi.toBool();
+
+        return true;
+      }
+
+      bool _isValid;
+      QString _apiUrl;
+      bool _debugLogEnabled;
+    };
   }
 }

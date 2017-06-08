@@ -17,7 +17,6 @@ namespace GameNet {
 
     ApplicationStatistic::ApplicationStatistic(QObject *parent)
       : QObject(parent)
-      , _downloader(nullptr)
     {
     }
 
@@ -38,13 +37,27 @@ namespace GameNet {
 
     void ApplicationStatistic::init()
     {
-      Q_ASSERT(this->_downloader);
-
       quint64 installDate = this->installDate();
-      if (installDate != 0)
-        return;
+      if (installDate == 0) {
+        this->_firstStart = true;
+        this->setInstallDate();
+      }
 
-      this->setInstallDate();
+      Settings settings;
+      settings.beginGroup("qGNA");
+
+      if (this->_firstStart)
+        settings.setValue("firstStart", 1);
+      else
+        this->_firstStart = settings.value("firstStart", 0).toInt() == 1;
+    }
+
+    void ApplicationStatistic::applcationStarted()
+    {
+      // INFO reset flag about first app launch
+      Settings settings;
+      settings.beginGroup("qGNA");
+      settings.setValue("firstStart", 0);
     }
 
     bool ApplicationStatistic::isGameInstalled(const QString& serviceId) const
@@ -111,7 +124,6 @@ namespace GameNet {
 
     void ApplicationStatistic::setInstallDate()
     {
-
       quint64 installDate = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
       Settings settings;
       settings.beginGroup("qGNA");
@@ -127,6 +139,11 @@ namespace GameNet {
         return false;
 
       return true;
+    }
+
+    bool ApplicationStatistic::isFirstStart() const
+    {
+      return this->_firstStart;
     }
 
   }

@@ -69,6 +69,12 @@ namespace GameNet {
         return this->_applicationStatistic->installDate();
       }
 
+      bool ApplicationStatisticBridge::isFirstStart() const
+      {
+        Q_ASSERT(this->_applicationStatistic);
+        return this->_applicationStatistic->isFirstStart();
+      }
+
     }
   }
 }

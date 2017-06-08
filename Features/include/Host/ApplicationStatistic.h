@@ -23,6 +23,7 @@ namespace GameNet {
       void setStartingGame(const QString& serviceId);
 
       void init();
+      void applcationStarted();
 
     public slots:
 
@@ -143,13 +144,26 @@ namespace GameNet {
        */
       virtual quint64 installDate() const;
 
+      /*!
+      \fn virtual bool ApplicationStatistic::isFirstStart() const;
+      
+      \brief  Query if application first time launched.
+      
+      \author "Ilya Tkachenko"
+      \date 07.06.2017
+      
+      \return true if first launch, false if not.
+       */
+
+      virtual bool isFirstStart() const;
+
     private:
       void setInstallDate();
       bool hasStartingService();
       
       QString _startingServiceId;
-      GGS::GameDownloader::GameDownloadService *_downloader;
-
+      GGS::GameDownloader::GameDownloadService *_downloader = nullptr;
+      bool _firstStart = false;
     };
 
   }

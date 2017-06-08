@@ -10,8 +10,8 @@
 
 #include <Features/GameDownloader/DownloadStats.h>
 
-#include <Core/Service>
-#include <Settings/Settings>
+#include <Core/Service.h>
+#include <Settings/Settings.h>
 
 namespace Features {
   namespace GameDownloader {

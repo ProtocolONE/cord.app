@@ -22,6 +22,8 @@ public:
 
   MOCK_CONST_METHOD0(installWithService, QString());
   MOCK_CONST_METHOD0(installDate, quint64());
+  
+  MOCK_CONST_METHOD0(isFirstStart, bool());
 };
 
 class ApplicationStatisticBridgeTest : public ::testing::Test 
@@ -108,4 +110,13 @@ TEST_F(ApplicationStatisticBridgeTest, installDate)
     .WillOnce(Return(expectedValue));
 
   ASSERT_EQ(expectedValue, bridge.installDate());
+}
+
+TEST_F(ApplicationStatisticBridgeTest, isFirstStart)
+{
+  bool expectedValue = true;
+  EXPECT_CALL(statistic, isFirstStart())
+    .WillOnce(Return(expectedValue));
+
+  ASSERT_EQ(expectedValue, bridge.isFirstStart());
 }

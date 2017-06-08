@@ -141,6 +141,19 @@ namespace GameNet {
 
         quint64 installDate() const;
 
+        /*!
+        \fn virtual bool ApplicationStatistic::isFirstStart() const;
+
+        \brief  Query if application first time launched.
+
+        \author "Ilya Tkachenko"
+        \date 07.06.2017
+
+        \return true if first launch, false if not.
+        */
+
+        bool isFirstStart() const;
+
       private:
         ApplicationStatistic *_applicationStatistic;
       };

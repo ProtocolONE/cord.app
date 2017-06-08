@@ -44,6 +44,8 @@ namespace GameNet {
       this->_downloader->setSeedEnabled(this->seedEnabled());
       this->_downloader->setDownloadRateLimit(this->downloadRate() * 1024);
       this->_downloader->setUploadRateLimit(this->uploadRate() * 1024);
+      this->_downloader->setMaxConnection(this->maxConnection());
+
       this->internalSetTorrentProfile(this->torrentProfile());
     }
 
@@ -107,13 +109,13 @@ namespace GameNet {
 
     int DownloaderSettings::maxConnection() const
     {
-      return this->readInt("qGNA/numConnections", 10);
+      return this->readInt("qGNA/numConnections", 200);
     }
 
     void DownloaderSettings::setMaxConnection(int val)
     {
       Q_ASSERT(this->_downloader);
-      int current = this->downloadRate();
+      int current = this->maxConnection();
       if (current == val)
         return;
 

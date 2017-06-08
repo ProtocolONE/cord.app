@@ -3,6 +3,8 @@
 #include <Host/Proxy/DownloaderProxy.h>
 #include <Host/Proxy/GameExecutorProxy.h>
 
+#include <Host/GameDownloader/DownloaderSettingsRoulette.h>
+
 #include <Core/Marketing.h>
 
 #include <QtCore/QDebug>
@@ -85,7 +87,17 @@ namespace GameNet {
       QVariantMap params;
       this->setCredential(params, downloader->credential(serviceId));
       Marketing::send(Marketing::StartDownloadService, serviceId, params);
-      Marketing::sendOnceByService(Marketing::FirstStartDownloadService, serviceId, params);
+
+      QVariantMap paramsOnce;
+      this->setCredential(paramsOnce, downloader->credential(serviceId));
+
+      GameDownloader::DownloaderSettingsRoulette roulette;
+      if (roulette.hasTestInfo()) {
+        paramsOnce["DownloaderSettingsTestName"] = roulette.testName();
+        paramsOnce["DownloaderSettingsTestGroup"] = roulette.groupName();
+      }
+
+      Marketing::sendOnceByService(Marketing::FirstStartDownloadService, serviceId, paramsOnce);
     }
 
     void MarketingStatistic::onGameTorrentDownloadFinished(const Service *service)
@@ -118,5 +130,6 @@ namespace GameNet {
       params["overrideUserId"] = credetial.userId();
       params["overrideAppKey"] = credetial.appKey();
     }
+
   }
 }

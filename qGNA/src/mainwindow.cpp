@@ -1002,8 +1002,11 @@ void MainWindow::initRestApi()
 {
   //Port selection due to https://jira.gamenet.ru:8443/browse/QGNA-285
 
+  Features::Helper::DebugConfigLoader debugConfig;
+  debugConfig.init();
+
   QString overrideApiUrl;
-  bool overrideApi = Features::Helper::checkDebugApiConfig(overrideApiUrl);
+  bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
 
   QString apiUrl;
 
@@ -1024,6 +1027,11 @@ void MainWindow::initRestApi()
   this->_restapiManager.setUri(apiUrl);
   this->_restapiManager.setRequest(GGS::RestApi::RequestFactory::Http);
   this->_restapiManager.setCache(&_fakeCache);
+
+  bool debugLogEnabled = false;
+  if (debugConfig.debugApiEnabled(debugLogEnabled))
+    this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
+
   GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
 }
 
