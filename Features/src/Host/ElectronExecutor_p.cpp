@@ -53,7 +53,6 @@ namespace GameNet {
       command->appendParameter("appKey", this->_credential.appKey());
 
       QObject::connect(command, &GetRedirectToken::result, this, &ElectronExecutorPrivate::onGetRedirectTokenResult, Qt::DirectConnection);
-      QObject::connect(command, &GetRedirectToken::genericError, this, &ElectronExecutorPrivate::onGenericError, Qt::DirectConnection);
       
       command->execute();
     }
@@ -85,8 +84,12 @@ namespace GameNet {
         url.setScheme("https");
 
       QObject::connect(&_process, &QProcess::started, this, &ElectronExecutorPrivate::onStarted, Qt::DirectConnection);
-      QObject::connect(&_process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &ElectronExecutorPrivate::onFinished, Qt::DirectConnection);
-      QObject::connect(&_process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), this, &ElectronExecutorPrivate::onError, Qt::DirectConnection);
+
+      QObject::connect(&_process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), 
+        this, &ElectronExecutorPrivate::onFinished, Qt::DirectConnection);
+
+      QObject::connect(&_process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), 
+        this, &ElectronExecutorPrivate::onError, Qt::DirectConnection);
 
       QString path = QDir::cleanPath(QCoreApplication::applicationDirPath() + "\\WebPlayer\\WebPlayer.exe");
       this->_process.setProgram(path);
@@ -96,14 +99,6 @@ namespace GameNet {
       this->_process.setArguments(arg);
 
       this->_process.start();
-    }
-
-    void ElectronExecutorPrivate::onGenericError(GGS::RestApi::CommandBase::Error error, QString message)
-    {
-      WARNING_LOG << "GetRedirectToken error code: " << error;
-      WARNING_LOG << "GetRedirectToken error message: " << message;
-
-      emit this->finished(this->_service, ExecutorBase::finishStateFromRestApiErrorCode(error));
     }
 
     void ElectronExecutorPrivate::onStarted()
