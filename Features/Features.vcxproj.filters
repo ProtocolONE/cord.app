@@ -515,13 +515,31 @@
     <ClCompile Include="src\Host\GameDownloader\DownloaderSettingsRoulette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaSender.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ElectronExecutor.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ThettaSender.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ElectronExecutor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\Thetta\ThettaSender.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ElectronExecutor_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ElectronExecutor_p.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ElectronsExecutor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ElectronsExecutor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ElectronExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ElectronExecutor_p.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ElectronsExecutor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -717,7 +735,13 @@
     </CustomBuild>
     <CustomBuild Include="include\Features\Thetta\DistrIntegrityWorker.h" />
     <CustomBuild Include="include\Features\Thetta\KernelExaminer.h" />
-    <CustomBuild Include="include\Features\Thetta\ThettaSender.h">
+    <CustomBuild Include="include\Host\ElectronExecutor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ElectronExecutor_p.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\Host\ElectronsExecutor.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

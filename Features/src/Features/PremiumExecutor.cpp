@@ -12,6 +12,8 @@
 #include <GameExecutor/Executor/ExecutableFile.h>
 #include <GameExecutor/Executor/WebLink.h>
 #include <GameExecutor/Executor/WebLinkSsl.h>
+#include <Host/ElectronExecutor.h>
+#include <Host/ElectronsExecutor.h>
 
 #include <RestApi/RestApiManager.h>
 
@@ -190,13 +192,14 @@ namespace Features {
 
   void PremiumExecutor::registerExecutors(GameExecutorService *executor)
   {
-    using GGS::GameExecutor::Executor::ExecutableFile;
-    using GGS::GameExecutor::Executor::WebLink;    
-    using GGS::GameExecutor::Executor::WebLinkSsl;
+    using namespace GGS::GameExecutor::Executor;
+    using namespace GameNet::Host;
 
     executor->registerExecutor(new ExecutableFile(this));
     executor->registerExecutor(new WebLink(this));
     executor->registerExecutor(new WebLinkSsl(this));
+    executor->registerExecutor(new ElectronExecutor(this));
+    executor->registerExecutor(new ElectronsExecutor(this));
   }
 
   void PremiumExecutor::setNoInjectItem(Service* service, const QString& value)
