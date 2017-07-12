@@ -109,7 +109,7 @@ namespace GameNet {
 
     int DownloaderSettings::maxConnection() const
     {
-      return this->readInt("qGNA/numConnections", 200);
+      return this->readInt("qGNA/numConnections", 20);
     }
 
     void DownloaderSettings::setMaxConnection(int val)

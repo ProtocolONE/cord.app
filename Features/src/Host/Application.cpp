@@ -397,12 +397,6 @@ namespace GameNet {
 
     void Application::initGameDownloader()
     {
-      if (this->_applicationStatistic->isFirstStart()) {
-        // INFO QGNA-1667 init downloader settings preset
-        GameDownloader::DownloaderSettingsRoulette roulette;
-        roulette.chooseYourDestiny();
-      }
-
       this->_gameDownloader->setListeningPort(this->_downloaderSettings->listeningPort());
       this->_gameDownloader->init();
       
