@@ -323,7 +323,6 @@
     <ClCompile Include="src\Features\Thetta\ProtectorHooks.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaInstaller.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaMonitor.cpp" />
-    <ClCompile Include="src\Features\Thetta\ThettaSender.cpp" />
     <ClCompile Include="src\Features\Thetta\TlsInitializer.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaMonitorApp.cpp" />
     <ClCompile Include="src\Features\Thetta\ThettaHashSender.cpp" />
@@ -516,6 +515,15 @@
     <ClCompile Include="src\Host\GameDownloader\DownloaderSettingsRoulette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThettaSender.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThettaSender.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Thetta\ThettaSender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -680,7 +688,6 @@
     <CustomBuild Include="include\Features\SilentMode.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaHashSender.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaMonitorApp.h" />
-    <CustomBuild Include="include\Features\Thetta\ThettaSender.h" />
     <CustomBuild Include="include\features\taskbarprogresshelper.h" />
     <CustomBuild Include="include\Features\PremiumExecutor.h" />
     <CustomBuild Include="include\Features\Thetta\ThettaInstaller.h" />
@@ -710,6 +717,9 @@
     </CustomBuild>
     <CustomBuild Include="include\Features\Thetta\DistrIntegrityWorker.h" />
     <CustomBuild Include="include\Features\Thetta\KernelExaminer.h" />
+    <CustomBuild Include="include\Features\Thetta\ThettaSender.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
