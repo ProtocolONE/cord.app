@@ -6,6 +6,7 @@
 #include <GameDownloader/Hooks/InstallDependency.h>
 #include <GameDownloader/Hooks/PreventWinXpDownload.h>
 #include <GameDownloader/Hooks/RemoveFileHook.h>
+#include <GameDownloader/Hooks/PreventWin32Download.h>
 
 #include <Features/Thetta/DistrIntegrity.h>
 
@@ -24,6 +25,7 @@ using GGS::Core::UI::Message;
 using GGS::GameDownloader::HookBase;
 using GGS::GameDownloader::Hooks::InstallDependency;
 using GGS::GameDownloader::Hooks::PreventWinXpDownload;
+using GGS::GameDownloader::Hooks::PreventWin32Download;
 using Features::Thetta::DistrIntegrity;
 using GameNet::Host::GameDownloader::Hook::SaveInstallPath;
 using GameNet::Host::GameDownloader::Hook::CheckDownload;
@@ -65,7 +67,8 @@ namespace GameNet {
         result = hook;
       } else if (guid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
         CheckDownload *hook = new CheckDownload(this);
-        hook->setCredential([this](const QString& serviceId)-> GGS::RestApi::GameNetCredential {
+        hook->setCredential([this](const QString& serviceId)-> GGS::RestApi::GameNetCredential
+        {
           Connection* connection = this->_serviceHandle->connectionLockedService(serviceId);
           if (!connection) {
             return GGS::RestApi::GameNetCredential();
@@ -74,7 +77,8 @@ namespace GameNet {
           return connection->credential();
         });
 
-        QObject::connect(hook, &CheckDownload::internalError, []() {
+        QObject::connect(hook, &CheckDownload::internalError, []()
+        {
           // INFO HACK перевод не работает в Checkdownload 
           QString title = tr("RESTAPI_ERROR_CAPTION");
           QString msg = tr("HAS_ACCESS_INTERNAL_ERROR");
@@ -94,6 +98,8 @@ namespace GameNet {
         result = new PreventWinXpDownload(this);
       } else if (guid == "B963B92F-17D5-4DA3-A5C0-942776CE680A") {
         result = new GGS::GameDownloader::Hooks::RemoveFileHook(this);
+      } else if (guid == "1A097DFD-7660-4619-8B1D-8A1FE5440300") {
+        result = new PreventWin32Download(this);
       }
 
       Q_ASSERT(result);
