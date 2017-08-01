@@ -31,6 +31,19 @@ namespace GameNet {
 
       bool skipUi();
 
+      /*!
+      \fn bool CommandLineManager::overrideWebExecutor() const;
+      
+      \brief  Возвращает истину, елси необходимо принудительно все web-игры запускать через Electron.
+      
+      \author "Ilya Tkachenko"
+      \date 27.07.2017
+      
+      \return true if should override web scheme with electron, false if it's not.
+       */
+
+      bool overrideWebExecutor() const;
+
     signals:
 
       /**

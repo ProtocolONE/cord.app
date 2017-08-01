@@ -10,6 +10,7 @@ namespace GameNet {
       ServicesListRequest::ServicesListRequest(QObject *parent)
         : _retryCount(0)
         , _serviceLoader(nullptr)
+        , _overrideWebScheme(false)
         , QObject(parent)
       {
         this->_retryIntervals << 5000 << 15000 << 30000 << 60000 << 90000;
@@ -75,7 +76,18 @@ namespace GameNet {
           serviceDist.setIsDownloadable(data["isBrowserGame"] != "1");
           serviceDist.setHasDownloadPath(data["hasDownloadPath"] == "1");
           serviceDist.setExtractorType(data["extractorType"]);
-          serviceDist.setExecuteUrl(data["executeUrl"]);
+
+          QString executeUrl = data["executeUrl"];
+
+          if (this->_overrideWebScheme) {
+            if (executeUrl.startsWith("http://"))
+              executeUrl = "electron://" + executeUrl.mid(7);
+
+            if (executeUrl.startsWith("https://"))
+              executeUrl = "electrons://" + executeUrl.mid(8);
+          }
+
+          serviceDist.setExecuteUrl(executeUrl);
           serviceDist.setGameSize(data["gameSize"].toInt());
           serviceDist.setDependencyList(data["dependencyList"]);
 
@@ -156,6 +168,12 @@ namespace GameNet {
       {
         this->_applicationArea = area;
       }
+
+      void ServicesListRequest::setOverrideWebExecutor(bool value)
+      {
+        this->_overrideWebScheme = value;
+      }
+
     }
   }
 }

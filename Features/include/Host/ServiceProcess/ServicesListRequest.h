@@ -25,6 +25,8 @@ namespace GameNet {
 
         void setApplicationArea(GGS::Core::Service::Area area);
         void setServiceLoader(ServiceLoader* loader);
+        void setOverrideWebExecutor(bool value);
+
         void request();
 
     signals:
@@ -41,6 +43,7 @@ namespace GameNet {
         int _retryCount;
         QVector<int> _retryIntervals;
         DownloadServiceIcon _downloadIconHelper;
+        bool _overrideWebScheme;
       };
     }
   }

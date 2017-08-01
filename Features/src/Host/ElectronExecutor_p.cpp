@@ -26,9 +26,10 @@ namespace GameNet {
     using namespace GGS::GameExecutor;
     using namespace GGS::RestApi::Auth;
 
-    ElectronExecutorPrivate::ElectronExecutorPrivate(QObject *parent) : QObject(parent), _process(this)
+    ElectronExecutorPrivate::ElectronExecutorPrivate(QObject *parent) 
+      : QObject(parent)
+      , _process(this)
     {
-
     }
 
     ElectronExecutorPrivate::~ElectronExecutorPrivate()
@@ -45,14 +46,15 @@ namespace GameNet {
 
       this->_service = service;
       this->_credential = !secondCredential.userId().isEmpty() ? secondCredential : credential;
-      this->_scheme = _scheme;
+      this->_scheme = scheme;
 
-      GetRedirectToken* command = new GetRedirectToken;
+      GetRedirectToken* command = new GetRedirectToken(this);
       command->setAuthRequire(false);
       command->appendParameter("userId", this->_credential.userId());
       command->appendParameter("appKey", this->_credential.appKey());
 
-      QObject::connect(command, &GetRedirectToken::result, this, &ElectronExecutorPrivate::onGetRedirectTokenResult, Qt::DirectConnection);
+      QObject::connect(command, &GetRedirectToken::result, 
+        this, &ElectronExecutorPrivate::onGetRedirectTokenResult, Qt::DirectConnection);
       
       command->execute();
     }
@@ -97,7 +99,6 @@ namespace GameNet {
       QStringList arg;
       arg << this->_credential.userId() << command->token() << url.toString();
       this->_process.setArguments(arg);
-
       this->_process.start();
     }
 
