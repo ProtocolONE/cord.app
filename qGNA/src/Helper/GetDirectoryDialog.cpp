@@ -192,22 +192,46 @@ bool GetDirectoryDialog::isAcceptedFolder(const QString &newDirectory, QString *
   return true;
 }
 
+QString GetDirectoryDialog::formatSize(quint64 value)
+{
+  if (value < 1024) {
+    return QObject::tr("%1 Б").arg(value);
+  }
+
+  if (value < 1024 * 1024) {
+    return QObject::tr("%1 КиБ").arg(value >> 10);
+  }
+
+  if (value < 1024 * 1024 * 1024) {
+    return QObject::tr("%1 МиБ").arg(value >> 20);
+  }
+
+  if (value < 1024ull * 1024ull * 1024ull * 1024ull) {
+    return QObject::tr("%1 ГиБ").arg(value >> 30);
+  }
+
+  return QObject::tr("%1 ТиБ").arg(value >> 40);
+}
+
 bool GetDirectoryDialog::checkFreeSpace(const QString &newDirectory, const QString &serviceName, const int size)
 {
   using GGS::Core::UI::Message;
 
   QStorageInfo info = QStorageInfo(newDirectory);
 
-  int freeMBytes = info.bytesAvailable() / 1048576;
+  int freeMBytes = info.bytesAvailable() >> 20; // divide 1024 * 1024
   
   if (size < freeMBytes)
     return true;
 
+  QString needSize = formatSize(size << 20); // multiply 1024 * 1024
+  QString freeSize = formatSize(info.bytesAvailable());
+
   QString title = QObject::tr("Недостаточно места на диске \"%1\"").arg(info.rootPath());
-  QString message = QObject::tr("Для установки \"%1\" требуется не менее <b>%2 мб</b>. На выбранном вами диске доступно <b>%3 мб</b>. Выберите другой каталог или освободите место на диске.")
+  QString message = QObject::tr("Для установки \"%1\" требуется не менее <b>%2</b>. На выбранном вами диске доступно <b>%3</b>. Выберите другой каталог или освободите место на диске.")
     .arg(serviceName)
-    .arg(size)
-    .arg(freeMBytes);
+    .arg(needSize)
+    .arg(freeSize);
 
   return Message::Ignore == Message::warning(title, message, static_cast<Message::StandardButton>(Message::Ignore | Message::Cancel));
 }

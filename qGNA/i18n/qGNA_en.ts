@@ -95,13 +95,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="198"/>
+        <source>%1 Б</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="202"/>
+        <source>%1 КиБ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="206"/>
+        <source>%1 МиБ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="210"/>
+        <source>%1 ГиБ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="213"/>
+        <source>%1 ТиБ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="230"/>
         <source>Недостаточно места на диске &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="207"/>
-        <source>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2 мб&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3 мб&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</source>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="231"/>
+        <source>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

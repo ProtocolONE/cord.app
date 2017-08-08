@@ -32,4 +32,5 @@ private:
   bool isRootFolder(const QString &newDirectory);
   bool isEmptyFolder(const QString &newDirectory);
   bool checkFreeSpace(const QString &newDirectory, const QString &serviceName, const int size);
+  QString formatSize(quint64 value);
 };
