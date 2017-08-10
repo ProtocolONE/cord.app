@@ -245,6 +245,11 @@ void MainWindow::initialize()
   this->_keyboardLayoutHelper.update();
 }
 
+void MainWindow::hideToTaskBar()
+{
+  this->showMinimized();
+}
+
 void MainWindow::sendStartingMarketing()
 {
   int dwMajorVersion = 6;

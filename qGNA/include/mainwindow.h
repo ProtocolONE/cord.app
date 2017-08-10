@@ -144,6 +144,7 @@ public slots:
   void initFinished();
   void initialize();
 
+  void hideToTaskBar();
 
   void onTaskbarButtonCreated();
   void onProgressUpdated(int progressValue, const QString &status);
