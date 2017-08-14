@@ -183,12 +183,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="230"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="231"/>
         <source>Недостаточно места на диске &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="231"/>
+        <location filename="../src/Helper/GetDirectoryDialog.cpp" line="232"/>
         <source>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</source>
         <translation type="unfinished"></translation>
     </message>
