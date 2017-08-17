@@ -308,6 +308,7 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plug
     <ClCompile Include="src\Bridge\MessageAdapterBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\ServiceHandleBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\ServiceSettingsBridgeTest.cpp" />
+    <ClCompile Include="src\Bridge\SettingsBridgeTest.cpp" />
     <ClCompile Include="src\Bridge\UpdaterTest.cpp" />
     <ClCompile Include="src\FactoryTest.cpp" />
     <ClCompile Include="src\GameDownloader\DownloadStatsPub.cpp" />

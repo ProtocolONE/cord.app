@@ -8,6 +8,7 @@
 #include <Host/Application.h>
 #include <Host/MarketingStatistic.h>
 #include <Host/ServiceHandle.h>
+#include <Host/SettingsManager.h>
 
 #include <Host/Proxy/GameExecutorProxy.h>
 #include <Host/Proxy/DownloaderProxy.h>
@@ -23,6 +24,7 @@
 #include <Host/Bridge/MessageAdapterBridge.h>
 #include <Host/Bridge/ServiceHandleBridge.h>
 #include <Host/Bridge/LicenseManagerBridge.h>
+#include <Host/Bridge/SettingsBridge.h>
 
 #include <Host/Dbus/DBusServer.h>
 #include <Host/Dbus/DownloaderBridgeAdaptor.h>
@@ -35,6 +37,7 @@
 #include <Host/Dbus/MessageAdapterBridgeAdaptor.h>
 #include <Host/Dbus/ServiceHandleBridgeAdaptor.h>
 #include <Host/Dbus/LicenseManagerBridgeAdaptor.h>
+#include <Host/Dbus/SettingsBridgeAdaptor.h>
 
 #include <Features/Thetta/KernelStatistics.h>
 
@@ -181,7 +184,7 @@ namespace GameNet {
       const QString& applicationName = connection->applicationName();
       this->_connections[applicationName] = connection;
 
-      if (applicationName == "QGNA"){
+      if (applicationName == "QGNA") {
         this->registerServicesForQGNA(connection);
       }
 
@@ -218,6 +221,7 @@ namespace GameNet {
       this->registerUpdateManager(connection);
       this->registerServiceHandle(connection);
       this->registerLicenseManager(connection);
+      this->registerSettingsManager(connection);
     }
 
     void ConnectionManager::registerApplicationStatistic(Connection* connection)
@@ -353,6 +357,16 @@ namespace GameNet {
 
       new LicenseManagerBridgeAdaptor(licenseManagerBridge);
       connection->registerObject("/licenseManager", licenseManagerBridge);
+    }
+
+    void ConnectionManager::registerSettingsManager(Connection * connection)
+    {
+      Host::SettingsManager * settingsManager = new Host::SettingsManager(connection);
+      Bridge::SettingsBridge *settingsBridge = new Bridge::SettingsBridge(connection);
+      settingsBridge->setProxy(settingsManager);
+
+      new SettingsBridgeAdaptor(settingsBridge);
+      connection->registerObject("/remotesettings", settingsBridge);
     }
 
     void ConnectionManager::shutdown()

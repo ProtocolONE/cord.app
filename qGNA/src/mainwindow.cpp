@@ -16,6 +16,7 @@
 #include <viewmodel/SettingsViewModel.h>
 #include <viewmodel/GameSettingsViewModel.h>
 #include <viewmodel/ServiceHandleViewModel.h>
+#include <viewmodel/SettingsManagerViewModel.h>
 
 #include <Host/CredentialConverter.h>
 #include <Host/Translation.h>
@@ -186,6 +187,7 @@ void MainWindow::initialize()
   qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");
   qmlRegisterType<ApplicationStatisticViewModel>("qGNA.Library", 1, 0, "ApplicationStatistic");
   qmlRegisterType<ServiceHandleViewModel>("qGNA.Library", 1, 0, "ServiceHandle");
+  qmlRegisterType<SettingsManagerViewModel>("qGNA.Library", 1, 0, "SettingsManager");
   
   qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
