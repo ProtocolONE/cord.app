@@ -6,6 +6,8 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDirIterator>
 #include <QtCore/QStorageInfo>
+#include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 #include <QtWidgets/QFileDialog>
 
@@ -105,17 +107,30 @@ void GetDirectoryDialog::getDirectory(const QString& serviceName, const int size
         return;
     } 
 
-    if (!this->isEmptyFolder(newDirectory)) {
-      bool dontUseFolder = Message::Cancel == Message::question(
-        tr("DIRECTORY_NOT_EMPTY_INFO"), 
-        tr("DIRECTORY_NOT_EMPTY_QUESTION"), 
+    bool dontUseFolder = false;
+
+    QDir path = QCoreApplication::applicationDirPath();
+    QDir newPath = newDirectory;
+    if (newPath.absolutePath().toCaseFolded().indexOf(path.absolutePath().toCaseFolded()) == 0) {
+      dontUseFolder = Message::Cancel == Message::question(
+        tr("DIRECTORY_NOT_EMPTY_INFO"),
+        tr("DIRECTORY_QGNA_QUESTION"),
         static_cast<Message::StandardButton>(Message::Ok | GGS::Core::UI::Message::Cancel));
 
-      if (dontUseFolder) {
-        this->directoryEntered(QString());
-        return;
+    } else {
+      if (!this->isEmptyFolder(newDirectory)) {
+        dontUseFolder = Message::Cancel == Message::question(
+          tr("DIRECTORY_NOT_EMPTY_INFO"),
+          tr("DIRECTORY_NOT_EMPTY_QUESTION"),
+          static_cast<Message::StandardButton>(Message::Ok | GGS::Core::UI::Message::Cancel));
       }
     }
+
+    if (dontUseFolder) {
+      this->directoryEntered(QString());
+      return;
+    }
+
     this->directoryEntered(newDirectory);
   });
 
