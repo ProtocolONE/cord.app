@@ -40,24 +40,17 @@ namespace GameNet {
       void onShutdown(const QString& serviceId);
 
     private:
-      void internalError(int errorCode);
       void onGetRedirectTokenResult(GGS::RestApi::CommandBase::CommandResults result);
+      void activateElectron(quint32 pid);
 
     signals:
       void started(const GGS::Core::Service &service);
       void finished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
 
     private:
-      void onStarted();
-      void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
-      void onError(QProcess::ProcessError error);
-
-    private:
       GGS::Core::Service _service;
       GGS::RestApi::GameNetCredential _credential;
       QString _scheme;
-      QProcess _process;
-      bool _shutdown = false;
     };
   }
 }

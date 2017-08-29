@@ -59,15 +59,15 @@
 <context>
     <name>Features::Thetta::ThettaMonitor</name>
     <message>
+        <source>DRIVER_INSTALL_ERROR_TEST_MODE_TEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>DRIVER_INSTALL_ERROR_TITLE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DRIVER_INSTALL_ERROR_TEXT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DRIVER_INSTALL_ERROR_TEST_MODE_TEXT</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -196,10 +196,10 @@ namespace Features {
     using namespace GameNet::Host;
 
     executor->registerExecutor(new ExecutableFile(this));
-    executor->registerExecutor(new WebLink(this));
-    executor->registerExecutor(new WebLinkSsl(this));
     executor->registerExecutor(new ElectronExecutor(this));
     executor->registerExecutor(new ElectronsExecutor(this));
+    executor->registerExecutor(new WebLink(this));
+    executor->registerExecutor(new WebLinkSsl(this));
   }
 
   void PremiumExecutor::setNoInjectItem(Service* service, const QString& value)

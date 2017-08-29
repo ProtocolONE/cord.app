@@ -12,6 +12,8 @@
 #include <GameExecutor/Extension.h>
 #include <Host/ElectronExecutor_p.h>
 #include <RestApi/Auth/GetRedirectToken.h>
+#include <Application/WindowHelper.h>
+#include <GameExecutor/Executor/WebLink.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
@@ -28,7 +30,6 @@ namespace GameNet {
 
     ElectronExecutorPrivate::ElectronExecutorPrivate(QObject *parent) 
       : QObject(parent)
-      , _process(this)
     {
     }
 
@@ -43,6 +44,16 @@ namespace GameNet {
       const GGS::RestApi::GameNetCredential& secondCredential, 
       const QString& scheme)
     {
+
+      if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
+        GGS::GameExecutor::Executor::WebLink* webLink = new GGS::GameExecutor::Executor::WebLink(this);
+
+        QObject::connect(webLink, &GGS::GameExecutor::Executor::WebLink::started, this, &ElectronExecutorPrivate::started, Qt::DirectConnection);
+        QObject::connect(webLink, &GGS::GameExecutor::Executor::WebLink::finished, this, &ElectronExecutorPrivate::finished, Qt::DirectConnection);
+
+        webLink->execute(service, executorService, secondCredential);
+        return;
+      }
 
       this->_service = service;
       this->_credential = !secondCredential.userId().isEmpty() ? secondCredential : credential;
@@ -85,73 +96,71 @@ namespace GameNet {
       else if (this->_scheme == "electrons")
         url.setScheme("https");
 
-      QObject::connect(&_process, &QProcess::started, this, &ElectronExecutorPrivate::onStarted, Qt::DirectConnection);
+      QString path = '\"' + QDir::toNativeSeparators(QDir::cleanPath(QCoreApplication::applicationDirPath() + "\\WebPlayer\\WebPlayer.exe")) + '\"';
+      path += " " + this->_credential.userId() + " " + command->token() + " " + url.toString();
 
-      QObject::connect(&_process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), 
-        this, &ElectronExecutorPrivate::onFinished, Qt::DirectConnection);
+      PROCESS_INFORMATION pi = { 0 };
+      STARTUPINFO si = { 0 };
+      si.cb = sizeof(si);
+      si.dwFlags = STARTF_USESHOWWINDOW;
+      si.wShowWindow = SW_MAXIMIZE;
 
-      QObject::connect(&_process, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error), 
-        this, &ElectronExecutorPrivate::onError, Qt::DirectConnection);
-
-      QString path = QDir::cleanPath(QCoreApplication::applicationDirPath() + "\\WebPlayer\\WebPlayer.exe");
-      this->_process.setProgram(path);
-
-      QStringList arg;
-      arg << this->_credential.userId() << command->token() << url.toString();
-      this->_process.setArguments(arg);
-      this->_process.start();
-    }
-
-    void ElectronExecutorPrivate::onStarted()
-    {
       emit this->started(this->_service);
-    }
 
-    void ElectronExecutorPrivate::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
-    {
-      if (exitCode == 0 && exitStatus == QProcess::NormalExit) {
-        emit this->finished(this->_service, Success);
+      std::vector<wchar_t> cmd(path.utf16(), path.utf16() + path.size());
+      if (!::CreateProcessW(nullptr, cmd.data(), nullptr, nullptr, false, 0, nullptr, nullptr, &si, &pi)) {
+
+        DEBUG_LOG << "Failed to execute " << path;
+        emit this->finished(this->_service, GGS::GameExecutor::ExternalFatalError);
         return;
       }
 
-      CRITICAL_LOG << "Process is finished with error code: " << exitCode;
+      ::WaitForInputIdle(pi.hProcess, INFINITE);
+      CloseHandle(pi.hThread);
+      CloseHandle(pi.hProcess);
 
-      if (exitCode == 0 && exitStatus == QProcess::CrashExit)
-        this->internalError(-1);
-      else
-        this->internalError(exitCode);
+      emit this->finished(this->_service, GGS::GameExecutor::Success);
 
+      activateElectron(pi.dwProcessId);
     }
 
-    void ElectronExecutorPrivate::onError(QProcess::ProcessError error)
+    void ElectronExecutorPrivate::activateElectron(quint32 pid)
     {
-      if (_shutdown) {
-        emit this->finished(this->_service, Success);
-        return;
+      qDebug() << "ElectronExecutorPrivate::activateElectron start";
+
+      std::pair<LPARAM, bool> param = std::make_pair(pid, false);
+
+      for (int i = 0; i < 10 && !param.second; i++) {
+
+        ::EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL
+        {
+          std::pair<LPARAM, bool>* param = reinterpret_cast<std::pair<LPARAM, bool>*>(lParam);
+          DWORD processId;
+
+          ::GetWindowThreadProcessId(hwnd, &processId);
+          if (processId == param->first && ::GetWindow(hwnd, GW_OWNER) == 0 && ::IsWindowVisible(hwnd)) {
+
+            ::AllowSetForegroundWindow(::GetCurrentProcessId());
+            ::AllowSetForegroundWindow(processId);
+
+            GGS::Application::WindowHelper::activate(hwnd);
+
+            param->second = true;
+            return false;
+          }
+          return true;
+        }, reinterpret_cast<LPARAM>(&param));
+
+        ::Sleep(500);
       }
 
-      CRITICAL_LOG << "Process failed with error: " << error;
-      this->internalError(-1);
+      qDebug() << "ElectronExecutorPrivate::activateElectron finish";
     }
 
     void ElectronExecutorPrivate::onShutdown(const QString& serviceId)
     {
       if (!serviceId.isEmpty() && this->_service.id() != serviceId)
         return;
-
-      _shutdown = true;
-      this->_process.close();
-    }
-
-    void ElectronExecutorPrivate::internalError(int errorCode)
-    {
-      QUrl url = this->_service.url();
-      QUrlQuery urlQuery(url);
-      urlQuery.addQueryItem("exitCode", QString::number(errorCode));
-      url.setQuery(urlQuery);
-
-      this->_service.setUrl(url);
-      emit this->finished(this->_service, ExternalFatalError);
     }
   }
 }
