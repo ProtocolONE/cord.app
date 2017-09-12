@@ -97,15 +97,15 @@ void GetDirectoryDialog::getDirectory(const QString& serviceName, const int size
       return;
     }
 
-    if (this->isRootFolder(newDirectory)) {
-      this->directoryEntered(newDirectory + serviceName);
-      return;
-    }
-
     if (!this->checkFreeSpace(newDirectory, serviceName, size))  {
         this->directoryEntered(QString());
         return;
     } 
+
+    if (this->isRootFolder(newDirectory)) {
+      this->directoryEntered(newDirectory + serviceName);
+      return;
+    }
 
     bool dontUseFolder = false;
 
