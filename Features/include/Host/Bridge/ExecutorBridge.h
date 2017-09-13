@@ -57,6 +57,19 @@ namespace GameNet {
         bool canExecuteSecond(const QString& serviceId) const;
         Q_NOREPLY void shutdownSecond();
 
+        /*!
+        \fn Q_NOREPLY void ExecutorBridge::terminateGame(const QString& serviceId = QString());
+        
+        \brief  Terminate game by serviceId. Close all games if serviceId is empty.
+        
+        \author "Ilya Tkachenko"
+        \date 13.09.2017
+        
+        \param  serviceId Identifier for the service.
+         */
+
+        Q_NOREPLY void terminateGame(const QString& serviceId = QString());
+
       signals:
         void serviceStarted(const QString& serviceId);
         void serviceFinished(const QString& serviceId, int finishState);

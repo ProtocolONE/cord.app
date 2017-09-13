@@ -122,6 +122,8 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Test%D%.dll" "$(TargetDir)"
 
 @REM DBus
 xcopy /Y /I /R /E "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
@@ -239,6 +241,8 @@ xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Sql%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Xml%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Widgets%D%.dll" "$(TargetDir)"
 xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Script%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Gui%D%.dll" "$(TargetDir)"
+xcopy /Y /I /R /E "$(QTDIR)\bin\Qt5Test%D%.dll" "$(TargetDir)"
 
 @REM DBus
 xcopy /Y /I /R /E "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
@@ -353,7 +357,7 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plug
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" QtVersion_x0020_Win32="$(DefaultQtVersion)"/>
+      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" QtVersion_x0020_Win32="$(DefaultQtVersion)" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

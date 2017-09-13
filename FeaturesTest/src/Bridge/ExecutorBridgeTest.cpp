@@ -42,6 +42,8 @@ public:
   MOCK_CONST_METHOD1(canExecuteSecond, bool(const QString&));
   MOCK_METHOD0(shutdownSecond, void());
   
+  MOCK_METHOD1(terminateGame, void(const QString&));
+
 // slots for signals
   MOCK_CONST_METHOD1(onServiceStarted, void(const QString&));
   MOCK_CONST_METHOD2(onServiceFinished, void(const QString&, int));
@@ -168,3 +170,10 @@ TEST_F(ExecutorBridgeTest, secondServiceFinished)
   EXPECT_CALL(executor, onSecondServiceFinished(serviceId, 42)).Times(1);
   executor.secondServiceFinished(serviceId, 42);
 }
+
+TEST_F(ExecutorBridgeTest, terminateGame)
+{
+  EXPECT_CALL(executor, terminateGame(serviceId)).Times(1);
+  bridge.terminateGame(serviceId);
+}
+

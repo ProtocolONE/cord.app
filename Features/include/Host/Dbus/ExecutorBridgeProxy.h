@@ -78,6 +78,19 @@ public Q_SLOTS: // METHODS
         callWithArgumentList(QDBus::NoBlock, QStringLiteral("shutdownSecond"), argumentList);
     }
 
+    inline Q_NOREPLY void terminateGame()
+    {
+        QList<QVariant> argumentList;
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("terminateGame"), argumentList);
+    }
+
+    inline Q_NOREPLY void terminateGame(const QString &serviceId)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(serviceId);
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("terminateGame"), argumentList);
+    }
+
 Q_SIGNALS: // SIGNALS
     void secondServiceFinished(const QString &serviceId, int finishState);
     void secondServiceStarted(const QString &serviceId);

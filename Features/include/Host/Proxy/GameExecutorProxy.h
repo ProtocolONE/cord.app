@@ -40,6 +40,8 @@ namespace GameNet {
         virtual bool canExecuteSecond(const QString& serviceId) const;
         virtual void shutdownSecond();
 
+        virtual void terminateGame(const QString& serviceId = QString());
+
         GGS::RestApi::GameNetCredential gameCredential(const QString& serviceId);
         GGS::RestApi::GameNetCredential secondGameCredential(const QString& serviceId);
 

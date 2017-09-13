@@ -156,6 +156,8 @@ public slots:
   void restartUISlot(bool minimized);
   void shutdownUISlot();
 
+  void terminateGame(const QString& serviceId);
+
 signals:
   /*
     Вызывается когда хост закончил инициализацию и обновление

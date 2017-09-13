@@ -173,6 +173,12 @@ namespace GameNet {
         this->_executor->shutdownSecond();
       }
 
+      void GameExecutorProxy::terminateGame(const QString& serviceId /*= QString()*/)
+      {
+        Q_ASSERT(this->_executor);
+        this->_executor->terminateAll(serviceId);
+      }
+
       GameNetCredential GameExecutorProxy::gameCredential(const QString& serviceId)
       {
         if (!this->_executedGame.contains(serviceId))

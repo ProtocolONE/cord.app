@@ -9,6 +9,7 @@
  */
 
 #include <Host/Dbus/ExecutorBridgeAdaptor.h>
+
 #include <QtCore/QMetaObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>
@@ -73,5 +74,17 @@ void ExecutorBridgeAdaptor::shutdownSecond()
 {
     // handle method call com.gamenet.dbus.Executor.shutdownSecond
     QMetaObject::invokeMethod(parent(), "shutdownSecond");
+}
+
+void ExecutorBridgeAdaptor::terminateGame()
+{
+    // handle method call com.gamenet.dbus.Executor.terminateGame
+    QMetaObject::invokeMethod(parent(), "terminateGame");
+}
+
+void ExecutorBridgeAdaptor::terminateGame(const QString &serviceId)
+{
+    // handle method call com.gamenet.dbus.Executor.terminateGame
+    QMetaObject::invokeMethod(parent(), "terminateGame", Q_ARG(QString, serviceId));
 }
 

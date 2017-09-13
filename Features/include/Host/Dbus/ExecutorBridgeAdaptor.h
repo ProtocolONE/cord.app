@@ -48,18 +48,6 @@ class ExecutorBridgeAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"out\" type=\"i\" name=\"finishState\"/>\n"
 "    </signal>\n"
-"    <method name=\"execute\">\n"
-"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
-"      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
-"    </method>\n"
-"    <method name=\"executeSecond\">\n"
-"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
-"      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
-"      <arg direction=\"in\" type=\"a(sii)\" name=\"secondCredential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
-"    </method>\n"
 "    <method name=\"isGameStarted\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
@@ -73,6 +61,25 @@ class ExecutorBridgeAdaptor: public QDBusAbstractAdaptor
 "    </method>\n"
 "    <method name=\"shutdownSecond\">\n"
 "      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
+"    </method>\n"
+"    <method name=\"terminateGame\">\n"
+"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
+"    </method>\n"
+"    <method name=\"terminateGame\">\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
+"    </method>\n"
+"    <method name=\"execute\">\n"
+"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
+"      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
+"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
+"    </method>\n"
+"    <method name=\"executeSecond\">\n"
+"      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
+"      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
+"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
+"      <arg direction=\"in\" type=\"a(sii)\" name=\"secondCredential\"/>\n"
+"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
 "    </method>\n"
 "  </interface>\n"
         "")
@@ -88,6 +95,8 @@ public Q_SLOTS: // METHODS
     bool isAnyGameStarted();
     bool isGameStarted(const QString &serviceId);
     Q_NOREPLY void shutdownSecond();
+    Q_NOREPLY void terminateGame();
+    Q_NOREPLY void terminateGame(const QString &serviceId);
 Q_SIGNALS: // SIGNALS
     void secondServiceFinished(const QString &serviceId, int finishState);
     void secondServiceStarted(const QString &serviceId);

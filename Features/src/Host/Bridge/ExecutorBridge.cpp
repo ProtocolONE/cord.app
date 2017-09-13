@@ -83,6 +83,12 @@ namespace GameNet {
         this->_executor->shutdownSecond();
       }
 
+      Q_NOREPLY void ExecutorBridge::terminateGame(const QString& serviceId /*= QString()*/)
+      {
+        Q_ASSERT(this->_executor);
+        this->_executor->terminateGame(serviceId);
+      }
+
     }
   }
 }

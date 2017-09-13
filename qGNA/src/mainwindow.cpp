@@ -288,6 +288,11 @@ void MainWindow::shutdownUISlot()
   this->onWindowClose();
 }
 
+void MainWindow::terminateGame(const QString& serviceId)
+{
+  this->_executor->terminateGame(serviceId);
+}
+
 bool MainWindow::isInitCompleted()
 {
   return this->_applicationProxy->isInitCompleted();
