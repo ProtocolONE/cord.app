@@ -95,9 +95,14 @@ namespace GameNet {
       return this->_commandLineArguments->contains("skip-ui");
     }
 
-    bool CommandLineManager::overrideWebExecutor() const
+    bool CommandLineManager::forceElectronExecutor() const
     {
       return this->_commandLineArguments->contains("electron");
+    }
+
+    bool CommandLineManager::forceWebBrowserExecutor() const
+    {
+      return this->_commandLineArguments->contains("web-browser");
     }
 
     void CommandLineManager::gogamenetmoney(const QString& name, const QStringList& arguments)

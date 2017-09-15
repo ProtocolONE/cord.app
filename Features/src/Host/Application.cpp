@@ -213,7 +213,12 @@ namespace GameNet {
 
       this->_servicesListRequest->setServiceLoader(this->_serviceLoader);
       this->_servicesListRequest->setApplicationArea(this->_updater->applicationArea());
-      this->_servicesListRequest->setOverrideWebExecutor(this->_commandLineManager->overrideWebExecutor());
+      
+      if (this->_commandLineManager->forceElectronExecutor())
+        this->_servicesListRequest->setOverrideWebExecutor(true);
+
+      if (this->_commandLineManager->forceWebBrowserExecutor())
+        this->_servicesListRequest->setOverrideWebExecutor(false);
 
       this->_applicationStatistic->setDownloader(this->_gameDownloader);
       this->_applicationStatistic->setStartingGame(this->_commandLineManager->startingService());

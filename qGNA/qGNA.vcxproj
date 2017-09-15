@@ -304,7 +304,10 @@ IF NOT "$(Configuration)" == "Debug" (
   CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)" "$(QTDIR)\bin\"
 )
 
-</Command>
+del /F /Q /S "$(TargetDir)WebPlayer\*.*"
+
+mkdir "$(TargetDir)WebPlayer"
+%COPY_CHANGED% /E "$(QGNACOMMONDIR)\GGS\WebPlayer\$(WebPlayerArea)\bin\*.*" "$(TargetDir)WebPlayer\"</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
     <CustomBuildStep>
@@ -563,7 +566,10 @@ IF NOT "$(Configuration)" == "Debug" (
   CALL "$(SolutionDir)generate_config.cmd" "$(TargetDir)" "$(QTDIR)\bin\"
 )
 
-</Command>
+del /F /Q /S "$(TargetDir)WebPlayer\*.*"
+
+mkdir "$(TargetDir)WebPlayer"
+%COPY_CHANGED% /E "$(QGNACOMMONDIR)\GGS\WebPlayer\$(WebPlayerArea)\bin\*.*" "$(TargetDir)WebPlayer\"</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
     <Manifest>
@@ -894,7 +900,7 @@ IF NOT "$(Configuration)" == "Debug" (
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" QtVersion_x0020_Win32="$(DefaultQtVersion)"/>
+      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" QtVersion_x0020_Win32="$(DefaultQtVersion)" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

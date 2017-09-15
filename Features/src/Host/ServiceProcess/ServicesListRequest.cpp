@@ -10,7 +10,7 @@ namespace GameNet {
       ServicesListRequest::ServicesListRequest(QObject *parent)
         : _retryCount(0)
         , _serviceLoader(nullptr)
-        , _overrideWebScheme(false)
+        , _overrideWebScheme(true)
         , QObject(parent)
       {
         this->_retryIntervals << 5000 << 15000 << 30000 << 60000 << 90000;
