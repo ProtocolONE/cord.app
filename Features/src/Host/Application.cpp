@@ -59,6 +59,8 @@
 #include <Helper/TerminateProcess.h>
 #include <Helper/SystemInfo.h>
 
+#include <Core/Service.h>
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaType>
 #include <QtCore/QUrl>
@@ -213,7 +215,7 @@ namespace GameNet {
 
       this->_servicesListRequest->setServiceLoader(this->_serviceLoader);
       this->_servicesListRequest->setApplicationArea(this->_updater->applicationArea());
-      
+
       if (this->_commandLineManager->forceElectronExecutor())
         this->_servicesListRequest->setOverrideWebExecutor(true);
 
