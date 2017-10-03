@@ -120,5 +120,59 @@ namespace GameNet {
         return;
       }
 
+      this->openUrlWithAuth("http://www.gamenet.ru/money", credential);
+    }
+
+    void CommandLineManager::gogamenethelper(const QString& name, const QStringList& arguments)
+    {
+      if (arguments.count() < 1)
+        return;
+
+      GameNetCredential credential;
+      if (this->shouldSendToUi(credential)) {
+        emit this->uiCommand(name, arguments);
+        return;
+      }
+
+      QString gameId = arguments.at(0);
+      QString url = QString("http://www.gamenet.ru/games/%1/guides").arg(gameId);
+      this->openUrlWithAuth(url, credential);
+    }
+
+    void CommandLineManager::gocombatarmsrating(const QString& name, const QStringList& arguments)
+    {
+      GameNetCredential credential;
+      if (this->shouldSendToUi(credential)) {
+        emit this->uiCommand(name, arguments);
+        return;
+      }
+
+      this->openUrlWithAuth("http://www.combatarms.ru/ratings/user/", credential);
+    }
+
+    bool CommandLineManager::shouldSendToUi(GameNetCredential& credential)
+    {
+      QString applicationName;
+      bool gameExecuted = this->_executedGameCredential(credential, applicationName);
+      return !gameExecuted || (gameExecuted && applicationName == "QGNA");
+    }
+
+    void CommandLineManager::openUrlWithAuth(const QString& url, GameNetCredential& credential)
+    {
+      QString authUrl;
+      if (credential.isEmpty()) {
+        authUrl = url;
+      } else {
+        authUrl = "https://gnlogin.ru/?auth=";
+        authUrl.append(credential.cookie());
+        authUrl.append("&rp=");
+        authUrl.append(QUrl::toPercentEncoding(url));
+      }
+
+      authUrl.append('\0');
+
+      emit this->openBrowser(authUrl);
+    }
+
   }
 }

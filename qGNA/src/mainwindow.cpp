@@ -754,7 +754,7 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
 
   if (name == "gogamenethelper" && arguments.size() > 0) {
     QString gameId = arguments.at(0);
-    QString url = QString("http://www.gamenet.ru/games/%1/helper").arg(gameId);
+    QString url = QString("http://www.gamenet.ru/games/%1/guides").arg(gameId);
     this->openExternalUrlWithAuth(url);
     return;
   } 
