@@ -5,12 +5,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace Features {
-  namespace Marketing {
-    class AbMarketing;
-  }
-}
-
 namespace GGS {
   namespace Core {
     class Service;
@@ -37,7 +31,6 @@ namespace GameNet {
 
     private:
       void setCredential(QVariantMap &params, const GGS::RestApi::GameNetCredential &credetial);
-      Features::Marketing::AbMarketing* _abMarketing;
     };
 
   }

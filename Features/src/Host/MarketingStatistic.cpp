@@ -3,8 +3,6 @@
 #include <Host/Proxy/DownloaderProxy.h>
 #include <Host/Proxy/GameExecutorProxy.h>
 
-#include <Features/Marketing/AbMarketing.h>
-
 #include <Settings/Settings.h>
 
 #include <Host/GameDownloader/DownloaderSettingsRoulette.h>
@@ -25,10 +23,8 @@ namespace GameNet {
   namespace Host {
 
     MarketingStatistic::MarketingStatistic(QObject *parent /*= 0*/)
-      : QObject(parent), 
-      _abMarketing(new Features::Marketing::AbMarketing(this))
+      : QObject(parent)
     {
-      
     }
 
     MarketingStatistic::~MarketingStatistic()
@@ -96,9 +92,6 @@ namespace GameNet {
 
       QVariantMap paramsOnce;
       this->setCredential(paramsOnce, downloader->credential(serviceId));
-
-      // Fire marketing
-      paramsOnce["QGNA1681"] = this->_abMarketing->getTestValue();
 
       Marketing::sendOnceByService(Marketing::FirstStartDownloadService, serviceId, paramsOnce);
     }

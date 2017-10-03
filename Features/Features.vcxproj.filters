@@ -572,7 +572,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SettingsBridgeProxy.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\Marketing\AbMarketing.cpp" />
     <ClCompile Include="src\Host\SettingsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -785,7 +784,6 @@
     <CustomBuild Include="include\Host\Bridge\SettingsBridge.h" />
     <CustomBuild Include="include\Host\Dbus\SettingsBridgeProxy.h" />
     <CustomBuild Include="include\Host\Dbus\SettingsBridgeAdaptor.h" />
-    <CustomBuild Include="include\Features\Marketing\AbMarketing.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
