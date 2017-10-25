@@ -13,7 +13,7 @@
     <BugTrapArea>1.3.3718.38316.vs13</BugTrapArea>
     <CoreArea>trunk</CoreArea>
     <LibtorrentWrapperArea>trunk</LibtorrentWrapperArea>
-    <GameDownloaderArea>trunk</GameDownloaderArea>
+    <GameDownloaderArea>1.0.503</GameDownloaderArea>
     <GameExecutorArea>1.0.528</GameExecutorArea>
     <ApplicationArea>trunk</ApplicationArea>
     <OpenSSLArea>1.0.2d</OpenSSLArea>
