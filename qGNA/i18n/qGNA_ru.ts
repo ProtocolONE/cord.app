@@ -169,28 +169,28 @@
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="213"/>
-        <source>%1 Б</source>
-        <translation type="unfinished"></translation>
+        <source>%1 B</source>
+        <translation type="unfinished">%1 Б</translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="217"/>
-        <source>%1 КиБ</source>
-        <translation type="unfinished"></translation>
+        <source>%1 KB</source>
+        <translation type="unfinished">%1 КБ</translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="221"/>
-        <source>%1 МиБ</source>
-        <translation type="unfinished"></translation>
+        <source>%1 MB</source>
+        <translation type="unfinished">%1 МБ</translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="225"/>
-        <source>%1 ГиБ</source>
-        <translation type="unfinished"></translation>
+        <source>%1 GB</source>
+        <translation type="unfinished">&gt;%1 ГБ</translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="228"/>
-        <source>%1 ТиБ</source>
-        <translation type="unfinished"></translation>
+        <source>%1 TB</source>
+        <translation type="unfinished">%1 ТБ</translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="246"/>

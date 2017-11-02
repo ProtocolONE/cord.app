@@ -210,22 +210,22 @@ bool GetDirectoryDialog::isAcceptedFolder(const QString &newDirectory, QString *
 QString GetDirectoryDialog::formatSize(quint64 value)
 {
   if (value < 1024) {
-    return QObject::tr("%1 Б").arg(value);
+    return QObject::tr("%1 B").arg(value);
   }
 
   if (value < 1024 * 1024) {
-    return QObject::tr("%1 КиБ").arg(value >> 10);
+    return QObject::tr("%1 KB").arg(value >> 10);
   }
 
   if (value < 1024 * 1024 * 1024) {
-    return QObject::tr("%1 МиБ").arg(value >> 20);
+    return QObject::tr("%1 MB").arg(value >> 20);
   }
 
   if (value < 1024ull * 1024ull * 1024ull * 1024ull) {
-    return QObject::tr("%1 ГиБ").arg(value >> 30);
+    return QObject::tr("%1 GB").arg(value >> 30);
   }
 
-  return QObject::tr("%1 ТиБ").arg(value >> 40);
+  return QObject::tr("%1 TB").arg(value >> 40);
 }
 
 bool GetDirectoryDialog::checkFreeSpace(const QString &newDirectory, const QString &serviceName, const int size)

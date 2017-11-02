@@ -102,27 +102,27 @@
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="213"/>
-        <source>%1 Б</source>
+        <source>%1 B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="217"/>
-        <source>%1 КиБ</source>
+        <source>%1 KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="221"/>
-        <source>%1 МиБ</source>
+        <source>%1 MB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="225"/>
-        <source>%1 ГиБ</source>
+        <source>%1 GB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="228"/>
-        <source>%1 ТиБ</source>
+        <source>%1 TB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
