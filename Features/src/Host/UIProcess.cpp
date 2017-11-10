@@ -292,7 +292,7 @@ namespace GameNet {
 
         CloseHandle(hProcess);
       }
-#include <QtCore/QProcess>
-#include <QtCore/QMutex>
-#include <QtCore/QMutexLocker>
+#include <QtCore/QProcess>
+#include <QtCore/QMutex>
+#include <QtCore/QMutexLocker>
 

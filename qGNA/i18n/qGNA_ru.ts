@@ -185,7 +185,7 @@
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="225"/>
         <source>%1 GB</source>
-        <translation type="unfinished">&gt;%1 ГБ</translation>
+        <translation type="unfinished">%1 ГБ</translation>
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="228"/>
@@ -199,8 +199,8 @@
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="247"/>
-        <source>Для установки &quot;%1&quot; требуется &lt;b&gt;%2&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</source>
-        <translation type="unfinished"></translation>
+        <source>DIRECTORY_NEED_FREE_SPACE</source>
+        <translation>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</translation>
     </message>
 </context>
 <context>

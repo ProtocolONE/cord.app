@@ -132,7 +132,7 @@
     </message>
     <message>
         <location filename="../src/Helper/GetDirectoryDialog.cpp" line="247"/>
-        <source>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</source>
+        <source>DIRECTORY_NEED_FREE_SPACE</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

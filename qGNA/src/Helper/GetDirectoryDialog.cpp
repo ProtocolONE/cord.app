@@ -244,7 +244,7 @@ bool GetDirectoryDialog::checkFreeSpace(const QString &newDirectory, const QStri
   QString freeSize = formatSize(freeBytes);
 
   QString title = QObject::tr("Недостаточно места на диске \"%1\"").arg(info.rootPath());
-  QString message = QObject::tr("Для установки \"%1\" требуется не менее <b>%2</b>. На выбранном вами диске доступно <b>%3</b>. Выберите другой каталог или освободите место на диске.")
+  QString message = QObject::tr("DIRECTORY_NEED_FREE_SPACE")
     .arg(serviceName)
     .arg(needSize)
     .arg(freeSize);
