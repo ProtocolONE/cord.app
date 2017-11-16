@@ -23,8 +23,8 @@
     <OverlayArea>trunk</OverlayArea>
     <HookEngineArea>1.3</HookEngineArea>
     <ThettaArea>1.1.284</ThettaArea>
-    <QxmppArea>0.9.4</QxmppArea>
-    <QxmppDeclarativeArea>1.4.0</QxmppDeclarativeArea>
+    <QxmppArea>0.9.5</QxmppArea>
+    <QxmppDeclarativeArea>1.5.0</QxmppDeclarativeArea>
     <WebPlayerArea>trunk</WebPlayerArea>
   </PropertyGroup>
   <PropertyGroup />
