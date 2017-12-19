@@ -79,12 +79,22 @@ namespace GameNet {
 
           QString executeUrl = data["executeUrl"];
 
-          if (this->_overrideWebScheme) {
-            if (executeUrl.startsWith("http://"))
-              executeUrl = "electron://" + executeUrl.mid(7);
+          if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
+            if (executeUrl.startsWith("electron://"))
+              executeUrl = "http://" + executeUrl.mid(11);
 
-            if (executeUrl.startsWith("https://"))
-              executeUrl = "electrons://" + executeUrl.mid(8);
+            if (executeUrl.startsWith("electrons://"))
+              executeUrl = "https://" + executeUrl.mid(12);
+
+          } else {
+            if (this->_overrideWebScheme) {
+              if (executeUrl.startsWith("http://"))
+                executeUrl = "electron://" + executeUrl.mid(7);
+
+              if (executeUrl.startsWith("https://"))
+                executeUrl = "electrons://" + executeUrl.mid(8);
+            }
+
           }
 
           serviceDist.setExecuteUrl(executeUrl);

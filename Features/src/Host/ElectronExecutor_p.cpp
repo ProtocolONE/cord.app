@@ -44,15 +44,8 @@ namespace GameNet {
       const GGS::RestApi::GameNetCredential& secondCredential, 
       const QString& scheme)
     {
-
       if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
-        GGS::GameExecutor::Executor::WebLink* webLink = new GGS::GameExecutor::Executor::WebLink(this);
-
-        QObject::connect(webLink, &GGS::GameExecutor::Executor::WebLink::started, this, &ElectronExecutorPrivate::started, Qt::DirectConnection);
-        QObject::connect(webLink, &GGS::GameExecutor::Executor::WebLink::finished, this, &ElectronExecutorPrivate::finished, Qt::DirectConnection);
-
-        webLink->execute(service, executorService, secondCredential);
-        return;
+        qWarning() << "Electron does not support Windows Xp";
       }
 
       this->_service = service;
