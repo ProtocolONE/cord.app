@@ -102,8 +102,7 @@ namespace GameNet {
         result = new PreventWin32Download(this);
       }
 
-      Q_ASSERT(result);
-      Q_ASSERT(result->hookId() == guid);
+      Q_ASSERT(result && result->hookId() == guid);
 
       if (result)
         this->_cache[guid] = result;
