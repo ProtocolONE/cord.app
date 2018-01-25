@@ -44,6 +44,12 @@ class LicenseManagerBridgeAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"in\" type=\"s\" name=\"hash\"/>\n"
 "      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
 "    </method>\n"
+"    <method name=\"acceptWebLicense\">\n"
+"      <annotation value=\"true\" name=\"org.freedesktop.DBus.Method.NoReply\"/>\n"
+"    </method>\n"
+"    <method name=\"hasAcceptedWebLicense\">\n"
+"      <arg direction=\"out\" type=\"b\"/>\n"
+"    </method>\n"
 "  </interface>\n"
         "")
 public:
@@ -53,8 +59,10 @@ public:
 public: // PROPERTIES
 public Q_SLOTS: // METHODS
     Q_NOREPLY void acceptLicense(const QString &serviceId, const QString &hash);
+    Q_NOREPLY void acceptWebLicense();
     bool hasAcceptedLicense(const QString &serviceId);
     bool hasAcceptedLicense();
+    bool hasAcceptedWebLicense();
 Q_SIGNALS: // SIGNALS
 };
 

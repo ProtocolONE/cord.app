@@ -43,6 +43,12 @@ public Q_SLOTS: // METHODS
         callWithArgumentList(QDBus::NoBlock, QStringLiteral("acceptLicense"), argumentList);
     }
 
+    inline Q_NOREPLY void acceptWebLicense()
+    {
+        QList<QVariant> argumentList;
+        callWithArgumentList(QDBus::NoBlock, QStringLiteral("acceptWebLicense"), argumentList);
+    }
+
     inline QDBusPendingReply<bool> hasAcceptedLicense(const QString &serviceId)
     {
         QList<QVariant> argumentList;
@@ -54,6 +60,12 @@ public Q_SLOTS: // METHODS
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("hasAcceptedLicense"), argumentList);
+    }
+
+    inline QDBusPendingReply<bool> hasAcceptedWebLicense()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QStringLiteral("hasAcceptedWebLicense"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS

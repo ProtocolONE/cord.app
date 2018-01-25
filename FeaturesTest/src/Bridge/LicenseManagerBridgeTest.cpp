@@ -14,6 +14,9 @@ public:
   MOCK_METHOD1(hasAcceptedLicense, bool(const QString&));
   MOCK_METHOD0(hasAcceptedLicense, bool());
   MOCK_METHOD2(acceptLicense, void(const QString&, const QString&));
+
+  MOCK_METHOD0(acceptWebLicense, void());
+  MOCK_METHOD0(hasAcceptedWebLicense, bool());
 };
 
 class LicenseManagerBridgeTest: public ::testing::Test 
@@ -53,4 +56,19 @@ TEST_F(LicenseManagerBridgeTest, acceptLicense)
   EXPECT_CALL(mock, acceptLicense(expectedValue, expectedHash));
     
   bridge.acceptLicense(expectedValue, expectedHash);
+}
+
+TEST_F(LicenseManagerBridgeTest, hasAcceptedWebLicense)
+{
+  EXPECT_CALL(mock, hasAcceptedWebLicense())
+    .WillOnce(Return(true));
+
+  ASSERT_TRUE(bridge.hasAcceptedWebLicense());
+}
+
+TEST_F(LicenseManagerBridgeTest, acceptWebLicense)
+{
+  EXPECT_CALL(mock, acceptWebLicense());
+
+  bridge.acceptWebLicense();
 }

@@ -17,6 +17,10 @@ namespace GameNet {
       virtual bool hasAcceptedLicense();
       virtual bool hasAcceptedLicense(const QString &serviceId);
       virtual void acceptLicense(const QString &serviceId, const QString &hash);
+      
+      virtual void acceptWebLicense();
+      virtual bool hasAcceptedWebLicense();
+
     private:
       QStringList _services;
     };

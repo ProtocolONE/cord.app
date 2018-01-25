@@ -608,6 +608,8 @@ void MainWindow::downloadButtonStart(QString serviceId)
   emit this->downloadButtonStartSignal(serviceId); 
 
   if (!this->_serviceSettings->isDownloadable(serviceId)) {
+    this->_licenseManager->acceptWebLicense();
+
     GGS::RestApi::GameNetCredential baseCredential = 
       GGS::RestApi::RestApiManager::commonInstance()->credential();
 

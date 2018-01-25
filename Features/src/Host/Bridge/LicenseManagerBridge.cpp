@@ -37,6 +37,19 @@ namespace GameNet {
         Q_ASSERT(this->_licenseManager);
         this->_licenseManager->acceptLicense(serviceId, hash);
       }
+
+      Q_NOREPLY void LicenseManagerBridge::acceptWebLicense()
+      {
+        Q_ASSERT(this->_licenseManager);
+        this->_licenseManager->acceptWebLicense();
+      }
+
+      bool LicenseManagerBridge::hasAcceptedWebLicense()
+      {
+        Q_ASSERT(this->_licenseManager);
+        return this->_licenseManager->hasAcceptedWebLicense();
+      }
+
     }
   }
 }

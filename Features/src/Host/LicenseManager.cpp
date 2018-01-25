@@ -4,6 +4,7 @@
 #include <QtCore/QSettings>
 
 #include <Core/Marketing.h>
+#include <Settings/Settings.h>
 
 namespace GameNet {
   namespace Host {
@@ -23,6 +24,9 @@ namespace GameNet {
 
     bool LicenseManager::hasAcceptedLicense()
     {
+      if (this->hasAcceptedWebLicense())
+        return true;
+
       Q_FOREACH(const QString &id, this->_services) {
         if (this->hasAcceptedLicense(id))
           return true;
@@ -55,5 +59,21 @@ namespace GameNet {
 
       Marketing::sendInstallerStepOnce(Marketing::InstallAcceptLicense);
     }
+
+    void LicenseManager::acceptWebLicense()
+    {
+      GGS::Settings::Settings settings;
+      settings.beginGroup("qGNA");
+      settings.setValue("webLicenseAccepted", "1");
+    }
+
+    bool LicenseManager::hasAcceptedWebLicense()
+    {
+      GGS::Settings::Settings settings;
+      settings.beginGroup("qGNA");
+      QString hash = settings.value("webLicenseAccepted", QString()).toString();
+      return !hash.isEmpty();
+    }
+
   }
 }

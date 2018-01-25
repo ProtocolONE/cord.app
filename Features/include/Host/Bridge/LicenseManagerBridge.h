@@ -30,6 +30,9 @@ namespace GameNet {
         bool hasAcceptedLicense(const QString &serviceId);
         Q_NOREPLY void acceptLicense(const QString &serviceId, const QString &hash);
       
+        Q_NOREPLY void acceptWebLicense();
+        bool hasAcceptedWebLicense();
+
       private:
         LicenseManager *_licenseManager;
       };
