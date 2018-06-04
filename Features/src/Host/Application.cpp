@@ -214,7 +214,6 @@ namespace GameNet {
       this->initGameDownloader();
 
       this->_servicesListRequest->setServiceLoader(this->_serviceLoader);
-      this->_servicesListRequest->setApplicationArea(this->_updater->applicationArea());
 
       if (this->_commandLineManager->forceElectronExecutor())
         this->_servicesListRequest->setOverrideWebExecutor(true);
@@ -286,7 +285,6 @@ namespace GameNet {
       this->_uiProcess->setFileName("gamenet.ui.exe");
 
       this->_applicationDistrMon->setExecutor(this->_executor->mainExecutor());
-      this->_applicationDistrMon->setArea(this->_updater->applicationArea());
 
       QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished, [this](){
         StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
@@ -314,14 +312,6 @@ namespace GameNet {
 
       QObject::connect(this->_commandLineManager, &CommandLineManager::updateRequested,
         [this](){
-        QString updateArea = QString("live");
-        QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-        bool ok = false;
-        int area = settings.value("Repository", 0).toInt(&ok);
-        if (!ok)
-          area = 0;
-
-        this->_applicationDistrMon->setArea((GGS::Core::Service::Area)area);
         this->updateCompletedSlot(true);
       });
 
@@ -451,15 +441,15 @@ namespace GameNet {
 
     void Application::switchClientVersion()
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-      bool ok = false;
-      int area = settings.value("Repository", 0).toInt(&ok);
-      if (!ok)
-        area = 0;
+      GGS::ApplicationArea area;
+      area.load();
 
-      area = area == 0 ? 1 : 0;
+      area = area.isLive()
+        ? GGS::ApplicationArea::SupportedArea::Pts
+        : GGS::ApplicationArea::SupportedArea::Live;
 
-      settings.setValue("Repository", area);
+      area.save();
+
       this->restartApplication(true, false);
     }
 

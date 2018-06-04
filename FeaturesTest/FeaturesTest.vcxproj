@@ -288,6 +288,7 @@ xcopy /Y /I /R /E "$(QTDIR)\plugins\sqldrivers\qsqlite%D%.dll" "$(TargetDir)plug
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ApplicationAreaTest.cpp" />
     <ClCompile Include="src\ApplicationStatisticTest.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_SingleShotFunctor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

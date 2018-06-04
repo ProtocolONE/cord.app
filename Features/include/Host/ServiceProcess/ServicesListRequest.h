@@ -23,7 +23,6 @@ namespace GameNet {
         explicit ServicesListRequest(QObject *parent = 0);
         virtual ~ServicesListRequest();
 
-        void setApplicationArea(GGS::Core::Service::Area area);
         void setServiceLoader(ServiceLoader* loader);
         void setOverrideWebExecutor(bool value);
 
@@ -38,7 +37,6 @@ namespace GameNet {
         int getRetryInterval();
         void getHostsResult(GGS::RestApi::CommandBase::CommandResults result);
 
-        GGS::Core::Service::Area _applicationArea;
         ServiceLoader* _serviceLoader;
         int _retryCount;
         QVector<int> _retryIntervals;

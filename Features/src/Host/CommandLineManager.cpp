@@ -3,6 +3,8 @@
 
 #include <QtCore/QCoreApplication>
 
+#include <Helper/ApplicationArea.hpp>
+
 using GGS::Core::Service;
 
 namespace GameNet {
@@ -51,6 +53,12 @@ namespace GameNet {
       }
 
       if (name == "update") {
+        if (arguments.count() > 0) {
+          GGS::ApplicationArea requestedArea;
+          requestedArea.parse(arguments.at(0));
+          requestedArea.save();
+        }
+        
         this->updateRequested();
         return;
       }

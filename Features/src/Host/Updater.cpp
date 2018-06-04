@@ -89,37 +89,7 @@ namespace GameNet {
 
     void Updater::initializeUpdateSettings()
     {
-      QString updateArea = QString("live");
-      QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-      bool ok = false;
-      int area = settings.value("Repository", 0).toInt(&ok);
-      if (!ok)
-        area = 0;
-
-      switch(area)
-      {
-      case 0:
-        updateArea = QString("live");
-        this->_applicationArea = Service::Live;
-        break;
-      case 1:
-        updateArea = QString("pts");
-        this->_applicationArea = Service::Pts;
-        break;
-      case 2:
-        updateArea = QString("tst");
-        this->_applicationArea = Service::Tst;
-        break;
-      // HACK Раскоментирвать крайне аккуратно и только для выливки реально на 3ью зону.
-      //case 3:
-      //  updateArea = QString("2live");
-      //  this->_applicationArea = Service::Live;
-      //  break;
-      default:
-        settings.setValue("Repository", 0);
-        updateArea = QString("live");
-        this->_applicationArea = Service::Live;
-      }
+      this->_applicationArea.load();
 
       QString installUpdateGnaPath = QString("");
 
@@ -127,7 +97,7 @@ namespace GameNet {
       installUpdateGnaPath = QString("tst");
 #endif
 
-      QString updateUrl = QString("https://fs0.gnfiles.com/update/qgna/%1/").arg(updateArea);
+      QString updateUrl = QString("https://fs0.gnfiles.com/update/qgna/%1/").arg(QString(this->_applicationArea));
       QString updateCrc = QString("%1update.crc.7z").arg(updateUrl);
       this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 
@@ -165,21 +135,6 @@ namespace GameNet {
         DEBUG_LOG << "Unknown result " << result;
         break;
       }
-    }
-
-    void Updater::switchClientVersion() 
-    {
-      QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-      bool ok = false;
-      int area = settings.value("Repository", 0).toInt(&ok);
-      if (!ok)
-        area = 0;
-
-      area = area == 0 ? 1 : 0;
-
-      settings.setValue("Repository", area);
-
-      emit this->restartApplication(true, false);
     }
 
     int Updater::checkUpdateInterval()
@@ -251,7 +206,7 @@ namespace GameNet {
       }
     }
 
-    Service::Area Updater::applicationArea() const
+    GGS::ApplicationArea Updater::applicationArea() const
     {
       return this->_applicationArea;
     }

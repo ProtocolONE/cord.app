@@ -12,6 +12,8 @@
 
 #include <QtCore/QDateTime>
 
+#include <Helper/ApplicationArea.hpp>
+
 SettingsViewModel::SettingsViewModel(QObject *parent)
   : QObject(parent)
   , _downloaderSettings(nullptr)
@@ -256,23 +258,9 @@ void SettingsViewModel::setDownloaderSettings(DownloaderSettingsBridgeProxy *val
 
 QString SettingsViewModel::updateArea()
 {
-  QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\GGS\\QGNA", QSettings::NativeFormat);
-  bool ok = false;
-  int area = settings.value("Repository", 0).toInt(&ok);
-  if (!ok)
-    area = 0;
-
-  switch(area)
-  {
-  case 1:
-    return QString("pts");
-  case 2:
-    return QString("tst");
-  case 3:
-    return QString("2live");
-  }
-
-  return QString("live");
+  GGS::ApplicationArea area;
+  area.load();
+  return QString(area);
 }
 
 void SettingsViewModel::setApplicationProxy(ApplicationBridgeProxy *value)

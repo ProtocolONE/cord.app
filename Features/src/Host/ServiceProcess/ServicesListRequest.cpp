@@ -1,6 +1,8 @@
 #include <Host/ServiceProcess/ServicesListRequest.h>
 #include <Host/ServiceProcess/ServiceLoader.h>
 
+#include <Helper/ApplicationArea.hpp>
+
 #include <QtCore/QTimer>
 
 namespace GameNet {
@@ -63,8 +65,11 @@ namespace GameNet {
       void ServicesListRequest::registerServices(const QList<QMap<QString, QString>>& servicesData)
       {
         QMap<QString, QString> data;
+        GGS::ApplicationArea applicationArea;
+        applicationArea.load();
+
         Q_FOREACH(data, servicesData) {
-          if (data["isPublishedInApp"] != "1" && this->_applicationArea != GGS::Core::Service::Tst)
+          if (data["isPublishedInApp"] != "1" && !applicationArea.isTestVersion())
             continue;
 
           ServiceDescription serviceDist;
@@ -172,11 +177,6 @@ namespace GameNet {
 
         this->_retryCount++;
         return this->_retryIntervals[this->_retryIntervals.count() - 1];
-      }
-
-      void ServicesListRequest::setApplicationArea(GGS::Core::Service::Area area)
-      {
-        this->_applicationArea = area;
       }
 
       void ServicesListRequest::setOverrideWebExecutor(bool value)

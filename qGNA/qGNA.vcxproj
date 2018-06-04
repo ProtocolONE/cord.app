@@ -308,7 +308,7 @@ del /F /Q /S "$(TargetDir)WebPlayer\*.*"
 
 mkdir "$(TargetDir)WebPlayer"
 %COPY_CHANGED% /E "$(QGNACOMMONDIR)\GGS\WebPlayer\$(WebPlayerArea)\bin\*.*" "$(TargetDir)WebPlayer\"
-%COPY_CHANGED% /E "$(QGNACOMMONDIR)\Adobe\FlashPepPlugin\trunk\bin\pepflashplayer32.dll" "$(TargetDir)WebPlayer\resources\app\"</Command>
+%COPY_CHANGED% /E "$(QGNACOMMONDIR)\Adobe\FlashPepPlugin\$(PepFlashArea)\bin\pepflashplayer32.dll" "$(TargetDir)WebPlayer\resources\app\"</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
     <CustomBuildStep>
@@ -571,7 +571,7 @@ del /F /Q /S "$(TargetDir)WebPlayer\*.*"
 
 mkdir "$(TargetDir)WebPlayer"
 %COPY_CHANGED% /E "$(QGNACOMMONDIR)\GGS\WebPlayer\$(WebPlayerArea)\bin\*.*" "$(TargetDir)WebPlayer\"
-%COPY_CHANGED% /E "$(QGNACOMMONDIR)\Adobe\FlashPepPlugin\trunk\bin\pepflashplayer32.dll" "$(TargetDir)WebPlayer\resources\app\"</Command>
+%COPY_CHANGED% /E "$(QGNACOMMONDIR)\Adobe\FlashPepPlugin\$(PepFlashArea)\bin\pepflashplayer32.dll" "$(TargetDir)WebPlayer\resources\app\"</Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
     <Manifest>

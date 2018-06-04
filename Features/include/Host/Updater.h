@@ -18,6 +18,8 @@
 
 #include <functional>
 
+#include <Helper/ApplicationArea.hpp>
+
 namespace GGS {
   namespace UpdateSystem {
     class UpdateManagerWorker;
@@ -85,20 +87,7 @@ namespace GameNet {
        * \return  .
        */
 
-      GGS::Core::Service::Area applicationArea() const;
-
-    public slots:
-
-      /**
-       * \fn  void Updater::switchClientVersion();
-       *
-       * \brief Switch client version zone.
-       *
-       * \author Igor Bugaev
-       * \date  25.09.2014
-       */
-
-      void switchClientVersion();
+      GGS::ApplicationArea applicationArea() const;
 
 signals:
 
@@ -245,7 +234,7 @@ signals:
       GGS::UpdateSystem::UpdateManagerWorker *_updateManagerWorker;
       GGS::UpdateSystem::CheckUpdateHelper _checkUpdateHelper;
 
-      GGS::Core::Service::Area _applicationArea;
+      GGS::ApplicationArea _applicationArea;
       int _updateState;
       QThread* _updateThread;
       QTimer* _retryTimer;
