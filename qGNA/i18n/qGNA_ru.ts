@@ -40,32 +40,32 @@
   <context>
     <name>MainWindow</name>
     <message>
-      <location filename="../src/mainwindow.cpp" line="707" />
-      <location filename="../src/mainwindow.cpp" line="714" />
-      <location filename="../src/mainwindow.cpp" line="725" />
-      <location filename="../src/mainwindow.cpp" line="744" />
+      <location filename="../src/mainwindow.cpp" line="708" />
+      <location filename="../src/mainwindow.cpp" line="717" />
+      <location filename="../src/mainwindow.cpp" line="728" />
       <location filename="../src/mainwindow.cpp" line="747" />
+      <location filename="../src/mainwindow.cpp" line="751" />
       <source>INFO_CAPTION</source>
       <translation>Внимание</translation>
     </message>
     <message>
-      <location filename="../src/mainwindow.cpp" line="744" />
+      <location filename="../src/mainwindow.cpp" line="747" />
       <source>SECOND_SERVICE_AUTH_ERROR</source>
       <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-      <location filename="../src/mainwindow.cpp" line="707" />
-      <location filename="../src/mainwindow.cpp" line="747" />
+      <location filename="../src/mainwindow.cpp" line="708" />
+      <location filename="../src/mainwindow.cpp" line="751" />
       <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
-      <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки по адресу &lt;a href="http://support.gamenet.ru"&gt;http://support.gamenet.ru&lt;/a&gt; Подробности в &lt;a href="https://support.gamenet.ru/kb/articles/899"&gt;KB-899&lt;/a&gt;.</translation>
+      <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки. Подробности в &lt;a href="https://support.gamenet.ru/kb/articles/899"&gt;KB-899&lt;/a&gt;.</translation>
     </message>
     <message>
-      <location filename="../src/mainwindow.cpp" line="715" />
+      <location filename="../src/mainwindow.cpp" line="718" />
       <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
       <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-      <location filename="../src/mainwindow.cpp" line="726" />
+      <location filename="../src/mainwindow.cpp" line="729" />
       <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
       <translation>Эта игра недоступна в вашей стране.</translation>
     </message>

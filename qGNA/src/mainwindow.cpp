@@ -793,7 +793,10 @@ void MainWindow::onServiceFinished(const QString &serviceId, int state)
     emit this->wrongCredential(this->_credential.userId());
     break;
   case GGS::GameExecutor::ServiceAccountBlockedError:
-    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
+    if (GGS::Core::UI::Message::Support == 
+      GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"), 
+      static_cast<Message::StandardButton>(GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Support)))
+      this->openExternalUrl("https://support.gamenet.ru");
     break;
   case GGS::GameExecutor::ServiceAuthorizationImpossible:
     //INFO Handled in qml 
@@ -833,7 +836,11 @@ void MainWindow::onSecondServiceFinished(const QString &serviceId, int state)
     GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SECOND_SERVICE_AUTH_ERROR")); 
     break;
   case GGS::GameExecutor::ServiceAccountBlockedError:
-    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO")); 
+    if (GGS::Core::UI::Message::Support ==
+      GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"),
+      static_cast<Message::StandardButton>(GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Support)))
+      this->openExternalUrlWithAuth("https://support.gamenet.ru");
+    break;
     break;
   case GGS::GameExecutor::ServiceAuthorizationImpossible:
     //INFO Handled in qml 
