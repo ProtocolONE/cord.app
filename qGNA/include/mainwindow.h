@@ -224,6 +224,7 @@ signals:
   void taskBarButtonMsgRegistered(unsigned int msgId);
 
   void showLicense(QString serviceId);
+  void showWebLicense(QString serviceId);
   void quit();
   void wrongCredential(const QString& userId);
 

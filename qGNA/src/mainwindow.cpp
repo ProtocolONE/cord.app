@@ -549,10 +549,14 @@ bool MainWindow::executeService(QString id)
     return false;
   }
 
+  if (!this->_serviceSettings->isDownloadable(id))
+    this->_licenseManager->acceptWebLicense();
+
   GGS::RestApi::GameNetCredential baseCredential =
     GGS::RestApi::RestApiManager::commonInstance()->credential();
 
   this->_executor->execute(id, createDbusCredential(baseCredential));
+  this->startGame(id);
   return true;
 }
 
@@ -608,12 +612,14 @@ void MainWindow::downloadButtonStart(QString serviceId)
   emit this->downloadButtonStartSignal(serviceId); 
 
   if (!this->_serviceSettings->isDownloadable(serviceId)) {
-    this->_licenseManager->acceptWebLicense();
 
-    GGS::RestApi::GameNetCredential baseCredential = 
-      GGS::RestApi::RestApiManager::commonInstance()->credential();
+    int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
+    if (0 == totalCount) {
+      emit this->showWebLicense(serviceId);
+      return;
+    }
 
-    this->_executor->execute(serviceId, createDbusCredential(baseCredential));
+    this->startGame(serviceId);
     return;
   }
 
@@ -704,10 +710,14 @@ void MainWindow::startGame(const QString& serviceId)
   if (!service)
     return;
 
-  if (this->_premiumExecutor.isMainGameStarted())
+  if (this->_serviceSettings->isDownloadable(serviceId)) {
+    this->_downloader->start(serviceId, static_cast<int>(GGS::GameDownloader::Normal));
     return;
-
-  if (this->_premiumExecutor.isSecondGameStarted() && !this->_premiumExecutor.isSecondGameStarted(serviceId))
+  }
+  
+  bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
+  if (!isAuthed) {
+    emit this->authBeforeStartGameRequest(serviceId);
     return;
  
   if (service->isDownloadable()) {
