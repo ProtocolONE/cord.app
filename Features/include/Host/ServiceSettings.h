@@ -3,7 +3,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -27,7 +27,7 @@ namespace GameNet {
       virtual ~ServiceSettings();
 
       void setServices(ServiceProcess::ServiceLoader *value);
-      void setDownloader(GGS::GameDownloader::GameDownloadService *value);
+      void setDownloader(P1::GameDownloader::GameDownloadService *value);
 
       virtual bool isDownloadable(const QString& serviceId) const;
       virtual bool isDefaultInstallPath(const QString& serviceId) const;
@@ -51,7 +51,7 @@ namespace GameNet {
 
     private:
       ServiceProcess::ServiceLoader *_services;
-      GGS::GameDownloader::GameDownloadService *_downloader;
+      P1::GameDownloader::GameDownloadService *_downloader;
     };
 
   }

@@ -1,6 +1,6 @@
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 
-#include <Core/Service>
+#include <Core/Service.h>
 
 #include <TestEventLoopFinisher.h>
 
@@ -13,11 +13,11 @@ class StopDownloadServiceWhileExecuteAnyGameTest: public ::testing::Test
 public:
   void SetUp()
   {
-    qRegisterMetaType<GGS::GameDownloader::StartType>("GGS::GameDownloader::StartType");
-    qRegisterMetaType<const GGS::Core::Service *>("const GGS::Core::Service *");
+    qRegisterMetaType<P1::GameDownloader::StartType>("P1::GameDownloader::StartType");
+    qRegisterMetaType<const P1::Core::Service *>("const P1::Core::Service *");
 
-    downloadStopRequestSpy = new QSignalSpy(&_feature, SIGNAL(downloadStopRequest(const GGS::Core::Service *)));
-    downloadStartRequestSpy = new QSignalSpy(&_feature, SIGNAL(downloadStartRequest(const GGS::Core::Service *, GGS::GameDownloader::StartType)));
+    downloadStopRequestSpy = new QSignalSpy(&_feature, SIGNAL(downloadStopRequest(const P1::Core::Service *)));
+    downloadStartRequestSpy = new QSignalSpy(&_feature, SIGNAL(downloadStartRequest(const P1::Core::Service *, P1::GameDownloader::StartType)));
     torrentSessionPauseRequestSpy = new QSignalSpy(&_feature, SIGNAL(torrentSessionPauseRequest()));
     torrentSessionResumeRequestSpy = new QSignalSpy(&_feature, SIGNAL(torrentSessionResumeRequest()));
   }
@@ -28,8 +28,8 @@ public:
   QSignalSpy *torrentSessionResumeRequestSpy;
 
   Features::StopDownloadServiceWhileExecuteAnyGame _feature;
-  GGS::Core::Service service1;
-  GGS::Core::Service service2;
+  P1::Core::Service service1;
+  P1::Core::Service service2;
 };
 
 TEST_F(StopDownloadServiceWhileExecuteAnyGameTest, simple)
@@ -38,8 +38,8 @@ TEST_F(StopDownloadServiceWhileExecuteAnyGameTest, simple)
   TestEventLoopFinisher killer(&loop, 5000);
   QObject::connect(&_feature, SIGNAL(torrentSessionPauseRequest()), &killer, SLOT(terminateLoop()));
 
-  _feature.onServiceStartDownload(&service1, GGS::GameDownloader::Normal);
-  _feature.onServiceStartDownload(&service2, GGS::GameDownloader::Force);
+  _feature.onServiceStartDownload(&service1, P1::GameDownloader::Normal);
+  _feature.onServiceStartDownload(&service2, P1::GameDownloader::Force);
   _feature.onGameExecuted("fake");
 
   loop.exec();
@@ -49,8 +49,8 @@ TEST_F(StopDownloadServiceWhileExecuteAnyGameTest, simple)
   ASSERT_EQ(1, torrentSessionPauseRequestSpy->count());
   ASSERT_EQ(0, torrentSessionResumeRequestSpy->count());
 
-  const GGS::Core::Service* s1 = downloadStopRequestSpy->at(0).at(0).value<const GGS::Core::Service*>();
-  const GGS::Core::Service* s2 = downloadStopRequestSpy->at(1).at(0).value<const GGS::Core::Service*>();
+  const P1::Core::Service* s1 = downloadStopRequestSpy->at(0).at(0).value<const P1::Core::Service*>();
+  const P1::Core::Service* s2 = downloadStopRequestSpy->at(1).at(0).value<const P1::Core::Service*>();
 
   ASSERT_TRUE((&service1 == s1 && &service2 == s2) || (&service2 == s1 && &service1 == s2));
 
@@ -66,8 +66,8 @@ TEST_F(StopDownloadServiceWhileExecuteAnyGameTest, simple)
   ASSERT_EQ(1, torrentSessionPauseRequestSpy->count());
   ASSERT_EQ(1, torrentSessionResumeRequestSpy->count());
 
-  const GGS::Core::Service* s3 = downloadStartRequestSpy->at(0).at(0).value<const GGS::Core::Service*>();
-  const GGS::Core::Service* s4 = downloadStartRequestSpy->at(1).at(0).value<const GGS::Core::Service*>();
+  const P1::Core::Service* s3 = downloadStartRequestSpy->at(0).at(0).value<const P1::Core::Service*>();
+  const P1::Core::Service* s4 = downloadStartRequestSpy->at(1).at(0).value<const P1::Core::Service*>();
   ASSERT_TRUE((&service1 == s3 && &service2 == s4) || (&service2 == s3 && &service1 == s4));
 
 }

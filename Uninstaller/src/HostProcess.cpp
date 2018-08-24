@@ -25,7 +25,7 @@ HostProcess::~HostProcess()
 
 void HostProcess::start()
 {
-  GGS::Application::ArgumentParser argumentsParser;
+  P1::Application::ArgumentParser argumentsParser;
   argumentsParser.parse(QCoreApplication::arguments());
 
   if (!argumentsParser.contains("uninstall")) {

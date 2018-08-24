@@ -26,7 +26,7 @@ namespace GameNet {
 
     QString Translation::language() const
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       return settings.value("qGNA/language").toString(); 
     }
 
@@ -57,7 +57,7 @@ namespace GameNet {
 
     void Translation::saveLanguage(const QString& value)
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/language", value);
     }
 

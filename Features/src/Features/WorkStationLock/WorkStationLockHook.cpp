@@ -1,7 +1,7 @@
 #include <Features/WorkStationLock/WorkStationLockHook.h>
 #include <Features/WorkStationLock/RegisterSessionNotificationFilter.h>
 
-#include <Core/Service>
+#include <Core/Service.h>
 #include <QtCore/QDebug>
 
 namespace Features {
@@ -17,21 +17,21 @@ namespace Features {
     {
     }
 
-    void WorkStationLockHook::PreExecute(GGS::Core::Service &service)
+    void WorkStationLockHook::PreExecute(P1::Core::Service &service)
     {
       Q_ASSERT(this->_filter);
       emit this->preExecuteCompleted(
         service,
-        this->_filter->isLocked() ? GGS::GameExecutor::PreExecutionHookBreak : GGS::GameExecutor::Success
+        this->_filter->isLocked() ? P1::GameExecutor::PreExecutionHookBreak : P1::GameExecutor::Success
       );
     }
 
-    void WorkStationLockHook::CanExecute(GGS::Core::Service &service)
+    void WorkStationLockHook::CanExecute(P1::Core::Service &service)
     {
       Q_ASSERT(this->_filter);
       emit this->canExecuteCompleted(
         service, 
-        this->_filter->isLocked() ? GGS::GameExecutor::CanExecutionHookBreak : GGS::GameExecutor::Success
+        this->_filter->isLocked() ? P1::GameExecutor::CanExecutionHookBreak : P1::GameExecutor::Success
       );
     }
 

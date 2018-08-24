@@ -7,8 +7,8 @@ namespace GameNet {
   namespace Host {
     namespace Bridge {
 
-      Credential createDbusCredential(const GGS::RestApi::GameNetCredential& credential);
-      GGS::RestApi::GameNetCredential createGameNetCredential(const Credential& credential);
+      Credential createDbusCredential(const P1::RestApi::GameNetCredential& credential);
+      P1::RestApi::GameNetCredential createGameNetCredential(const Credential& credential);
     }
   }
 }

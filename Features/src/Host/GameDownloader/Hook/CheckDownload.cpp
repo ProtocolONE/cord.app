@@ -14,13 +14,13 @@
 
 #include <QtCore/QSettings>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::GameDownloader::ServiceState;
-using GGS::GameDownloader::HookBase;
+using P1::GameDownloader::GameDownloadService;
+using P1::GameDownloader::ServiceState;
+using P1::GameDownloader::HookBase;
 using GameNet::Host::ServiceProcess::ServiceLoader;
-using GGS::Core::Service;
-using GGS::RestApi::GameNetCredential;
-using GGS::Core::UI::Message;
+using P1::Core::Service;
+using P1::RestApi::GameNetCredential;
+using P1::Core::UI::Message;
 
 namespace GameNet {
   namespace Host {
@@ -53,9 +53,9 @@ namespace GameNet {
           command->appendParameter("userId", credential.userId());
           command->appendParameter("appKey", credential.appKey());
 
-          GGS::RestApi::CommandBase::CommandResults requestResult = GGS::RestApi::CommandBase::GenericError;
+          P1::RestApi::CommandBase::CommandResults requestResult = P1::RestApi::CommandBase::GenericError;
 
-          QObject::connect(command, &ServiceHasAccess::result, [command, &hasAccess, &requestResult](GGS::RestApi::CommandBase::CommandResults result) {
+          QObject::connect(command, &ServiceHasAccess::result, [command, &hasAccess, &requestResult](P1::RestApi::CommandBase::CommandResults result) {
             hasAccess = command->hasAccess();
             requestResult = result;
             command->deleteLater();
@@ -66,7 +66,7 @@ namespace GameNet {
           command->execute();
           loop.exec();
           
-          if (requestResult != GGS::RestApi::CommandBase::NoError ) {
+          if (requestResult != P1::RestApi::CommandBase::NoError ) {
             emit this->internalError();
             return HookBase::Abort;
           }
@@ -83,7 +83,7 @@ namespace GameNet {
           return HookBase::Continue;
         }
 
-        void CheckDownload::setCredential(std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > value)
+        void CheckDownload::setCredential(std::function< P1::RestApi::GameNetCredential(const QString& serviceId) > value)
         {
           this->_credential = value;
         }

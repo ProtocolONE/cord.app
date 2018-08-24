@@ -1,5 +1,4 @@
-#ifndef SETTINGSVIEWMODEL_H
-#define SETTINGSVIEWMODEL_H
+#pragma once
 
 #include <QObject>
 
@@ -100,5 +99,3 @@ signals:
     void updateAreaChanged();
     void torrentProfileChanged();
 };
-
-#endif // SETTINGSVIEWMODEL_H

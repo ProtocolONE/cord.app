@@ -7,12 +7,6 @@
 class QTranslator;
 
 namespace Features {
-
-  namespace Thetta {
-    class AppDistrIntegrity;
-    class KernelStatistics;
-  }
-
   namespace GameDownloader {
     class GameDownloadStatistics;
   }
@@ -26,7 +20,7 @@ namespace Features {
   class StopDownloadServiceWhileExecuteAnyGame;
 }
 
-namespace GGS {
+namespace P1 {
   namespace Application {
     class SingleApplication;
   }
@@ -47,12 +41,6 @@ namespace GGS {
 }
 
 namespace GameNet {
-  namespace Integration {
-    namespace ZZima {
-      class ZZimaConnection;
-    }
-  }
-
   namespace Host {
     namespace ServiceProcess {
       class ServiceLoader;
@@ -62,7 +50,6 @@ namespace GameNet {
     class DownloaderSettings;
     class ServiceSettings;
     class GameExecutor;
-    class Thetta;
     class UpdateManagerBridge;
     class Updater;
     class UIProcess;
@@ -99,7 +86,7 @@ namespace GameNet {
 
       void finalize();
 
-      void setSingleApplication(GGS::Application::SingleApplication *value);
+      void setSingleApplication(P1::Application::SingleApplication *value);
 
       virtual void restartApplication(bool shouldStartWithSameArguments, bool isMinimized);
       virtual void shutdownUIResult();
@@ -144,22 +131,20 @@ namespace GameNet {
       void initRestApi();
       void initMarketing();
 
-      bool executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name);
+      bool executedGameCredential(P1::RestApi::GameNetCredential& credetial, QString& name);
       void internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized);
 
       void onNewConnection(Connection *connection);
       void onConnectionLogoutMain();
 
-      void setDownloaderCredential(const GGS::RestApi::GameNetCredential &creds);
+      void setDownloaderCredential(const P1::RestApi::GameNetCredential &creds);
 
       void setUiCommandConnection();
 
-      void closeThettaService();
-
-      GGS::Application::SingleApplication *_singleApplication;
+      P1::Application::SingleApplication *_singleApplication;
       ServiceProcess::ServiceLoader *_serviceLoader;
       ServiceProcess::ServicesListRequest *_servicesListRequest;
-      GGS::GameDownloader::GameDownloadService *_gameDownloader;
+      P1::GameDownloader::GameDownloadService *_gameDownloader;
       LicenseManager *_licenseManager;
 
       DownloaderSettings *_downloaderSettings;
@@ -172,26 +157,22 @@ namespace GameNet {
 
       Features::GameDownloader::GameDownloadStatistics *_downloadStatistics;
       Features::StopDownloadServiceWhileExecuteAnyGame *_stopDownloadServiceOnExecuteGame;
-      Thetta *_thetta;
-      GGS::RestApi::RestApiManager *_restApiManager;
-      GGS::RestApi::FakeCache *_restApiCache;
+      P1::RestApi::RestApiManager *_restApiManager;
+      P1::RestApi::FakeCache *_restApiCache;
 
       Updater *_updater;
       UIProcess *_uiProcess;
       ApplicationRestarter *_applicationRestarter;
       ApplicationStatistic *_applicationStatistic;
       MarketingStatistic *_marketingStatistic;
-      GGS::Marketing::MarketingTarget *_marketingTarget;
+      P1::Marketing::MarketingTarget *_marketingTarget;
       CommandLineManager *_commandLineManager;
       Translation *_translation;
       MessageAdapter *_messageAdapter;
       ServiceHandle *_serviceHandle;
-      ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
       AutoRunManager *_autoRunManager;
       DBus::DBusServer *_dbusServer;
       Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
-      Features::Thetta::AppDistrIntegrity * _applicationDistrMon;
-      Features::Thetta::KernelStatistics * _kernelStat;
 
       bool _initFinished;
       bool _updateFinished;

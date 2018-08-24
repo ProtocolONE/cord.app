@@ -2,7 +2,6 @@
 #include <gtest/gtest.h>
 
 #include <Host/Application.h>
-#include <Host/Thetta.h>
 #include <Host/Translation.h>
 #include <Host/AutoRunManager.h>
 
@@ -15,7 +14,7 @@
 using ::testing::Return;
 
 using GameNet::Host::Bridge::ApplicationBridge;
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 
 class ApplicationMock : public GameNet::Host::Application
 {
@@ -32,12 +31,6 @@ public:
    MOCK_METHOD0(onShutdownUIRequest, void());
    MOCK_METHOD1(onUninstallServiceRequest, void(const QString&));
    MOCK_METHOD0(onAdditionalResourcesReady, void());
-};
-
-class ThettaMock : public GameNet::Host::Thetta
-{
-public:
-  MOCK_METHOD1(openBrowser, void(const QString&));
 };
 
 class TranslationMock : public GameNet::Host::Translation
@@ -68,7 +61,6 @@ public:
     serviceId = "1234567890";
 
     bridge.setApplication(&appMock);
-    bridge.setThetta(&thettaMock);
     bridge.setTranslation(&translationMock);
     bridge.setAutoRunManager(&autoRunManager);
 
@@ -97,7 +89,6 @@ public:
   QString serviceId;
   ApplicationBridge bridge;
   ApplicationMock appMock;
-  ThettaMock thettaMock;
   TranslationMock translationMock;
   AutoRunManagerMock autoRunManager;
 };
@@ -176,21 +167,11 @@ TEST_F(ApplicationBridgeTest, isInitCompleted)
   ASSERT_EQ(true, appMock.isInitCompleted());
 }
 
-TEST_F(ApplicationBridgeTest, openBrowser)
-{
-  const QString& testUrlString = "http://test.url/string";
-
-  EXPECT_CALL(thettaMock, openBrowser(testUrlString))
-    .Times(1);
-
-  bridge.openBrowser(testUrlString);
-}
-
 TEST_F(ApplicationBridgeTest, language)
 {
   QString expectedLanguage("fr");
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/language", expectedLanguage);
 
   EXPECT_CALL(translationMock, language())

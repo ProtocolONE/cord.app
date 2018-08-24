@@ -1,11 +1,11 @@
-#include "viewmodel/settingsviewmodel.h"
+#include <viewmodel/settingsviewmodel.h>
 
 #include <Host/Dbus/DownloaderSettingsBridgeProxy.h>
 #include <Host/DBus/UpdateManagerBridgeProxy.h>
 #include <Host/Dbus/ApplicationBridgeProxy.h>
 
 #include <Settings/Settings.h>
-#include <Core/UI/Message>
+#include <Core/UI/Message.h>
 
 #include <AutoRunHelper.h>
 #include <QtConcurrent/QtConcurrentRun>
@@ -39,7 +39,7 @@ int SettingsViewModel::autoStart()
 
 bool SettingsViewModel::notifyWhenStartedGameNet()
 {
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   return settings.value("qGNA/notifyWhenStartedGameNet").toBool();
 }
 
@@ -49,14 +49,14 @@ void SettingsViewModel::setNotifyWhenStartedGameNet(bool _notify)
   if (tmp == _notify)
     return;
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/notifyWhenStartedGameNet", _notify, _instantlySave); 
   emit this->notifyWhenStartedGameNetChanged();
 }
 
 bool SettingsViewModel::notifyStartEndGameDownload()
 {
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   return settings.value("qGNA/notifyStartEndGameDownload").toBool();
 }
 
@@ -66,14 +66,14 @@ void SettingsViewModel::setNotifyStartEndGameDownload(bool _notify)
   if (tmp == _notify)
     return;
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/notifyStartEndGameDownload", _notify, _instantlySave); 
   emit this->notifyStartEndGameDownloadChanged();
 }
 
 bool SettingsViewModel::notifyDisconnectFriendFromNetwork()
 {
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   return settings.value("qGNA/notifyDisconnectFriendFromNetwork").toBool();
 }
 
@@ -83,14 +83,14 @@ void SettingsViewModel::setNotifyDisconnectFriendFromNetwork(bool _notify)
   if (tmp == _notify)
     return;
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/notifyDisconnectFriendFromNetwork", _notify, _instantlySave); 
   emit this->notifyDisconnectFriendFromNetworkChanged();
 }
 
 bool SettingsViewModel::notifyDisconnectFriendFromGame()
 {
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   return settings.value("qGNA/notifyDisconnectFriendFromGame").toBool();
 }
 
@@ -100,14 +100,14 @@ void SettingsViewModel::setNotifyDisconnectFriendFromGame(bool _notify)
   if (tmp == _notify)
     return;
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/notifyDisconnectFriendFromGame", _notify, _instantlySave); 
   emit this->notifyDisconnectFriendFromGameChanged();
 }
 
 bool SettingsViewModel::notifyNewMessage()
 {
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   return settings.value("qGNA/notifyNewMessage").toBool();
 }
 
@@ -117,7 +117,7 @@ void SettingsViewModel::setNotifyNewMessage(bool _notify)
   if (tmp == _notify)
     return;
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/notifyNewMessage", _notify, _instantlySave); 
   emit this->notifyNewMessageChanged();
 }
@@ -132,7 +132,7 @@ void SettingsViewModel::setDefaultSettings()
   setNotifyDisconnectFriendFromGame(true);
   setNotifyNewMessage(true);
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/language", "ru" , true);
 
   _instantlySave = true;
@@ -258,7 +258,7 @@ void SettingsViewModel::setDownloaderSettings(DownloaderSettingsBridgeProxy *val
 
 QString SettingsViewModel::updateArea()
 {
-  GGS::ApplicationArea area;
+  P1::ApplicationArea area;
   area.load();
   return QString(area);
 }

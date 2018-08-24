@@ -8,9 +8,9 @@
 
 #include <QtCore/QDateTime>
 
-using GGS::Settings::Settings;
-using GGS::GameDownloader::GameDownloadService;
-using GGS::Application::ArgumentParser;
+using P1::Settings::Settings;
+using P1::GameDownloader::GameDownloadService;
+using P1::Application::ArgumentParser;
 
 namespace GameNet {
   namespace Host {

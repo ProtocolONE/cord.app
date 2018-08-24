@@ -14,10 +14,10 @@
 using GameNet::Host::Proxy::DownloaderProxy;
 using GameNet::Host::Proxy::GameExecutorProxy;
 
-using GGS::Core::Marketing;
-using GGS::Core::Service;
+using P1::Core::Marketing;
+using P1::Core::Service;
 
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {

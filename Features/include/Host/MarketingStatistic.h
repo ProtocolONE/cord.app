@@ -5,7 +5,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -25,12 +25,12 @@ namespace GameNet {
       void onSecondServiceStarted(const QString& serviceId);
       void onSecondServiceFinished(const QString& serviceId, int finishState);
 
-      void onGameDownloadStarted(const GGS::Core::Service *service);
-      void onGameTorrentDownloadFinished(const GGS::Core::Service *service);
-      void onGameDownloadFinished(const GGS::Core::Service *service);
+      void onGameDownloadStarted(const P1::Core::Service *service);
+      void onGameTorrentDownloadFinished(const P1::Core::Service *service);
+      void onGameDownloadFinished(const P1::Core::Service *service);
 
     private:
-      void setCredential(QVariantMap &params, const GGS::RestApi::GameNetCredential &credetial);
+      void setCredential(QVariantMap &params, const P1::RestApi::GameNetCredential &credetial);
     };
 
   }

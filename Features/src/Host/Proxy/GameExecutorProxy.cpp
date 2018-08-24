@@ -3,7 +3,7 @@
 
 #include <Host/Proxy/GameExecutorProxy.h>
 
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {
@@ -87,7 +87,7 @@ namespace GameNet {
         const GameNetCredential& credetial, 
         const GameNetCredential& secondCredetial)
       {
-        QHash<QString, GGS::RestApi::GameNetCredential>& map = 
+        QHash<QString, P1::RestApi::GameNetCredential>& map = 
           secondCredetial.isEmpty() ? this->_executedGame : this->_executedSecondGame;
 
         // INFO всегда переписываем автризацию на новую запускаемую.

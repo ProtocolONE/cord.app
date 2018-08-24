@@ -3,7 +3,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace GGS {
+namespace P1 {
   namespace GameDownloader {
     class GameDownloadService;
   }
@@ -19,7 +19,7 @@ namespace GameNet {
       explicit ApplicationStatistic(QObject *parent = 0);
       virtual ~ApplicationStatistic();
 
-      void setDownloader(GGS::GameDownloader::GameDownloadService *value);
+      void setDownloader(P1::GameDownloader::GameDownloadService *value);
       void setStartingGame(const QString& serviceId);
 
       void init();
@@ -162,7 +162,7 @@ namespace GameNet {
       bool hasStartingService();
       
       QString _startingServiceId;
-      GGS::GameDownloader::GameDownloadService *_downloader = nullptr;
+      P1::GameDownloader::GameDownloadService *_downloader = nullptr;
       bool _firstStart = false;
     };
 

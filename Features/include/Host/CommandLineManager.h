@@ -6,7 +6,9 @@
 
 #include <Core/Service.h>
 
-namespace GGS {
+#include <functional>
+
+namespace P1 {
   namespace Application {
     class ArgumentParser;
   }
@@ -20,12 +22,24 @@ namespace GameNet {
     {
       Q_OBJECT
     public:
+      typedef std::function<bool (P1::RestApi::GameNetCredential&, QString&) > ExecutedGameCredential;
+
       explicit CommandLineManager(QObject *parent = 0);
       virtual ~CommandLineManager();
 
       void commandRecieved(const QString& name, const QStringList& arguments);
 
-      GGS::Core::Service::Area gameArea();
+      /**
+       * \fn  GGS::Core::Service::Area CommandLineManager::gameArea();
+       *
+       * \brief Получить зону для скачивания игр. Зона определяется только при старте приложения.
+       *
+       * \author  Ilya Tkachenko
+       * \date  15.10.2014
+       *
+       * \return  Зона для скачивания игр.
+       */
+      P1::Core::Service::Area gameArea();
 
       QString startingService();
 
@@ -97,7 +111,14 @@ namespace GameNet {
       void updateRequested();
 
     private:
-      GGS::Application::ArgumentParser* _commandLineArguments;
+      void gogamenetmoney(const QString& name, const QStringList& arguments);
+      void gogamenethelper(const QString& name, const QStringList& arguments);
+      void gocombatarmsrating(const QString& name, const QStringList& arguments);
+      
+      bool shouldSendToUi(P1::RestApi::GameNetCredential& credential);
+      void openUrlWithAuth(const QString& url, P1::RestApi::GameNetCredential& credential);
+
+      P1::Application::ArgumentParser* _commandLineArguments;
 
     };
 

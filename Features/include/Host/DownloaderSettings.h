@@ -2,7 +2,7 @@
 
 #include <QtCore/QObject>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -29,7 +29,7 @@ namespace GameNet {
       explicit DownloaderSettings(QObject *parent = 0);
       virtual ~DownloaderSettings();
 
-      void setDownloader(GGS::GameDownloader::GameDownloadService *val);
+      void setDownloader(P1::GameDownloader::GameDownloadService *val);
       void init();
 
       virtual int listeningPort() const;
@@ -59,7 +59,7 @@ namespace GameNet {
       void torrentProfileChanged();
 
     private:
-      GGS::GameDownloader::GameDownloadService *_downloader;
+      P1::GameDownloader::GameDownloadService *_downloader;
 
       void internalSetTorrentProfile(int val);
 

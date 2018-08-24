@@ -5,7 +5,7 @@
 
 #include <Windows.h>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -33,8 +33,8 @@ namespace GameNet {
         void asyncWaitResult();
 
       public slots:
-        void onUninstallFinished(const GGS::Core::Service *service);
-        void onUninstallFailed(const GGS::Core::Service *service);
+        void onUninstallFinished(const P1::Core::Service *service);
+        void onUninstallFailed(const P1::Core::Service *service);
         void onUninstallCancelled(const QString &serviceId);
 
       signals:

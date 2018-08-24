@@ -11,8 +11,8 @@
 #include <gtest/gtest.h>
 
 using GameNet::Host::ApplicationStatistic;
-using GGS::Settings::Settings;
-using GGS::GameDownloader::GameDownloadService;
+using P1::Settings::Settings;
+using P1::GameDownloader::GameDownloadService;
 using ::testing::Return;
 
 class ApplicationStatisticTestGameDownloadServiceMock : public GameDownloadService

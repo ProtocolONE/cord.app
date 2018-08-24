@@ -1,5 +1,4 @@
-#ifndef _GGS_GAMESETTINGSVIEWMODEL_H_
-#define _GGS_GAMESETTINGSVIEWMODEL_H_
+#pragma once
 
 #include <QtCore/QObject>
 #include <QtCore/QHash>
@@ -7,7 +6,7 @@
 #include <QtCore/QStringList>
 #include <Qtcore/QByteArray>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -78,5 +77,3 @@ private:
   QString _downloadPath;
   bool _hasDownloadPath;
 };
-
-#endif // _GGS_GAMESETTINGSVIEWMODEL_H_

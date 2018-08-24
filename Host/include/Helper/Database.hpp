@@ -18,12 +18,12 @@ namespace GameNet {
 
       Features::FileUtils::createDirectoryForFile(settingsPath);
 
-      GGS::Settings::InitializeHelper helper;
+      P1::Settings::InitializeHelper helper;
       helper.setFileName(settingsPath);
       if (!helper.init())
         return false;
 
-      GGS::Settings::Settings::setCacheEnabled(true);
+      P1::Settings::Settings::setCacheEnabled(true);
       return true;
     }
   }

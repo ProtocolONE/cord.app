@@ -1,16 +1,7 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
 #include <Uninstall.h>
 #include <viewmodel/GameSettingsViewModel.h>
 #include <Application/ArgumentParser.h>
-#include <Settings/Settings>
+#include <Settings/Settings.h>
 
 #include <QtCore/QFile>
 #include <QtCore/QCoreApplication>
@@ -25,12 +16,12 @@ Uninstall::~Uninstall()
 
 void Uninstall::run(const QStringList& arguments)
 {
-  GGS::Application::ArgumentParser argumentsParser;
+  P1::Application::ArgumentParser argumentsParser;
   argumentsParser.parse(arguments);
 
   QStringList args = argumentsParser.commandArguments("uninstall");
 
-  GGS::Settings::Settings settings;
+  P1::Settings::Settings settings;
   QStringList filesToDelete;
 
   if (args.isEmpty()) {

@@ -3,10 +3,10 @@
 #include <QtCore/QRegularExpression>
 #include <Core/UI/Message.h>
 
-using GGS::GameExecutor::HookInterface;
-using GGS::Core::Service;
+using P1::GameExecutor::HookInterface;
+using P1::Core::Service;
 
-using namespace GGS::Core::UI;
+using namespace P1::Core::UI;
 
 namespace Features {
   namespace GameExecutor {
@@ -33,14 +33,14 @@ namespace Features {
         QRegularExpressionMatch match = re.match(path);
         bool hasMatch = match.hasMatch(); // true
         if (hasMatch) {
-          emit this->canExecuteCompleted(service, GGS::GameExecutor::Success);
+          emit this->canExecuteCompleted(service, P1::GameExecutor::Success);
         } else {
           QString message = tr("CHECK_ASCII_PATH_MESSAGE");
           Message::StandardButton button = Message::critical(tr("CHECK_ASCII_PATH_ERROR_TITLE"),
             message,
             Message::Close);
 
-          emit this->canExecuteCompleted(service, GGS::GameExecutor::CanExecutionHookBreak);
+          emit this->canExecuteCompleted(service, P1::GameExecutor::CanExecutionHookBreak);
         }
       }
 

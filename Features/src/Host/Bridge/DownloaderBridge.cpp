@@ -9,9 +9,9 @@
 
 #include <Core/Service.h>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::Core::Service;
-using GGS::Libtorrent::EventArgs::ProgressEventArgs;
+using P1::GameDownloader::GameDownloadService;
+using P1::Core::Service;
+using P1::Libtorrent::EventArgs::ProgressEventArgs;
 using GameNet::Host::Proxy::DownloaderProxy;
 
 namespace GameNet {
@@ -104,7 +104,7 @@ namespace GameNet {
         if (!service)
           return;
 
-        this->_downloader->start(service, static_cast<GGS::GameDownloader::StartType>(startType));
+        this->_downloader->start(service, static_cast<P1::GameDownloader::StartType>(startType));
       }
 
       void DownloaderBridge::stop(const QString& serviceId)
@@ -130,7 +130,7 @@ namespace GameNet {
         this->_downloader->resumeSession();
       }
 
-      void DownloaderBridge::onStarted(const Service *service, GGS::GameDownloader::StartType startType)
+      void DownloaderBridge::onStarted(const Service *service, P1::GameDownloader::StartType startType)
       {
         Q_ASSERT(service);
         this->started(service->id(), static_cast<int>(startType));
@@ -197,7 +197,7 @@ namespace GameNet {
       }
 
       void DownloaderBridge::onDownloadProgress(
-        const Service *service, qint8 progress, const GGS::Libtorrent::EventArgs::ProgressEventArgs& args)
+        const Service *service, qint8 progress, const P1::Libtorrent::EventArgs::ProgressEventArgs& args)
       {
         Q_ASSERT(service);
         DownloadProgressArgs arg;

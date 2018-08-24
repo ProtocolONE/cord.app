@@ -2,7 +2,7 @@
 
 #include <QtCore/QObject>
 
-namespace GGS {
+namespace P1 {
   namespace Application {
     class SingleApplication;
   }
@@ -15,7 +15,6 @@ namespace GGS {
 namespace GameNet {
   namespace Host {
 
-    class Thetta;
     class GameExecutor;
     class Application;
     class ConnectionManager;
@@ -32,11 +31,10 @@ namespace GameNet {
 
       void setGameDownloadInitialized();
 
-      void setThetta(Thetta *value);
       void setExecutor(GameExecutor *value);
-      void setDownloader(GGS::GameDownloader::GameDownloadService *value);
+      void setDownloader(P1::GameDownloader::GameDownloadService *value);
       void setApplication(Application *value);
-      void setSingleApplication(GGS::Application::SingleApplication *value);
+      void setSingleApplication(P1::Application::SingleApplication *value);
       void setConnectionManager(ConnectionManager *value);
 
     signals:
@@ -45,14 +43,11 @@ namespace GameNet {
     private:
       void shutdownDownloader();
       void shutdownDownloaderCompleted();
-      void shutdownThetta();
-      void shutdownThettaCompleted();
 
-      Thetta *_thetta;
       GameExecutor *_executor;
-      GGS::GameDownloader::GameDownloadService *_downloader;
+      P1::GameDownloader::GameDownloadService *_downloader;
       Application *_application;
-      GGS::Application::SingleApplication *_singleApplication;
+      P1::Application::SingleApplication *_singleApplication;
       ConnectionManager *_connectionManager;
       bool _gameDownloadInitialized;
     };

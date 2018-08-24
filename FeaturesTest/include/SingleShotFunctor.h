@@ -1,5 +1,5 @@
-#ifndef _GGS_GAMEDOWNLOADER_TEST_SINGLESHOTFUNCTOR_H_
-#define _GGS_GAMEDOWNLOADER_TEST_SINGLESHOTFUNCTOR_H_
+#pragma once
+
 
 #include <QtCore/QObject>
 #include <functional>
@@ -25,5 +25,3 @@ private slots:
 private:
   std::tr1::function<void ()> _functor;
 };
-
-#endif // _GGS_GAMEDOWNLOADER_TEST_SINGLESHOTFUNCTOR_H_

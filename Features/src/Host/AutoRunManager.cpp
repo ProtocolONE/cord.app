@@ -4,6 +4,7 @@
 
 #include <QtCore/QSettings>
 #include <QtCore/QDebug>
+#include <QtCore/QCoreApplication>
 
 namespace GameNet {
   namespace Host {
@@ -50,7 +51,7 @@ namespace GameNet {
       bool autostart = mode == 1 || mode == 2;
       bool isMinimized = mode == 2;
 
-      GGS::AutoRunHelper::AutoRunHelper autorunHelper;
+      P1::AutoRunHelper::AutoRunHelper autorunHelper;
       autorunHelper.setTaskName("GameNet");
 
       if (!autostart) {

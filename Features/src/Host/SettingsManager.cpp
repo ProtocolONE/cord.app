@@ -16,14 +16,14 @@ namespace GameNet {
 
     void SettingsManager::setValue(const QString& path, const QString& key, const QString& data)
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup(path);
       settings.setValue(key, data);
     }
 
     QString SettingsManager::value(const QString& path, const QString& key, const QString& defValue)
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup(path);
       QString res = settings.value(key, QString()).toString();
       

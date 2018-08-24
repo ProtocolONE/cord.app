@@ -2,7 +2,7 @@
 
 #include <GameDownloader/HookBase.h>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -18,7 +18,7 @@ namespace GameNet {
     namespace GameDownloader {
       namespace Hook {
 
-        class UpdateUninstallInfo : public GGS::GameDownloader::HookBase
+        class UpdateUninstallInfo : public P1::GameDownloader::HookBase
         {
           Q_OBJECT
         public:
@@ -26,16 +26,16 @@ namespace GameNet {
           virtual ~UpdateUninstallInfo();
 
         virtual HookResult beforeDownload(
-          GGS::GameDownloader::GameDownloadService *gameDownloader, 
-          GGS::GameDownloader::ServiceState *state) override;
+          P1::GameDownloader::GameDownloadService *gameDownloader, 
+          P1::GameDownloader::ServiceState *state) override;
 
         virtual HookResult afterDownload(
-          GGS::GameDownloader::GameDownloadService *gameDownloader, 
-          GGS::GameDownloader::ServiceState *state) override;
+          P1::GameDownloader::GameDownloadService *gameDownloader, 
+          P1::GameDownloader::ServiceState *state) override;
 
         private:
-          void saveUninstallInfo(const GGS::Core::Service *service);
-          void removeUninstallInfo(const GGS::Core::Service *service);
+          void saveUninstallInfo(const P1::Core::Service *service);
+          void removeUninstallInfo(const P1::Core::Service *service);
 
         };
       }

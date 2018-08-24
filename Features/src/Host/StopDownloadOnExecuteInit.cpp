@@ -8,8 +8,8 @@
 
 #include <Core/Service.h>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::Core::Service;
+using P1::GameDownloader::GameDownloadService;
+using P1::Core::Service;
 using Features::StopDownloadServiceWhileExecuteAnyGame;
 
 namespace GameNet {

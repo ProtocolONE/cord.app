@@ -8,9 +8,9 @@
 
 #include <GameDownloader/GameDownloadService.h>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::Core::Service;
-using GGS::RestApi::GameNetCredential;
+using P1::GameDownloader::GameDownloadService;
+using P1::Core::Service;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {
@@ -66,7 +66,7 @@ namespace GameNet {
         return this->_connection;
       }
 
-      void DownloaderProxy::onStarted(const Service *service, GGS::GameDownloader::StartType startType)
+      void DownloaderProxy::onStarted(const Service *service, P1::GameDownloader::StartType startType)
       {
         if (!this->isConnectionLockedService(service))
           return;
@@ -134,7 +134,7 @@ namespace GameNet {
         emit this->serviceUninstalled(service);
       }
 
-      void DownloaderProxy::onServiceUpdated(const GGS::Core::Service *service)
+      void DownloaderProxy::onServiceUpdated(const P1::Core::Service *service)
       {
         if (!this->isConnectionLockedService(service))
           return;
@@ -159,9 +159,9 @@ namespace GameNet {
       }
 
       void DownloaderProxy::onDownloadProgressChanged(
-        const GGS::Core::Service *service, 
+        const P1::Core::Service *service, 
         qint8 progress, 
-        GGS::Libtorrent::EventArgs::ProgressEventArgs args)
+        P1::Libtorrent::EventArgs::ProgressEventArgs args)
       {
         if (!this->isConnectionLockedService(service))
           return;
@@ -169,7 +169,7 @@ namespace GameNet {
         emit this->downloadProgressChanged(service, progress, args);
       }
 
-      void DownloaderProxy::onFinishedDownloading(const GGS::Core::Service *service)
+      void DownloaderProxy::onFinishedDownloading(const P1::Core::Service *service)
       {
         if (!this->isConnectionLockedService(service))
           return;
@@ -195,7 +195,7 @@ namespace GameNet {
         return this->_downloader->isInstalled(serviceId);
       }
 
-      void DownloaderProxy::start(const Service *service, GGS::GameDownloader::StartType startType)
+      void DownloaderProxy::start(const Service *service, P1::GameDownloader::StartType startType)
       {
         Q_ASSERT(this->_downloader);
         Q_ASSERT(this->_serviceHandle);

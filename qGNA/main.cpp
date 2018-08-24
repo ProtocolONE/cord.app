@@ -5,7 +5,6 @@
 #include <version.h>
 
 #include <Features/RemouteStartGame.h>
-#include <Features/SilentMode.h>
 
 #include <Features/TaskBarEventFilter.h>
 #include <Features/LanguageChangeEventFilter.h>
@@ -15,10 +14,8 @@
 #include <Core/System/Shell/UrlProtocolHelper.h>
 #include <Core/Marketing.h>
 
-#include <ResourceHelper/ResourceLoader.h>
-
-#include <Settings/Settings>
-#include <Settings/InitializeHelper>
+#include <Settings/Settings.h>
+#include <Settings/InitializeHelper.h>
 
 #include <AutoRunHelper/AutoRunHelper.h>
 
@@ -43,20 +40,19 @@
 
 #include <Helper/DBusConnectionCheck.h>
 #include <Helper/FileUtils.h>
-#include <Helper/JobOffer.hpp>
 
 #include <QtWebEngine/QtWebEngine>
 
 using namespace Log4Qt;
 using namespace GameNet;
-using GGS::Application::SingleApplication;
+using P1::Application::SingleApplication;
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
 
 bool initDatabase()
 {
-  GGS::Settings::InitializeHelper helper;
+  P1::Settings::InitializeHelper helper;
   QString settingsPath = QString("%1/settings/settings.sql")
     .arg(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
@@ -72,7 +68,7 @@ bool initDatabase()
     settingsViewModel.setDefaultSettings();
   }
 
-  GGS::Settings::Settings::setCacheEnabled(true);
+  P1::Settings::Settings::setCacheEnabled(true);
   return true;
 }
 
@@ -153,8 +149,6 @@ int main(int argc, char *argv[])
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setQuitOnLastWindowClosed(false);
 
-  jobOffer();
-
   QCoreApplication::setOrganizationName("Vebanaul");
   QCoreApplication::setApplicationName("GameNet");
   
@@ -221,8 +215,8 @@ int main(int argc, char *argv[])
   initOpenglRender(app);
 
 #ifndef QGNA_NO_ADMIN_REQUIRED
-  if (!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
-    if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {
+  if (!P1::AutoRunHelper::UACHelper::isUserAdminByRole()) {
+    if (!P1::AutoRunHelper::UACHelper::restartToElevateRights()) {
       qDebug() << "Restart failed. May be user didn't accept UAC.";
 
       LogManager::qtLogger()->removeAllAppenders(); 
@@ -256,20 +250,29 @@ int main(int argc, char *argv[])
     return 0;
   }
 
-  GGS::Application::TaskBarEventFilter *taskBarFilter = new GGS::Application::TaskBarEventFilter(&app);
+  P1::Application::TaskBarEventFilter *taskBarFilter = new P1::Application::TaskBarEventFilter(&app);
   app.installNativeEventFilter(taskBarFilter);
 
-  GGS::Application::LanguageChangeEventFilter *languageChangeEventFilter = new GGS::Application::LanguageChangeEventFilter(&app);
+  P1::Application::LanguageChangeEventFilter *languageChangeEventFilter = new P1::Application::LanguageChangeEventFilter(&app);
   app.installNativeEventFilter(languageChangeEventFilter);
 
-  GGS::ResourceHelper::ResourceLoader loader;
+  //P1::ResourceHelper::ResourceLoader loader;
+
+  //QString altConfigPth = path + "/Config.rcc";
+  //if (QFile::exists(altConfigPth)) 
+  //  loader.load(altConfigPth);
+
+  //loader.load(path + "/qGNA.rcc");
+  //loader.load(path + "/smiles.rcc");
 
   QString altConfigPth = path + "/Config.rcc";
   if (QFile::exists(altConfigPth)) 
-    loader.load(altConfigPth);
+    QResource::registerResource(altConfigPth);
+  
+  QResource::registerResource(path + "/qGNA.rcc");
+  QResource::registerResource(path + "/smiles.rcc");
 
-  loader.load(path + "/qGNA.rcc");
-  loader.load(path + "/smiles.rcc");
+  
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
   settings.setValue("Path",  QDir::toNativeSeparators(path));
@@ -296,8 +299,8 @@ int main(int argc, char *argv[])
   SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(commandRecieved(QString, QStringList)), &remouteStartGame, SLOT(commandRecieved(QString, QStringList)), Qt::QueuedConnection));  
   SIGNAL_CONNECT_CHECK(QObject::connect(&remouteStartGame, SIGNAL(startGameRequest(QString)), &w, SLOT(removeStartGame(QString))));
 
-  GGS::Settings::SettingsSaver saver; 
-  GGS::Settings::Settings::setSettingsSaver(&saver); 
+  P1::Settings::SettingsSaver saver; 
+  P1::Settings::Settings::setSettingsSaver(&saver); 
 
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &app, SLOT(initializeFinished())));
   SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), taskBarFilter, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));

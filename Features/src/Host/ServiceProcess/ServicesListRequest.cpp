@@ -32,23 +32,23 @@ namespace GameNet {
 
       void ServicesListRequest::request()
       {
-        using GGS::RestApi::Commands::Service::GetHosts;
+        using P1::RestApi::Commands::Service::GetHosts;
         GetHosts *cmd = new GetHosts(this);
         QObject::connect(cmd, &GetHosts::result, this, &ServicesListRequest::getHostsResult);
 
         cmd->execute();
       }
 
-      void ServicesListRequest::getHostsResult(GGS::RestApi::CommandBase::CommandResults result) 
+      void ServicesListRequest::getHostsResult(P1::RestApi::CommandBase::CommandResults result) 
       {
         Q_ASSERT(this->_serviceLoader);
 
-        using GGS::RestApi::Commands::Service::GetHosts;
+        using P1::RestApi::Commands::Service::GetHosts;
         GetHosts* cmd = qobject_cast<GetHosts*>(sender());
         if (!cmd)
           return;
 
-        if (result == GGS::RestApi::CommandBase::NoError) {
+        if (result == P1::RestApi::CommandBase::NoError) {
           this->registerServices(cmd->servicesData());
           this->_downloadIconHelper.start();
           emit this->finished();
@@ -65,7 +65,7 @@ namespace GameNet {
       void ServicesListRequest::registerServices(const QList<QMap<QString, QString>>& servicesData)
       {
         QMap<QString, QString> data;
-        GGS::ApplicationArea applicationArea;
+        P1::ApplicationArea applicationArea;
         applicationArea.load();
 
         Q_FOREACH(data, servicesData) {

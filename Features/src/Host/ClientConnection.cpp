@@ -12,7 +12,7 @@
 #include <QtCore/QDebug>
 
 using GameNet::Host::DBus::DBusConnection;
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 
 using GameNet::Host::Bridge::createDbusCredential;
 
@@ -91,13 +91,13 @@ namespace GameNet {
       this->_timeoutFail = 0;
     }
 
-    void ClientConnection::setCredential(const GGS::RestApi::GameNetCredential& value)
+    void ClientConnection::setCredential(const P1::RestApi::GameNetCredential& value)
     {
       Q_ASSERT(this->_connection);
       this->_connection->setCredential(createDbusCredential(value));
     }
 
-    void ClientConnection::setSecondCredential(const GGS::RestApi::GameNetCredential& value)
+    void ClientConnection::setSecondCredential(const P1::RestApi::GameNetCredential& value)
     {
       Q_ASSERT(this->_connection);
       this->_connection->setSecondCredential(createDbusCredential(value));
@@ -115,7 +115,7 @@ namespace GameNet {
       this->_pingpongTimer.stop();
 
       qDebug() << "Disconnected from host";
-      GGS::Core::UI::Message::critical(tr("DBUS_DISCONNECTED_TITLE"), tr("DBUS_DISCONNECTED_TEXT"));
+      P1::Core::UI::Message::critical(tr("DBUS_DISCONNECTED_TITLE"), tr("DBUS_DISCONNECTED_TEXT"));
 
       emit this->disconnected();
     }

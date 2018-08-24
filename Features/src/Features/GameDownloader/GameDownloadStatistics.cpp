@@ -1,13 +1,3 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/GameDownloader/ExternalIpAddress.h>
 #include <Core/Marketing.h>
@@ -17,7 +7,7 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/QDebug>
 
-using GGS::GameDownloader::GameDownloadService;
+using P1::GameDownloader::GameDownloadService;
 
 namespace Features {
   namespace GameDownloader {
@@ -30,7 +20,7 @@ namespace Features {
     {
     }
 
-    void GameDownloadStatistics::init(GGS::GameDownloader::GameDownloadService* downloader)
+    void GameDownloadStatistics::init(P1::GameDownloader::GameDownloadService* downloader)
     {
       this->_downloader = downloader;
 
@@ -60,9 +50,9 @@ namespace Features {
     }
 
     void GameDownloadStatistics::progressDownloadChanged(
-      const GGS::Core::Service *service,
+      const P1::Core::Service *service,
       qint8 progress,
-      GGS::Libtorrent::EventArgs::ProgressEventArgs args)
+      P1::Libtorrent::EventArgs::ProgressEventArgs args)
     {
       if (!this->_mutex.tryLock())
         return;
@@ -76,7 +66,7 @@ namespace Features {
       this->_mutex.unlock();
     }
 
-    void GameDownloadStatistics::started(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType)
+    void GameDownloadStatistics::started(const P1::Core::Service *service, P1::GameDownloader::StartType startType)
     {
       QMutexLocker locker(&this->_mutex);
 
@@ -97,11 +87,11 @@ namespace Features {
       stats->start();
     }
 
-    void GameDownloadStatistics::finished(const GGS::Core::Service *service)
+    void GameDownloadStatistics::finished(const P1::Core::Service *service)
     {
       QMutexLocker locker(&this->_mutex);
 
-      using namespace GGS::Core;
+      using namespace P1::Core;
       if (!this->_statisticMap.contains(service->id()))
         return;
 
@@ -140,7 +130,7 @@ namespace Features {
       this->_statisticMap.remove(service->id());
     }
 
-    void GameDownloadStatistics::stopped(const GGS::Core::Service *service)
+    void GameDownloadStatistics::stopped(const P1::Core::Service *service)
     {
       QMutexLocker locker(&this->_mutex);
 
@@ -151,7 +141,7 @@ namespace Features {
       stats->stop();
     }
 
-    void GameDownloadStatistics::failed(const GGS::Core::Service *service)
+    void GameDownloadStatistics::failed(const P1::Core::Service *service)
     {
       QMutexLocker locker(&this->_mutex);
 

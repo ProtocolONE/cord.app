@@ -9,11 +9,11 @@ namespace GameNet {
 
     bool requireAdminRights() 
     {
-      using GGS::AutoRunHelper::UACHelper;
+      using P1::AutoRunHelper::UACHelper;
 
 #ifndef QGNA_NO_ADMIN_REQUIRED
-      if(!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
-        if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {    
+      if(!P1::AutoRunHelper::UACHelper::isUserAdminByRole()) {
+        if (!P1::AutoRunHelper::UACHelper::restartToElevateRights()) {    
           qDebug() << "Restart failed. May be user didn't accept UAC.";
           return false;
         }

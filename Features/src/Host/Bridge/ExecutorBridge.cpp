@@ -5,7 +5,7 @@
 
 #include <RestApi/GameNetCredential.h>
 
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 using GameNet::Host::Proxy::GameExecutorProxy;
 
 namespace GameNet {

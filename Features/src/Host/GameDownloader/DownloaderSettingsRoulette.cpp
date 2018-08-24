@@ -8,7 +8,7 @@
 #include <random>
 #include <cstdint>
 
-using GGS::Settings::Settings;
+using P1::Settings::Settings;
 
 namespace GameNet {
   namespace Host {
@@ -22,7 +22,7 @@ namespace GameNet {
 
       void setDownloadProfile(TorrentProfile value)
       {
-        GGS::Settings::Settings settings;
+        P1::Settings::Settings settings;
         settings.setValue("qGNA/torrentProfile", QString::number(static_cast<uint32_t>(value)));
       }
 
@@ -32,7 +32,7 @@ namespace GameNet {
         if (value < 10)
           value = 10;
 
-        GGS::Settings::Settings settings;
+        P1::Settings::Settings settings;
         settings.setValue("qGNA/numConnections", QString::number(value));
       }
 

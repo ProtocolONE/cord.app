@@ -5,7 +5,7 @@
 
 class ConnectionBridgeProxy;
 
-namespace GGS {
+namespace P1 {
   namespace RestApi {
     class GameNetCredential;
   }
@@ -24,8 +24,8 @@ namespace GameNet {
       void init();
       void close();
 
-      void setCredential(const GGS::RestApi::GameNetCredential& value);
-      void setSecondCredential(const GGS::RestApi::GameNetCredential& value);
+      void setCredential(const P1::RestApi::GameNetCredential& value);
+      void setSecondCredential(const P1::RestApi::GameNetCredential& value);
 
     signals:
       void disconnected();

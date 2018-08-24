@@ -1,6 +1,6 @@
 #pragma once
 
-namespace GGS {
+namespace P1 {
   namespace GameDownloader {
     class GameDownloadService;
   }
@@ -26,7 +26,7 @@ namespace GameNet {
       virtual ~StopDownloadOnExecuteInit();
 
       void setTarget(Features::StopDownloadServiceWhileExecuteAnyGame *value);
-      void setDownloader(GGS::GameDownloader::GameDownloadService *value);
+      void setDownloader(P1::GameDownloader::GameDownloadService *value);
       void setServices(ServiceProcess::ServiceLoader *value);
       void setExecutor(GameExecutor *value);
 
@@ -34,7 +34,7 @@ namespace GameNet {
 
     private:
       Features::StopDownloadServiceWhileExecuteAnyGame *_target;
-      GGS::GameDownloader::GameDownloadService *_downloader;
+      P1::GameDownloader::GameDownloadService *_downloader;
       ServiceProcess::ServiceLoader *_services;
       GameExecutor *_excutor;
     };

@@ -1,11 +1,11 @@
 #include <ViewModel/GameSettingsViewModel.h>
 #include <Helper/GetDirectoryDialog.h>
 
-#include <Core/Service>
+#include <Core/Service.h>
 #include <Core/System/Shell/ShortCut.h>
-#include <GameDownloader/GameDownloadService>
-#include <Core/UI/Message>
-#include <Settings/Settings>
+#include <GameDownloader/GameDownloadService.h>
+#include <Core/UI/Message.h>
+#include <Settings/Settings.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
@@ -20,7 +20,7 @@
 #include <Host/Dbus/ServiceSettingsBridgeProxy.h>
 #include <Host/Dbus/DownloaderBridgeProxy.h>
 
-using GGS::Core::Service;
+using P1::Core::Service;
 
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
 
@@ -91,8 +91,8 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
   lnkroot.append("\\");
   lnkroot.append(name);
   lnkroot.append(".lnk");
-
-  GGS::Settings::Settings settings;
+  
+  P1::Settings::Settings settings;
   settings.beginGroup("GameInstallInfo");
   settings.beginGroup(serviceId);
   QStringList icons = this->deserialize(settings.value("iconPaths", QByteArray()).toByteArray());
@@ -105,9 +105,9 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
 
   settings.setValue("filesToDelete", this->serialize(filesToDelete));
   
-  GGS::Core::System::Shell::ShortCut object;
+  P1::Core::System::Shell::ShortCut object;
   object.setDescription(QString("Short cut for game %1").arg(name));
-  object.setShowCmd(GGS::Core::System::Shell::ShortCut::MinNoActive);
+  object.setShowCmd(P1::Core::System::Shell::ShortCut::MinNoActive);
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
   object.setPath(QString("gamenet://startservice/%1").arg(serviceId));
 
@@ -130,7 +130,7 @@ void GameSettingsViewModel::submitSettings()
 
 void GameSettingsViewModel::restoreClient()
 {
-  this->_downloader->start(this->_currentServiceId, static_cast<int>(GGS::GameDownloader::Recheck));
+  this->_downloader->start(this->_currentServiceId, static_cast<int>(P1::GameDownloader::Recheck));
 }
 
 void GameSettingsViewModel::switchGame(const QString& serviceId)

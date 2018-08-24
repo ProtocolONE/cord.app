@@ -12,11 +12,11 @@
 
 #include <QtCore/QSettings>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::GameDownloader::ServiceState;
-using GGS::GameDownloader::HookBase;
+using P1::GameDownloader::GameDownloadService;
+using P1::GameDownloader::ServiceState;
+using P1::GameDownloader::HookBase;
 using GameNet::Host::ServiceProcess::ServiceLoader;
-using GGS::Core::Service;
+using P1::Core::Service;
 
 namespace GameNet {
   namespace Host {
@@ -34,10 +34,10 @@ namespace GameNet {
 
         HookBase::HookResult UpdateUninstallInfo::beforeDownload(GameDownloadService *gameDownloader, ServiceState *state)
         {
-          const GGS::Core::Service *service = state->service();
+          const P1::Core::Service *service = state->service();
           Q_ASSERT(service);
 
-          if (state->startType() == GGS::GameDownloader::Uninstall) {
+          if (state->startType() == P1::GameDownloader::Uninstall) {
             this->removeUninstallInfo(service);
           } else {
             this->saveUninstallInfo(service);
@@ -51,7 +51,7 @@ namespace GameNet {
           return HookBase::Continue;
         }
 
-        void UpdateUninstallInfo::saveUninstallInfo(const GGS::Core::Service *service)
+        void UpdateUninstallInfo::saveUninstallInfo(const P1::Core::Service *service)
         {
           Q_ASSERT(service);
 
@@ -60,7 +60,7 @@ namespace GameNet {
           info.save();
         }
 
-        void UpdateUninstallInfo::removeUninstallInfo(const GGS::Core::Service *service)
+        void UpdateUninstallInfo::removeUninstallInfo(const P1::Core::Service *service)
         {
           Q_ASSERT(service);
 

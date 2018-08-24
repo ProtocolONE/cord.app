@@ -3,7 +3,6 @@
 #include <Host/HookFactory.h>
 #include <Host/ExecutorHookFactory.h>
 
-#include <Features/Thetta/ThettaMonitor.h>
 #include <Features/WorkStationLock/WorkStationLockHook.h>
 
 #include <Core/Service.h>
@@ -19,9 +18,9 @@
 
 #include <QtCore/QSettings>
 
-using GGS::Core::Service;
-using GGS::GameDownloader::GameDownloadService;
-using GGS::GameExecutor::GameExecutorService;
+using P1::Core::Service;
+using P1::GameDownloader::GameDownloadService;
+using P1::GameExecutor::GameExecutorService;
 
 namespace GameNet {
   namespace Host {
@@ -79,7 +78,7 @@ namespace GameNet {
         this->_executorHookFactory = value;
       }
 
-      GGS::Core::Service::Area ServiceLoader::gameArea() const
+      P1::Core::Service::Area ServiceLoader::gameArea() const
       {
         return this->_gameArea;
       }
@@ -99,7 +98,7 @@ namespace GameNet {
         this->_applicationPath = val;
       }
 
-      GGS::Core::Service* ServiceLoader::getService(const QString& serviceId)
+      P1::Core::Service* ServiceLoader::getService(const QString& serviceId)
       {
         if (!this->_serviceMap.contains(serviceId))
           return nullptr;
@@ -107,7 +106,7 @@ namespace GameNet {
         return this->_serviceMap[serviceId];
       }
 
-      QHash<QString, GGS::Core::Service *>& ServiceLoader::servicesMap()
+      QHash<QString, P1::Core::Service *>& ServiceLoader::servicesMap()
       {
         return this->_serviceMap;
       }
@@ -188,7 +187,7 @@ namespace GameNet {
       {
         Q_ASSERT(this->_downloader);
 
-        using GGS::GameDownloader::HookBase;
+        using P1::GameDownloader::HookBase;
         Q_FOREACH(DownloadHookDescription info, description.downloadHooks()) {
           HookBase* hook = this->_factory->create(info.first);
           if (!hook) {
@@ -218,11 +217,10 @@ namespace GameNet {
         Q_ASSERT(this->_secondExecutor);
         Q_ASSERT(this->_simpleMainExecutor);
 
-        using GGS::GameExecutor::HookInterface;
-        using GGS::GameExecutor::Hook::SendPlayingInfo;
-        using GGS::GameExecutor::Hook::ActivateWindow;
+        using P1::GameExecutor::HookInterface;
+        using P1::GameExecutor::Hook::SendPlayingInfo;
+        using P1::GameExecutor::Hook::ActivateWindow;
 
-        using Features::Thetta::ThettaMonitor;
         using Features::WorkStationLock::WorkStationLockHook;
 
         Q_FOREACH(const ExecutorHookDescription& info, description.executorHooks()) {
@@ -235,18 +233,6 @@ namespace GameNet {
 
         // INFO тут обязательные хуки !!! Внимание эти хуки должны быть зарегистрированы в тестах!
         if (description.isDownloadable()) {
-          HookInterface *thetta = this->_executorHookFactory->create(ThettaMonitor::id());
-          Q_ASSERT(thetta);
-          this->_executor->addHook(*service, thetta, 99);
-
-          thetta = this->_executorHookFactory->create(ThettaMonitor::id());
-          Q_ASSERT(thetta);
-          this->_secondExecutor->addHook(*service, thetta, 99);
-
-          thetta = this->_executorHookFactory->create(ThettaMonitor::id());
-          Q_ASSERT(thetta);
-          this->_simpleMainExecutor->addHook(*service, thetta, 99);
-
           HookInterface *playing = this->_executorHookFactory->create(SendPlayingInfo::id());
           Q_ASSERT(playing);
           this->_executor->addHook(*service, playing, 0);
@@ -292,7 +278,7 @@ namespace GameNet {
         if (!this->_downloader->isInstalled(serviceId))
           return;
 
-        GGS::Settings::Settings settings;
+        P1::Settings::Settings settings;
         settings.beginGroup("GameDownloader");
         settings.beginGroup(serviceId);
 

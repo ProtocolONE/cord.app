@@ -106,7 +106,7 @@ namespace GameNet {
 
       QString DownloadServiceIcon::readLastModified(const QString& path)
       {
-        GGS::Settings::Settings settings; 
+        P1::Settings::Settings settings; 
         settings.beginGroup("DownloadServiceIconHelper");
         settings.beginGroup("Icons");
         settings.beginGroup(path);
@@ -115,7 +115,7 @@ namespace GameNet {
 
       void DownloadServiceIcon::saveLastModifed(const QString& path, const QString& value)
       {
-        GGS::Settings::Settings settings; 
+        P1::Settings::Settings settings; 
         settings.beginGroup("DownloadServiceIconHelper");
         settings.beginGroup("Icons");
         settings.beginGroup(path);

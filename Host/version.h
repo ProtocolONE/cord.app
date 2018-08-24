@@ -1,15 +1,4 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-
-#ifndef _GGS_HOST_VERSION_H_
-#define _GGS_HOST_VERSION_H_
+#pragma once
 
 #ifndef HUDSON_BUILD
   #define FILEVER          1,0,0,0
@@ -36,5 +25,3 @@
   #define ORIGINALFILENAME "$$FILENAME$$"
   #define PRODUCTNAME      "$$PRODUCTNAME$$"
 #endif
-
-#endif //_GGS_HOST_VERSION_H_

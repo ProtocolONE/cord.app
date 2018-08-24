@@ -1,6 +1,6 @@
 #include <GameDownloader/DownloadStatsPub.h>
 
-#include <Settings/Settings>
+#include <Settings/Settings.h>
 
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
@@ -48,7 +48,7 @@ public:
       } 
     }
 
-    GGS::Settings::Settings::setConnection(db.connectionName());
+    P1::Settings::Settings::setConnection(db.connectionName());
   }
 };
 

@@ -1,19 +1,9 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates.
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-
 #pragma once
 
 #include <GameExecutor/gameexecutor_global.h>
 #include <GameExecutor/ExecutorBase.h>
 
-#include <Core/Service>
+#include <Core/Service.h>
 
 #include <QtCore/QProcess>
 
@@ -31,25 +21,24 @@ namespace GameNet {
       virtual ~ElectronExecutorPrivate();
 
       void execute(
-        const GGS::Core::Service &service,
-        GGS::GameExecutor::GameExecutorService *executorService,
-        const GGS::RestApi::GameNetCredential& credential,
-        const GGS::RestApi::GameNetCredential& secondCredential, 
+        const P1::Core::Service &service,
+        P1::GameExecutor::GameExecutorService *executorService,
+        const P1::RestApi::GameNetCredential& credential,
         const QString& scheme);
 
       void onShutdown(const QString& serviceId);
 
     private:
-      void onGetRedirectTokenResult(GGS::RestApi::CommandBase::CommandResults result);
+      void onGetRedirectTokenResult(P1::RestApi::CommandBase::CommandResults result);
       void activateElectron(quint32 pid);
 
     signals:
-      void started(const GGS::Core::Service &service);
-      void finished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+      void started(const P1::Core::Service &service);
+      void finished(const P1::Core::Service &service, P1::GameExecutor::FinishState state);
 
     private:
-      GGS::Core::Service _service;
-      GGS::RestApi::GameNetCredential _credential;
+      P1::Core::Service _service;
+      P1::RestApi::GameNetCredential _credential;
       QString _scheme;
     };
   }

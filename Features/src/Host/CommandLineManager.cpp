@@ -5,14 +5,15 @@
 
 #include <Helper/ApplicationArea.hpp>
 
-using GGS::Core::Service;
+using P1::Core::Service;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {
 
     CommandLineManager::CommandLineManager(QObject *parent /*= 0*/)
       : QObject(parent)
-      , _commandLineArguments(new GGS::Application::ArgumentParser(this))
+      , _commandLineArguments(new P1::Application::ArgumentParser(this))
     {
       this->_commandLineArguments->parse(QCoreApplication::arguments());
     }
@@ -47,14 +48,9 @@ namespace GameNet {
         return;
       }
 
-      if (name == "gocombatarmsrating") {
-        this->gocombatarmsrating(name, arguments);
-        return;
-      }
-
       if (name == "update") {
         if (arguments.count() > 0) {
-          GGS::ApplicationArea requestedArea;
+          P1::ApplicationArea requestedArea;
           requestedArea.parse(arguments.at(0));
           requestedArea.save();
         }
@@ -117,11 +113,6 @@ namespace GameNet {
     {
       GameNetCredential credential;
       bool seendToUi = this->shouldSendToUi(credential);
-
-      if (arguments.size() > 0 && arguments.at(0) == "darkage") {
-        this->openUrlWithAuth("https://gamenet.ru/games/da/exchange", credential);
-        return;
-      }
 
       if (seendToUi) {
         emit this->uiCommand(name, arguments);

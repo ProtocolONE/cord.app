@@ -1,6 +1,6 @@
 #include <Host/CredentialConverter.h>
 
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {

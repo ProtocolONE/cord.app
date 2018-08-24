@@ -8,12 +8,12 @@
 
 #include <QtCore/QSettings>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::GameDownloader::ServiceState;
-using GGS::GameDownloader::HookBase;
-using GGS::GameDownloader::StartType;
+using P1::GameDownloader::GameDownloadService;
+using P1::GameDownloader::ServiceState;
+using P1::GameDownloader::HookBase;
+using P1::GameDownloader::StartType;
 using GameNet::Host::ServiceProcess::ServiceLoader;
-using GGS::Core::Service;
+using P1::Core::Service;
 
 namespace GameNet {
   namespace Host {
@@ -36,7 +36,7 @@ namespace GameNet {
           Q_ASSERT(this->_settings);
           QString id(state->id());
           
-          GGS::Core::Service *service = this->_services->getService(id);
+          P1::Core::Service *service = this->_services->getService(id);
           Q_ASSERT(service);
 
           QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);

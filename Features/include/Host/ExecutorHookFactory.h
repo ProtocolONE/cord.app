@@ -11,16 +11,12 @@
 #include <QtWidgets/QWidget>
 
 namespace Features {
-  namespace Thetta {
-    class SaveUserInfo;
-  }
-
   namespace WorkStationLock {
     class RegisterSessionNotificationFilter;
   }
 }
 
-namespace GGS {
+namespace P1 {
   namespace GameDownloader {
     class GameDownloadService;
   }
@@ -34,42 +30,38 @@ namespace GameNet {
   namespace Host {
     
     class HookFactory;
-    class Thetta;
     class Application;
 
     class ExecutorHookFactory 
-      : public QObject, public Factory<GGS::GameExecutor::HookInterface, QString>
+      : public QObject, public Factory<P1::GameExecutor::HookInterface, QString>
     {
       Q_OBJECT
     public:
       explicit ExecutorHookFactory(QObject *parent = 0);
       virtual ~ExecutorHookFactory();
 
-      void setDownloader(GGS::GameDownloader::GameDownloadService *value);
-      void setExecutor(GGS::GameExecutor::GameExecutorService *value);
+      void setDownloader(P1::GameDownloader::GameDownloadService *value);
+      void setExecutor(P1::GameExecutor::GameExecutorService *value);
       void setDownloaderHookFactory(HookFactory *value);
-      void setThetta(Thetta *value);
       void setApplication(Application *value);
 
       void init();
 
-      GGS::GameExecutor::HookInterface *create(const QString& id);
+      P1::GameExecutor::HookInterface *create(const QString& id);
 
     private:
-      GGS::GameDownloader::GameDownloadService *_downloader;
+      P1::GameDownloader::GameDownloadService *_downloader;
       // INFO основной запускатор. Нужен для закрытия СА из хука защиты.
-      GGS::GameExecutor::GameExecutorService *_executor;
+      P1::GameExecutor::GameExecutorService *_executor;
       HookFactory *_downloaderHookFactory;
-      Thetta *_thetta;
       Features::WorkStationLock::RegisterSessionNotificationFilter *_filter;
-      Features::Thetta::SaveUserInfo *_saveUserInfo;
       QWidget _window;
 
       // INFO кол выводит класс и его id при регистрации хуков
       //template<typename T>
       //void reg(std::function<void(T*)> init = nullptr) {
       //  qDebug() <<  typeid(T).name() << " " << T::id();
-      //  this->Factory<GGS::GameExecutor::HookInterface, QString>::reg<T>();
+      //  this->Factory<P1::GameExecutor::HookInterface, QString>::reg<T>();
       //}
 
     };

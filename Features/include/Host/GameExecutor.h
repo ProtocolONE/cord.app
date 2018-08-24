@@ -9,7 +9,7 @@ namespace Features {
   class PremiumExecutor;
 }
 
-namespace GGS {
+namespace P1 {
   namespace GameExecutor {
     class ServiceInfoCounter;
   }
@@ -28,7 +28,6 @@ namespace GameNet {
     namespace ServiceProcess {
       class ServiceLoader;
     }
-    class Thetta;
     class ServiceSettings;
 
     class GameExecutor : public QObject
@@ -39,7 +38,6 @@ namespace GameNet {
       virtual ~GameExecutor();
 
       void setServices(ServiceProcess::ServiceLoader *value);
-      void setThetta(Thetta *value);
       void setServiceSettings(ServiceSettings* value);
 
       virtual void init();
@@ -47,12 +45,12 @@ namespace GameNet {
     
       virtual void execute(
         const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential& credetial);
+        const P1::RestApi::GameNetCredential& credetial);
 
       virtual void executeSecond(
         const QString& serviceId, 
-        const GGS::RestApi::GameNetCredential& credetial, 
-        const GGS::RestApi::GameNetCredential& secondCredetial);
+        const P1::RestApi::GameNetCredential& credetial, 
+        const P1::RestApi::GameNetCredential& secondCredetial);
 
       virtual bool isGameStarted(const QString& serviceId) const;
       virtual bool isSecondGameStarted(const QString& serviceId) const;
@@ -73,9 +71,9 @@ namespace GameNet {
 
       QString executedGame() const;
 
-      GGS::GameExecutor::GameExecutorService *mainExecutor();
-      GGS::GameExecutor::GameExecutorService* secondExecutor();
-      GGS::GameExecutor::GameExecutorService* simpleMainExecutor();
+      P1::GameExecutor::GameExecutorService *mainExecutor();
+      P1::GameExecutor::GameExecutorService* secondExecutor();
+      P1::GameExecutor::GameExecutorService* simpleMainExecutor();
 
       void terminateAll(const QString& serviceId = QString());
       void terminateSecond(const QString& serviceId = QString());
@@ -87,20 +85,19 @@ namespace GameNet {
       void secondServiceFinished(const QString& serviceId, int finishState);
 
     private:
-      void onServiceStarted(const GGS::Core::Service &service);
-      void onServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+      void onServiceStarted(const P1::Core::Service &service);
+      void onServiceFinished(const P1::Core::Service &service, P1::GameExecutor::FinishState state);
 
-      void onSecondServiceStarted(const GGS::Core::Service &service);
-      void onSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+      void onSecondServiceStarted(const P1::Core::Service &service);
+      void onSecondServiceFinished(const P1::Core::Service &service, P1::GameExecutor::FinishState state);
 
-      void prepairExecuteUrl(GGS::Core::Service *service);
+      void prepairExecuteUrl(P1::Core::Service *service);
 
-      GGS::GameExecutor::GameExecutorService *_mainExecutor;
+      P1::GameExecutor::GameExecutorService *_mainExecutor;
       Features::PremiumExecutor *_premiumExecutor;
-      GGS::GameExecutor::ServiceInfoCounter *_gameExecutorServiceInfoCounter;
+      P1::GameExecutor::ServiceInfoCounter *_gameExecutorServiceInfoCounter;
       ServiceProcess::ServiceLoader *_services;
       ServiceSettings* _serviceSettings;
-      Thetta *_thetta;
     };
 
   }

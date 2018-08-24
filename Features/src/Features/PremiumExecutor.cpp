@@ -1,12 +1,3 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (�) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
 #include <Features/PremiumExecutor.h>
 
 #include <GameExecutor/Executor/ExecutableFile.h>
@@ -22,9 +13,9 @@
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
-using GGS::GameExecutor::GameExecutorService;
-using GGS::Core::Service;
-using GGS::RestApi::GameNetCredential;
+using P1::GameExecutor::GameExecutorService;
+using P1::Core::Service;
+using P1::RestApi::GameNetCredential;
 
 namespace Features {
 
@@ -62,33 +53,33 @@ namespace Features {
   }
 
   void PremiumExecutor::executeMain(
-    GGS::Core::Service* service, const GGS::RestApi::GameNetCredential& credetial)
+    P1::Core::Service* service, const P1::RestApi::GameNetCredential& credetial)
   {
     QMutexLocker locker(&this->_mutex);
     
     this->setNoInjectItem(service, "0");
     if (this->isSecondStarted(service->id()))
-      this->_simpleMainExecutor.executeEx(*service, credetial);
+      this->_simpleMainExecutor.execute(*service, credetial);
     else
-      this->_mainExecutor->executeEx(*service, credetial);
+      this->_mainExecutor->execute(*service, credetial);
 
     this->_mainGameStarted.insert(service->id());
   }
 
   void PremiumExecutor::executeSecond(
-    GGS::Core::Service* service, 
-    const GGS::RestApi::GameNetCredential& credetial, 
-    const GGS::RestApi::GameNetCredential& secondCredetial)
+    P1::Core::Service* service, 
+    const P1::RestApi::GameNetCredential& credetial, 
+    const P1::RestApi::GameNetCredential& secondCredetial)
   {
-    QMutexLocker locker(&this->_mutex);
+    //QMutexLocker locker(&this->_mutex);
 
-    if (!this->isMainStarted(service->id()))
-      return;
-    
-    this->setNoInjectItem(service, "1");
+    //if (!this->isMainStarted(service->id()))
+    //  return;
+    //
+    //this->setNoInjectItem(service, "1");
 
-    this->_secondExecutor.executeEx(*service, credetial, secondCredetial);
-    this->_secondGameStarted.insert(service->id());
+    //this->_secondExecutor.executeEx(*service, credetial, secondCredetial);
+    //this->_secondGameStarted.insert(service->id());
   }
 
   void PremiumExecutor::shutdownSecond(const QString& serviceId /* = QString()*/)
@@ -160,7 +151,7 @@ namespace Features {
     emit this->secondServiceStarted(service);
   }
 
-  void PremiumExecutor::internalSecondServiceFinished(const Service &service, GGS::GameExecutor::FinishState state)
+  void PremiumExecutor::internalSecondServiceFinished(const Service &service, P1::GameExecutor::FinishState state)
   {
     QMutexLocker locker(&this->_mutex);
     this->_secondGameStarted.remove(service.id());
@@ -173,7 +164,7 @@ namespace Features {
     emit this->serviceStarted(service);
   }
 
-  void PremiumExecutor::internalServiceFinished(const Service &service, GGS::GameExecutor::FinishState state)
+  void PremiumExecutor::internalServiceFinished(const Service &service, P1::GameExecutor::FinishState state)
   {
     QMutexLocker locker(&this->_mutex);
     this->_mainGameStarted.remove(service.id());
@@ -192,7 +183,7 @@ namespace Features {
 
   void PremiumExecutor::registerExecutors(GameExecutorService *executor)
   {
-    using namespace GGS::GameExecutor::Executor;
+    using namespace P1::GameExecutor::Executor;
     using namespace GameNet::Host;
 
     executor->registerExecutor(new ExecutableFile(this));

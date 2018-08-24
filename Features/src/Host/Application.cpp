@@ -8,7 +8,6 @@
 #include <Host/ServiceSettings.h>
 #include <Host/ServiceProcess/ServiceDescription.h>
 #include <Host/GameExecutor.h>
-#include <Host/Thetta.h>
 #include <Host/StopDownloadOnExecuteInit.h>
 #include <Host/ShutdownManager.h>
 #include <Host/HookFactory.h>
@@ -24,7 +23,6 @@
 #include <Host/ServiceHandle.h>
 #include <Host/AutoRunManager.h>
 #include <Host/ServiceProcess/ServicesListRequest.h>
-#include <Host/Installer/Migration.h>
 #include <Host/Installer/UninstallResult.h>
 #include <Host/LicenseManager.h>
 
@@ -32,18 +30,11 @@
 
 #include <Host/Dbus/DBusServer.h>
 
-#include <Helper/ConfigLoader.hpp>
-
-#include <Integration/ZZima/ZzimaGameExecutor.h>
-#include <Integration/ZZima/ZZimaConnection.h>
+//#include <Helper/ConfigLoader.hpp>
 
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
-#include <Features/Thetta/ThettaInstaller.h>
 #include <Features/Marketing/SystemInfo/SystemInfoManager.h>
-#include <Features/Thetta/ModuleScanner.h>
-#include <Features/Thetta/AppDistrIntegrity.h>
-#include <Features/Thetta/KernelStatistics.h>
 
 #include <GameDownloader/GameDownloadService.h>
 
@@ -66,10 +57,10 @@
 #include <QtCore/QUrl>
 #include <QtCore/QMutexLocker>
 #include <QtCore/QCryptographicHash>
+#include <QtDBus/QDBusError>
 
-using GGS::Application::SingleApplication;
-using GGS::GameDownloader::GameDownloadService;
-using ::GameNet::Integration::ZZima::ZZimaConnection;
+using P1::Application::SingleApplication;
+using P1::GameDownloader::GameDownloadService;
 using GameNet::Host::DBus::DBusServer;
 using GameNet::Host::Installer::UninstallResult;
 
@@ -85,10 +76,9 @@ namespace GameNet {
       , _serviceSettings(new ServiceSettings(this))
       , _downloadStatistics(new Features::GameDownloader::GameDownloadStatistics(this))
       , _executor(new GameExecutor(this))
-      , _thetta(new Thetta(this))
       , _stopDownloadServiceOnExecuteGame(new Features::StopDownloadServiceWhileExecuteAnyGame(this))
-      , _restApiManager(new GGS::RestApi::RestApiManager(this))
-      , _restApiCache(new GGS::RestApi::FakeCache())
+      , _restApiManager(new P1::RestApi::RestApiManager(this))
+      , _restApiCache(new P1::RestApi::FakeCache())
       , _updater(new Updater(this))
       , _uiProcess(new UIProcess(this))
       , _applicationRestarter(new ApplicationRestarter(this))
@@ -96,22 +86,19 @@ namespace GameNet {
       , _executorHookFactory(new ExecutorHookFactory(this))
       , _applicationStatistic(new ApplicationStatistic(this))
       , _marketingStatistic(new MarketingStatistic(this))
-      , _marketingTarget(new GGS::Marketing::MarketingTarget(this))
+      , _marketingTarget(new P1::Marketing::MarketingTarget(this))
       , _commandLineManager(new CommandLineManager(this))
       , _messageAdapter(new MessageAdapter(this))
       , _translation(new Translation(this))
       , _connectionManager(new ConnectionManager(this))
       , _serviceHandle(new ServiceHandle(this))
-      , _zzimaConnection(new ZZimaConnection(this))
       , _autoRunManager(new AutoRunManager(this))
       , _dbusServer(nullptr)
       , _servicesListRequest(new ServiceProcess::ServicesListRequest(this))
       , _initFinished(false)
       , _updateFinished(false)
       , _closing(false)
-      , _applicationDistrMon(new Features::Thetta::AppDistrIntegrity(this))
       , _licenseManager(new LicenseManager(this))
-      , _kernelStat(new Features::Thetta::KernelStatistics(this))
       , QObject(parent)
     {
 
@@ -149,13 +136,6 @@ namespace GameNet {
 
       this->_licenseManager->setServices(this->_serviceLoader->servicesMap().keys());
       emit this->initCompleted();
-
-      if (!GameNet::Host::Installer::Migration::isMigrated()) {
-        GameNet::Host::Installer::Migration installerMigration;
-        installerMigration.setServices(this->_serviceLoader);
-        installerMigration.setDownloader(this->_gameDownloader);
-        installerMigration.migrate();
-      }
     }
 
     bool Application::isInitCompleted()
@@ -205,7 +185,7 @@ namespace GameNet {
       QObject::connect(this, &Application::internalShutdownUIResult,
         this, &Application::internalShutdown, Qt::QueuedConnection);
 
-      GGS::Core::UI::Message::setAdapter(this->_messageAdapter);
+      P1::Core::UI::Message::setAdapter(this->_messageAdapter);
 
       this->initRestApi();
       this->_translation->init();
@@ -226,36 +206,17 @@ namespace GameNet {
       QObject::connect(this, &Application::initCompleted,
         this->_applicationStatistic, &ApplicationStatistic::applcationStarted);
 
-      this->_thetta->setApplication(this);
-      this->_thetta->init();
-
-      //Connect service termination
-      QObject::connect(this->_thetta->scanner(), &Features::Thetta::ModuleScanner::scannerFoundModule,
-        this->_executor, &GameNet::Host::GameExecutor::terminateAll);
-      
-      QObject::connect(this->_thetta, &Thetta::closeGamesRequest, 
-        this->_executor, &GameNet::Host::GameExecutor::terminateAll);
-
       this->_executor->setServices(this->_serviceLoader);
       this->_executor->setServiceSettings(this->_serviceSettings);
-      this->_executor->setThetta(this->_thetta);
       this->_executor->init();
-
-      GameNet::Integration::ZZima::ZzimaGameExecutor * zzimaExecutor = 
-        new GameNet::Integration::ZZima::ZzimaGameExecutor(this);
-      zzimaExecutor->setZzimaConnection(this->_zzimaConnection);
-
-      this->_executor->mainExecutor()->registerExecutor(zzimaExecutor);
 
       this->_downloaderHookFactory->setServiceLoader(this->_serviceLoader);
       this->_downloaderHookFactory->setServiceHandle(this->_serviceHandle);
       this->_downloaderHookFactory->setServiceSettings(this->_serviceSettings);
-      this->_downloaderHookFactory->setZzimaConnection(this->_zzimaConnection);
 
       this->_executorHookFactory->setDownloader(this->_gameDownloader);
       this->_executorHookFactory->setExecutor(this->_executor->mainExecutor());
       this->_executorHookFactory->setDownloaderHookFactory(this->_downloaderHookFactory);
-      this->_executorHookFactory->setThetta(this->_thetta);
       this->_executorHookFactory->init();
 
       this->_serviceLoader->setApplicationPath(QCoreApplication::applicationDirPath());
@@ -275,7 +236,6 @@ namespace GameNet {
       this->_shutdown->setApplication(this);
       this->_shutdown->setDownloader(this->_gameDownloader);
       this->_shutdown->setExecutor(this->_executor);
-      this->_shutdown->setThetta(this->_thetta);
       this->_shutdown->setSingleApplication(this->_singleApplication);
       this->_shutdown->setConnectionManager(this->_connectionManager);
 
@@ -283,8 +243,6 @@ namespace GameNet {
       
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
       this->_uiProcess->setFileName("gamenet.ui.exe");
-
-      this->_applicationDistrMon->setExecutor(this->_executor->mainExecutor());
 
       QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished, [this](){
         StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
@@ -307,19 +265,10 @@ namespace GameNet {
       QObject::connect(this->_commandLineManager, &CommandLineManager::uninstallService, 
         this, &Application::onUninstallRequestSlot);
 
-      QObject::connect(this->_commandLineManager, &CommandLineManager::openBrowser, 
-        this->_thetta, &Thetta::openBrowser);
-
       QObject::connect(this->_commandLineManager, &CommandLineManager::updateRequested,
         [this](){
         this->updateCompletedSlot(true);
       });
-
-      QObject::connect(this, &Application::initCompleted,
-        this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::onAppStarted);
-
-      QObject::connect(this->_applicationDistrMon, &Features::Thetta::AppDistrIntegrity::restartRequest,
-        this, &Application::restartApplicationRequest);
 
       this->_commandLineManager->setExecutedGameCredential(
         std::bind(&Application::executedGameCredential, this, std::placeholders::_1, std::placeholders::_2));
@@ -336,16 +285,12 @@ namespace GameNet {
           !this->_gameDownloader->isAnyServiceInProgress();
       });
 
-      closeThettaService();
       this->_updater->startCheckUpdate();
     }
 
     void Application::updateCompletedSlot(bool needRestart)
     {
-      closeThettaService();
-
       if (needRestart) {
-        this->_applicationDistrMon->disable();
         if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
           this->restartApplication(true, false);
           return;
@@ -386,10 +331,6 @@ namespace GameNet {
       QObject::connect(this->_connectionManager, &ConnectionManager::newConnection, 
         this, &Application::onNewConnection);
 
-      QObject::connect(this->_connectionManager, &ConnectionManager::zzimaDisabled, [this](){
-        this->_thetta->openBrowser("https://support.gamenet.ru/kb/articles/1188-reborn-zzima");
-      });
-
       return true;
     }
 
@@ -407,46 +348,51 @@ namespace GameNet {
     
     void Application::initRestApi()
     {
-      Features::Helper::DebugConfigLoader debugConfig;
-      debugConfig.init();
+      //Features::Helper::DebugConfigLoader debugConfig;
+      //debugConfig.init();
 
-      QString overrideApiUrl;
-      bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
+      //QString overrideApiUrl;
+      //bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
 
       QString apiUrl;
 
-      if (overrideApi) {
-        apiUrl = overrideApiUrl;
-      } else {
-        QStringList ports;
-        ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-        QString randomPort = ports.takeAt(qrand() % ports.count());
-        apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-      }
+      //if (overrideApi) {
+      //  apiUrl = overrideApiUrl;
+      //} else {
+      //  QStringList ports;
+      //  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
+      //  QString randomPort = ports.takeAt(qrand() % ports.count());
+      //  apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+      //}
 
-      GGS::Settings::Settings settings;
+      QStringList ports;
+      ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
+      QString randomPort = ports.takeAt(qrand() % ports.count());
+      apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/restApi/url", apiUrl);
       qDebug() << "Using rest api url " << apiUrl;
 
       this->_restApiManager->setUri(apiUrl);
-      this->_restApiManager->setRequest(GGS::RestApi::RequestFactory::Http);
+      this->_restApiManager->setRequest(P1::RestApi::RequestFactory::Http);
       this->_restApiManager->setCache(this->_restApiCache);
       
-      bool debugLogEnabled = false;
-      if (debugConfig.debugApiEnabled(debugLogEnabled))
-        this->_restApiManager->setDebugLogEnabled(debugLogEnabled);
+      //bool debugLogEnabled = false;
+      //if (debugConfig.debugApiEnabled(debugLogEnabled))
+      //  this->_restApiManager->setDebugLogEnabled(debugLogEnabled);
 
-      GGS::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
+      P1::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
     }
 
     void Application::switchClientVersion()
     {
-      GGS::ApplicationArea area;
+      P1::ApplicationArea area;
       area.load();
 
       area = area.isLive()
-        ? GGS::ApplicationArea::SupportedArea::Pts
-        : GGS::ApplicationArea::SupportedArea::Live;
+        ? P1::ApplicationArea::SupportedArea::Pts
+        : P1::ApplicationArea::SupportedArea::Live;
 
       area.save();
 
@@ -467,7 +413,6 @@ namespace GameNet {
 
     void Application::finalize()
     {
-      closeThettaService();
       this->_shutdown->finalize();
     }
 
@@ -516,7 +461,7 @@ namespace GameNet {
       this->_systemInfoManager->init();
     }
 
-    bool Application::executedGameCredential(GGS::RestApi::GameNetCredential& credetial, QString& name)
+    bool Application::executedGameCredential(P1::RestApi::GameNetCredential& credetial, QString& name)
     {
       QString executedGame = this->_executor->executedGame();
       if (executedGame.isEmpty())
@@ -565,36 +510,27 @@ namespace GameNet {
       if (connection->applicationName() == "QGNA") {
         this->setUiCommandConnection();
 
-        if (this->_updater->applicationArea() == GGS::Core::Service::Tst)
-          this->_thetta->installer()->connectToDriver();
-
         auto qgnaLogout = [this]() {
-          this->_systemInfoManager->setCredential(GGS::RestApi::GameNetCredential());
+          this->_systemInfoManager->setCredential(P1::RestApi::GameNetCredential());
           this->_gameDownloader->resetCredentials();
         };
 
         QObject::connect(connection, &Connection::logoutMain, qgnaLogout);
         QObject::connect(connection, &Connection::disconnected, qgnaLogout);
         QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
-          GGS::RestApi::RestApiManager::commonInstance()->setCridential(connection->credential());
+          P1::RestApi::RestApiManager::commonInstance()->setCridential(connection->credential());
           this->_systemInfoManager->setCredential(connection->credential());
-          this->_thetta->setCredential(connection->credential());
           this->setDownloaderCredential(connection->credential());
-        });
-
-        // Kernel patch detect
-        QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
-          this->_kernelStat->execute(connection->credential());
         });
       }
     }
 
-    void Application::setDownloaderCredential(const GGS::RestApi::GameNetCredential &creds)
+    void Application::setDownloaderCredential(const P1::RestApi::GameNetCredential &creds)
     {
       QString userId = creds.userId();
 
       QCryptographicHash hash(QCryptographicHash::Sha1);
-      hash.addData(userId.toLocal8Bit());
+      hash.addData(userId.toLatin1());
       hash.addData("t5mPWw25K8FIpZaQ"); //INFO QGNA-1319
       
       QString authHash(hash.result().toHex());
@@ -620,14 +556,5 @@ namespace GameNet {
       }
     }
 
-    void Application::closeThettaService()
-    {
-      // terminate Thetta Service process
-      QString name = "ThettaService";
-      name += (Features::isWow64() ? "x64" : "x86");
-      name += ".exe";
-
-      Features::terminateProcessByName(name, false, 0);
-    }
   }
 }

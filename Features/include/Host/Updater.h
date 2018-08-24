@@ -1,13 +1,4 @@
-﻿/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates.
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-#pragma once
+﻿#pragma once
 
 #include <UpdateSystem/CheckUpdateHelper.h>
 
@@ -20,7 +11,7 @@
 
 #include <Helper/ApplicationArea.hpp>
 
-namespace GGS {
+namespace P1 {
   namespace UpdateSystem {
     class UpdateManagerWorker;
     class CheckUpdateHelper;
@@ -87,7 +78,7 @@ namespace GameNet {
        * \return  .
        */
 
-      GGS::ApplicationArea applicationArea() const;
+      P1::ApplicationArea applicationArea() const;
 
 signals:
 
@@ -221,7 +212,7 @@ signals:
       void updateThreadFinished();
       void setUpdateState(int updateState);
 
-      void checkUpdateHelperFinished(GGS::UpdateSystem::CheckUpdateHelper::Results result);
+      void checkUpdateHelperFinished(P1::UpdateSystem::CheckUpdateHelper::Results result);
       int checkUpdateInterval();
       void updateErrorSlot(int errorCode);
       
@@ -231,10 +222,10 @@ signals:
     private:
       void initializeUpdateSettings();
 
-      GGS::UpdateSystem::UpdateManagerWorker *_updateManagerWorker;
-      GGS::UpdateSystem::CheckUpdateHelper _checkUpdateHelper;
+      P1::UpdateSystem::UpdateManagerWorker *_updateManagerWorker;
+      P1::UpdateSystem::CheckUpdateHelper _checkUpdateHelper;
 
-      GGS::ApplicationArea _applicationArea;
+      P1::ApplicationArea _applicationArea;
       int _updateState;
       QThread* _updateThread;
       QTimer* _retryTimer;

@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <string>
 
-namespace GGS {
+namespace P1 {
 
   class ApplicationArea
   {

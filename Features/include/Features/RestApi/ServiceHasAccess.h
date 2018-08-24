@@ -3,7 +3,7 @@
 #include <QObject>
 #include <RestApi/CommandBase.h>
 
-class ServiceHasAccess : public GGS::RestApi::CommandBase
+class ServiceHasAccess : public P1::RestApi::CommandBase
 {
   Q_OBJECT
 public:

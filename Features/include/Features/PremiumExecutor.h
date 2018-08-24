@@ -1,12 +1,3 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (�) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
 #pragma once
 
 #include <GameExecutor/GameExecutorService.h>
@@ -29,18 +20,18 @@ namespace Features {
     ~PremiumExecutor();
 
     void init();
-    void setMainExecutor(GGS::GameExecutor::GameExecutorService * value);
+    void setMainExecutor(P1::GameExecutor::GameExecutorService * value);
     bool canSimpleExecuteMain(const QString& id);
     bool canExecuteSecond(const QString& id);
 
     void executeMain(
-      GGS::Core::Service* service, 
-      const GGS::RestApi::GameNetCredential& credetial);
+      P1::Core::Service* service, 
+      const P1::RestApi::GameNetCredential& credetial);
 
     void executeSecond(
-      GGS::Core::Service* service, 
-      const GGS::RestApi::GameNetCredential& credetial, 
-      const GGS::RestApi::GameNetCredential& secondCredetial);
+      P1::Core::Service* service, 
+      const P1::RestApi::GameNetCredential& credetial, 
+      const P1::RestApi::GameNetCredential& secondCredetial);
 
     void shutdownSecond(const QString& serviceId = QString());
 
@@ -54,27 +45,27 @@ namespace Features {
     bool isMainGameStarted();
     bool isSecondGameStarted();
 
-    GGS::GameExecutor::GameExecutorService* secondExecutor();
-    GGS::GameExecutor::GameExecutorService* simpleMainExecutor();
+    P1::GameExecutor::GameExecutorService* secondExecutor();
+    P1::GameExecutor::GameExecutorService* simpleMainExecutor();
 
   signals:
-    void serviceStarted(const GGS::Core::Service &service);
-    void serviceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState serviceState);
+    void serviceStarted(const P1::Core::Service &service);
+    void serviceFinished(const P1::Core::Service &service, P1::GameExecutor::FinishState serviceState);
 
-    void secondServiceStarted(const GGS::Core::Service &service);
-    void secondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState serviceState);
+    void secondServiceStarted(const P1::Core::Service &service);
+    void secondServiceFinished(const P1::Core::Service &service, P1::GameExecutor::FinishState serviceState);
 
   private slots:
-    void internalSecondServiceStarted(const GGS::Core::Service &service);
-    void internalSecondServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+    void internalSecondServiceStarted(const P1::Core::Service &service);
+    void internalSecondServiceFinished(const P1::Core::Service &service, P1::GameExecutor::FinishState state);
 
-    void internalServiceStarted(const GGS::Core::Service &service);
-    void internalServiceFinished(const GGS::Core::Service &service, GGS::GameExecutor::FinishState state);
+    void internalServiceStarted(const P1::Core::Service &service);
+    void internalServiceFinished(const P1::Core::Service &service, P1::GameExecutor::FinishState state);
 
   private:
-    GGS::GameExecutor::GameExecutorService _secondExecutor;
-    GGS::GameExecutor::GameExecutorService _simpleMainExecutor;
-    GGS::GameExecutor::GameExecutorService *_mainExecutor;
+    P1::GameExecutor::GameExecutorService _secondExecutor;
+    P1::GameExecutor::GameExecutorService _simpleMainExecutor;
+    P1::GameExecutor::GameExecutorService *_mainExecutor;
     
     QSet<QString> _mainGameStarted;
     QSet<QString> _secondGameStarted;
@@ -82,8 +73,8 @@ namespace Features {
 
     bool isMainStarted(const QString& id);
     bool isSecondStarted(const QString& id);
-    void registerExecutors(GGS::GameExecutor::GameExecutorService *executor);
-    void setNoInjectItem(GGS::Core::Service* service, const QString& value);
+    void registerExecutors(P1::GameExecutor::GameExecutorService *executor);
+    void setNoInjectItem(P1::Core::Service* service, const QString& value);
 
   };
 

@@ -1,15 +1,5 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates.
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
 
 #include <GameExecutor/GameExecutorService.h>
-#include <GameExecutor/Extension.h>
 #include <Host/ElectronExecutor_p.h>
 #include <RestApi/Auth/GetRedirectToken.h>
 #include <Application/WindowHelper.h>
@@ -25,8 +15,8 @@
 namespace GameNet {
   namespace Host {
 
-    using namespace GGS::GameExecutor;
-    using namespace GGS::RestApi::Auth;
+    using namespace P1::GameExecutor;
+    using namespace P1::RestApi::Auth;
 
     ElectronExecutorPrivate::ElectronExecutorPrivate(QObject *parent) 
       : QObject(parent)
@@ -38,10 +28,9 @@ namespace GameNet {
     }
 
     void ElectronExecutorPrivate::execute(
-      const GGS::Core::Service &service,
-      GGS::GameExecutor::GameExecutorService *executorService,
-      const GGS::RestApi::GameNetCredential& credential,
-      const GGS::RestApi::GameNetCredential& secondCredential, 
+      const P1::Core::Service &service,
+      P1::GameExecutor::GameExecutorService *executorService,
+      const P1::RestApi::GameNetCredential& credential,
       const QString& scheme)
     {
       if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {
@@ -49,7 +38,7 @@ namespace GameNet {
       }
 
       this->_service = service;
-      this->_credential = !secondCredential.userId().isEmpty() ? secondCredential : credential;
+      this->_credential = credential;
       this->_scheme = scheme;
 
       GetRedirectToken* command = new GetRedirectToken(this);
@@ -63,7 +52,7 @@ namespace GameNet {
       command->execute();
     }
 
-    void ElectronExecutorPrivate::onGetRedirectTokenResult(GGS::RestApi::CommandBase::CommandResults result)
+    void ElectronExecutorPrivate::onGetRedirectTokenResult(P1::RestApi::CommandBase::CommandResults result)
     {
       GetRedirectToken *command = qobject_cast<GetRedirectToken*>(QObject::sender());
       if (!command)
@@ -71,12 +60,12 @@ namespace GameNet {
 
       command->deleteLater();
 
-      if (result != GGS::RestApi::CommandBase::NoError) {
+      if (result != P1::RestApi::CommandBase::NoError) {
 
         int errorCode = command->getGenericErrorMessageCode();
         WARNING_LOG << "GetRedirectToken result error: " << errorCode;
 
-        FinishState state = (GGS::RestApi::CommandBase::GenericError == result)
+        FinishState state = (P1::RestApi::CommandBase::GenericError == result)
           ? ExecutorBase::finishStateFromRestApiErrorCode(errorCode) : ExternalFatalError;
 
         this->finished(this->_service, state);
@@ -104,7 +93,7 @@ namespace GameNet {
       if (!::CreateProcessW(nullptr, cmd.data(), nullptr, nullptr, false, 0, nullptr, nullptr, &si, &pi)) {
 
         DEBUG_LOG << "Failed to execute " << path;
-        emit this->finished(this->_service, GGS::GameExecutor::ExternalFatalError);
+        emit this->finished(this->_service, P1::GameExecutor::ExternalFatalError);
         return;
       }
 
@@ -112,7 +101,7 @@ namespace GameNet {
       CloseHandle(pi.hThread);
       CloseHandle(pi.hProcess);
 
-      emit this->finished(this->_service, GGS::GameExecutor::Success);
+      emit this->finished(this->_service, P1::GameExecutor::Success);
 
       activateElectron(pi.dwProcessId);
     }
@@ -136,7 +125,7 @@ namespace GameNet {
             ::AllowSetForegroundWindow(::GetCurrentProcessId());
             ::AllowSetForegroundWindow(processId);
 
-            GGS::Application::WindowHelper::activate(hwnd);
+            P1::Application::WindowHelper::activate(hwnd);
 
             param->second = true;
             return false;

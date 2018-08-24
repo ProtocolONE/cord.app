@@ -8,8 +8,8 @@
 
 #include <QtCore/QSettings>
 
-using GGS::Core::Service;
-using GGS::Settings::Settings;
+using P1::Core::Service;
+using P1::Settings::Settings;
 
 namespace GameNet {
   namespace Host {
@@ -31,7 +31,7 @@ namespace GameNet {
       this->_services = value;
     }
 
-    void ServiceSettings::setDownloader(GGS::GameDownloader::GameDownloadService *value)
+    void ServiceSettings::setDownloader(P1::GameDownloader::GameDownloadService *value)
     {
       Q_ASSERT(value);
       this->_downloader = value;

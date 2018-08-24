@@ -1,6 +1,5 @@
 #include <Host/ExecutorHookFactory.h>
 #include <Host/HookFactory.h>
-#include <Host/Thetta.h>
 #include <Host/Application.h>
 
 #include <GameDownloader/GameDownloadService.h>
@@ -11,31 +10,21 @@
 #include <GameExecutor/Hook/DownloadCustomFile.h>
 #include <GameExecutor/Hook/DisableIEDefalutProxy.h>
 #include <GameExecutor/Hook/SendPlayingInfo.h>
-#include <GameExecutor/Hook/DefaultAikaSettings.h>
 #include <GameExecutor/Hook/DisableAeroHook.h>
-#include <GameExecutor/Hook/BannerDownload.h>
 #include <GameExecutor/Hook/PreventWinXpLaunch.h>
 
-#include <Features/CASettingsFix.h>
 #include <Features/WorkStationLock/RegisterSessionNotificationFilter.h>
 #include <Features/WorkStationLock/WorkStationLockHook.h>
-#include <Features/Thetta/DistrIntegrityExecutorHook.h>
-#include <Features/Thetta/DistrIntegrity.h>
-#include <Features/Thetta/ThettaMonitor.h>
-#include <Features/Thetta/SaveUserInfo.h>
-#include <Features/Thetta/ModuleScanner.h>
-#include <Features/Thetta/Certificate/ModuleSender.h>
 
 #include <Features/GameExecutor/Hook/CheckAsciiPath.h>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::GameExecutor::GameExecutorService;
-using GGS::GameExecutor::HookInterface;
+using P1::GameDownloader::GameDownloadService;
+using P1::GameExecutor::GameExecutorService;
+using P1::GameExecutor::HookInterface;
 
-using Features::Thetta::SaveUserInfo;
 using Features::WorkStationLock::RegisterSessionNotificationFilter;
 using Features::WorkStationLock::WorkStationLockHook;
 
@@ -47,8 +36,6 @@ namespace GameNet {
       , _downloader(nullptr)
       , _executor(nullptr)
       , _downloaderHookFactory(nullptr)
-      , _thetta(nullptr)
-      , _saveUserInfo(new SaveUserInfo(this))
       , _filter(nullptr)
     {
       this->_window.setGeometry(-30000, -30000, 1, 1);
@@ -86,9 +73,8 @@ namespace GameNet {
 
     void ExecutorHookFactory::init()
     {
-      using namespace GGS::GameExecutor::Hook;
+      using namespace P1::GameExecutor::Hook;
       using namespace Features;
-      using namespace Features::Thetta;
       using namespace Features::GameExecutor::Hook;
 
       this->reg<ActivateWindow>([this](ActivateWindow* a){
@@ -103,43 +89,9 @@ namespace GameNet {
       this->reg<DownloadCustomFile>();
       this->reg<DisableIEDefalutProxy>();
       this->reg<SendPlayingInfo>();
-      this->reg<DefaultAikaSettings>();
       this->reg<DisableAeroHook>();
       this->reg<PreventWinXpLaunch>();
       this->reg<CheckAsciiPath>();
-      this->reg<ThettaMonitor>([this](ThettaMonitor* h){
-        h->setDriverInstaller(this->_thetta->installer());
-        h->setSaveUserInfo(this->_saveUserInfo);
-
-        QObject::connect(h, &Features::Thetta::ThettaMonitor::onScanModuleLoaded, 
-          this->_thetta->scanner(), &Features::Thetta::ModuleScanner::onModuleLoaded);
-
-        QObject::connect(this->_thetta->scanner(), &Features::Thetta::ModuleScanner::needSendHash,
-          h, &Features::Thetta::ThettaMonitor::processQueue);
-
-        QObject::connect(h, &Features::Thetta::ThettaMonitor::sendTimeout,
-          this->_thetta, &Thetta::onTettaMonitorSendTimeout, Qt::QueuedConnection);
-
-
-        using Features::Thetta::Certificate::ModuleSender;
-        ModuleSender* driverScanner(this->_thetta->driverScanner());
-
-        QObject::connect(h, &Features::Thetta::ThettaMonitor::preExecuteCompleted,
-          driverScanner, &ModuleSender::onPreExecuteCompleted, Qt::QueuedConnection);
-        QObject::connect(h, &Features::Thetta::ThettaMonitor::postExecuteCompleted,
-          driverScanner, &ModuleSender::onPostExecuteCompleted, Qt::QueuedConnection);
-      });
-
-      this->reg<CASettingsFix>([this](CASettingsFix *h) {
-        int primaryScreen = QApplication::desktop()->primaryScreen();
-        h->setResolution(QApplication::desktop()->screenGeometry(primaryScreen));
-        QObject::connect(this->_downloader, &GameDownloadService::serviceInstalled,
-          h, &Features::CASettingsFix::install);
-      });
-
-      this->reg<DistrIntegrityExecutorHook>([this](DistrIntegrityExecutorHook *h) {
-        h->setGameExecutor(this->_executor);
-      });
     }
 
     HookInterface* ExecutorHookFactory::create(const QString& id)
@@ -150,12 +102,6 @@ namespace GameNet {
         result->setParent(this);
 
       return result;
-    }
-
-    void ExecutorHookFactory::setThetta(Thetta *value)
-    {
-      Q_ASSERT(value);
-      this->_thetta = value;
     }
 
   }

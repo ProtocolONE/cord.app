@@ -1,13 +1,3 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-
 #pragma once
 
 #include <Features/GameDownloader/DownloadStats.h>
@@ -29,24 +19,24 @@ namespace Features {
       GameDownloadStatistics(QObject *parent = 0);
       ~GameDownloadStatistics();
 
-      void init(GGS::GameDownloader::GameDownloadService* downloader);
+      void init(P1::GameDownloader::GameDownloadService* downloader);
 
     private slots:
       void progressDownloadChanged(
-        const GGS::Core::Service *service, 
+        const P1::Core::Service *service, 
         qint8 progress, 
-        GGS::Libtorrent::EventArgs::ProgressEventArgs args); 
+        P1::Libtorrent::EventArgs::ProgressEventArgs args); 
 
-      void started(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
-      void finished(const GGS::Core::Service *service);
-      void stopped(const GGS::Core::Service *service);
-      void failed(const GGS::Core::Service *service); 
+      void started(const P1::Core::Service *service, P1::GameDownloader::StartType startType);
+      void finished(const P1::Core::Service *service);
+      void stopped(const P1::Core::Service *service);
+      void failed(const P1::Core::Service *service); 
 
       void saveTimer();
       void externalIpResult(QString ip);
 
     private:
-      GGS::GameDownloader::GameDownloadService* _downloader;
+      P1::GameDownloader::GameDownloadService* _downloader;
       QHash<QString, DownloadStats*> _statisticMap;
       QTimer _timer;
       QMutex _mutex;

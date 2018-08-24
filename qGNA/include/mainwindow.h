@@ -2,18 +2,15 @@
 
 #include <QmlMessageAdapter.h>
 
-#include <Features/SilentMode.h>
 #include <Features/TaskBarProgressHelper.h>
-
-#include <Features/Thetta/ThettaInstaller.h>
 
 #include <Marketing/MarketingTarget.h>
 
-#include <Core/Service>
+#include <Core/Service.h>
 
-#include <RestApi/FakeCache>
-#include <RestApi/GameNetCredential>
-#include <RestApi/RestApiManager>
+#include <RestApi/FakeCache.h>
+#include <RestApi/GameNetCredential.h>
+#include <RestApi/RestApiManager.h>
 
 #include <AutoRunHelper/UACHelper.h>
 
@@ -25,10 +22,6 @@
 #include <QtCore/QScopedPointer>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-
-//#include <QtDeclarative/QDeclarativeContext>
-//#include <QtDeclarative/QDeclarativeView>
-//#include <QtDeclarative/QDeclarativeEngine>
 
 #include <QQuickView>
 
@@ -151,7 +144,6 @@ public slots:
 
   void onLanguageChanged();
 
-  bool silent();
   void onWindowClose();
   void restartUISlot(bool minimized);
   void shutdownUISlot();
@@ -256,15 +248,13 @@ private slots:
   void removeStartGame(QString serviceId);
 
   void restApiGenericError(
-    GGS::RestApi::CommandBase::Error error,
+    P1::RestApi::CommandBase::Error error,
     QString message,
-    GGS::RestApi::CommandBase *command);
+    P1::RestApi::CommandBase *command);
 
 private:
   void sendStartingMarketing();
-
-  void loadPlugin(QString pluginName, QString uri);
-
+  
   void initRestApi();
   void initMarketing();
 
@@ -276,9 +266,9 @@ private:
   void postUpdateInit();
   void onApplicationStateChanged(Qt::ApplicationState state);
 
-  GGS::RestApi::FakeCache _fakeCache;
-  GGS::RestApi::GameNetCredential _credential;
-  GGS::RestApi::RestApiManager _restapiManager;
+  P1::RestApi::FakeCache _fakeCache;
+  P1::RestApi::GameNetCredential _credential;
+  P1::RestApi::RestApiManager _restapiManager;
 
   QmlMessageAdapter* messageAdapter;
   SettingsViewModel* settingsViewModel;
@@ -290,19 +280,18 @@ private:
   //MQDeclarativeView *nQMLContainer;
 
   bool m_WindowState; // false - normal size, true - max size  
-  GGS::Application::ArgumentParser _commandLineArguments;
-  GGS::Core::Service::Area _gameArea;
-  GGS::KeyboardLayoutHelper _keyboardLayoutHelper;
+  P1::Application::ArgumentParser _commandLineArguments;
+  P1::Core::Service::Area _gameArea;
+  P1::KeyboardLayoutHelper _keyboardLayoutHelper;
 
   QMap<QString,QTranslator*> translators;
-  GGS::GameDownloader::GameDownloadService _gameDownloader;
+  P1::GameDownloader::GameDownloadService _gameDownloader;
 
-  GGS::Core::Service::Area _applicationArea;
+  P1::Core::Service::Area _applicationArea;
 
-  GGS::Marketing::MarketingTarget _marketingTargetFeatures;
+  P1::Marketing::MarketingTarget _marketingTargetFeatures;
 
   Features::TaskBarHelper _taskBarHelper;
-  Features::SilentMode _silentMode;
 
   DownloaderBridgeProxy *_downloader;
   DownloaderSettingsBridgeProxy *_downloaderSettings;

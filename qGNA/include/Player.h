@@ -1,6 +1,5 @@
 #pragma once
 
-//#include <QDeclarativeItem>
 #include <QtMultimedia/QAudioOutput>
 #include <QtMultimedia/QMediaPlayer>
 

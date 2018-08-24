@@ -50,7 +50,7 @@ namespace GameNet {
 
     void LicenseManager::acceptLicense(const QString &serviceId, const QString &hash)
     {
-      using GGS::Core::Marketing;
+      using P1::Core::Marketing;
 
       QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
       settings.beginGroup(serviceId);
@@ -62,14 +62,14 @@ namespace GameNet {
 
     void LicenseManager::acceptWebLicense()
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("qGNA");
       settings.setValue("webLicenseAccepted", "1");
     }
 
     bool LicenseManager::hasAcceptedWebLicense()
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("qGNA");
       QString hash = settings.value("webLicenseAccepted", QString()).toString();
       return !hash.isEmpty();

@@ -16,16 +16,16 @@
 #include <Features/Marketing/SystemInfo/Hardware/Screen.h>
 #include <Features/Marketing/SystemInfo/Hardware/OsInfo.h>
 
-#include <RestApi/Commands/Marketing/SetGnaInstallStep>
+#include <RestApi/Commands/Marketing/SetGnaInstallStep.h>
 
 #include <Settings/Settings.h>
 #include <Core/System/HardwareId.h>
 
-using GGS::RestApi::Commands::Marketing::SetGnaInstallStep;
-using GGS::RestApi::CommandBase;
-using GGS::RestApi::GameNetCredential;
-using GGS::RestApi::RestApiManager;
-using GGS::Settings::Settings;
+using P1::RestApi::Commands::Marketing::SetGnaInstallStep;
+using P1::RestApi::CommandBase;
+using P1::RestApi::GameNetCredential;
+using P1::RestApi::RestApiManager;
+using P1::Settings::Settings;
 
 
 namespace Features {
@@ -55,7 +55,7 @@ namespace Features {
         QTimer::singleShot(300000, this, SLOT(send()));
       }
 
-      void SystemInfoManager::setCredential(const GGS::RestApi::GameNetCredential& value)
+      void SystemInfoManager::setCredential(const P1::RestApi::GameNetCredential& value)
       {
         this->_credential = value;
       }
@@ -75,7 +75,7 @@ namespace Features {
         SetGnaInstallStep *cmd = new SetGnaInstallStep();
         cmd->setUserId(this->_credential.userId());
         cmd->setAppKey(this->_credential.appKey());
-        cmd->setHwid(GGS::Core::System::HardwareId::value());
+        cmd->setHwid(P1::Core::System::HardwareId::value());
         cmd->setServiceId(QLatin1String("1"));
         cmd->setMarketingTarget(2761);
         cmd->setMarketingId(this->_mid);
@@ -83,7 +83,7 @@ namespace Features {
 
         QObject::connect(cmd, &SetGnaInstallStep::result, [this, cmd](CommandBase::CommandResults result) {
           cmd->deleteLater();
-          if (result == GGS::RestApi::CommandBase::NoError)
+          if (result == P1::RestApi::CommandBase::NoError)
             this->saveSendDate();
         });
 

@@ -1,5 +1,4 @@
 #include <Host/GameExecutor.h>
-#include <Host/Thetta.h>
 #include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/ServiceSettings.h>
 
@@ -16,10 +15,10 @@
 #include <QtCore/QCoreApplication>
 
 using Features::PremiumExecutor;
-using GGS::GameExecutor::GameExecutorService;
-using GGS::GameExecutor::ServiceInfoCounter;
-using GGS::Core::Service;
-using GGS::RestApi::GameNetCredential;
+using P1::GameExecutor::GameExecutorService;
+using P1::GameExecutor::ServiceInfoCounter;
+using P1::Core::Service;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {
@@ -30,7 +29,6 @@ namespace GameNet {
       , _mainExecutor(new GameExecutorService(this))
       , _gameExecutorServiceInfoCounter(new ServiceInfoCounter(this))
       , _services(nullptr)
-      , _thetta(nullptr)
       , _serviceSettings(nullptr)
     {
     }
@@ -45,12 +43,6 @@ namespace GameNet {
       this->_services = value;
     }
 
-    void GameExecutor::setThetta(Thetta *value)
-    {
-      Q_ASSERT(value);
-      this->_thetta = value;
-    }
-
     void GameExecutor::setServiceSettings(ServiceSettings* value)
     {
       Q_ASSERT(value);
@@ -60,15 +52,10 @@ namespace GameNet {
     void GameExecutor::init()
     {
       Q_ASSERT(this->_mainExecutor);
-      Q_ASSERT(this->_thetta);
       Q_ASSERT(this->_serviceSettings);
 
       this->_premiumExecutor->setMainExecutor(this->_mainExecutor);
       this->_premiumExecutor->init();
-
-      this->_thetta->initExtensions(this->_mainExecutor);
-      this->_thetta->initExtensions(this->_premiumExecutor->secondExecutor());
-      this->_thetta->initExtensions(this->_premiumExecutor->simpleMainExecutor());
 
       QObject::connect(this->_premiumExecutor, &PremiumExecutor::serviceStarted,
         this, &GameExecutor::onServiceStarted);
@@ -115,7 +102,7 @@ namespace GameNet {
     {
       Q_ASSERT(this->_services);
       Q_ASSERT(this->_premiumExecutor);
-      GGS::Core::Service *service = this->_services->getService(serviceId);
+      P1::Core::Service *service = this->_services->getService(serviceId);
       if (!service)
         return;
 
@@ -148,7 +135,7 @@ namespace GameNet {
       emit this->serviceStarted(service.id());
     }
 
-    void GameExecutor::onServiceFinished(const Service &service, GGS::GameExecutor::FinishState state)
+    void GameExecutor::onServiceFinished(const Service &service, P1::GameExecutor::FinishState state)
     {
       emit this->serviceFinished(service.id(), static_cast<int>(state));
     }
@@ -158,7 +145,7 @@ namespace GameNet {
       emit this->secondServiceStarted(service.id());
     }
 
-    void GameExecutor::onSecondServiceFinished(const Service &service, GGS::GameExecutor::FinishState state)
+    void GameExecutor::onSecondServiceFinished(const Service &service, P1::GameExecutor::FinishState state)
     {
       emit this->secondServiceFinished(service.id(), static_cast<int>(state));
     }
@@ -168,7 +155,7 @@ namespace GameNet {
       return this->_mainExecutor;
     }
 
-    void GameExecutor::prepairExecuteUrl(GGS::Core::Service *service)
+    void GameExecutor::prepairExecuteUrl(P1::Core::Service *service)
     {
       Q_ASSERT(this->_serviceSettings);
 
@@ -205,20 +192,6 @@ namespace GameNet {
 
       urlQuery.addQueryItem("start64", start64);
 
-      if (urlQuery.hasQueryItem("injectOverlay")) {
-        urlQuery.removeAllQueryItems("injectOverlay");
-
-        bool overlayEnabled = this->_serviceSettings->isOverlayEnabled(serviceId);
-        if (overlayEnabled) {
-#ifdef _DEBUG
-          QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-#else
-          QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-#endif
-          urlQuery.addQueryItem("injectDll", injectedDll);
-        }
-      }
-
       result.setQuery(urlQuery);
       service->setUrl(result);
     }
@@ -238,12 +211,12 @@ namespace GameNet {
       return result;
     }
 
-    GGS::GameExecutor::GameExecutorService* GameExecutor::secondExecutor()
+    P1::GameExecutor::GameExecutorService* GameExecutor::secondExecutor()
     {
       return this->_premiumExecutor->secondExecutor();
     }
 
-    GGS::GameExecutor::GameExecutorService* GameExecutor::simpleMainExecutor()
+    P1::GameExecutor::GameExecutorService* GameExecutor::simpleMainExecutor()
     {
       return this->_premiumExecutor->simpleMainExecutor();
     }

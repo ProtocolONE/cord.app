@@ -1,4 +1,3 @@
-
 #include <Features/Marketing/SystemInfo/Hardware/Ram.h>
 #include <Features/WmiQuery.h>
 

@@ -20,7 +20,7 @@ namespace Features {
         virtual ~SystemInfoManager();
 
         void init();
-        void setCredential(const GGS::RestApi::GameNetCredential& value);
+        void setCredential(const P1::RestApi::GameNetCredential& value);
         void setMid(const QString& value);
 
       private slots:
@@ -36,7 +36,7 @@ namespace Features {
         void saveSendDate();
         QDateTime loadSendDate();
 
-        GGS::RestApi::GameNetCredential _credential;
+        P1::RestApi::GameNetCredential _credential;
         QString _mid;
         QTimer _timer;
       };

@@ -72,7 +72,7 @@ namespace GameNet {
         QtConcurrent::run(this, &UninstallResult::internalWaitUninstall);
       }
 
-      void UninstallResult::onUninstallFinished(const GGS::Core::Service *service)
+      void UninstallResult::onUninstallFinished(const P1::Core::Service *service)
       {
         Q_ASSERT(service);
         if (this->_serviceId != service->id()) 
@@ -82,7 +82,7 @@ namespace GameNet {
         this->deleteLater();
       }
 
-      void UninstallResult::onUninstallFailed(const GGS::Core::Service *service)
+      void UninstallResult::onUninstallFailed(const P1::Core::Service *service)
       {
         Q_ASSERT(service);
         if (this->_serviceId != service->id())

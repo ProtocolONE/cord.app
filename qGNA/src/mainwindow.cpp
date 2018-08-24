@@ -4,7 +4,7 @@
 #include <HostMessageAdapter.h>
 
 #include <Helper/CacheNetworkManagerFactory.h>
-#include <Helper/ConfigLoader.hpp>
+//#include <Helper/ConfigLoader.hpp>
 
 #include <Features/RestApi/ServiceHasAccess.h>
 #include <Features/RenderRateHack.h>
@@ -31,7 +31,7 @@
 #include <Host/Dbus/ApplicationStatisticBridgeProxy.h>
 #include <Host/Dbus/LicenseManagerBridgeProxy.h>
 
-#include <Core/UI/Message>
+#include <Core/UI/Message.h>
 #include <Core/Marketing.h>
 #include <Core/System/FileInfo.h>
 #include <Core/System/HardwareId.h>
@@ -73,7 +73,7 @@ using GameNet::Host::Bridge::createGameNetCredential;
 
 MainWindow::MainWindow(QWindow *parent)
   : QQuickView(parent)
-  , _gameArea(GGS::Core::Service::Live)
+  , _gameArea(P1::Core::Service::Live)
   , _downloader(nullptr)
   , _downloaderSettings(nullptr)
   , _serviceSettings(nullptr)
@@ -158,12 +158,12 @@ void MainWindow::initialize()
   this->_commandLineArguments.parse(QCoreApplication::arguments());
   
   if (this->_commandLineArguments.contains("gamepts"))
-    this->_gameArea = GGS::Core::Service::Pts;
+    this->_gameArea = P1::Core::Service::Pts;
   
   if (this->_commandLineArguments.contains("gametest"))
-    this->_gameArea = GGS::Core::Service::Tst;
+    this->_gameArea = P1::Core::Service::Tst;
   
-  this->setFileVersion(GGS::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
+  this->setFileVersion(P1::Core::System::FileInfo::version(QCoreApplication::applicationFilePath())); 
   
   this->setTitle("GameNet " + this->_fileVersion);
   this->setColor(QColor(0, 0, 0, 0));
@@ -184,15 +184,13 @@ void MainWindow::initialize()
   
   qmlRegisterType<UpdateViewModel>("qGNA.Library", 1, 0, "UpdateViewModel");
   qmlRegisterType<Player>("qGNA.Library", 1, 0, "Player");
-  qmlRegisterType<GGS::Core::UI::Message>("qGNA.Library", 1, 0, "Message");
+  qmlRegisterType<P1::Core::UI::Message>("qGNA.Library", 1, 0, "Message");
   qmlRegisterType<ApplicationStatisticViewModel>("qGNA.Library", 1, 0, "ApplicationStatistic");
   qmlRegisterType<ServiceHandleViewModel>("qGNA.Library", 1, 0, "ServiceHandle");
   qmlRegisterType<SettingsManagerViewModel>("qGNA.Library", 1, 0, "SettingsManager");
   
-  qmlRegisterUncreatableType<GGS::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
-  qmlRegisterUncreatableType<GGS::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
-  
-  qRegisterMetaType<Features::Thetta::ThettaInstaller::Result>("Features::Thetta::ThettaInstaller::Result");
+  qmlRegisterUncreatableType<P1::Downloader::DownloadResultsWrapper>("qGNA.Library", 1, 0,  "DownloadResults", "");
+  qmlRegisterUncreatableType<P1::UpdateSystem::UpdateInfoGetterResultsWrapper>("qGNA.Library", 1, 0,  "UpdateInfoGetterResults", "");
   
   this->initMarketing();
   
@@ -201,7 +199,7 @@ void MainWindow::initialize()
   this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins5/"));
   this->engine()->addPluginPath(QCoreApplication::applicationDirPath() + "/plugins5/");
 
-  QObject::connect(&this->_restapiManager, &GGS::RestApi::RestApiManager::genericErrorEx,
+  QObject::connect(&this->_restapiManager, &P1::RestApi::RestApiManager::genericErrorEx,
     this, &MainWindow::restApiGenericError);
   
   messageAdapter = new QmlMessageAdapter(this);
@@ -273,8 +271,8 @@ void MainWindow::sendStartingMarketing()
   params["updateArea"] = this->settingsViewModel->updateArea();
   params["version"] = this->_fileVersion;    
 
-  GGS::Core::Marketing::send(GGS::Core::Marketing::AnyStartQGna, params);
-  GGS::Core::Marketing::sendOnce(GGS::Core::Marketing::FirstRunGna);
+  P1::Core::Marketing::send(P1::Core::Marketing::AnyStartQGna, params);
+  P1::Core::Marketing::sendOnce(P1::Core::Marketing::FirstRunGna);
 }
 
 void MainWindow::restartUISlot(bool minimized)
@@ -330,7 +328,7 @@ void MainWindow::activateWindow()
   this->showNormal();
 
   // Эта функция активирует окно и поднмиает его повех всех окон
-  GGS::Application::WindowHelper::activate(this->winId());
+  P1::Application::WindowHelper::activate(reinterpret_cast<HWND>(this->winId()));
 
   this->_taskBarHelper.restore();
   
@@ -374,7 +372,7 @@ void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, c
 {
   qDebug() << "Auth success with userId " << userId;
 
-  GGS::RestApi::GameNetCredential credential;
+  P1::RestApi::GameNetCredential credential;
   credential.setUserId(userId);
   credential.setAppKey(appKey);
   credential.setCookie(cookie);
@@ -427,7 +425,7 @@ void MainWindow::openExternalUrlWithAuth(const QString& url)
 
 void MainWindow::openExternalUrl(const QString& url)
 {
-  this->_applicationProxy->openBrowser(url);
+  QDesktopServices::openUrl(url);
 }
 
 void MainWindow::logout()
@@ -445,7 +443,7 @@ void MainWindow::logout()
 
 void MainWindow::prepairGameDownloader()
 {
-  using GGS::GameDownloader::GameDownloadService;
+  using P1::GameDownloader::GameDownloadService;
   
   QObject::connect(this->_downloader, &DownloaderBridgeProxy::totalProgress, 
     this, &MainWindow::downloadGameTotalProgressChanged);
@@ -500,8 +498,8 @@ void MainWindow::downloadGameProgressChanged(
   int progress, 
   GameNet::Host::Bridge::DownloadProgressArgs args)
 {
-  if (args.status() == GGS::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles) {
-      emit this->rehashProgressChanged(service->id(), progress, args.progress() * 100);
+  if (args.status == static_cast<int>(P1::Libtorrent::EventArgs::ProgressEventArgs::CheckingFiles)) {
+      emit this->rehashProgressChanged(serviceId, progress, args.progress * 100);
       return;
   }
 
@@ -552,8 +550,8 @@ bool MainWindow::executeService(QString id)
   if (!this->_serviceSettings->isDownloadable(id))
     this->_licenseManager->acceptWebLicense();
 
-  GGS::RestApi::GameNetCredential baseCredential =
-    GGS::RestApi::RestApiManager::commonInstance()->credential();
+  P1::RestApi::GameNetCredential baseCredential =
+    P1::RestApi::RestApiManager::commonInstance()->credential();
 
   this->_executor->execute(id, createDbusCredential(baseCredential));
   this->startGame(id);
@@ -582,16 +580,6 @@ void MainWindow::gameDownloaderFailed(const QString& serviceId)
 
 void MainWindow::removeStartGame(QString serviceId)
 {
-  if (this->_silentMode.isEnabled()) {
-    static bool firstCall = true;
-
-    if (firstCall) {
-      firstCall = false;
-      this->forceDownload(serviceId);
-      return;
-    }
-  }
-
   int totalCount = this->_applicationStatistic->executeGameTotalCount(serviceId);
   if (totalCount > 0) {
     this->selectService(serviceId);
@@ -636,7 +624,7 @@ void MainWindow::downloadButtonStart(QString serviceId)
 void MainWindow::forceDownload(QString serviceId)
 {
   if (this->_serviceSettings->isDownloadable(serviceId)) {
-    this->_downloader->start(serviceId, static_cast<int>(GGS::GameDownloader::Normal));
+    this->_downloader->start(serviceId, static_cast<int>(P1::GameDownloader::Normal));
   }
 }
 
@@ -683,15 +671,15 @@ void MainWindow::initializeUpdateSettings()
     this->_applicationArea = GGS::Core::Service::Live;
   }
 
-  GGS::RestApi::GameNetCredential baseCredential = 
-    GGS::RestApi::RestApiManager::commonInstance()->credential();
+  P1::RestApi::GameNetCredential baseCredential = 
+    P1::RestApi::RestApiManager::commonInstance()->credential();
     
   this->_executor->execute(serviceId, createDbusCredential(baseCredential));
 }
 
 void MainWindow::uninstallService(const QString serviceId)
 {
-  this->_downloader->start(serviceId, GGS::GameDownloader::Uninstall);
+  this->_downloader->start(serviceId, P1::GameDownloader::Uninstall);
 }
 
 void MainWindow::cancelServiceUninstall(const QString serviceId)
@@ -711,7 +699,7 @@ void MainWindow::startGame(const QString& serviceId)
     return;
 
   if (this->_serviceSettings->isDownloadable(serviceId)) {
-    this->_downloader->start(serviceId, static_cast<int>(GGS::GameDownloader::Normal));
+    this->_downloader->start(serviceId, static_cast<int>(P1::GameDownloader::Normal));
     return;
   }
   
@@ -739,8 +727,8 @@ void MainWindow::startGame(const QString& serviceId)
     this->_premiumExecutor.executeMain(service);
   }
 
-  GGS::RestApi::GameNetCredential baseCredential = 
-    GGS::RestApi::RestApiManager::commonInstance()->credential();
+  P1::RestApi::GameNetCredential baseCredential = 
+    P1::RestApi::RestApiManager::commonInstance()->credential();
 
   this->_executor->execute(serviceId, createDbusCredential(baseCredential));
 }
@@ -799,31 +787,31 @@ void MainWindow::onServiceFinished(const QString &serviceId, int state)
   emit this->serviceFinished(serviceId, state);
 
   switch(state) {
-  case GGS::GameExecutor::AuthorizationError:
+  case P1::GameExecutor::AuthorizationError:
     emit this->wrongCredential(this->_credential.userId());
     break;
-  case GGS::GameExecutor::ServiceAccountBlockedError:
-    if (GGS::Core::UI::Message::Support == 
-      GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"), 
-      static_cast<Message::StandardButton>(GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Support)))
+  case P1::GameExecutor::ServiceAccountBlockedError:
+    if (P1::Core::UI::Message::Support == 
+      P1::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"), 
+      static_cast<Message::StandardButton>(P1::Core::UI::Message::Ok | P1::Core::UI::Message::Support)))
       this->openExternalUrl("https://support.gamenet.ru");
     break;
-  case GGS::GameExecutor::ServiceAuthorizationImpossible:
+  case P1::GameExecutor::ServiceAuthorizationImpossible:
     //INFO Handled in qml 
     break;
-  case GGS::GameExecutor::PakkanenPermissionDenied:
-    GGS::Core::UI::Message::warning(
+  case P1::GameExecutor::PakkanenPermissionDenied:
+    P1::Core::UI::Message::warning(
       tr("INFO_CAPTION"), 
       tr("SERVICE_ACCOUNT_CBT_PERMISSION_INFO").arg(this->_serviceSettings->name(serviceId)));
     break;
-  case GGS::GameExecutor::PakkanenPhoneVerification:
+  case P1::GameExecutor::PakkanenPhoneVerification:
     emit this->needPakkanenVerification(serviceId);
     break;
-  case GGS::GameExecutor::GuestAccountExpired:
+  case P1::GameExecutor::GuestAccountExpired:
     emit this->authGuestConfirmRequest(serviceId);
     break;
-  case GGS::GameExecutor::PakkanenGeoIpBlocked:
-    GGS::Core::UI::Message::warning(
+  case P1::GameExecutor::PakkanenGeoIpBlocked:
+    P1::Core::UI::Message::warning(
       tr("INFO_CAPTION"),
       tr("SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO").arg(this->_serviceSettings->name(serviceId)));
     break;
@@ -842,17 +830,17 @@ void MainWindow::onSecondServiceFinished(const QString &serviceId, int state)
   DEBUG_LOG << "Finish state" << state;
 
   switch(state) {
-  case GGS::GameExecutor::AuthorizationError:
-    GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SECOND_SERVICE_AUTH_ERROR")); 
+  case P1::GameExecutor::AuthorizationError:
+    P1::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SECOND_SERVICE_AUTH_ERROR")); 
     break;
-  case GGS::GameExecutor::ServiceAccountBlockedError:
-    if (GGS::Core::UI::Message::Support ==
-      GGS::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"),
-      static_cast<Message::StandardButton>(GGS::Core::UI::Message::Ok | GGS::Core::UI::Message::Support)))
+  case P1::GameExecutor::ServiceAccountBlockedError:
+    if (P1::Core::UI::Message::Support ==
+      P1::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"),
+      static_cast<Message::StandardButton>(P1::Core::UI::Message::Ok | P1::Core::UI::Message::Support)))
       this->openExternalUrlWithAuth("https://support.gamenet.ru");
     break;
     break;
-  case GGS::GameExecutor::ServiceAuthorizationImpossible:
+  case P1::GameExecutor::ServiceAuthorizationImpossible:
     //INFO Handled in qml 
     break;
   }
@@ -864,11 +852,11 @@ void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, co
 }
 
 void MainWindow::restApiGenericError(
-  GGS::RestApi::CommandBase::Error error,
+  P1::RestApi::CommandBase::Error error,
   QString message,
-  GGS::RestApi::CommandBase *command)
+  P1::RestApi::CommandBase *command)
 {
-  using GGS::RestApi::CommandBase;
+  using P1::RestApi::CommandBase;
 
   switch(error) {
   case CommandBase::AuthorizationFailed: // break пропущен не спроста
@@ -890,40 +878,15 @@ void MainWindow::restApiGenericError(
 
 void MainWindow::showEvent(QShowEvent* event)
 {
-  //this->_taskBarHelper.prepare(reinterpret_cast<HWND>(this->effectiveWinId()));
   this->_taskBarHelper.prepare(reinterpret_cast<HWND>(this->winId()));
   emit this->taskBarButtonMsgRegistered(this->_taskBarHelper.getTaskbarCreatedMessageId());
 
-  // UNDONE  !!!!!!!!!!!!!!!!Next one overloaded due to QGNA-128
-  // посмотреть надо ли теперь форсированно репейнтить при разворачивани
-  //this->repaint();
-  //this->requestUpdate();
-  //QApplication::postEvent(this, new QEvent(QEvent::UpdateRequest), Qt::LowEventPriority);
   QQuickView::showEvent(event);
 }
 
 bool MainWindow::isWindowVisible()
 {
   return this->isVisible() && this->windowState() != Qt::WindowMinimized;
-}
-
-// UNDONE Больше мы не грузим руками плагины - удлить функцию
-void MainWindow::loadPlugin(QString pluginName, QString uri)
-{
-  QString message = QString("Couldn't load plugin %1").arg(pluginName);
-
-#ifdef _DEBUG
-  QString pluginPath = QString("%1/%2d.dll").arg(QCoreApplication::applicationDirPath(), pluginName);
-#else
-  QString pluginPath = QString("%1/%2.dll").arg(QCoreApplication::applicationDirPath(), pluginName);
-#endif
-
-  QList<QQmlError> errors;
-  this->engine()->importPlugin(pluginPath, uri, &errors);
-
-  Q_FOREACH(const QQmlError& error, errors) {
-    DEBUG_LOG << error.toString() << "\n" << error.description();
-  }
 }
 
 void MainWindow::gameDownloaderServiceInstalled(const QString& serviceId)
@@ -934,15 +897,6 @@ void MainWindow::gameDownloaderServiceInstalled(const QString& serviceId)
 void MainWindow::gameDownloaderServiceUpdated(const QString& serviceId)
 {
   DEBUG_LOG;
-  if (this->_silentMode.isEnabled()) {
-    static bool firstTime = true;
-    if (firstTime) {
-      firstTime = false;
-      emit this->selectService(serviceId);
-      return;
-    }
-  }
-
   this->activateWindow();
   emit this->selectService(serviceId);
 }
@@ -962,9 +916,6 @@ void MainWindow::postUpdateInit()
 
   QObject::connect(this->_executor, &ExecutorBridgeProxy::secondServiceFinished,
     this, &MainWindow::onSecondServiceFinished);
-
-  QObject::connect(this->_executor, &ExecutorBridgeProxy::serviceStarted,
-    &this->_silentMode, &Features::SilentMode::gameStarted);
 }
 
 void MainWindow::onApplicationStateChanged(Qt::ApplicationState state)
@@ -1033,37 +984,42 @@ void MainWindow::initRestApi()
 {
   //Port selection due to https://jira.gamenet.ru:8443/browse/QGNA-285
 
-  Features::Helper::DebugConfigLoader debugConfig;
-  debugConfig.init();
+  //Features::Helper::DebugConfigLoader debugConfig;
+  //debugConfig.init();
 
-  QString overrideApiUrl;
-  bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
+  //QString overrideApiUrl;
+  //bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
 
   QString apiUrl;
 
-  if (overrideApi) {
-    apiUrl = overrideApiUrl;
-  } else {
-    QStringList ports;
-    ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-    QString randomPort = ports.takeAt(qrand() % ports.count());
-    apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-  }
+  //if (overrideApi) {
+  //  apiUrl = overrideApiUrl;
+  //} else {
+  //  QStringList ports;
+  //  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
+  //  QString randomPort = ports.takeAt(qrand() % ports.count());
+  //  apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+  //}
 
-  GGS::Settings::Settings settings;
+
+  QStringList ports;
+  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
+  QString randomPort = ports.takeAt(qrand() % ports.count());
+  apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+  P1::Settings::Settings settings;
   settings.setValue("qGNA/restApi/url", apiUrl);
 
   qDebug() << "Using rest api url " << apiUrl;
 
   this->_restapiManager.setUri(apiUrl);
-  this->_restapiManager.setRequest(GGS::RestApi::RequestFactory::Http);
+  this->_restapiManager.setRequest(P1::RestApi::RequestFactory::Http);
   this->_restapiManager.setCache(&_fakeCache);
 
-  bool debugLogEnabled = false;
-  if (debugConfig.debugApiEnabled(debugLogEnabled))
-    this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
+  //bool debugLogEnabled = false;
+  //if (debugConfig.debugApiEnabled(debugLogEnabled))
+  //  this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
 
-  GGS::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
+  P1::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
 }
 
 bool MainWindow::event(QEvent* event)
@@ -1094,10 +1050,10 @@ bool MainWindow::executeSecondService(QString id, QString userId, QString appKey
   if (!this->_executor->canExecuteSecond(id))
     return false;
 
-  GGS::RestApi::GameNetCredential baseCredential = 
-    GGS::RestApi::RestApiManager::commonInstance()->credential();
+  P1::RestApi::GameNetCredential baseCredential = 
+    P1::RestApi::RestApiManager::commonInstance()->credential();
 
-  GGS::RestApi::GameNetCredential credential;
+  P1::RestApi::GameNetCredential credential;
   credential.setUserId(userId);
   credential.setAppKey(appKey);
   // set cookie if needed 
@@ -1168,11 +1124,6 @@ void MainWindow::onLanguageChanged()
 void MainWindow::onLanguageChanged()
 {
   this->_keyboardLayoutHelper.update();
-}
-
-bool MainWindow::silent()
-{
-  return this->_silentMode.isEnabled();
 }
 
 void MainWindow::switchClientVersion()

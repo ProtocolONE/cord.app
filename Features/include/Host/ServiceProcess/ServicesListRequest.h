@@ -35,7 +35,7 @@ namespace GameNet {
       private:
         void registerServices(const QList<QMap<QString, QString>>& servicesData);
         int getRetryInterval();
-        void getHostsResult(GGS::RestApi::CommandBase::CommandResults result);
+        void getHostsResult(P1::RestApi::CommandBase::CommandResults result);
 
         ServiceLoader* _serviceLoader;
         int _retryCount;

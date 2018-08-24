@@ -9,7 +9,6 @@ namespace GameNet {
   namespace Host {
 
     class Application;
-    class Thetta;
     class Translation;
     class AutoRunManager;
 
@@ -40,19 +39,6 @@ namespace GameNet {
          */
 
         void setApplication(Application* app);
-
-        /**
-         * \fn  void ApplicationBridge::setThetta(Thetta *value);
-         *
-         * \brief Sets a thetta.
-         *
-         * \author Igor Bugaev
-         * \date  26.09.2014
-         *
-         * \param [in,out]  value If non-null, the value.
-         */
-
-        void setThetta(Thetta *value);
 
         /**
          * \fn  void ApplicationBridge::setTranslation(Translation *value);
@@ -125,19 +111,6 @@ namespace GameNet {
         Q_NOREPLY void switchClientVersion();
 
         /**
-         * \fn  void ApplicationBridge::openBrowser(const QString& url);
-         *
-         * \brief Открывает ссылку в дефолтном браузере. Необходимо вызывать из приложений 
-         *        находящихся под защитой Thetta.
-         *
-         * \author Ilya Tkachenko
-         * \date  19.09.2014
-         *
-         * \param url URL of the document.
-         */
-        Q_NOREPLY void openBrowser(const QString& url);
-
-        /**
          * \fn  void ApplicationBridge::cancelUninstallServiceRequest(const QString &serviceId);
          *
          * \brief User answered 'No' to uninstall prompt for particular service
@@ -203,7 +176,6 @@ namespace GameNet {
 
       private:
         Application* _application;
-        Thetta *_thetta;
         Translation *_translation;
         AutoRunManager *_autoRunManager;
       };

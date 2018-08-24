@@ -5,7 +5,6 @@
 namespace GameNet {
   namespace Host {
 
-    // INFO: https://corp.syncopate.local/!%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/QGNA/%D0%9A%D0%BB%D1%8E%D1%87%D0%B8_%D1%80%D0%B5%D0%B5%D1%81%D1%82%D1%80%D0%B0
     class AutoRunManager : public QObject
     {
       Q_OBJECT

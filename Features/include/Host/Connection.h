@@ -24,13 +24,13 @@ namespace GameNet {
 
       virtual void setApplicationName(const QString& value);
 
-      virtual void setCredential(const GGS::RestApi::GameNetCredential& value);
-      virtual void setSecondCredential(const GGS::RestApi::GameNetCredential& value);
+      virtual void setCredential(const P1::RestApi::GameNetCredential& value);
+      virtual void setSecondCredential(const P1::RestApi::GameNetCredential& value);
 
       virtual void ping();
       virtual void close();
 
-      virtual const GGS::RestApi::GameNetCredential& credential();
+      virtual const P1::RestApi::GameNetCredential& credential();
       const QString& applicationName();
 
       void registerObject(const QString &path, QObject *object);
@@ -38,9 +38,9 @@ namespace GameNet {
       bool isOwnService(const QString& serviceId);
 
       void onGenericError(
-        GGS::RestApi::CommandBase::Error error,
+        P1::RestApi::CommandBase::Error error,
         QString message, 
-        GGS::RestApi::CommandBase *command);
+        P1::RestApi::CommandBase *command);
 
     signals:
       void pong();
@@ -61,8 +61,8 @@ namespace GameNet {
       QDBusConnection _dbusConnection;
 
       QString _applicationName;
-      GGS::RestApi::GameNetCredential _credential;
-      GGS::RestApi::GameNetCredential _secondCredential;
+      P1::RestApi::GameNetCredential _credential;
+      P1::RestApi::GameNetCredential _secondCredential;
       QSet<QString> _lockedServices;
       QTimer _timeoutTimer;
       int _maxTimeoutFail;

@@ -1,5 +1,4 @@
 #include <Host/ShutdownManager.h>
-#include <Host/Thetta.h>
 #include <Host/GameExecutor.h>
 #include <Host/Application.h>
 #include <Host/ConnectionManager.h>
@@ -8,15 +7,14 @@
 
 #include <Application/SingleApplication.h>
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::Application::SingleApplication;
+using P1::GameDownloader::GameDownloadService;
+using P1::Application::SingleApplication;
 
 namespace GameNet {
   namespace Host {
 
     ShutdownManager::ShutdownManager(QObject *parent /*= 0*/)
       : QObject(parent)
-      , _thetta(nullptr)
       , _executor(nullptr)
       , _downloader(nullptr)
       , _application(nullptr)
@@ -28,12 +26,6 @@ namespace GameNet {
 
     ShutdownManager::~ShutdownManager()
     {
-    }
-
-    void ShutdownManager::setThetta(Thetta *value)
-    {
-      Q_ASSERT(value);
-      this->_thetta = value;
     }
 
     void ShutdownManager::setExecutor(GameExecutor *value)
@@ -77,37 +69,10 @@ namespace GameNet {
     {
       Q_ASSERT(this->_connectionManager);
       this->_connectionManager->shutdown();
-      this->shutdownThetta();
-    }
-
-    void ShutdownManager::shutdownThettaCompleted()
-    {
-      // UNDONE 19.09.2014 Раньше тут падало из-за приколов с потоками в запускаторе
-      // но теперь потоков там нет и есть шанс что теперь не падает - надо проверить
+      
       Q_ASSERT(this->_executor);
       this->_executor->shutdown();
       this->shutdownDownloader();
-    }
-
-    void ShutdownManager::shutdownThetta()
-    {
-      Q_ASSERT(this->_thetta);
-      if (!this->_thetta->installer()) {
-        this->shutdownThettaCompleted();
-        return;
-      }
-
-      using Features::Thetta::ThettaInstaller;
-
-      QObject::connect(this->_thetta->installer(), &ThettaInstaller::disconnected,
-        [this](ThettaInstaller::Result result) {
-          if (result == Features::Thetta::ThettaInstaller::Running)
-            return;
-
-          this->shutdownThettaCompleted();
-      });
-
-      this->_thetta->installer()->disconnectFromDriver();
     }
 
     void ShutdownManager::shutdownDownloader()

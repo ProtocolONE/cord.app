@@ -1,7 +1,6 @@
 #include <Host/Bridge/ApplicationBridge.h>
 
 #include <Host/Application.h>
-#include <Host/Thetta.h>
 #include <Host/Translation.h>
 #include <Host/AutoRunManager.h>
 
@@ -13,7 +12,6 @@ namespace GameNet {
       ApplicationBridge::ApplicationBridge(QObject *parent /* = 0 */)
         : QObject(parent)
         , _application(nullptr)
-        , _thetta(nullptr)
         , _translation(nullptr)
         , _autoRunManager(nullptr)
       {
@@ -42,12 +40,6 @@ namespace GameNet {
 
         QObject::connect(this->_application, &Application::additionalResourcesReady,
           this, &ApplicationBridge::additionalResourcesReady);
-      }
-
-      void ApplicationBridge::setThetta(Thetta *value)
-      {
-        Q_ASSERT(value);
-        this->_thetta = value;
       }
 
       void ApplicationBridge::setTranslation(Translation *value)
@@ -95,11 +87,6 @@ namespace GameNet {
         this->_application->switchClientVersion();
       }
 
-      void ApplicationBridge::openBrowser(const QString& url)
-      {
-        Q_ASSERT(this->_thetta);
-        this->_thetta->openBrowser(url);
-      }
 
       void ApplicationBridge::cancelUninstallServiceRequest(const QString &serviceId)
       {

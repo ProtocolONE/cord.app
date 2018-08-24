@@ -2,19 +2,13 @@
 #include <QtCore/QObject>
 #include <QtCore/QHash>
 
-namespace GGS {
+namespace P1 {
   namespace GameDownloader {
     class HookBase;
   }
 }
 
 namespace GameNet {
-  namespace Integration {
-    namespace ZZima {
-      class ZZimaConnection;
-    }
-  }
-
   namespace Host {
 
     class ServiceSettings;
@@ -33,16 +27,14 @@ namespace GameNet {
 
       void setServiceSettings(ServiceSettings *value);
       void setServiceLoader(ServiceProcess::ServiceLoader *value);
-      void setZzimaConnection(::GameNet::Integration::ZZima::ZZimaConnection *value);
       void setServiceHandle(ServiceHandle *value);
 
-      GGS::GameDownloader::HookBase* create(const QString& guid);
+      P1::GameDownloader::HookBase* create(const QString& guid);
 
     private:
-      QHash<QString, GGS::GameDownloader::HookBase*> _cache;
+      QHash<QString, P1::GameDownloader::HookBase*> _cache;
       ServiceSettings *_serviceSettings;
       ServiceProcess::ServiceLoader *_serviceLoader;
-      ::GameNet::Integration::ZZima::ZZimaConnection *_zzimaConnection;
       ServiceHandle *_serviceHandle;
     };
 

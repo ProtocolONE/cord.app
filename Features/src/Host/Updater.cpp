@@ -1,26 +1,16 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates.
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-
 #include <Host/Updater.h>
 #include <Host/GameExecutor.h>
 
 #include <UpdateSystem/UpdateManagerWorker.h>
 #include <UpdateSystem/CheckUpdateHelper.h>
 
-#include <Core/Service>
+#include <Core/Service.h>
 
 #include <QtCore/QSettings>
 
-using GGS::UpdateSystem::UpdateManagerWorker;
-using GGS::UpdateSystem::CheckUpdateHelper;
-using GGS::Core::Service;
+using P1::UpdateSystem::UpdateManagerWorker;
+using P1::UpdateSystem::CheckUpdateHelper;
+using P1::Core::Service;
 
 namespace GameNet {
   namespace Host {
@@ -42,7 +32,7 @@ namespace GameNet {
               this, &Updater::downloadUpdateProgress);
 
       QObject::connect(this->_updateManagerWorker, &UpdateManagerWorker::updateWarning, 
-        [=](GGS::Downloader::DownloadResults error) {
+        [=](P1::Downloader::DownloadResults error) {
         DEBUG_LOG << "Update warning" << error;
       });
 
@@ -82,7 +72,7 @@ namespace GameNet {
 
     void Updater::updateErrorSlot(int errorCode)
     {
-      if (errorCode == GGS::UpdateSystem::NotEnoughSpace) {
+      if (errorCode == P1::UpdateSystem::NotEnoughSpace) {
         this->_retryTimer->start();
       }
     }
@@ -206,7 +196,7 @@ namespace GameNet {
       }
     }
 
-    GGS::ApplicationArea Updater::applicationArea() const
+    P1::ApplicationArea Updater::applicationArea() const
     {
       return this->_applicationArea;
     }

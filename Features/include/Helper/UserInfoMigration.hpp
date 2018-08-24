@@ -70,8 +70,5 @@ void migrateUserInfo()
   //QFile::remove(qgnaLog);
   //QFile::remove(qgnaLog1);
 
-  QString integrationPath = QString("%1/Integration/ZZima/ZZimaLauncher.exe").arg(QCoreApplication::applicationDirPath());
-  //FileUtils::removeRecursively(integrationPath);
-
   checkUserInfoMigration(true);
 }

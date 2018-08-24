@@ -39,14 +39,6 @@
 #include <Host/Dbus/LicenseManagerBridgeAdaptor.h>
 #include <Host/Dbus/SettingsBridgeAdaptor.h>
 
-#include <Features/Thetta/KernelStatistics.h>
-
-#ifdef ZZIMA_INTEGRATION
-#include <Features/Integration/Zzima/ZzimaGameExecutorAdapter.h>
-#include <Features/Integration/Zzima/ZzimaExecutorBridge.h>
-#include <Features/Integration/Zzima/Dbus/ZzimaExecutorBridgeAdaptor.h>
-#endif
-
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 
 #include <RestApi/RestApiManager.h>
@@ -56,7 +48,7 @@
 #include <Sddl.h>
 
 using GameNet::Host::DBus::DBusServer;
-using GGS::RestApi::RestApiManager;
+using P1::RestApi::RestApiManager;
 
 namespace GameNet {
   namespace Host {
@@ -188,19 +180,6 @@ namespace GameNet {
         this->registerServicesForQGNA(connection);
       }
 
-      if (applicationName == "zzima") {
-        // INFO https://jira.gamenet.ru/browse/QGNA-1613
-        emit this->zzimaDisabled();
-        connection->close();
-        return;
-      }
-
-#ifdef ZZIMA_INTEGRATION
-      else if (applicationName == "zzima") {
-        this->registerServicesForZzima(connection);
-      }
-#endif
-
       emit this->newConnection(connection);
     }
 
@@ -237,7 +216,6 @@ namespace GameNet {
     {
       Bridge::ApplicationBridge *applicationBridge = new Bridge::ApplicationBridge(connection);
       applicationBridge->setApplication(this->_application);
-      applicationBridge->setThetta(this->_application->_thetta);
       applicationBridge->setTranslation(this->_application->_translation);
       applicationBridge->setAutoRunManager(this->_application->_autoRunManager);
 
@@ -404,48 +382,6 @@ namespace GameNet {
       
       connection->deleteLater();
     }
-
-#ifdef ZZIMA_INTEGRATION
-    void ConnectionManager::registerServicesForZzima(Connection * connection)
-    {
-      this->registerDownloader(connection);
-      this->registerDownloaderSettings(connection);
-      this->registerServiceSettings(connection);
-      this->registerZzimaExecutor(connection);
-    }
-    
-    void ConnectionManager::registerZzimaExecutor(Connection * connection)
-    {
-      using namespace GameNet::Integration::Zzima;
-
-      Proxy::GameExecutorProxy *executorProxy = new Proxy::GameExecutorProxy(connection);
-      executorProxy->setConnection(connection);
-      executorProxy->setExecutor(this->_application->_executor);
-      executorProxy->setServiceHandle(this->_application->_serviceHandle);
-
-      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::serviceStarted,
-        this->_application->_marketingStatistic, &MarketingStatistic::onServiceStarted);
-
-      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::serviceFinished,
-        this->_application->_marketingStatistic, &MarketingStatistic::onServiceFinished);
-
-      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::secondServiceStarted,
-        this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceStarted);
-
-      QObject::connect(executorProxy, &Proxy::GameExecutorProxy::secondServiceFinished,
-        this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceFinished);
-
-      ZzimaGameExecutorAdapter *adapter = new ZzimaGameExecutorAdapter(connection);
-      adapter->setProxy(executorProxy);
-      adapter->setConnection(connection);
-
-      ZzimaExecutorBridge* executorBridge = new ZzimaExecutorBridge(connection);
-      executorBridge->setAdapter(adapter);
-
-      new ZzimaExecutorBridgeAdaptor(executorBridge);
-      connection->registerObject("/zzimaexecutor", executorBridge);
-    }
-#endif
 
     void ConnectionManager::setDbusServer(DBus::DBusServer* value)
     {

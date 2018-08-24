@@ -5,8 +5,8 @@
 
 #include <QtCore/QDebug>
 
-using GGS::RestApi::CommandBase;
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::CommandBase;
+using P1::RestApi::GameNetCredential;
 
 namespace GameNet {
   namespace Host {

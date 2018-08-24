@@ -3,11 +3,6 @@
 #include <Application/SingleApplication.h>
 #include <Application/ArgumentParser.h>
 
-#include <Features/Thetta/TlsInitializer.h>
-#include <Features/Thetta/Protector.h>
-#include <Features/Thetta/AppDistrIntegrity.h>
-#include <Features/SilentMode.h>
-
 #include <Features/Marketing/MarketingIntegrationMarker.h>
 
 #include <Helper/BugTrap.hpp>
@@ -15,7 +10,6 @@
 #include <Helper/Logger.hpp>
 #include <Helper/ElevateRights.hpp>
 #include <Helper/UserInfoMigration.hpp>
-#include <Helper/JobOffer.hpp>
 
 #include <Core/System/Shell/UrlProtocolHelper.h>
 
@@ -31,7 +25,7 @@
 #include <QtGui/QIcon>
 
 using namespace GameNet::Host;
-using GGS::Application::SingleApplication;
+using P1::Application::SingleApplication;
 
 Application *createApplication(SingleApplication *app) 
 {
@@ -47,8 +41,6 @@ int main(int argc, char *argv[])
   QCoreApplication::setOrganizationName("Vebanaul");
   QCoreApplication::setApplicationName("GameNet");
   migrateUserInfo();
-  
-  jobOffer();
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
   initBugTrap(logPath);
@@ -62,8 +54,6 @@ int main(int argc, char *argv[])
   app.setLibraryPaths(QStringList() << path + "/plugins5");
   app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
   app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
-
-  MemoryProtector_CheckFunction1(26500, 19169, 15724, 61393);
 
   QThread::currentThread()->setObjectName("Main host thread");
 
@@ -93,12 +83,6 @@ int main(int argc, char *argv[])
   if (!requireAdminRights())
     return -1;
 
-
-  if (app.containsCommand("silent")) {
-    Features::SilentMode mode;
-    mode.activate();
-  }
-
   Features::Marketing::MarketingIntegrationMarker marketingIntegrationMarker;
   marketingIntegrationMarker.init();
 
@@ -109,10 +93,10 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  GGS::Settings::SettingsSaver saver; 
-  GGS::Settings::Settings::setSettingsSaver(&saver); 
+  P1::Settings::SettingsSaver saver; 
+  P1::Settings::Settings::setSettingsSaver(&saver); 
 
-  GGS::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
+  P1::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
 
   Application *application = createApplication(&app);
 

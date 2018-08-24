@@ -3,7 +3,7 @@
 #include <RestApi/GameNetCredential.h>
 #include <functional>
 
-namespace GGS {
+namespace P1 {
   namespace GameDownloader {
     class GameDownloadService;
     class ServiceState;
@@ -15,7 +15,7 @@ namespace GameNet {
     namespace GameDownloader {
       namespace Hook {
 
-        class CheckDownload : public GGS::GameDownloader::HookBase
+        class CheckDownload : public P1::GameDownloader::HookBase
         {
           Q_OBJECT
         public:
@@ -23,14 +23,14 @@ namespace GameNet {
           virtual ~CheckDownload();
 
           virtual HookResult beforeDownload(
-            GGS::GameDownloader::GameDownloadService *gameDownloader, 
-            GGS::GameDownloader::ServiceState *state) override;
+            P1::GameDownloader::GameDownloadService *gameDownloader, 
+            P1::GameDownloader::ServiceState *state) override;
 
           virtual HookResult afterDownload(
-            GGS::GameDownloader::GameDownloadService *gameDownloader, 
-            GGS::GameDownloader::ServiceState *state) override;
+            P1::GameDownloader::GameDownloadService *gameDownloader, 
+            P1::GameDownloader::ServiceState *state) override;
 
-          void setCredential(std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > value);
+          void setCredential(std::function< P1::RestApi::GameNetCredential(const QString& serviceId) > value);
 
         signals:
           void accessRequired();
@@ -38,7 +38,7 @@ namespace GameNet {
           void internalError();
 
         private:
-          std::function< GGS::RestApi::GameNetCredential(const QString& serviceId) > _credential;
+          std::function< P1::RestApi::GameNetCredential(const QString& serviceId) > _credential;
 
         };
 

@@ -61,10 +61,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SingleShotFunctor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\Thetta\ProtectorTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Thetta\ForbiddenCertificateTesterTest.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ServiceDescriptionTest.cpp">
@@ -77,9 +74,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ApplicationStatisticTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Integration\Zzima\ZzimaCredentialConverterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Bridge\LicenseManagerBridgeTest.cpp">
@@ -118,6 +112,10 @@
     <ClCompile Include="src\Bridge\SettingsBridgeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ApplicationAreaTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="deps\gmock-gtest-all.cc" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\TestEventLoopFinisher.h">
@@ -132,6 +130,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GameDownloader\DownloadStatsPub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deps\gmock\gmock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deps\gtest\gtest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

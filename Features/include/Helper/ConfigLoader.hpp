@@ -1,4 +1,4 @@
-#include <QtScript/QScriptEngine>
+#include <QScriptEngine>
 
 #include <QtCore/QResource>
 #include <QtCore/QTextStream>

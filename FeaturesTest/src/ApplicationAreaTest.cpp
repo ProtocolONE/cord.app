@@ -5,7 +5,7 @@
 
 #include <QtCore/QObject>
 
-using GGS::ApplicationArea;
+using P1::ApplicationArea;
 
 TEST(ApplicationAreaTest, isValid)
 {

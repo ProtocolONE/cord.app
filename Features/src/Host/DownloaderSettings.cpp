@@ -1,4 +1,3 @@
-
 #include <Host/DownloaderSettings.h>
 
 #include <GameDownloader/GameDownloadService.h>
@@ -8,7 +7,7 @@
 #include <QtCore/QStandardPaths>
 #include <QtCore/QCoreApplication>
 
-using GGS::GameDownloader::GameDownloadService;
+using P1::GameDownloader::GameDownloadService;
 
 namespace GameNet {
   namespace Host {
@@ -23,7 +22,7 @@ namespace GameNet {
     {
     }
 
-    void DownloaderSettings::setDownloader(GGS::GameDownloader::GameDownloadService *val)
+    void DownloaderSettings::setDownloader(P1::GameDownloader::GameDownloadService *val)
     {
       Q_ASSERT(val);
       this->_downloader = val;
@@ -51,7 +50,7 @@ namespace GameNet {
 
     int DownloaderSettings::listeningPort() const
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       QString port = settings.value("qGNA/inPort").toString();
       bool ok = false;
       unsigned short result = port.toUShort(&ok);
@@ -66,7 +65,7 @@ namespace GameNet {
 
     void DownloaderSettings::internalListeningPortChanged(unsigned short port)
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/inPort", QString::number(port));
       emit this->listeningPortChanged();
     }
@@ -84,7 +83,7 @@ namespace GameNet {
         return;
 
       this->_downloader->setUploadRateLimit(val * 1024);
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/uploadSpeed", QString::number(val));
       emit this->uploadRateChanged();
     }
@@ -102,7 +101,7 @@ namespace GameNet {
         return;
 
       this->_downloader->setDownloadRateLimit(val * 1024);
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/downloadSpeed", QString::number(val));
       emit this->downloadRateChanged();
     }
@@ -120,14 +119,14 @@ namespace GameNet {
         return;
 
       this->_downloader->setMaxConnection(val);
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/numConnections", QString::number(val));
       emit this->maxConnectionChanged();
     }
 
     bool DownloaderSettings::seedEnabled() const
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       return settings.value("qGNA/seedEnabled", true).toBool();
     }
 
@@ -139,7 +138,7 @@ namespace GameNet {
         return;
 
       this->_downloader->setSeedEnabled(val);
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/seedEnabled", val);
       emit this->seedEnabledChanged();
     }
@@ -157,7 +156,7 @@ namespace GameNet {
 
       this->internalSetTorrentProfile(val);
       
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.setValue("qGNA/torrentProfile", QString::number(val));
 
       emit this->torrentProfileChanged();
@@ -184,7 +183,7 @@ namespace GameNet {
 
     int DownloaderSettings::readInt(const QString& key, int defaultValue) const
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       QString value = settings.value(key).toString();
       bool ok = false;
       int result = value.toInt(&ok);

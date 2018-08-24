@@ -7,7 +7,7 @@ namespace Features {
   namespace GameExecutor {
     namespace Hook {
 
-      class CheckAsciiPath : public GGS::GameExecutor::HookInterface
+      class CheckAsciiPath : public P1::GameExecutor::HookInterface
       {
         Q_OBJECT
       public:
@@ -16,7 +16,7 @@ namespace Features {
 
         static QString id();
 
-        virtual void CanExecute(GGS::Core::Service &service) override;
+        virtual void CanExecute(P1::Core::Service &service) override;
 
       };
 

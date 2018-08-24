@@ -9,7 +9,7 @@
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusAbstractAdaptor>
 
-namespace GGS {
+namespace P1 {
   namespace Core {
     class Service;
   }
@@ -379,23 +379,23 @@ namespace GameNet {
         Proxy::DownloaderProxy *_downloader;
         ServiceProcess::ServiceLoader *_serviceLoader;
 
-        void onStarted(const GGS::Core::Service *service, GGS::GameDownloader::StartType startType);
-        void onFinished(const GGS::Core::Service *service);
-        void onStopped(const GGS::Core::Service *service);
-        void onStopping(const GGS::Core::Service *service);
-        void onFailed(const GGS::Core::Service *service);
+        void onStarted(const P1::Core::Service *service, P1::GameDownloader::StartType startType);
+        void onFinished(const P1::Core::Service *service);
+        void onStopped(const P1::Core::Service *service);
+        void onStopping(const P1::Core::Service *service);
+        void onFailed(const P1::Core::Service *service);
         
-        void onServiceInstalled(const GGS::Core::Service *service);
-        void onServiceUninstalled(const  GGS::Core::Service *service);
-        void onServiceUpdated(const GGS::Core::Service *service);
-        void onStatusMessageChanged(const GGS::Core::Service *service, const QString& message);
+        void onServiceInstalled(const P1::Core::Service *service);
+        void onServiceUninstalled(const  P1::Core::Service *service);
+        void onServiceUpdated(const P1::Core::Service *service);
+        void onStatusMessageChanged(const P1::Core::Service *service, const QString& message);
 
-        void onTotalProgress(const GGS::Core::Service *service, qint8 progress);
+        void onTotalProgress(const P1::Core::Service *service, qint8 progress);
         void onDownloadProgress(
-          const GGS::Core::Service *service, 
+          const P1::Core::Service *service, 
           qint8 progress, 
-          const GGS::Libtorrent::EventArgs::ProgressEventArgs& args);
-        void onAccessRequired(const GGS::Core::Service *service);
+          const P1::Libtorrent::EventArgs::ProgressEventArgs& args);
+        void onAccessRequired(const P1::Core::Service *service);
       };
     }
   }

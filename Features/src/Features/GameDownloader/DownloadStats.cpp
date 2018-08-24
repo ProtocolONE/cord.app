@@ -1,13 +1,3 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
-
 #include <Features/GameDownloader/DownloadStats.h>
 
 #include <Core/Service.h>
@@ -107,7 +97,7 @@ namespace Features {
 
     void DownloadStats::load()
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("qGNA");
       settings.beginGroup("Features");
       settings.beginGroup("GameDownloaderStatistic");
@@ -127,7 +117,7 @@ namespace Features {
 
     void DownloadStats::save()
     {
-      GGS::Settings::Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("qGNA");
       settings.beginGroup("Features");
       settings.beginGroup("GameDownloaderStatistic");

@@ -1,8 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <Features/Thetta/ThettaMonitor.h>
-#include <Features/Thetta/DistrIntegrity.h>
 #include <Features/WorkStationLock/WorkStationLockHook.h>
 
 #include <Host/ServiceProcess/ServiceLoader.h>
@@ -33,31 +31,18 @@ using GameNet::Host::ServiceProcess::ExecutorHookDescription;
 using GameNet::Host::HookFactory;
 using GameNet::Host::ExecutorHookFactory;
 
-using GGS::Core::Service;
+using P1::Core::Service;
 
-using GGS::GameExecutor::GameExecutorService;
-using GGS::GameExecutor::HookInterface;
-using GGS::GameExecutor::Hook::ActivateWindow;
-using GGS::GameExecutor::Hook::SendPlayingInfo;
+using P1::GameExecutor::GameExecutorService;
+using P1::GameExecutor::HookInterface;
+using P1::GameExecutor::Hook::ActivateWindow;
+using P1::GameExecutor::Hook::SendPlayingInfo;
 
-using GGS::GameDownloader::GameDownloadService;
-using GGS::GameDownloader::HookBase;
-using GGS::GameDownloader::Hooks::InstallDependency;
+using P1::GameDownloader::GameDownloadService;
+using P1::GameDownloader::HookBase;
+using P1::GameDownloader::Hooks::InstallDependency;
 
-using Features::Thetta::DistrIntegrity;
-using Features::Thetta::ThettaMonitor;
 using Features::WorkStationLock::WorkStationLockHook;
-
-class ThettaMonitorMock : public HookInterface 
-{
-public :
-  ThettaMonitorMock() 
-    : HookInterface()
-  {
-  }
-
-  static QString id() { return ThettaMonitor::id(); }
-};
 
 class SendPlayingInfoMock : public HookInterface 
 {
@@ -98,7 +83,7 @@ public:
   {
   }
 
-  virtual bool addHook(const GGS::Core::Service &service, HookInterface* hook, int priority = 0)
+  virtual bool addHook(const P1::Core::Service &service, HookInterface* hook, int priority = 0)
   {
     ExecutorHookArgs args;
     args.service = service;
@@ -166,7 +151,6 @@ public:
     downloaderHookFactory.setServiceLoader(&loader);
     downloaderHookFactory.setServiceSettings(&settigns);
 
-    executorHookFactory.reg<ThettaMonitorMock>();
     executorHookFactory.reg<SendPlayingInfoMock>();
     executorHookFactory.reg<ActivateWindow>();
     executorHookFactory.reg<WorkStationLockHook>();

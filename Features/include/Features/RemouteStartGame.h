@@ -1,5 +1,5 @@
-#ifndef _GGS_FEATURES_REMOUTSTARTGAME_H_
-#define _GGS_FEATURES_REMOUTSTARTGAME_H_
+#pragma once
+
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -21,4 +21,3 @@ namespace Features {
   };
 
 }
-#endif // _GGS_FEATURES_REMOUTSTARTGAME_H_

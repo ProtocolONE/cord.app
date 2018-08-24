@@ -14,7 +14,7 @@ using GameNet::Host::Bridge::ConnectionBridge;
 using GameNet::Host::Bridge::Credential;
 using GameNet::Host::Bridge::createGameNetCredential;
 
-using GGS::RestApi::GameNetCredential;
+using P1::RestApi::GameNetCredential;
 
 using ::testing::Return;
 

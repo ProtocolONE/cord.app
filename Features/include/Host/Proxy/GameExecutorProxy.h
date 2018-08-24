@@ -28,12 +28,12 @@ namespace GameNet {
 
         virtual void execute(
           const QString& serviceId,
-          const GGS::RestApi::GameNetCredential& credetial);
+          const P1::RestApi::GameNetCredential& credetial);
 
         virtual void executeSecond(
           const QString& serviceId,
-          const GGS::RestApi::GameNetCredential& credetial,
-          const GGS::RestApi::GameNetCredential& secondCredetial);
+          const P1::RestApi::GameNetCredential& credetial,
+          const P1::RestApi::GameNetCredential& secondCredetial);
 
         virtual bool isGameStarted(const QString& serviceId) const;
         virtual bool isAnyGameStarted() const;
@@ -42,8 +42,8 @@ namespace GameNet {
 
         virtual void terminateGame(const QString& serviceId = QString());
 
-        GGS::RestApi::GameNetCredential gameCredential(const QString& serviceId);
-        GGS::RestApi::GameNetCredential secondGameCredential(const QString& serviceId);
+        P1::RestApi::GameNetCredential gameCredential(const QString& serviceId);
+        P1::RestApi::GameNetCredential secondGameCredential(const QString& serviceId);
 
       signals:
         void serviceStarted(const QString& serviceId);
@@ -59,15 +59,15 @@ namespace GameNet {
 
         virtual void processExecute(
           const QString& serviceId,
-          const GGS::RestApi::GameNetCredential& credetial,
-          const GGS::RestApi::GameNetCredential& secondCredetial  = GGS::RestApi::GameNetCredential());
+          const P1::RestApi::GameNetCredential& credetial,
+          const P1::RestApi::GameNetCredential& secondCredetial  = P1::RestApi::GameNetCredential());
 
         Connection *_connetion;
         GameNet::Host::GameExecutor *_executor;
         ServiceHandle *_serviceHandle;
 
-        QHash<QString, GGS::RestApi::GameNetCredential> _executedGame;
-        QHash<QString, GGS::RestApi::GameNetCredential> _executedSecondGame;
+        QHash<QString, P1::RestApi::GameNetCredential> _executedGame;
+        QHash<QString, P1::RestApi::GameNetCredential> _executedSecondGame;
         
      };
 

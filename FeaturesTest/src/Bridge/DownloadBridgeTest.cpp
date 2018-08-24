@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <LibtorrentWrapper/EventArgs/ProgressEventArgs>
+#include <LibtorrentWrapper/EventArgs/ProgressEventArgs.h>
 #include <Host/Bridge/DownloaderBridge.h>
 #include <Host/Proxy/DownloaderProxy.h>
 #include <Host/ServiceProcess/ServiceLoader.h>
@@ -14,10 +14,10 @@ using GameNet::Host::Application;
 
 using ::testing::Return;
 
-void constructFakeProgressEventArgs(GGS::Libtorrent::EventArgs::ProgressEventArgs &args)
+void constructFakeProgressEventArgs(P1::Libtorrent::EventArgs::ProgressEventArgs &args)
 {
   args.setId("300012010000000000");
-  args.setStatus(GGS::Libtorrent::EventArgs::ProgressEventArgs::Downloading);
+  args.setStatus(P1::Libtorrent::EventArgs::ProgressEventArgs::Downloading);
   args.setProgress(0.50f);
   args.setDownloadRate(100000);
   args.setUploadRate(50000);
@@ -39,34 +39,34 @@ public:
   explicit ServiceLoaderFixture() {};
   ~ServiceLoaderFixture(){};
 
-  void setService(GGS::Core::Service *service)
+  void setService(P1::Core::Service *service)
   {
     this->_service = service;
   }
 
-  virtual GGS::Core::Service *getService(const QString& serviceId)
+  virtual P1::Core::Service *getService(const QString& serviceId)
   {
     return this->_service;
   }
 
 public:
-  GGS::Core::Service *_service;
+  P1::Core::Service *_service;
 };
 
 class DownloadBridgeTestApplicationMock : public Application
 {
 public:
-  MOCK_METHOD1(credential, GGS::RestApi::GameNetCredential(const QString&));
+  MOCK_METHOD1(credential, P1::RestApi::GameNetCredential(const QString&));
 };
 
 class GameDownloadServiceMock : public DownloaderProxy
 {
 public:
-  MOCK_METHOD1(isInProgress, bool(const GGS::Core::Service *));
+  MOCK_METHOD1(isInProgress, bool(const P1::Core::Service *));
   MOCK_METHOD0(isAnyServiceInProgress, bool());
   MOCK_METHOD1(isInstalled, bool(const QString&));
-  MOCK_METHOD2(start, void(const GGS::Core::Service *, GGS::GameDownloader::StartType));
-  MOCK_METHOD1(stop, void(const GGS::Core::Service *));
+  MOCK_METHOD2(start, void(const P1::Core::Service *, P1::GameDownloader::StartType));
+  MOCK_METHOD1(stop, void(const P1::Core::Service *));
   MOCK_METHOD0(pauseSession, void());
   MOCK_METHOD0(resumeSession, void());
 
@@ -91,8 +91,8 @@ class DownloadBridgeTest : public ::testing::Test
 public:
   DownloadBridgeTest()
   {
-    qRegisterMetaType<const GGS::Core::Service *>("const GGS::Core::Service *");
-    qRegisterMetaType<GGS::GameDownloader::StartType>("GGS::GameDownloader::StartType");
+    qRegisterMetaType<const P1::Core::Service *>("const P1::Core::Service *");
+    qRegisterMetaType<P1::GameDownloader::StartType>("P1::GameDownloader::StartType");
     qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
 
     this->_service.setId("300012010000000000");
@@ -137,7 +137,7 @@ public:
       &this->_downloadServiceFixture, &GameDownloadServiceMock::onAccessRequired);
   }
     
-  GGS::Core::Service _service;
+  P1::Core::Service _service;
   DownloaderBridge _downloadBridge;
   GameDownloadServiceMock _downloadServiceFixture;
   ServiceLoaderFixture _serviceLoaderFixture;
@@ -146,7 +146,7 @@ public:
 
 TEST_F(DownloadBridgeTest, EmitStartedSignal)
 {
-  GGS::GameDownloader::StartType startType = GGS::GameDownloader::Normal;
+  P1::GameDownloader::StartType startType = P1::GameDownloader::Normal;
 
   EXPECT_CALL(_downloadServiceFixture, onStarted(_service.id(), startType)).Times(1);
   _downloadServiceFixture.started(&_service, startType);
@@ -213,7 +213,7 @@ TEST_F(DownloadBridgeTest, EmitTotalProgressSignal)
 TEST_F(DownloadBridgeTest, EmitDownloadProgressSignal)
 {
   int progress = 80;
-  GGS::Libtorrent::EventArgs::ProgressEventArgs libtorrentArgs;
+  P1::Libtorrent::EventArgs::ProgressEventArgs libtorrentArgs;
   constructFakeProgressEventArgs(libtorrentArgs);
 
   DownloadProgressArgs downloadArgs;
@@ -268,7 +268,7 @@ TEST_F(DownloadBridgeTest, isInstalled)
 
 TEST_F(DownloadBridgeTest, start)
 {
-  GGS::GameDownloader::StartType type = GGS::GameDownloader::StartType::Shadow;
+  P1::GameDownloader::StartType type = P1::GameDownloader::StartType::Shadow;
   EXPECT_CALL(_downloadServiceFixture, start(&_service, type)).Times(1);
 
   _downloadBridge.start(_service.id(), static_cast<int>(type));

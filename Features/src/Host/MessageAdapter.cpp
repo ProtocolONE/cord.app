@@ -8,7 +8,7 @@ namespace GameNet {
   namespace Host {
 
     MessageAdapter::MessageAdapter(QObject *parent)
-      : GGS::Core::UI::MessageAdapter(parent)
+      : P1::Core::UI::MessageAdapter(parent)
     {
     }
 
@@ -25,8 +25,8 @@ namespace GameNet {
     void MessageAdapter::show(
       const QString& title,
       const QString& text,
-      GGS::Core::UI::Message::StandardButtons buttons,
-      GGS::Core::UI::Message::Icon icon,
+      P1::Core::UI::Message::StandardButtons buttons,
+      P1::Core::UI::Message::Icon icon,
       int messageId,
       QObject* receiver,
       const char* member)
@@ -48,7 +48,7 @@ namespace GameNet {
         return;
 
       MessageInfo info = this->_activeMessages.take(messageId);
-      this->_returnButtons[messageId] = static_cast<GGS::Core::UI::Message::StandardButton>(buttonId);
+      this->_returnButtons[messageId] = static_cast<P1::Core::UI::Message::StandardButton>(buttonId);
       QTimer::singleShot(
         0, 
         info.receiver,
@@ -62,7 +62,7 @@ namespace GameNet {
 
       Q_FOREACH(int messageId, messages.keys()) {
         MessageInfo info = messages[messageId];
-        this->_returnButtons[messageId] = static_cast<GGS::Core::UI::Message::StandardButton>(0);
+        this->_returnButtons[messageId] = static_cast<P1::Core::UI::Message::StandardButton>(0);
         QTimer::singleShot(
           0, 
           info.receiver,
@@ -73,8 +73,8 @@ namespace GameNet {
     void MessageAdapter::showDefaultMessage(
       const QString& title,
       const QString& text,
-      GGS::Core::UI::Message::StandardButtons buttons,
-      GGS::Core::UI::Message::Icon icon,
+      P1::Core::UI::Message::StandardButtons buttons,
+      P1::Core::UI::Message::Icon icon,
       int messageId,
       QObject* receiver,
       const char* member)
@@ -85,7 +85,7 @@ namespace GameNet {
       msgbox->setStandardButtons(QMessageBox::StandardButtons(buttons.operator int()));
       msgbox->setIcon(static_cast<QMessageBox::Icon>(icon));
       int result = msgbox->exec();
-      this->_returnButtons[messageId] = static_cast<GGS::Core::UI::Message::StandardButton>(result);
+      this->_returnButtons[messageId] = static_cast<P1::Core::UI::Message::StandardButton>(result);
       QTimer::singleShot(0, receiver, member);
     }
 

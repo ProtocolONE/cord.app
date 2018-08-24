@@ -1,6 +1,6 @@
 #include <Helper/GetDirectoryDialog.h>
 
-#include <Core/UI/Message>
+#include <Core/UI/Message.h>
 
 #include <QtCore/QDir>
 #include <QtCore/QDebug>
@@ -14,7 +14,7 @@
 #include <Windows.h>
 #include <Shlobj.h>
 
-using GGS::Core::UI::Message;
+using P1::Core::UI::Message;
 
 GetDirectoryDialog::GetDirectoryDialog(QWidget *parent)
   : QObject(parent)
@@ -115,14 +115,14 @@ void GetDirectoryDialog::getDirectory(const QString& serviceName, const int size
       dontUseFolder = Message::Cancel == Message::question(
         tr("DIRECTORY_NOT_EMPTY_INFO"),
         tr("DIRECTORY_QGNA_QUESTION"),
-        static_cast<Message::StandardButton>(Message::Ok | GGS::Core::UI::Message::Cancel));
+        static_cast<Message::StandardButton>(Message::Ok | P1::Core::UI::Message::Cancel));
 
     } else {
       if (!this->isEmptyFolder(newDirectory)) {
         dontUseFolder = Message::Cancel == Message::question(
           tr("DIRECTORY_NOT_EMPTY_INFO"),
           tr("DIRECTORY_NOT_EMPTY_QUESTION"),
-          static_cast<Message::StandardButton>(Message::Ok | GGS::Core::UI::Message::Cancel));
+          static_cast<Message::StandardButton>(Message::Ok | P1::Core::UI::Message::Cancel));
       }
     }
 
@@ -230,7 +230,7 @@ QString GetDirectoryDialog::formatSize(quint64 value)
 
 bool GetDirectoryDialog::checkFreeSpace(const QString &newDirectory, const QString &serviceName, const int size)
 {
-  using GGS::Core::UI::Message;
+  using P1::Core::UI::Message;
 
   QStorageInfo info = QStorageInfo(newDirectory);
 

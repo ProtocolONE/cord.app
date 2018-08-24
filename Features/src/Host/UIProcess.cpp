@@ -1,4 +1,3 @@
-
 #include <Host/UIProcess.h>
 #include <Helper/DebugLog.h>
 #include <Helper/TerminateProcess.h>
@@ -57,7 +56,7 @@ namespace GameNet {
 
       bool start(const QStringList& args, bool skipIgnore = false)
       {
-        GGS::Application::ArgumentParser uiSendedArgs;
+        P1::Application::ArgumentParser uiSendedArgs;
         uiSendedArgs.parse(args);
 
         if (!skipIgnore) {
