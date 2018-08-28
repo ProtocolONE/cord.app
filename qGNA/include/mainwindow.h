@@ -109,9 +109,6 @@ public slots:
   void downloadButtonStart(QString serviceId);
   void downloadButtonPause(QString serviceId);
 
-  // INFO используется в запуке продолжения скачивания в SilentMode
-  void forceDownload(QString serviceId);
-
   void uninstallService(const QString serviceId);
   void cancelServiceUninstall(const QString serviceId);
 

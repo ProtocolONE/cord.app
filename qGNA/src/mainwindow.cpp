@@ -621,13 +621,6 @@ void MainWindow::downloadButtonStart(QString serviceId)
   emit this->showLicense(serviceId);
 }
 
-void MainWindow::forceDownload(QString serviceId)
-{
-  if (this->_serviceSettings->isDownloadable(serviceId)) {
-    this->_downloader->start(serviceId, static_cast<int>(P1::GameDownloader::Normal));
-  }
-}
-
 void MainWindow::downloadButtonPause(QString serviceId)
 {
   if (this->_serviceSettings->isDownloadable(serviceId)) {

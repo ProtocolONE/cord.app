@@ -175,7 +175,6 @@ int main(int argc, char *argv[])
 
     skipActivation |= app.containsCommand("gogamenetmoney");
     skipActivation |= app.containsCommand("minimized");
-    skipActivation |= app.containsCommand("silent");
 
     if (!skipActivation) {
       arguments << "-activate"; 
