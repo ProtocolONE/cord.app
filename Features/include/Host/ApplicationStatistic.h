@@ -9,7 +9,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class ApplicationStatistic : public QObject
@@ -121,7 +121,7 @@ namespace GameNet {
       /**
        * \fn  virtual QString ApplicationStatistic::installWithService() const;
        *
-       * \brief GameNet application installed the with game 'serviceId'.
+       * \brief ProtocolOne Launcher application installed the with game 'serviceId'.
        *
        * \author  Ilya Tkachenko
        * \date  01.10.2014
@@ -134,13 +134,13 @@ namespace GameNet {
       /**
        * \fn  virtual quint64 ApplicationStatistic::installDate() const;
        *
-       * \brief Query GameNet application install date as the number of seconds that 
+       * \brief Query ProtocolOne Launcher application install date as the number of seconds that 
        *        have passed since 1970-01-01T00:00:00.000. 
        *
        * \author  Ilya Tkachenko
        * \date  01.10.2014
        *
-       * \return GameNet application install date.
+       * \return ProtocolOne Launcher application install date.
        */
       virtual quint64 installDate() const;
 

@@ -9,7 +9,7 @@
 
 #include <Host/Bridge/Credential.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     namespace Proxy {
@@ -22,7 +22,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Executor")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Executor")
 
       public:
         explicit ExecutorBridge(QObject *parent = 0);
@@ -36,7 +36,7 @@ namespace GameNet {
         <method name="execute">
           <arg name="serviceId" type="s" direction="in"/>
           <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="GameNet::Host::Bridge::Credential"/>
+          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="P1::Host::Bridge::Credential"/>
         </method>
         */
         Q_NOREPLY void execute(const QString& serviceId, const Credential& credential);
@@ -45,9 +45,9 @@ namespace GameNet {
         <method name="executeSecond">
           <arg name="serviceId" type="s" direction="in"/>
           <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="GameNet::Host::Bridge::Credential"/>
+          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="P1::Host::Bridge::Credential"/>
           <arg name="secondCredential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="GameNet::Host::Bridge::Credential"/>
+          <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="P1::Host::Bridge::Credential"/>
         </method>
         */
         Q_NOREPLY void executeSecond(const QString& serviceId, const Credential& credential, const Credential& secondCredential);

@@ -7,7 +7,7 @@
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusAbstractAdaptor>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class LicenseManager;
@@ -17,7 +17,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.LicenseManager")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.LicenseManager")
 
       public:
         explicit LicenseManagerBridge(QObject *parent = 0);

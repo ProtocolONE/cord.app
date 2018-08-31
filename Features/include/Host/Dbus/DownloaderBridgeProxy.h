@@ -23,14 +23,14 @@
 #include <Host/Bridge/DownloaderBridge.h>
 
 /*
- * Proxy class for interface com.gamenet.dbus.Downloader
+ * Proxy class for interface com.protocolone.launcher.dbus.Downloader
  */
 class DownloaderBridgeProxy: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.gamenet.dbus.Downloader"; }
+    { return "com.protocolone.launcher.dbus.Downloader"; }
 
 public:
     DownloaderBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
@@ -86,7 +86,7 @@ public Q_SLOTS: // METHODS
 
 Q_SIGNALS: // SIGNALS
     void accessRequired(const QString &serviceId);
-    void downloadProgress(const QString &serviceId, int progress, GameNet::Host::Bridge::DownloadProgressArgs args);
+    void downloadProgress(const QString &serviceId, int progress, P1::Host::Bridge::DownloadProgressArgs args);
     void failed(const QString &serviceId);
     void finished(const QString &serviceId);
     void serviceInstalled(const QString &serviceId);
@@ -100,7 +100,7 @@ Q_SIGNALS: // SIGNALS
 };
 
 namespace com {
-  namespace gamenet {
+  namespace p1 {
     namespace dbus {
       typedef ::DownloaderBridgeProxy Downloader;
     }

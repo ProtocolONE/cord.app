@@ -4,7 +4,7 @@
 
 #include <Core/Service.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -26,12 +26,12 @@ namespace Features {
 
     void executeMain(
       P1::Core::Service* service, 
-      const P1::RestApi::GameNetCredential& credetial);
+      const P1::RestApi::ProtocolOneCredential& credetial);
 
     void executeSecond(
       P1::Core::Service* service, 
-      const P1::RestApi::GameNetCredential& credetial, 
-      const P1::RestApi::GameNetCredential& secondCredetial);
+      const P1::RestApi::ProtocolOneCredential& credetial, 
+      const P1::RestApi::ProtocolOneCredential& secondCredetial);
 
     void shutdownSecond(const QString& serviceId = QString());
 

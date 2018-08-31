@@ -59,13 +59,13 @@ void ApplicationBridgeAdaptor::setLanguage(const QString &value)
 
 void ApplicationBridgeAdaptor::cancelUninstallServiceRequest(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Application.cancelUninstallServiceRequest
+    // handle method call com.protocolone.launcher.dbus.Application.cancelUninstallServiceRequest
     QMetaObject::invokeMethod(parent(), "cancelUninstallServiceRequest", Q_ARG(QString, serviceId));
 }
 
 bool ApplicationBridgeAdaptor::isInitCompleted()
 {
-    // handle method call com.gamenet.dbus.Application.isInitCompleted
+    // handle method call com.protocolone.launcher.dbus.Application.isInitCompleted
     bool out0;
     QMetaObject::invokeMethod(parent(), "isInitCompleted", Q_RETURN_ARG(bool, out0));
     return out0;
@@ -73,19 +73,19 @@ bool ApplicationBridgeAdaptor::isInitCompleted()
 
 void ApplicationBridgeAdaptor::restartApplication(bool isMinimized)
 {
-    // handle method call com.gamenet.dbus.Application.restartApplication
+    // handle method call com.protocolone.launcher.dbus.Application.restartApplication
     QMetaObject::invokeMethod(parent(), "restartApplication", Q_ARG(bool, isMinimized));
 }
 
 void ApplicationBridgeAdaptor::shutdownUIResult()
 {
-    // handle method call com.gamenet.dbus.Application.shutdownUIResult
+    // handle method call com.protocolone.launcher.dbus.Application.shutdownUIResult
     QMetaObject::invokeMethod(parent(), "shutdownUIResult");
 }
 
 void ApplicationBridgeAdaptor::switchClientVersion()
 {
-    // handle method call com.gamenet.dbus.Application.switchClientVersion
+    // handle method call com.protocolone.launcher.dbus.Application.switchClientVersion
     QMetaObject::invokeMethod(parent(), "switchClientVersion");
 }
 

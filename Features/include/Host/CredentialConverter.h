@@ -1,14 +1,14 @@
 #pragma once
 
 #include <Host/Bridge/Credential.h>
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 
-      Credential createDbusCredential(const P1::RestApi::GameNetCredential& credential);
-      P1::RestApi::GameNetCredential createGameNetCredential(const Credential& credential);
+      Credential createDbusCredential(const P1::RestApi::ProtocolOneCredential& credential);
+      P1::RestApi::ProtocolOneCredential createProtocolOneCredential(const Credential& credential);
     }
   }
 }

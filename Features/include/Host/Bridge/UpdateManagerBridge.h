@@ -4,7 +4,7 @@
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Updater;
@@ -15,7 +15,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Updater")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Updater")
       public:
         explicit UpdateManagerBridge(QObject *parent = 0);
         virtual ~UpdateManagerBridge();

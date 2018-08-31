@@ -23,13 +23,13 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QVector>
 
-using GameNet::Host::ServiceProcess::ServiceLoader;
-using GameNet::Host::ServiceProcess::ServiceDescription;
-using GameNet::Host::ServiceSettings;
-using GameNet::Host::ServiceProcess::DownloadHookDescription;
-using GameNet::Host::ServiceProcess::ExecutorHookDescription;
-using GameNet::Host::HookFactory;
-using GameNet::Host::ExecutorHookFactory;
+using P1::Host::ServiceProcess::ServiceLoader;
+using P1::Host::ServiceProcess::ServiceDescription;
+using P1::Host::ServiceSettings;
+using P1::Host::ServiceProcess::DownloadHookDescription;
+using P1::Host::ServiceProcess::ExecutorHookDescription;
+using P1::Host::HookFactory;
+using P1::Host::ExecutorHookFactory;
 
 using P1::Core::Service;
 
@@ -144,7 +144,7 @@ public:
       "?workingDir=%gamePath%/"
       "&args=%login% %token% 300002010000000000 login"
       "&executorHelper=1"
-      "&downloadCustomFile=UI/GuildMarkWorld1.tga,http://files.gamenet.ru/update/aika,2");
+      "&downloadCustomFile=UI/GuildMarkWorld1.tga,http://files.protocol.one/update/aika,2");
     description.setDependencyList("vcredistr2005,/Q,vcredistr2010,/Q,dxwebsetup.exe,/Q");
     description.setGameSize(2800);
 

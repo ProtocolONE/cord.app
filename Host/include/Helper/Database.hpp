@@ -8,7 +8,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStandardPaths>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     bool initDatabase()

@@ -3,7 +3,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class SettingsManager;
@@ -14,7 +14,7 @@ namespace GameNet {
       {
         Q_OBJECT
           Q_CLASSINFO("Version", "1.0.0.0")
-          Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.RemoteSettings")
+          Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.RemoteSettings")
       public:
         explicit SettingsBridge(QObject *parent = 0);
         virtual ~SettingsBridge();

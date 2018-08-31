@@ -4,7 +4,7 @@
 #include <Host/ElectronExecutor_p.h>
 
 #include <RestApi/RestApiManager.h>
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QUrl>
 #include <QtCore/QUrlQuery>
@@ -13,7 +13,7 @@
 #include <qt_windows.h>
 #include <shellapi.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     using namespace P1::GameExecutor;
@@ -30,7 +30,7 @@ namespace GameNet {
     void ElectronExecutor::execute(
       const P1::Core::Service &service,
       P1::GameExecutor::GameExecutorService *executorService,
-      const P1::RestApi::GameNetCredential& credential)
+      const P1::RestApi::ProtocolOneCredential& credential)
     {
       QString id = service.id();
       ElectronExecutorPrivate* executor = new ElectronExecutorPrivate(this);

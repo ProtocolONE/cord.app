@@ -1,6 +1,6 @@
 #pragma once
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -20,7 +20,7 @@ namespace Features {
         virtual ~SystemInfoManager();
 
         void init();
-        void setCredential(const P1::RestApi::GameNetCredential& value);
+        void setCredential(const P1::RestApi::ProtocolOneCredential& value);
         void setMid(const QString& value);
 
       private slots:
@@ -36,7 +36,7 @@ namespace Features {
         void saveSendDate();
         QDateTime loadSendDate();
 
-        P1::RestApi::GameNetCredential _credential;
+        P1::RestApi::ProtocolOneCredential _credential;
         QString _mid;
         QTimer _timer;
       };

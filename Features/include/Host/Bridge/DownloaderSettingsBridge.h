@@ -2,7 +2,7 @@
 
 #include <QtCore/QObject>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class DownloaderSettings;
@@ -19,7 +19,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.DownloaderSettings")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.DownloaderSettings")
 
         /*!
         \property int DownloaderSettingsBridge::listeningPort

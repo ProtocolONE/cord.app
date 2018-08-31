@@ -7,7 +7,7 @@
 
 #include <GameExecutor/ServiceInfoCounter.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <Core/Service.h>
 
@@ -18,9 +18,9 @@ using Features::PremiumExecutor;
 using P1::GameExecutor::GameExecutorService;
 using P1::GameExecutor::ServiceInfoCounter;
 using P1::Core::Service;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     
     GameExecutor::GameExecutor(QObject *parent /*= 0*/)
@@ -82,7 +82,7 @@ namespace GameNet {
     }
 
     void GameExecutor::execute(
-      const QString& serviceId, const GameNetCredential& credetial)
+      const QString& serviceId, const ProtocolOneCredential& credetial)
     {
       Q_ASSERT(this->_services);
       Q_ASSERT(this->_premiumExecutor);
@@ -97,8 +97,8 @@ namespace GameNet {
 
     void GameExecutor::executeSecond(
       const QString& serviceId, 
-      const GameNetCredential& credetial, 
-      const GameNetCredential& secondCredetial)
+      const ProtocolOneCredential& credetial, 
+      const ProtocolOneCredential& secondCredetial)
     {
       Q_ASSERT(this->_services);
       Q_ASSERT(this->_premiumExecutor);

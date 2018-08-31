@@ -3,7 +3,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     namespace Proxy {
@@ -16,7 +16,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.ServiceHandle")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.ServiceHandle")
       public:
         explicit ServiceHandleBridge(QObject *parent = 0);
         virtual ~ServiceHandleBridge();

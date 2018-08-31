@@ -8,7 +8,7 @@
 
 #include <QtNetwork/QNetworkAccessManager>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 

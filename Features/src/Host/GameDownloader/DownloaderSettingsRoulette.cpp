@@ -10,7 +10,7 @@
 
 using P1::Settings::Settings;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace GameDownloader {
 
@@ -23,7 +23,7 @@ namespace GameNet {
       void setDownloadProfile(TorrentProfile value)
       {
         P1::Settings::Settings settings;
-        settings.setValue("qGNA/torrentProfile", QString::number(static_cast<uint32_t>(value)));
+        settings.setValue("launcher/torrentProfile", QString::number(static_cast<uint32_t>(value)));
       }
 
       void setMaxConnection(uint32_t value)
@@ -33,7 +33,7 @@ namespace GameNet {
           value = 10;
 
         P1::Settings::Settings settings;
-        settings.setValue("qGNA/numConnections", QString::number(value));
+        settings.setValue("launcher/numConnections", QString::number(value));
       }
 
       bool DownloaderSettingsRoulette::hasTestInfo() const
@@ -44,7 +44,7 @@ namespace GameNet {
       QString DownloaderSettingsRoulette::testName() const
       {
         Settings settings;
-        settings.beginGroup("qGNA");
+        settings.beginGroup("Launcher");
         settings.beginGroup("Features");
         settings.beginGroup("DownloaderSettingsRoulette");
         return settings.value("TestName", QString()).toString();
@@ -53,7 +53,7 @@ namespace GameNet {
       QString DownloaderSettingsRoulette::groupName() const
       {
         Settings settings;
-        settings.beginGroup("qGNA");
+        settings.beginGroup("Launcher");
         settings.beginGroup("Features");
         settings.beginGroup("DownloaderSettingsRoulette");
         return settings.value("GroupName", QString()).toString();
@@ -86,7 +86,7 @@ namespace GameNet {
       void DownloaderSettingsRoulette::saveTestGroup(const QString& name, const QString& group)
       {
         Settings settings;
-        settings.beginGroup("qGNA");
+        settings.beginGroup("Launcher");
         settings.beginGroup("Features");
         settings.beginGroup("DownloaderSettingsRoulette");
         settings.setValue("TestName", name);
@@ -100,7 +100,7 @@ namespace GameNet {
         // Default settings: HIGH_PERFORMANCE_SEED and 200 connection
         setDownloadProfile(TorrentProfile::HIGH_PERFORMANCE_SEED);
         setMaxConnection(200);
-        this->saveTestGroup("QGNA1667", "A");
+        this->saveTestGroup("LAUNCHER1667", "A");
       }
 
       void DownloaderSettingsRoulette::setGroupB()
@@ -108,7 +108,7 @@ namespace GameNet {
         // MIN_MEMORY_USAGE and 200 connection
         setDownloadProfile(TorrentProfile::MIN_MEMORY_USAGE);
         setMaxConnection(200);
-        this->saveTestGroup("QGNA1667", "B");
+        this->saveTestGroup("LAUNCHER1667", "B");
       }
 
       void DownloaderSettingsRoulette::setGroupC()
@@ -116,7 +116,7 @@ namespace GameNet {
         // HIGH_PERFORMANCE_SEED and 20 connection
         setDownloadProfile(TorrentProfile::HIGH_PERFORMANCE_SEED);
         setMaxConnection(20);
-        this->saveTestGroup("QGNA1667", "C");
+        this->saveTestGroup("LAUNCHER1667", "C");
       }
 
       void DownloaderSettingsRoulette::setGroupD()
@@ -124,7 +124,7 @@ namespace GameNet {
         // MIN_MEMORY_USAGE and 20 connection
         setDownloadProfile(TorrentProfile::MIN_MEMORY_USAGE);
         setMaxConnection(20);
-        this->saveTestGroup("QGNA1667", "D");
+        this->saveTestGroup("LAUNCHER1667", "D");
       }
 
     }

@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.ApplicationStatistic
+ * Adaptor class for interface com.protocolone.launcher.dbus.ApplicationStatistic
  */
 class ApplicationStatisticBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.ApplicationStatistic")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.ApplicationStatistic")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.ApplicationStatistic\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.ApplicationStatistic\">\n"
 "    <method name=\"isGameInstalled\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"

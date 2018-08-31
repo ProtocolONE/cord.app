@@ -1,7 +1,7 @@
 #include <Host/Updater.h>
 #include <Host/Bridge/UpdateManagerBridge.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     namespace Bridge {

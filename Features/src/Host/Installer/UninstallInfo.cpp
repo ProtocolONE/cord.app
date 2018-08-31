@@ -7,26 +7,26 @@
 
 #include <QtCore/QDebug>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Installer {
 
       //  INFO: разделы в Uninstall для каждой игры именуются 
       //  {GUID}.serviceId, где
       //    GUID = 4BD65630-3A19-4fc2-8AD8-2CF729DB6608
-      static const QString gameNetUninstallerGUID = "{4BD65630-3A19-4fc2-8AD8-2CF729DB6608}";
+      static const QString protocolOneUninstallerGUID = "{4BD65630-3A19-4fc2-8AD8-2CF729DB6608}";
 
       UninstallInfo::UninstallInfo(const QString &serviceId)
         : _serviceId(serviceId)
         , _displayVersion("1.0")
-        , _helpLink("https://support.gamenet.ru")
+        , _helpLink("https://support.protocol.one")
         , _majorVersion(1)
         , _minorVersion(0)
         , _noModify(1)
         , _noRepair(1)
         , _publisher("Global Gamers Solutions Ltd. ©")
-        , _urlInfoAbout("https://gamenet.ru/")
-        , _urlUpdateInfo("https://gamenet.ru/")
+        , _urlInfoAbout("https://protocol.one/")
+        , _urlUpdateInfo("https://protocol.one/")
       {
 
       }      
@@ -41,7 +41,7 @@ namespace GameNet {
         if (this->_serviceId.isEmpty())
           return;
 
-        QString keyName = gameNetUninstallerGUID + "." + this->_serviceId;
+        QString keyName = protocolOneUninstallerGUID + "." + this->_serviceId;
 
         QString applicationPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
@@ -92,7 +92,7 @@ namespace GameNet {
         if (this->_serviceId.isEmpty())
           return;
 
-        QString keyName = gameNetUninstallerGUID + "." + this->_serviceId;
+        QString keyName = protocolOneUninstallerGUID + "." + this->_serviceId;
         QSettings uninstallSection("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall", QSettings::NativeFormat);
 
         uninstallSection.beginGroup(keyName);

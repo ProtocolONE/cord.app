@@ -12,10 +12,10 @@ using P1::GameDownloader::GameDownloadService;
 using P1::GameDownloader::ServiceState;
 using P1::GameDownloader::HookBase;
 using P1::GameDownloader::StartType;
-using GameNet::Host::ServiceProcess::ServiceLoader;
+using P1::Host::ServiceProcess::ServiceLoader;
 using P1::Core::Service;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace GameDownloader {
       namespace Hook {
@@ -39,14 +39,13 @@ namespace GameNet {
           P1::Core::Service *service = this->_services->getService(id);
           Q_ASSERT(service);
 
-          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
           settings.beginGroup(id);
           if (state->startType() != StartType::Uninstall) {
             settings.setValue("DownloadPath", this->_settings->downloadPath(id));
             settings.setValue("InstallPath", this->_settings->installPath(id));
             service->setIsDefaultInstallPath(false);
           } else {
-            //INFO QGNA-1371
             settings.remove("DownloadPath");
             settings.remove("InstallPath");
             service->setIsDefaultInstallPath(true);

@@ -7,7 +7,7 @@
 
 #include <QtCore/QProcess>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class GameExecutorService;
@@ -23,7 +23,7 @@ namespace GameNet {
       void execute(
         const P1::Core::Service &service,
         P1::GameExecutor::GameExecutorService *executorService,
-        const P1::RestApi::GameNetCredential& credential,
+        const P1::RestApi::ProtocolOneCredential& credential,
         const QString& scheme);
 
       void onShutdown(const QString& serviceId);
@@ -38,7 +38,7 @@ namespace GameNet {
 
     private:
       P1::Core::Service _service;
-      P1::RestApi::GameNetCredential _credential;
+      P1::RestApi::ProtocolOneCredential _credential;
       QString _scheme;
     };
   }

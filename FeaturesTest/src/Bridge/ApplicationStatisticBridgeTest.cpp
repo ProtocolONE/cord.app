@@ -4,8 +4,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-using GameNet::Host::ApplicationStatistic;
-using GameNet::Host::Bridge::ApplicationStatisticBridge;
+using P1::Host::ApplicationStatistic;
+using P1::Host::Bridge::ApplicationStatisticBridge;
 using ::testing::Return;
 
 class ApplicationStatisticMock : public ApplicationStatistic

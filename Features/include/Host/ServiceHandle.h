@@ -5,7 +5,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Connection;

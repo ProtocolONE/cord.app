@@ -3,12 +3,12 @@
 
 #include <Host/Proxy/GameExecutorProxy.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
-using P1::RestApi::GameNetCredential;
-using GameNet::Host::Proxy::GameExecutorProxy;
+using P1::RestApi::ProtocolOneCredential;
+using P1::Host::Proxy::GameExecutorProxy;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 
@@ -43,7 +43,7 @@ namespace GameNet {
       void ExecutorBridge::execute(const QString& serviceId, const Credential& credential)
       {
         Q_ASSERT(this->_executor);
-        GameNetCredential base = createGameNetCredential(credential);
+        ProtocolOneCredential base = createProtocolOneCredential(credential);
         this->_executor->execute(serviceId, base);
       }
 
@@ -53,8 +53,8 @@ namespace GameNet {
         const Credential& secondCredential)
       {
         Q_ASSERT(this->_executor);
-        GameNetCredential base = createGameNetCredential(credential);
-        GameNetCredential second = createGameNetCredential(secondCredential);
+        ProtocolOneCredential base = createProtocolOneCredential(credential);
+        ProtocolOneCredential second = createProtocolOneCredential(secondCredential);
 
         this->_executor->executeSecond(serviceId, base, second);
       }

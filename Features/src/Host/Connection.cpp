@@ -6,9 +6,9 @@
 #include <QtCore/QDebug>
 
 using P1::RestApi::CommandBase;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     Connection::Connection(const QDBusConnection& connection, QObject *parent /*= 0*/)
@@ -23,7 +23,7 @@ namespace GameNet {
       new ConnectionBridgeAdaptor(bridge);
 
       this->_dbusConnection.registerObject("/connection", bridge);
-      this->_dbusConnection.registerService("com.gamenet.dbus");
+      this->_dbusConnection.registerService("com.protocolone.launcher.dbus");
 
       QObject::connect(&this->_timeoutTimer, &QTimer::timeout,
         this, &Connection::timeoutTick);
@@ -50,7 +50,7 @@ namespace GameNet {
       emit this->connectionInfoReceived();
     }
 
-    void Connection::setCredential(const GameNetCredential& value)
+    void Connection::setCredential(const ProtocolOneCredential& value)
     {
       if (value.isEmpty()) {
         emit this->logoutMain();
@@ -60,12 +60,12 @@ namespace GameNet {
       }
     }
 
-    void Connection::setSecondCredential(const GameNetCredential& value)
+    void Connection::setSecondCredential(const ProtocolOneCredential& value)
     {
       this->_secondCredential = value;
     }
 
-    const GameNetCredential& Connection::credential()
+    const ProtocolOneCredential& Connection::credential()
     {
       return this->_credential;
     }

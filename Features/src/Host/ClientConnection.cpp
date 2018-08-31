@@ -7,16 +7,16 @@
 
 #include <Core/UI/Message.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QDebug>
 
-using GameNet::Host::DBus::DBusConnection;
-using P1::RestApi::GameNetCredential;
+using P1::Host::DBus::DBusConnection;
+using P1::RestApi::ProtocolOneCredential;
 
-using GameNet::Host::Bridge::createDbusCredential;
+using P1::Host::Bridge::createDbusCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     ClientConnection::ClientConnection(const QString &name, QObject* parent /*= 0*/)
@@ -44,7 +44,7 @@ namespace GameNet {
     void ClientConnection::init()
     {
       QDBusConnection &connection = DBusConnection::bus();
-      QString dbusService("com.gamenet.dbus");
+      QString dbusService("com.protocolone.launcher.dbus");
 
       this->_connection = new ConnectionBridgeProxy(dbusService, "/connection", connection, this);
       this->_connection->setApplicationName(this->_appName);
@@ -91,13 +91,13 @@ namespace GameNet {
       this->_timeoutFail = 0;
     }
 
-    void ClientConnection::setCredential(const P1::RestApi::GameNetCredential& value)
+    void ClientConnection::setCredential(const P1::RestApi::ProtocolOneCredential& value)
     {
       Q_ASSERT(this->_connection);
       this->_connection->setCredential(createDbusCredential(value));
     }
 
-    void ClientConnection::setSecondCredential(const P1::RestApi::GameNetCredential& value)
+    void ClientConnection::setSecondCredential(const P1::RestApi::ProtocolOneCredential& value)
     {
       Q_ASSERT(this->_connection);
       this->_connection->setSecondCredential(createDbusCredential(value));

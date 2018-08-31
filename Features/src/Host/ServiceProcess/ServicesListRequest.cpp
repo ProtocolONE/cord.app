@@ -5,7 +5,7 @@
 
 #include <QtCore/QTimer>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 
@@ -123,7 +123,6 @@ namespace GameNet {
           }
 
           if (serviceDist.id() == "370000000000")  {
-            // HACK https://jira.gamenet.ru/browse/QGNA-1611
             // Force add Features::GameExecutor::Hook::CheckAsciiPath
             executorHooks << ExecutorHookDescription("DD9C78EE-A95A-4326-A913-F02F75C942EF", 100);
           }
@@ -155,7 +154,7 @@ namespace GameNet {
           }
 
           {
-          // HACK GGS::GameDownloader::Hooks::RemoveFileHook
+          // HACK P1::GameDownloader::Hooks::RemoveFileHook
             DownloadHookDescription hook;
             hook.first = "B963B92F-17D5-4DA3-A5C0-942776CE680A";
             hook.second.first = 0;

@@ -4,7 +4,7 @@
 #include <Host/Translation.h>
 #include <Host/AutoRunManager.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     namespace Bridge {

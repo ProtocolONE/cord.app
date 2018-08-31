@@ -4,7 +4,7 @@
 #include <QtCore/QList>
 #include <QtCore/QPair>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 

@@ -21,14 +21,14 @@
 #include <QtDBus/QtDBus>
 
 /*
- * Proxy class for interface com.gamenet.dbus.ServiceHandle
+ * Proxy class for interface com.protocolone.launcher.dbus.ServiceHandle
  */
 class ServiceHandleBridgeProxy: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.gamenet.dbus.ServiceHandle"; }
+    { return "com.protocolone.launcher.dbus.ServiceHandle"; }
 
 public:
     ServiceHandleBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
@@ -56,7 +56,7 @@ Q_SIGNALS: // SIGNALS
 };
 
 namespace com {
-  namespace gamenet {
+  namespace p1 {
     namespace dbus {
       typedef ::ServiceHandleBridgeProxy ServiceHandle;
     }

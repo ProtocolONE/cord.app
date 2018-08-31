@@ -1,7 +1,7 @@
 #include <Host/Bridge/ApplicationStatisticBridge.h>
 #include <Host/ApplicationStatistic.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 

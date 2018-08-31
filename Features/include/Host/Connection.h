@@ -1,6 +1,6 @@
 #pragma once
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 #include <RestApi/CommandBase.h>
 
 #include <QtDBus/QDBusConnection>
@@ -10,7 +10,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QTimer>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Connection : public QObject
@@ -24,13 +24,13 @@ namespace GameNet {
 
       virtual void setApplicationName(const QString& value);
 
-      virtual void setCredential(const P1::RestApi::GameNetCredential& value);
-      virtual void setSecondCredential(const P1::RestApi::GameNetCredential& value);
+      virtual void setCredential(const P1::RestApi::ProtocolOneCredential& value);
+      virtual void setSecondCredential(const P1::RestApi::ProtocolOneCredential& value);
 
       virtual void ping();
       virtual void close();
 
-      virtual const P1::RestApi::GameNetCredential& credential();
+      virtual const P1::RestApi::ProtocolOneCredential& credential();
       const QString& applicationName();
 
       void registerObject(const QString &path, QObject *object);
@@ -61,8 +61,8 @@ namespace GameNet {
       QDBusConnection _dbusConnection;
 
       QString _applicationName;
-      P1::RestApi::GameNetCredential _credential;
-      P1::RestApi::GameNetCredential _secondCredential;
+      P1::RestApi::ProtocolOneCredential _credential;
+      P1::RestApi::ProtocolOneCredential _secondCredential;
       QSet<QString> _lockedServices;
       QTimer _timeoutTimer;
       int _maxTimeoutFail;

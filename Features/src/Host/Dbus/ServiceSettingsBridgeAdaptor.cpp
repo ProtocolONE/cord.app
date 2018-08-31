@@ -35,7 +35,7 @@ ServiceSettingsBridgeAdaptor::~ServiceSettingsBridgeAdaptor()
 
 QString ServiceSettingsBridgeAdaptor::downloadPath(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.downloadPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.downloadPath
     QString out0;
     QMetaObject::invokeMethod(parent(), "downloadPath", Q_RETURN_ARG(QString, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -43,7 +43,7 @@ QString ServiceSettingsBridgeAdaptor::downloadPath(const QString &serviceId)
 
 qulonglong ServiceSettingsBridgeAdaptor::gameSize(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.gameSize
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.gameSize
     qulonglong out0;
     QMetaObject::invokeMethod(parent(), "gameSize", Q_RETURN_ARG(qulonglong, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -51,7 +51,7 @@ qulonglong ServiceSettingsBridgeAdaptor::gameSize(const QString &serviceId)
 
 bool ServiceSettingsBridgeAdaptor::hasDownloadPath(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.hasDownloadPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.hasDownloadPath
     bool out0;
     QMetaObject::invokeMethod(parent(), "hasDownloadPath", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -59,7 +59,7 @@ bool ServiceSettingsBridgeAdaptor::hasDownloadPath(const QString &serviceId)
 
 QString ServiceSettingsBridgeAdaptor::installPath(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.installPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.installPath
     QString out0;
     QMetaObject::invokeMethod(parent(), "installPath", Q_RETURN_ARG(QString, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -67,7 +67,7 @@ QString ServiceSettingsBridgeAdaptor::installPath(const QString &serviceId)
 
 bool ServiceSettingsBridgeAdaptor::isDefaultDownloadPath(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.isDefaultDownloadPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.isDefaultDownloadPath
     bool out0;
     QMetaObject::invokeMethod(parent(), "isDefaultDownloadPath", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -75,7 +75,7 @@ bool ServiceSettingsBridgeAdaptor::isDefaultDownloadPath(const QString &serviceI
 
 bool ServiceSettingsBridgeAdaptor::isDefaultInstallPath(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.isDefaultInstallPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.isDefaultInstallPath
     bool out0;
     QMetaObject::invokeMethod(parent(), "isDefaultInstallPath", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -83,7 +83,7 @@ bool ServiceSettingsBridgeAdaptor::isDefaultInstallPath(const QString &serviceId
 
 bool ServiceSettingsBridgeAdaptor::isDownloadable(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.isDownloadable
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.isDownloadable
     bool out0;
     QMetaObject::invokeMethod(parent(), "isDownloadable", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -91,7 +91,7 @@ bool ServiceSettingsBridgeAdaptor::isDownloadable(const QString &serviceId)
 
 bool ServiceSettingsBridgeAdaptor::isOverlayEnabled(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.isOverlayEnabled
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.isOverlayEnabled
     bool out0;
     QMetaObject::invokeMethod(parent(), "isOverlayEnabled", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -99,7 +99,7 @@ bool ServiceSettingsBridgeAdaptor::isOverlayEnabled(const QString &serviceId)
 
 bool ServiceSettingsBridgeAdaptor::isPrefer32Bit(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.isPrefer32Bit
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.isPrefer32Bit
     bool out0;
     QMetaObject::invokeMethod(parent(), "isPrefer32Bit", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -107,7 +107,7 @@ bool ServiceSettingsBridgeAdaptor::isPrefer32Bit(const QString &serviceId)
 
 QString ServiceSettingsBridgeAdaptor::name(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.name
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.name
     QString out0;
     QMetaObject::invokeMethod(parent(), "name", Q_RETURN_ARG(QString, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -115,25 +115,25 @@ QString ServiceSettingsBridgeAdaptor::name(const QString &serviceId)
 
 void ServiceSettingsBridgeAdaptor::setDownloadPath(const QString &serviceId, const QString &path)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.setDownloadPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.setDownloadPath
     QMetaObject::invokeMethod(parent(), "setDownloadPath", Q_ARG(QString, serviceId), Q_ARG(QString, path));
 }
 
 void ServiceSettingsBridgeAdaptor::setInstallPath(const QString &serviceId, const QString &path)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.setInstallPath
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.setInstallPath
     QMetaObject::invokeMethod(parent(), "setInstallPath", Q_ARG(QString, serviceId), Q_ARG(QString, path));
 }
 
 void ServiceSettingsBridgeAdaptor::setOverlayEnabled(const QString &serviceId, bool enabled)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.setOverlayEnabled
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.setOverlayEnabled
     QMetaObject::invokeMethod(parent(), "setOverlayEnabled", Q_ARG(QString, serviceId), Q_ARG(bool, enabled));
 }
 
 void ServiceSettingsBridgeAdaptor::setPrefer32Bit(const QString &serviceId, bool value)
 {
-    // handle method call com.gamenet.dbus.ServiceSettings.setPrefer32Bit
+    // handle method call com.protocolone.launcher.dbus.ServiceSettings.setPrefer32Bit
     QMetaObject::invokeMethod(parent(), "setPrefer32Bit", Q_ARG(QString, serviceId), Q_ARG(bool, value));
 }
 

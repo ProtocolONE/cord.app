@@ -23,14 +23,14 @@
 #include <QtDBus/QtDBus>
 
 /*
- * Proxy class for interface com.gamenet.dbus.Connection
+ * Proxy class for interface com.protocolone.launcher.dbus.Connection
  */
 class ConnectionBridgeProxy: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.gamenet.dbus.Connection"; }
+    { return "com.protocolone.launcher.dbus.Connection"; }
 
 public:
     ConnectionBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
@@ -57,14 +57,14 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("setApplicationName"), argumentList);
     }
 
-    inline QDBusPendingReply<> setCredential(GameNet::Host::Bridge::Credential credential)
+    inline QDBusPendingReply<> setCredential(P1::Host::Bridge::Credential credential)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(credential);
         return asyncCallWithArgumentList(QStringLiteral("setCredential"), argumentList);
     }
 
-    inline QDBusPendingReply<> setSecondCredential(GameNet::Host::Bridge::Credential credential)
+    inline QDBusPendingReply<> setSecondCredential(P1::Host::Bridge::Credential credential)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(credential);
@@ -77,7 +77,7 @@ Q_SIGNALS: // SIGNALS
 };
 
 namespace com {
-  namespace gamenet {
+  namespace p1 {
     namespace dbus {
       typedef ::ConnectionBridgeProxy Connection;
     }

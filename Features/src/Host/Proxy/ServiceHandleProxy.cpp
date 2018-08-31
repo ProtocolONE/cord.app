@@ -3,7 +3,7 @@
 #include <Host/Connection.h>
 #include <Host/ServiceHandle.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     namespace Proxy {

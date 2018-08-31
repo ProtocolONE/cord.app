@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.RemoteSettings
+ * Adaptor class for interface com.protocolone.launcher.dbus.RemoteSettings
  */
 class SettingsBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.RemoteSettings")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.RemoteSettings")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.RemoteSettings\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.RemoteSettings\">\n"
 "    <method name=\"setValue\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"path\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"key\"/>\n"

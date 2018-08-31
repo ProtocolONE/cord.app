@@ -13,7 +13,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
       class ServiceLoader;

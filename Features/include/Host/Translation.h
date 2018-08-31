@@ -6,7 +6,7 @@
 
 class QTranslator;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Translation : public QObject

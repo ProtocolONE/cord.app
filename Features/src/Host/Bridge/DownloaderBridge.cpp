@@ -12,9 +12,9 @@
 using P1::GameDownloader::GameDownloadService;
 using P1::Core::Service;
 using P1::Libtorrent::EventArgs::ProgressEventArgs;
-using GameNet::Host::Proxy::DownloaderProxy;
+using P1::Host::Proxy::DownloaderProxy;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 
@@ -228,7 +228,7 @@ namespace GameNet {
   }
 }
 
-QDBusArgument& operator<<(QDBusArgument &argument, const GameNet::Host::Bridge::DownloadProgressArgs& arg)
+QDBusArgument& operator<<(QDBusArgument &argument, const P1::Host::Bridge::DownloadProgressArgs& arg)
 {
   argument.beginStructure();
   argument 
@@ -256,7 +256,7 @@ QDBusArgument& operator<<(QDBusArgument &argument, const GameNet::Host::Bridge::
   return argument;
 }
 
-const QDBusArgument& operator>>(const QDBusArgument &argument, GameNet::Host::Bridge::DownloadProgressArgs& arg)
+const QDBusArgument& operator>>(const QDBusArgument &argument, P1::Host::Bridge::DownloadProgressArgs& arg)
 {
   argument.beginStructure();
   argument 

@@ -21,14 +21,14 @@
 #include <QtDBus/QtDBus>
 
 /*
- * Proxy class for interface com.gamenet.dbus.LicenseManager
+ * Proxy class for interface com.protocolone.launcher.dbus.LicenseManager
  */
 class LicenseManagerBridgeProxy: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.gamenet.dbus.LicenseManager"; }
+    { return "com.protocolone.launcher.dbus.LicenseManager"; }
 
 public:
     LicenseManagerBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
@@ -72,7 +72,7 @@ Q_SIGNALS: // SIGNALS
 };
 
 namespace com {
-  namespace gamenet {
+  namespace p1 {
     namespace dbus {
       typedef ::LicenseManagerBridgeProxy LicenseManager;
     }

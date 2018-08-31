@@ -9,7 +9,7 @@
 
 #include <Windows.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     ApplicationRestarter::ApplicationRestarter(QObject* parent /*= 0*/)
@@ -62,7 +62,7 @@ namespace GameNet {
       }
 
       if (!this->executeFile(dir, exe, commandLineArgs))
-        WARNING_LOG << "Can't restart qGNA";
+        WARNING_LOG << "Can't restart Launcher";
 
       QCoreApplication::quit();
     }

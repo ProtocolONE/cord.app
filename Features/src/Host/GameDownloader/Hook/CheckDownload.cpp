@@ -17,12 +17,12 @@
 using P1::GameDownloader::GameDownloadService;
 using P1::GameDownloader::ServiceState;
 using P1::GameDownloader::HookBase;
-using GameNet::Host::ServiceProcess::ServiceLoader;
+using P1::Host::ServiceProcess::ServiceLoader;
 using P1::Core::Service;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 using P1::Core::UI::Message;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace GameDownloader {
       namespace Hook {
@@ -40,7 +40,7 @@ namespace GameNet {
         {
           Q_ASSERT(this->_credential);
 
-          GameNetCredential credential = this->_credential(state->id());
+          ProtocolOneCredential credential = this->_credential(state->id());
           if (credential.isEmpty())
             return HookBase::Abort;
 
@@ -83,7 +83,7 @@ namespace GameNet {
           return HookBase::Continue;
         }
 
-        void CheckDownload::setCredential(std::function< P1::RestApi::GameNetCredential(const QString& serviceId) > value)
+        void CheckDownload::setCredential(std::function< P1::RestApi::ProtocolOneCredential(const QString& serviceId) > value)
         {
           this->_credential = value;
         }

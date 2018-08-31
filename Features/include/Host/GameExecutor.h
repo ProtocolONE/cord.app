@@ -19,11 +19,11 @@ namespace P1 {
   }
 
   namespace RestApi {
-    class GameNetCredential;
+    class ProtocolOneCredential;
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
       class ServiceLoader;
@@ -45,12 +45,12 @@ namespace GameNet {
     
       virtual void execute(
         const QString& serviceId, 
-        const P1::RestApi::GameNetCredential& credetial);
+        const P1::RestApi::ProtocolOneCredential& credetial);
 
       virtual void executeSecond(
         const QString& serviceId, 
-        const P1::RestApi::GameNetCredential& credetial, 
-        const P1::RestApi::GameNetCredential& secondCredetial);
+        const P1::RestApi::ProtocolOneCredential& credetial, 
+        const P1::RestApi::ProtocolOneCredential& secondCredetial);
 
       virtual bool isGameStarted(const QString& serviceId) const;
       virtual bool isSecondGameStarted(const QString& serviceId) const;

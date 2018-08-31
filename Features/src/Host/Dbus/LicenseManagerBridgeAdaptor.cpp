@@ -35,19 +35,19 @@ LicenseManagerBridgeAdaptor::~LicenseManagerBridgeAdaptor()
 
 void LicenseManagerBridgeAdaptor::acceptLicense(const QString &serviceId, const QString &hash)
 {
-    // handle method call com.gamenet.dbus.LicenseManager.acceptLicense
+    // handle method call com.protocolone.launcher.dbus.LicenseManager.acceptLicense
     QMetaObject::invokeMethod(parent(), "acceptLicense", Q_ARG(QString, serviceId), Q_ARG(QString, hash));
 }
 
 void LicenseManagerBridgeAdaptor::acceptWebLicense()
 {
-    // handle method call com.gamenet.dbus.LicenseManager.acceptWebLicense
+    // handle method call com.protocolone.launcher.dbus.LicenseManager.acceptWebLicense
     QMetaObject::invokeMethod(parent(), "acceptWebLicense");
 }
 
 bool LicenseManagerBridgeAdaptor::hasAcceptedLicense(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.LicenseManager.hasAcceptedLicense
+    // handle method call com.protocolone.launcher.dbus.LicenseManager.hasAcceptedLicense
     bool out0;
     QMetaObject::invokeMethod(parent(), "hasAcceptedLicense", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -55,7 +55,7 @@ bool LicenseManagerBridgeAdaptor::hasAcceptedLicense(const QString &serviceId)
 
 bool LicenseManagerBridgeAdaptor::hasAcceptedLicense()
 {
-    // handle method call com.gamenet.dbus.LicenseManager.hasAcceptedLicense
+    // handle method call com.protocolone.launcher.dbus.LicenseManager.hasAcceptedLicense
     bool out0;
     QMetaObject::invokeMethod(parent(), "hasAcceptedLicense", Q_RETURN_ARG(bool, out0));
     return out0;
@@ -63,7 +63,7 @@ bool LicenseManagerBridgeAdaptor::hasAcceptedLicense()
 
 bool LicenseManagerBridgeAdaptor::hasAcceptedWebLicense()
 {
-    // handle method call com.gamenet.dbus.LicenseManager.hasAcceptedWebLicense
+    // handle method call com.protocolone.launcher.dbus.LicenseManager.hasAcceptedWebLicense
     bool out0;
     QMetaObject::invokeMethod(parent(), "hasAcceptedWebLicense", Q_RETURN_ARG(bool, out0));
     return out0;

@@ -24,7 +24,7 @@
 
 #include <QtGui/QIcon>
 
-using namespace GameNet::Host;
+using namespace P1::Host;
 using P1::Application::SingleApplication;
 
 Application *createApplication(SingleApplication *app) 
@@ -38,8 +38,8 @@ Application *createApplication(SingleApplication *app)
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
-  QCoreApplication::setOrganizationName("Vebanaul");
-  QCoreApplication::setApplicationName("GameNet");
+  QCoreApplication::setOrganizationName("ProtocolOne");
+  QCoreApplication::setApplicationName("Launcher");
   migrateUserInfo();
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
 
   QString path = QCoreApplication::applicationDirPath();
   app.setLibraryPaths(QStringList() << path + "/plugins5");
-  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
-  app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
+  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher\\Host");
+  app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
 
   QThread::currentThread()->setObjectName("Main host thread");
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  LoggerHelper logger(logPath + "host.log");
+  LoggerHelper logger(logPath + "launcher.host.log");
   if (!requireAdminRights())
     return -1;
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
   P1::Settings::SettingsSaver saver; 
   P1::Settings::Settings::setSettingsSaver(&saver); 
 
-  P1::Core::System::Shell::UrlProtocolHelper::registerProtocol("gamenet");
+  P1::Core::System::Shell::UrlProtocolHelper::registerProtocol("protocolone");
 
   Application *application = createApplication(&app);
 

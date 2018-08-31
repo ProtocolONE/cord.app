@@ -23,7 +23,7 @@
 
 using P1::RestApi::Commands::Marketing::SetGnaInstallStep;
 using P1::RestApi::CommandBase;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 using P1::RestApi::RestApiManager;
 using P1::Settings::Settings;
 
@@ -55,7 +55,7 @@ namespace Features {
         QTimer::singleShot(300000, this, SLOT(send()));
       }
 
-      void SystemInfoManager::setCredential(const P1::RestApi::GameNetCredential& value)
+      void SystemInfoManager::setCredential(const P1::RestApi::ProtocolOneCredential& value)
       {
         this->_credential = value;
       }
@@ -99,7 +99,7 @@ namespace Features {
         writer.writeStartElement("root");
 
         if (!userId.isEmpty()) {
-          writer.writeStartElement("gamenet");
+          writer.writeStartElement("protocolone");
           writer.writeTextElement("user", userId);
           writer.writeEndElement();
         }

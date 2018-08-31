@@ -35,13 +35,13 @@ SettingsBridgeAdaptor::~SettingsBridgeAdaptor()
 
 void SettingsBridgeAdaptor::setValue(const QString &path, const QString &key, const QString &data)
 {
-    // handle method call com.gamenet.dbus.RemoteSettings.setValue
+    // handle method call com.protocolone.launcher.dbus.RemoteSettings.setValue
     QMetaObject::invokeMethod(parent(), "setValue", Q_ARG(QString, path), Q_ARG(QString, key), Q_ARG(QString, data));
 }
 
 QString SettingsBridgeAdaptor::value(const QString &path, const QString &key, const QString &defValue)
 {
-    // handle method call com.gamenet.dbus.RemoteSettings.value
+    // handle method call com.protocolone.launcher.dbus.RemoteSettings.value
     QString out0;
     QMetaObject::invokeMethod(parent(), "value", Q_RETURN_ARG(QString, out0), Q_ARG(QString, path), Q_ARG(QString, key), Q_ARG(QString, defValue));
     return out0;

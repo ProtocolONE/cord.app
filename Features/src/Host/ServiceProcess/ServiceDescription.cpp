@@ -1,6 +1,6 @@
 #include <Host/ServiceProcess/ServiceDescription.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 

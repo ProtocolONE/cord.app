@@ -8,7 +8,7 @@
 
 #include <functional>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     
     class MessageInfo 
@@ -36,12 +36,12 @@ namespace GameNet {
       /**
        * \fn  void :::setHasUiProcess(std::function<bool ()> value);
        *
-       * \brief Задает функтор возвращающий true, если QGNA-UI запущен, иначе false.
+       * \brief Задает функтор возвращающий true, если UI запущен, иначе false.
        *
        * \author  Ilya Tkachenko
        * \date  15.10.2014
        *
-       * \param value функция проверки наличия QGNA-UI.
+       * \param value функция проверки наличия UI.
        */
 
       void setHasUiProcess(std::function<bool ()> value);
@@ -49,7 +49,7 @@ namespace GameNet {
       /**
        * \fn  void :::uiProcessClosed();
        *
-       * \brief Обрабатывает ситуацию с закрытием QGNA-UI при наличии не закрытых MessageBox.
+       * \brief Обрабатывает ситуацию с закрытием UI при наличии не закрытых MessageBox.
        *
        * \author  Ilya Tkachenko
        * \date  15.10.2014

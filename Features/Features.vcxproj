@@ -1900,7 +1900,7 @@
     </ClCompile>
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QGNACOMMONDIR)\GGS\CASettings\$(CASettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Thetta\$(ThettaArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\HookEngine\$(HookEngineArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>crypt32.lib;Qt5WinExtrasd.lib;Wbemuuid.lib;Wtsapi32.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>

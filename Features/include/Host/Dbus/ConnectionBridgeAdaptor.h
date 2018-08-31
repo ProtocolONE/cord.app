@@ -26,14 +26,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.Connection
+ * Adaptor class for interface com.protocolone.launcher.dbus.Connection
  */
 class ConnectionBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Connection")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Connection")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.Connection\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.Connection\">\n"
 "    <signal name=\"wrongCredential\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"userId\"/>\n"
 "    </signal>\n"
@@ -45,11 +45,11 @@ class ConnectionBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"close\"/>\n"
 "    <method name=\"setCredential\">\n"
 "      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In0\"/>\n"
+"      <annotation value=\"P1::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In0\"/>\n"
 "    </method>\n"
 "    <method name=\"setSecondCredential\">\n"
 "      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In0\"/>\n"
+"      <annotation value=\"P1::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In0\"/>\n"
 "    </method>\n"
 "  </interface>\n"
         "")
@@ -62,8 +62,8 @@ public Q_SLOTS: // METHODS
     void close();
     void ping();
     void setApplicationName(const QString &applicationName);
-    void setCredential(GameNet::Host::Bridge::Credential credential);
-    void setSecondCredential(GameNet::Host::Bridge::Credential credential);
+    void setCredential(P1::Host::Bridge::Credential credential);
+    void setSecondCredential(P1::Host::Bridge::Credential credential);
 Q_SIGNALS: // SIGNALS
     void pong();
     void wrongCredential(const QString &userId);

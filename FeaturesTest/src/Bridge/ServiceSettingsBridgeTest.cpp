@@ -4,8 +4,8 @@
 #include <Host/ServiceSettings.h>
 #include <Host/Bridge/ServiceSettingsBridge.h>
 
-using GameNet::Host::ServiceSettings;
-using GameNet::Host::Bridge::ServiceSettingsBridge;
+using P1::Host::ServiceSettings;
+using P1::Host::Bridge::ServiceSettingsBridge;
 
 using ::testing::Return;
 

@@ -3,7 +3,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     class LicenseManager : public QObject
     {

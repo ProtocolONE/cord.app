@@ -10,9 +10,9 @@
 
 using P1::GameDownloader::GameDownloadService;
 using P1::Core::Service;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Proxy {
       
@@ -233,10 +233,10 @@ namespace GameNet {
         return this->_connection->isOwnService(service->id());
       }
 
-      GameNetCredential DownloaderProxy::credential(const QString& serviceId)
+      ProtocolOneCredential DownloaderProxy::credential(const QString& serviceId)
       {
         if (!this->_credentialMap.contains(serviceId))
-          return GameNetCredential();
+          return ProtocolOneCredential();
 
         return this->_credentialMap[serviceId];
       }

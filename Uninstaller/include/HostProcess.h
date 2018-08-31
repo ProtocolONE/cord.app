@@ -20,10 +20,10 @@ signals:
 
 private slots:
   void onUninstallFinished(int result);
-  void testQGNAReady();
+  void testLauncherReady();
 
 private:
-  void qgnaStarted();
+  void launcherStarted();
 
   int _waitAttempts;
   QTimer _waitTimer;

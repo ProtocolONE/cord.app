@@ -4,7 +4,7 @@
 
 #include <QtDBus/QDBusAbstractAdaptor>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class ServiceSettings;
@@ -22,7 +22,7 @@ namespace GameNet {
       {
         Q_OBJECT
           Q_CLASSINFO("Version", "1.0.0.0")
-          Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.ServiceSettings")
+          Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.ServiceSettings")
       public:
         /*!
         \fn explicit ServiceSettingsBridge(QObject *parent = 0);

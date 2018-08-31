@@ -2,7 +2,7 @@
 
 #include <Host/MessageAdapter.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 

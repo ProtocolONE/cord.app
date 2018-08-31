@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.ServiceHandle
+ * Adaptor class for interface com.protocolone.launcher.dbus.ServiceHandle
  */
 class ServiceHandleBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.ServiceHandle")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.ServiceHandle")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.ServiceHandle\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.ServiceHandle\">\n"
 "    <signal name=\"locked\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "    </signal>\n"

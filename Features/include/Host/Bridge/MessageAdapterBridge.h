@@ -4,7 +4,7 @@
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class MessageAdapter;

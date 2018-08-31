@@ -11,15 +11,15 @@
 
 #include <QtCore/QDebug>
 
-using GameNet::Host::Proxy::DownloaderProxy;
-using GameNet::Host::Proxy::GameExecutorProxy;
+using P1::Host::Proxy::DownloaderProxy;
+using P1::Host::Proxy::GameExecutorProxy;
 
 using P1::Core::Marketing;
 using P1::Core::Service;
 
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     MarketingStatistic::MarketingStatistic(QObject *parent /*= 0*/)
@@ -120,7 +120,7 @@ namespace GameNet {
       Marketing::sendOnceByService(Marketing::FinishInstallService, serviceId, params);
     }
 
-    void MarketingStatistic::setCredential(QVariantMap &params, const GameNetCredential &credetial)
+    void MarketingStatistic::setCredential(QVariantMap &params, const ProtocolOneCredential &credetial)
     {
       params["userId"] = credetial.userId();
       params["overrideUserId"] = credetial.userId();

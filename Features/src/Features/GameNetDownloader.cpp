@@ -1,4 +1,4 @@
-#include <Features/GameNetDownloader.h>
+#include <Features/ProtocolOneDownloader.h>
 #include <Helper/FileUtils.h>
 
 #include <QtCore/QByteArray>
@@ -9,21 +9,21 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 
-namespace GameNet {
+namespace P1 {
 
-  GameNetDownloader::GameNetDownloader(QObject *parent)
+  ProtocolOneDownloader::ProtocolOneDownloader(QObject *parent)
     : QObject(parent)
     , _networkAccessManager(new QNetworkAccessManager(this))
   {
     connect(this->_networkAccessManager, &QNetworkAccessManager::finished,
-      this, &GameNetDownloader::fileDownloaded);
+      this, &ProtocolOneDownloader::fileDownloaded);
   }
 
-  GameNetDownloader::~GameNetDownloader()
+  ProtocolOneDownloader::~ProtocolOneDownloader()
   {
   }
 
-  void GameNetDownloader::download(const QString &url, const QString &path)
+  void ProtocolOneDownloader::download(const QString &url, const QString &path)
   {
     if (!this->_targetFilePath.isEmpty()) {
       emit this->error(QNetworkReply::UnknownNetworkError);
@@ -35,7 +35,7 @@ namespace GameNet {
     this->_networkAccessManager->get(request);
   }
 
-  void GameNetDownloader::fileDownloaded(QNetworkReply* reply)
+  void ProtocolOneDownloader::fileDownloaded(QNetworkReply* reply)
   {
     QNetworkReply::NetworkError err = reply->error();
     reply->deleteLater();

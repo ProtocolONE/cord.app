@@ -10,7 +10,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-using GameNet::Host::ApplicationStatistic;
+using P1::Host::ApplicationStatistic;
 using P1::Settings::Settings;
 using P1::GameDownloader::GameDownloadService;
 using ::testing::Return;
@@ -107,7 +107,7 @@ TEST_F(ApplicationStatisticTest, executeGameTotalCount)
 TEST_F(ApplicationStatisticTest, installWithService)
 {
   Settings settings;
-  settings.beginGroup("qGNA");
+  settings.beginGroup("launcher");
   settings.setValue("installWithService", serviceId);
   ASSERT_EQ(serviceId, statistic.installWithService());
 }
@@ -117,7 +117,7 @@ TEST_F(ApplicationStatisticTest, installDate)
   quint64 installDate = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
 
   Settings settings;
-  settings.beginGroup("qGNA");
+  settings.beginGroup("launcher");
   settings.setValue("installDate", installDate);
   ASSERT_EQ(installDate, statistic.installDate());
 }
@@ -127,7 +127,7 @@ TEST_F(ApplicationStatisticTest, init)
   QString expectedServiceId = "ApplicationStatisticTestOtherServiceId";
 
   Settings settings;
-  settings.beginGroup("qGNA");
+  settings.beginGroup("launcher");
   settings.setValue("installDate", 0);
   settings.setValue("installWithService", expectedServiceId);
 
@@ -143,7 +143,7 @@ TEST_F(ApplicationStatisticTest, initWithStartingGame)
   statistic.setStartingGame(expectedServiceId);
 
   Settings settings;
-  settings.beginGroup("qGNA");
+  settings.beginGroup("launcher");
   settings.setValue("installDate", 0);
   settings.setValue("installWithService", "");
 
@@ -157,7 +157,7 @@ TEST_F(ApplicationStatisticTest, secondInit)
 {
   quint64 expectedInstallDate = 123123123;
   Settings settings;
-  settings.beginGroup("qGNA");
+  settings.beginGroup("launcher");
   settings.setValue("installDate", expectedInstallDate);
 
   statistic.init();

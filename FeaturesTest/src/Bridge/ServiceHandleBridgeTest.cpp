@@ -4,8 +4,8 @@
 #include <Host/Bridge/ServiceHandleBridge.h>
 #include <Host/Proxy/ServiceHandleProxy.h>
 
-using GameNet::Host::Bridge::ServiceHandleBridge;
-using GameNet::Host::Proxy::ServiceHandleProxy;
+using P1::Host::Bridge::ServiceHandleBridge;
+using P1::Host::Proxy::ServiceHandleProxy;
 
 using ::testing::Return;
 

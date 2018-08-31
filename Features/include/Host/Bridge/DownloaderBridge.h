@@ -15,7 +15,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
       class ServiceLoader;
@@ -160,7 +160,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Downloader")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Downloader")
       public:
         /*!
         \fn explicit DownloaderBridge(QObject *parent = 0);
@@ -353,7 +353,7 @@ namespace GameNet {
         <arg name="serviceId" type="s" direction="out"/>
         <arg name="progress" type="i" direction="out"/>
         <arg name="args" type="a(sii)" direction="out"/>
-        <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="GameNet::Host::Bridge::DownloadProgressArgs"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="P1::Host::Bridge::DownloadProgressArgs"/>
         </signal>
 
         */
@@ -362,7 +362,7 @@ namespace GameNet {
         \fn downloadProgress(
               const QString& serviceId,
               int progress, 
-              const GameNet::Host::Bridge::DownloadProgressArgs& args);
+              const P1::Host::Bridge::DownloadProgressArgs& args);
 
         This signal is emitted when downloader state for particular service is changed.
         It may occur due to change of download progress, download/upload speed change, total downloaded size change, etc.
@@ -371,7 +371,7 @@ namespace GameNet {
         void downloadProgress(
           const QString& serviceId,
           int progress, 
-          const GameNet::Host::Bridge::DownloadProgressArgs& args);
+          const P1::Host::Bridge::DownloadProgressArgs& args);
 
         void accessRequired(const QString & serviceId);
 
@@ -401,6 +401,6 @@ namespace GameNet {
   }
 }
 
-QDBusArgument& operator <<(QDBusArgument &argument, const GameNet::Host::Bridge::DownloadProgressArgs& arg);
-const QDBusArgument& operator >>(const QDBusArgument &argument, GameNet::Host::Bridge::DownloadProgressArgs& arg);
+QDBusArgument& operator <<(QDBusArgument &argument, const P1::Host::Bridge::DownloadProgressArgs& arg);
+const QDBusArgument& operator >>(const QDBusArgument &argument, P1::Host::Bridge::DownloadProgressArgs& arg);
 

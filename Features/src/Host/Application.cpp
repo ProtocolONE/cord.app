@@ -61,10 +61,10 @@
 
 using P1::Application::SingleApplication;
 using P1::GameDownloader::GameDownloadService;
-using GameNet::Host::DBus::DBusServer;
-using GameNet::Host::Installer::UninstallResult;
+using P1::Host::DBus::DBusServer;
+using P1::Host::Installer::UninstallResult;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     Application::Application(QObject *parent /*= 0*/)
@@ -175,7 +175,7 @@ namespace GameNet {
 
       this->_connectionManager->setStopDownloadServiceWhileExecuteAnyGame(this->_stopDownloadServiceOnExecuteGame);
 
-      this->_messageAdapter->setHasUiProcess(std::bind(&ConnectionManager::hasQGNA, this->_connectionManager));
+      this->_messageAdapter->setHasUiProcess(std::bind(&ConnectionManager::hasLauncher, this->_connectionManager));
       QObject::connect(this->_uiProcess, &UIProcess::closed, this->_messageAdapter, 
         &MessageAdapter::uiProcessClosed);
 
@@ -242,7 +242,7 @@ namespace GameNet {
       this->_applicationRestarter->setShutdownManager(this->_shutdown);
       
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
-      this->_uiProcess->setFileName("gamenet.ui.exe");
+      this->_uiProcess->setFileName("launcher.ui.exe");
 
       QObject::connect(this->_servicesListRequest, &ServiceProcess::ServicesListRequest::finished, [this](){
         StopDownloadOnExecuteInit stopDownloadOnExecuteInit;
@@ -291,7 +291,7 @@ namespace GameNet {
     void Application::updateCompletedSlot(bool needRestart)
     {
       if (needRestart) {
-        if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
+        if (!this->isInitCompleted() || !this->_connectionManager->hasLauncher()) {
           this->restartApplication(true, false);
           return;
         }
@@ -371,7 +371,7 @@ namespace GameNet {
       apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
 
       P1::Settings::Settings settings;
-      settings.setValue("qGNA/restApi/url", apiUrl);
+      settings.setValue("launcher/restApi/url", apiUrl);
       qDebug() << "Using rest api url " << apiUrl;
 
       this->_restApiManager->setUri(apiUrl);
@@ -418,7 +418,7 @@ namespace GameNet {
 
     void Application::shutdown()
     {
-      if (!this->isInitCompleted() || !this->_connectionManager->hasQGNA()) {
+      if (!this->isInitCompleted() || !this->_connectionManager->hasLauncher()) {
         this->internalShutdown();
         return;
       }
@@ -439,7 +439,7 @@ namespace GameNet {
         return;
       }
 
-      qDebug() << "Starting qGNA UI";
+      qDebug() << "Starting Launcher UI";
       QStringList args = QCoreApplication::arguments();
       args.removeFirst(); // INFO first argument always self execute path
       
@@ -449,9 +449,9 @@ namespace GameNet {
 
     void Application::initMarketing()
     {
-      QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       QString mid = midSettings.value("MID", "").toString();
-      this->_marketingTarget->init("qGNA", mid);
+      this->_marketingTarget->init("Launcher", mid);
 
       int installerKey = midSettings.value("InstKey").toInt();
       this->_marketingTarget->setInstallerKey(installerKey);
@@ -461,7 +461,7 @@ namespace GameNet {
       this->_systemInfoManager->init();
     }
 
-    bool Application::executedGameCredential(P1::RestApi::GameNetCredential& credetial, QString& name)
+    bool Application::executedGameCredential(P1::RestApi::ProtocolOneCredential& credetial, QString& name)
     {
       QString executedGame = this->_executor->executedGame();
       if (executedGame.isEmpty())
@@ -507,16 +507,16 @@ namespace GameNet {
       QObject::connect(connection, &Connection::logoutMain,
         this, &Application::onConnectionLogoutMain);
 
-      if (connection->applicationName() == "QGNA") {
+      if (connection->applicationName() == "Launcher") {
         this->setUiCommandConnection();
 
-        auto qgnaLogout = [this]() {
-          this->_systemInfoManager->setCredential(P1::RestApi::GameNetCredential());
+        auto launcherLogout = [this]() {
+          this->_systemInfoManager->setCredential(P1::RestApi::ProtocolOneCredential());
           this->_gameDownloader->resetCredentials();
         };
 
-        QObject::connect(connection, &Connection::logoutMain, qgnaLogout);
-        QObject::connect(connection, &Connection::disconnected, qgnaLogout);
+        QObject::connect(connection, &Connection::logoutMain, launcherLogout);
+        QObject::connect(connection, &Connection::disconnected, launcherLogout);
         QObject::connect(connection, &Connection::mainCredentialChanged, [this, connection]() {
           P1::RestApi::RestApiManager::commonInstance()->setCridential(connection->credential());
           this->_systemInfoManager->setCredential(connection->credential());
@@ -525,13 +525,13 @@ namespace GameNet {
       }
     }
 
-    void Application::setDownloaderCredential(const P1::RestApi::GameNetCredential &creds)
+    void Application::setDownloaderCredential(const P1::RestApi::ProtocolOneCredential &creds)
     {
       QString userId = creds.userId();
 
       QCryptographicHash hash(QCryptographicHash::Sha1);
       hash.addData(userId.toLatin1());
-      hash.addData("t5mPWw25K8FIpZaQ"); //INFO QGNA-1319
+      hash.addData("t5mPWw25K8FIpZaQ");
       
       QString authHash(hash.result().toHex());
 

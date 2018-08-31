@@ -4,19 +4,19 @@
 
 #include <Host/Proxy/GameExecutorProxy.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <QtCore/QString>
 
-using GameNet::Host::GameExecutor;
-using GameNet::Host::Proxy::GameExecutorProxy;
-using GameNet::Host::Bridge::ExecutorBridge;
-using GameNet::Host::Bridge::Credential;
-using GameNet::Host::Bridge::createGameNetCredential;
-using P1::RestApi::GameNetCredential;
+using P1::Host::GameExecutor;
+using P1::Host::Proxy::GameExecutorProxy;
+using P1::Host::Bridge::ExecutorBridge;
+using P1::Host::Bridge::Credential;
+using P1::Host::Bridge::createProtocolOneCredential;
+using P1::RestApi::ProtocolOneCredential;
 
 using ::testing::Return;
 
@@ -29,13 +29,13 @@ public:
 // slots
   MOCK_METHOD2(
     execute, 
-    void(const QString& serviceId, const GameNetCredential& credential));
+    void(const QString& serviceId, const ProtocolOneCredential& credential));
 
   MOCK_METHOD3(
     executeSecond, 
     void(const QString& serviceId, 
-         const GameNetCredential& credential, 
-         const GameNetCredential& secondCredential));
+         const ProtocolOneCredential& credential, 
+         const ProtocolOneCredential& secondCredential));
 
   MOCK_CONST_METHOD1(isGameStarted, bool(const QString&));
   MOCK_CONST_METHOD0(isAnyGameStarted, bool());
@@ -65,8 +65,8 @@ public:
     secondCredential.appKey = "secondAppKey";
     secondCredential.cookie = "secondcookie";
 
-    expectedCredential = createGameNetCredential(credential);
-    expectedSecondCredential = createGameNetCredential(secondCredential);
+    expectedCredential = createProtocolOneCredential(credential);
+    expectedSecondCredential = createProtocolOneCredential(secondCredential);
 
     bridge.setExecutor(&executor);
     
@@ -86,10 +86,10 @@ public:
   QString serviceId;
 
   Credential credential;
-  GameNetCredential expectedCredential;
+  ProtocolOneCredential expectedCredential;
 
   Credential secondCredential;
-  GameNetCredential expectedSecondCredential;
+  ProtocolOneCredential expectedSecondCredential;
 
   ExecutorBridge bridge;
   GameExecutorMock executor;

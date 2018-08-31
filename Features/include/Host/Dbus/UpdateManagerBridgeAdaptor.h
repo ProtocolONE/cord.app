@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.Updater
+ * Adaptor class for interface com.protocolone.launcher.dbus.Updater
  */
 class UpdateManagerBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Updater")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Updater")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.Updater\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.Updater\">\n"
 "    <signal name=\"downloadUpdateProgress\">\n"
 "      <arg direction=\"out\" type=\"t\" name=\"currentSize\"/>\n"
 "      <arg direction=\"out\" type=\"t\" name=\"totalSize\"/>\n"

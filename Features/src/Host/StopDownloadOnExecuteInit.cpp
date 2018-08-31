@@ -12,7 +12,7 @@ using P1::GameDownloader::GameDownloadService;
 using P1::Core::Service;
 using Features::StopDownloadServiceWhileExecuteAnyGame;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     StopDownloadOnExecuteInit::StopDownloadOnExecuteInit()

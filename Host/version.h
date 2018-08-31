@@ -6,12 +6,12 @@
   #define STRFILEVER       "1,0,0,0"
   #define STRPRODUCTVER    STRFILEVER
 
-  #define COMPANYNAME      "GGS"
-  #define FILEDESCRIPTION  "Developer version GameNet Host application"
-  #define INTERNALNAME     "HOST"
+  #define COMPANYNAME      "ProtocolOne"
+  #define FILEDESCRIPTION  "Developer version ProtocolOne Launcher Host application"
+  #define INTERNALNAME     "launcher.host"
   #define LEGALCOPYRIGHT   "Copyright ( ) 2014"
-  #define ORIGINALFILENAME "HOST.EXE"
-  #define PRODUCTNAME      "GameNet host application"
+  #define ORIGINALFILENAME "launcher.host.exe"
+  #define PRODUCTNAME      "ProtocolOne Launcher Host application"
 #else
   #define FILEVER          $$MAJOR$$,$$MINOR$$,$$PATCH$$,$$BUILD$$
   #define PRODUCTVER       FILEVER

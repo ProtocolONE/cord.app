@@ -28,7 +28,7 @@ using P1::GameExecutor::HookInterface;
 using Features::WorkStationLock::RegisterSessionNotificationFilter;
 using Features::WorkStationLock::WorkStationLockHook;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     ExecutorHookFactory::ExecutorHookFactory(QObject *parent /*= 0*/)

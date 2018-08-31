@@ -4,9 +4,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-#include <windows.h>
-
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class UIProcessPrivate;
@@ -76,7 +74,7 @@ namespace GameNet {
        * \fn  void UIProcess::sendCommand(const QString& name, const QStringList& args);
        *
        * \brief На основе комманды и аргументов формирует строку для запуска UI процесса и запускает его.
-       *        Все комманды преобразуются по формату uri:gamenet://name/args[0]/args[1]/...
+       *        Все комманды преобразуются по формату uri:protocolone://name/args[0]/args[1]/...
        *
        * \author  Ilya Tkachenko
        * \date  08.10.2014

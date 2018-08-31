@@ -1,6 +1,6 @@
 #include <Host/Bridge/Credential.h>
 
-QDBusArgument& operator<<(QDBusArgument &argument, const GameNet::Host::Bridge::Credential arg)
+QDBusArgument& operator<<(QDBusArgument &argument, const P1::Host::Bridge::Credential arg)
 {
   argument.beginStructure();
   argument 
@@ -11,7 +11,7 @@ QDBusArgument& operator<<(QDBusArgument &argument, const GameNet::Host::Bridge::
   return argument;
 }
 
-const QDBusArgument& operator>>(const QDBusArgument &argument, GameNet::Host::Bridge::Credential& arg)
+const QDBusArgument& operator>>(const QDBusArgument &argument, P1::Host::Bridge::Credential& arg)
 {
   argument.beginStructure();
   argument 

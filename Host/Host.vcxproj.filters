@@ -54,4 +54,7 @@
   <ItemGroup>
     <ResourceCompile Include="Host.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
+  </ItemGroup>
 </Project>

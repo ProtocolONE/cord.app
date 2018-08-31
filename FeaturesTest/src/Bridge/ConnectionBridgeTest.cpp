@@ -5,16 +5,16 @@
 #include <Host/CredentialConverter.h>
 #include <Host/Bridge/ConnectionBridge.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QString>
 
-using GameNet::Host::Connection;
-using GameNet::Host::Bridge::ConnectionBridge;
-using GameNet::Host::Bridge::Credential;
-using GameNet::Host::Bridge::createGameNetCredential;
+using P1::Host::Connection;
+using P1::Host::Bridge::ConnectionBridge;
+using P1::Host::Bridge::Credential;
+using P1::Host::Bridge::createProtocolOneCredential;
 
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
 using ::testing::Return;
 
@@ -27,8 +27,8 @@ public:
   }
 
   MOCK_METHOD1(setApplicationName, void(const QString&));
-  MOCK_METHOD1(setCredential, void(const GameNetCredential&));
-  MOCK_METHOD1(setSecondCredential, void(const GameNetCredential&));
+  MOCK_METHOD1(setCredential, void(const ProtocolOneCredential&));
+  MOCK_METHOD1(setSecondCredential, void(const ProtocolOneCredential&));
   MOCK_METHOD0(ping, void());
   MOCK_METHOD0(close, void());
 
@@ -46,7 +46,7 @@ public:
     credential.userId = "123123qwe123";
     credential.appKey = "lksdflkqerqwelkqwemqwklem";
     credential.cookie = "wklermwklrm234mlkmrklqwr90ads";
-    gnCredential = createGameNetCredential(credential);
+    gnCredential = createProtocolOneCredential(credential);
 
     QObject::connect(&bridge, &ConnectionBridge::wrongCredential,
       &connection, &ConnectionMock::onWrongCredential);
@@ -59,7 +59,7 @@ public:
   ConnectionMock connection;
 
   Credential credential;
-  GameNetCredential gnCredential;
+  ProtocolOneCredential gnCredential;
 };
 
 TEST_F(ConnectionBridgeTest, setApplicationName)

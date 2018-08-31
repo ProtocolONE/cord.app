@@ -35,7 +35,7 @@ ApplicationStatisticBridgeAdaptor::~ApplicationStatisticBridgeAdaptor()
 
 int ApplicationStatisticBridgeAdaptor::executeGameFailedCount(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.executeGameFailedCount
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.executeGameFailedCount
     int out0;
     QMetaObject::invokeMethod(parent(), "executeGameFailedCount", Q_RETURN_ARG(int, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -43,7 +43,7 @@ int ApplicationStatisticBridgeAdaptor::executeGameFailedCount(const QString &ser
 
 int ApplicationStatisticBridgeAdaptor::executeGameSuccessCount(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.executeGameSuccessCount
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.executeGameSuccessCount
     int out0;
     QMetaObject::invokeMethod(parent(), "executeGameSuccessCount", Q_RETURN_ARG(int, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -51,7 +51,7 @@ int ApplicationStatisticBridgeAdaptor::executeGameSuccessCount(const QString &se
 
 int ApplicationStatisticBridgeAdaptor::executeGameTotalCount(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.executeGameTotalCount
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.executeGameTotalCount
     int out0;
     QMetaObject::invokeMethod(parent(), "executeGameTotalCount", Q_RETURN_ARG(int, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -59,7 +59,7 @@ int ApplicationStatisticBridgeAdaptor::executeGameTotalCount(const QString &serv
 
 qulonglong ApplicationStatisticBridgeAdaptor::gameInstallDate(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.gameInstallDate
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.gameInstallDate
     qulonglong out0;
     QMetaObject::invokeMethod(parent(), "gameInstallDate", Q_RETURN_ARG(qulonglong, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -67,7 +67,7 @@ qulonglong ApplicationStatisticBridgeAdaptor::gameInstallDate(const QString &ser
 
 qulonglong ApplicationStatisticBridgeAdaptor::gameLastExecutionTime(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.gameLastExecutionTime
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.gameLastExecutionTime
     qulonglong out0;
     QMetaObject::invokeMethod(parent(), "gameLastExecutionTime", Q_RETURN_ARG(qulonglong, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -75,7 +75,7 @@ qulonglong ApplicationStatisticBridgeAdaptor::gameLastExecutionTime(const QStrin
 
 qulonglong ApplicationStatisticBridgeAdaptor::installDate()
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.installDate
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.installDate
     qulonglong out0;
     QMetaObject::invokeMethod(parent(), "installDate", Q_RETURN_ARG(qulonglong, out0));
     return out0;
@@ -83,7 +83,7 @@ qulonglong ApplicationStatisticBridgeAdaptor::installDate()
 
 QString ApplicationStatisticBridgeAdaptor::installWithService()
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.installWithService
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.installWithService
     QString out0;
     QMetaObject::invokeMethod(parent(), "installWithService", Q_RETURN_ARG(QString, out0));
     return out0;
@@ -91,7 +91,7 @@ QString ApplicationStatisticBridgeAdaptor::installWithService()
 
 bool ApplicationStatisticBridgeAdaptor::isFirstStart()
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.isFirstStart
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.isFirstStart
     bool out0;
     QMetaObject::invokeMethod(parent(), "isFirstStart", Q_RETURN_ARG(bool, out0));
     return out0;
@@ -99,7 +99,7 @@ bool ApplicationStatisticBridgeAdaptor::isFirstStart()
 
 bool ApplicationStatisticBridgeAdaptor::isGameInstalled(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ApplicationStatistic.isGameInstalled
+    // handle method call com.protocolone.launcher.dbus.ApplicationStatistic.isGameInstalled
     bool out0;
     QMetaObject::invokeMethod(parent(), "isGameInstalled", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;

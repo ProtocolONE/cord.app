@@ -6,7 +6,7 @@
 
 using ::testing::Return;
 
-class DownloaderSettingsMock : public GameNet::Host::DownloaderSettings
+class DownloaderSettingsMock : public P1::Host::DownloaderSettings
 {
 public:
   MOCK_METHOD1(setListeningPort, void(int));
@@ -36,7 +36,7 @@ public:
     this->_downloaderSettingsBridge.setDownloaderSettings(&this->_downloaderSettingsMock);
   }
   
-  GameNet::Host::Bridge::DownloaderSettingsBridge _downloaderSettingsBridge;
+  P1::Host::Bridge::DownloaderSettingsBridge _downloaderSettingsBridge;
   DownloaderSettingsMock _downloaderSettingsMock;
 };
 

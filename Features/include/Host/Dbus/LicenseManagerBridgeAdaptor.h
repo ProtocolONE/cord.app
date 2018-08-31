@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.LicenseManager
+ * Adaptor class for interface com.protocolone.launcher.dbus.LicenseManager
  */
 class LicenseManagerBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.LicenseManager")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.LicenseManager")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.LicenseManager\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.LicenseManager\">\n"
 "    <method name=\"hasAcceptedLicense\">\n"
 "      <arg direction=\"out\" type=\"b\"/>\n"
 "    </method>\n"

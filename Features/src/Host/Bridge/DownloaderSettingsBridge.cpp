@@ -1,7 +1,7 @@
 #include <Host/Bridge/DownloaderSettingsBridge.h>
 #include <Host/DownloaderSettings.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
       DownloaderSettingsBridge::DownloaderSettingsBridge(QObject *parent /*= 0*/)

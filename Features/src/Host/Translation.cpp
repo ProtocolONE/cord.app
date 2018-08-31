@@ -6,7 +6,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QCoreApplication>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     Translation::Translation(QObject *parent /*= 0*/)
@@ -27,7 +27,7 @@ namespace GameNet {
     QString Translation::language() const
     {
       P1::Settings::Settings settings;
-      return settings.value("qGNA/language").toString(); 
+      return settings.value("launcher/language").toString(); 
     }
 
     void Translation::setLanguage(const QString& value)
@@ -58,12 +58,12 @@ namespace GameNet {
     void Translation::saveLanguage(const QString& value)
     {
       P1::Settings::Settings settings;
-      settings.setValue("qGNA/language", value);
+      settings.setValue("launcher/language", value);
     }
 
     void Translation::load(QMap<QString, QTranslator*> &translators, QObject* parent)
     {
-      QString filenamePrefix("qgna_");
+      QString filenamePrefix("launcher_");
 
       QDir dir(QCoreApplication::applicationDirPath() + "/Languages/");
       dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);

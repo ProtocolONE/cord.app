@@ -26,14 +26,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.Downloader
+ * Adaptor class for interface com.protocolone.launcher.dbus.Downloader
  */
 class DownloaderBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Downloader")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Downloader")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.Downloader\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.Downloader\">\n"
 "    <signal name=\"started\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"out\" type=\"i\" name=\"startType\"/>\n"
@@ -100,7 +100,7 @@ class DownloaderBridgeAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"out\" type=\"i\" name=\"progress\"/>\n"
 "      <arg direction=\"out\" type=\"a(sii)\" name=\"args\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::DownloadProgressArgs\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
+"      <annotation value=\"P1::Host::Bridge::DownloadProgressArgs\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
 "    </signal>\n"
 "  </interface>\n"
         "")
@@ -119,7 +119,7 @@ public Q_SLOTS: // METHODS
     Q_NOREPLY void stop(const QString &serviceId);
 Q_SIGNALS: // SIGNALS
     void accessRequired(const QString &serviceId);
-    void downloadProgress(const QString &serviceId, int progress, GameNet::Host::Bridge::DownloadProgressArgs args);
+    void downloadProgress(const QString &serviceId, int progress, P1::Host::Bridge::DownloadProgressArgs args);
     void failed(const QString &serviceId);
     void finished(const QString &serviceId);
     void serviceInstalled(const QString &serviceId);

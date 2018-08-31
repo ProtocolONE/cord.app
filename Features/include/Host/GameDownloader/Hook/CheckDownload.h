@@ -1,6 +1,6 @@
 #pragma once
 #include <GameDownloader/HookBase.h>
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 #include <functional>
 
 namespace P1 {
@@ -10,7 +10,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace GameDownloader {
       namespace Hook {
@@ -30,7 +30,7 @@ namespace GameNet {
             P1::GameDownloader::GameDownloadService *gameDownloader, 
             P1::GameDownloader::ServiceState *state) override;
 
-          void setCredential(std::function< P1::RestApi::GameNetCredential(const QString& serviceId) > value);
+          void setCredential(std::function< P1::RestApi::ProtocolOneCredential(const QString& serviceId) > value);
 
         signals:
           void accessRequired();
@@ -38,7 +38,7 @@ namespace GameNet {
           void internalError();
 
         private:
-          std::function< P1::RestApi::GameNetCredential(const QString& serviceId) > _credential;
+          std::function< P1::RestApi::ProtocolOneCredential(const QString& serviceId) > _credential;
 
         };
 

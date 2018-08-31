@@ -1,7 +1,7 @@
 #include <Host/Bridge/ServiceSettingsBridge.h>
 #include <Host/ServiceSettings.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 

@@ -32,7 +32,7 @@ namespace P1 {
   namespace RestApi {
     class RestApiManager;
     class FakeCache;
-    class GameNetCredential;
+    class ProtocolOneCredential;
   }
 
   namespace Marketing {
@@ -40,7 +40,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
       class ServiceLoader;
@@ -131,13 +131,13 @@ namespace GameNet {
       void initRestApi();
       void initMarketing();
 
-      bool executedGameCredential(P1::RestApi::GameNetCredential& credetial, QString& name);
+      bool executedGameCredential(P1::RestApi::ProtocolOneCredential& credetial, QString& name);
       void internalRestartApplication(bool shouldStartWithSameArguments, bool isMinimized);
 
       void onNewConnection(Connection *connection);
       void onConnectionLogoutMain();
 
-      void setDownloaderCredential(const P1::RestApi::GameNetCredential &creds);
+      void setDownloaderCredential(const P1::RestApi::ProtocolOneCredential &creds);
 
       void setUiCommandConnection();
 

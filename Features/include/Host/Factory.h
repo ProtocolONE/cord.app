@@ -6,7 +6,7 @@
 
 #include <functional>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     template <typename T>

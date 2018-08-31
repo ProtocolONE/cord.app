@@ -6,12 +6,12 @@
     #define STRFILEVER       "1,0,0,0"
     #define STRPRODUCTVER    STRFILEVER
 
-    #define COMPANYNAME      "GGS"
-    #define FILEDESCRIPTION  "Developer version of GameNet Uninstaller"
+    #define COMPANYNAME      "ProtocolOne"
+    #define FILEDESCRIPTION  "Developer version of ProtocolOne Launcher Uninstaller"
     #define INTERNALNAME     "Uninstaller"
     #define LEGALCOPYRIGHT   "Copyright(c) 2015"
     #define ORIGINALFILENAME "Uninstaller.EXE"
-    #define PRODUCTNAME      "GameNet Uninstaller"
+    #define PRODUCTNAME      "ProtocolOne Launcher Uninstaller"
 #else
     #define FILEVER          $$MAJOR$$,$$MINOR$$,$$PATCH$$,$$BUILD$$
     #define PRODUCTVER       FILEVER

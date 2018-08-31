@@ -14,7 +14,7 @@
 
 #include <Application/ArgumentParser.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class QStringToWChar {
@@ -203,7 +203,7 @@ namespace GameNet {
         return;
 
       QString arg = args.join('/');
-      QString commandLine = QString("/uri:gamenet://%1/%2").arg(name, arg);
+      QString commandLine = QString("/uri:protocolone://%1/%2").arg(name, arg);
       QStringList processArgs;
       processArgs << commandLine;
       this->_d->start(processArgs, true);
@@ -217,7 +217,7 @@ namespace GameNet {
       
       DWORD exitCode = 0;
       GetExitCodeProcess(this->_d->_processHandle, &exitCode);
-      DEBUG_LOG << "qGNA UI process finished with exit code" << exitCode;
+      DEBUG_LOG << "Launcher UI process finished with exit code" << exitCode;
 
       this->_d->closeHandle();
     }

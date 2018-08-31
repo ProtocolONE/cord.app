@@ -1,14 +1,16 @@
 #include <Host/CommandLineManager.h>
 #include <Application/ArgumentParser.h>
 
+#include <RestApi/ProtocolOneCredential.h>
+
 #include <QtCore/QCoreApplication>
 
 #include <Helper/ApplicationArea.hpp>
 
 using P1::Core::Service;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     CommandLineManager::CommandLineManager(QObject *parent /*= 0*/)
@@ -38,13 +40,13 @@ namespace GameNet {
       if (ignoreCommand)
         return;
 
-      if (name == "gogamenetmoney") {
-        this->gogamenetmoney(name, arguments);
+      if (name == "goprotocolonemoney") {
+        this->goprotocolonemoney(name, arguments);
         return;
       }
 
-      if (name == "gogamenethelper") {
-        this->gogamenethelper(name, arguments);
+      if (name == "goprotocolonehelper") {
+        this->goprotocolonehelper(name, arguments);
         return;
       }
 
@@ -109,9 +111,9 @@ namespace GameNet {
       return this->_commandLineArguments->contains("web-browser");
     }
 
-    void CommandLineManager::gogamenetmoney(const QString& name, const QStringList& arguments)
+    void CommandLineManager::goprotocolonemoney(const QString& name, const QStringList& arguments)
     {
-      GameNetCredential credential;
+      ProtocolOneCredential credential;
       bool seendToUi = this->shouldSendToUi(credential);
 
       if (seendToUi) {
@@ -119,28 +121,28 @@ namespace GameNet {
         return;
       }
 
-      this->openUrlWithAuth("http://www.gamenet.ru/money", credential);
+      this->openUrlWithAuth("http://www.protocol.one/money", credential);
     }
 
-    void CommandLineManager::gogamenethelper(const QString& name, const QStringList& arguments)
+    void CommandLineManager::goprotocolonehelper(const QString& name, const QStringList& arguments)
     {
       if (arguments.count() < 1)
         return;
 
-      GameNetCredential credential;
+      ProtocolOneCredential credential;
       if (this->shouldSendToUi(credential)) {
         emit this->uiCommand(name, arguments);
         return;
       }
 
       QString gameId = arguments.at(0);
-      QString url = QString("http://www.gamenet.ru/games/%1/guides").arg(gameId);
+      QString url = QString("http://www.protocol.one/games/%1/guides").arg(gameId);
       this->openUrlWithAuth(url, credential);
     }
 
     void CommandLineManager::gocombatarmsrating(const QString& name, const QStringList& arguments)
     {
-      GameNetCredential credential;
+      ProtocolOneCredential credential;
       if (this->shouldSendToUi(credential)) {
         emit this->uiCommand(name, arguments);
         return;
@@ -149,14 +151,14 @@ namespace GameNet {
       this->openUrlWithAuth("http://www.combatarms.ru/ratings/user/", credential);
     }
 
-    bool CommandLineManager::shouldSendToUi(GameNetCredential& credential)
+    bool CommandLineManager::shouldSendToUi(ProtocolOneCredential& credential)
     {
       QString applicationName;
       bool gameExecuted = this->_executedGameCredential(credential, applicationName);
-      return !gameExecuted || (gameExecuted && applicationName == "QGNA");
+      return !gameExecuted || (gameExecuted && applicationName == "Launcher");
     }
 
-    void CommandLineManager::openUrlWithAuth(const QString& url, GameNetCredential& credential)
+    void CommandLineManager::openUrlWithAuth(const QString& url, ProtocolOneCredential& credential)
     {
       QString authUrl;
       if (credential.isEmpty()) {

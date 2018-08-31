@@ -11,7 +11,7 @@
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
 #include <Host/GameDownloader/Hook/CheckDownload.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <Core/UI/Message.h>
 
@@ -21,10 +21,11 @@ using P1::GameDownloader::HookBase;
 using P1::GameDownloader::Hooks::InstallDependency;
 using P1::GameDownloader::Hooks::PreventWinXpDownload;
 using P1::GameDownloader::Hooks::PreventWin32Download;
-using GameNet::Host::GameDownloader::Hook::SaveInstallPath;
-using GameNet::Host::GameDownloader::Hook::CheckDownload;
+using P1::Host::GameDownloader::Hook::SaveInstallPath;
+using P1::Host::GameDownloader::Hook::UpdateUninstallInfo;
+using P1::Host::GameDownloader::Hook::CheckDownload;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     HookFactory::HookFactory(QObject *parent)
@@ -58,11 +59,11 @@ namespace GameNet {
         result = hook;
       } else if (guid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
         CheckDownload *hook = new CheckDownload(this);
-        hook->setCredential([this](const QString& serviceId)-> P1::RestApi::GameNetCredential
+        hook->setCredential([this](const QString& serviceId)-> P1::RestApi::ProtocolOneCredential
         {
           Connection* connection = this->_serviceHandle->connectionLockedService(serviceId);
           if (!connection) {
-            return P1::RestApi::GameNetCredential();
+            return P1::RestApi::ProtocolOneCredential();
           }
 
           return connection->credential();
@@ -70,7 +71,7 @@ namespace GameNet {
 
         QObject::connect(hook, &CheckDownload::internalError, []()
         {
-          // INFO HACK перевод не работает в Checkdownload 
+          // INFO HACK пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ Checkdownload 
           QString title = tr("RESTAPI_ERROR_CAPTION");
           QString msg = tr("HAS_ACCESS_INTERNAL_ERROR");
           Message::warning(title, msg);

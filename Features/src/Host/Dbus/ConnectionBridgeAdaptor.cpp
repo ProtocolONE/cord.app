@@ -35,31 +35,31 @@ ConnectionBridgeAdaptor::~ConnectionBridgeAdaptor()
 
 void ConnectionBridgeAdaptor::close()
 {
-    // handle method call com.gamenet.dbus.Connection.close
+    // handle method call com.protocolone.launcher.dbus.Connection.close
     QMetaObject::invokeMethod(parent(), "close");
 }
 
 void ConnectionBridgeAdaptor::ping()
 {
-    // handle method call com.gamenet.dbus.Connection.ping
+    // handle method call com.protocolone.launcher.dbus.Connection.ping
     QMetaObject::invokeMethod(parent(), "ping");
 }
 
 void ConnectionBridgeAdaptor::setApplicationName(const QString &applicationName)
 {
-    // handle method call com.gamenet.dbus.Connection.setApplicationName
+    // handle method call com.protocolone.launcher.dbus.Connection.setApplicationName
     QMetaObject::invokeMethod(parent(), "setApplicationName", Q_ARG(QString, applicationName));
 }
 
-void ConnectionBridgeAdaptor::setCredential(GameNet::Host::Bridge::Credential credential)
+void ConnectionBridgeAdaptor::setCredential(P1::Host::Bridge::Credential credential)
 {
-    // handle method call com.gamenet.dbus.Connection.setCredential
-    QMetaObject::invokeMethod(parent(), "setCredential", Q_ARG(GameNet::Host::Bridge::Credential, credential));
+    // handle method call com.protocolone.launcher.dbus.Connection.setCredential
+    QMetaObject::invokeMethod(parent(), "setCredential", Q_ARG(P1::Host::Bridge::Credential, credential));
 }
 
-void ConnectionBridgeAdaptor::setSecondCredential(GameNet::Host::Bridge::Credential credential)
+void ConnectionBridgeAdaptor::setSecondCredential(P1::Host::Bridge::Credential credential)
 {
-    // handle method call com.gamenet.dbus.Connection.setSecondCredential
-    QMetaObject::invokeMethod(parent(), "setSecondCredential", Q_ARG(GameNet::Host::Bridge::Credential, credential));
+    // handle method call com.protocolone.launcher.dbus.Connection.setSecondCredential
+    QMetaObject::invokeMethod(parent(), "setSecondCredential", Q_ARG(P1::Host::Bridge::Credential, credential));
 }
 

@@ -35,7 +35,7 @@ ServiceHandleBridgeAdaptor::~ServiceHandleBridgeAdaptor()
 
 bool ServiceHandleBridgeAdaptor::lock(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceHandle.lock
+    // handle method call com.protocolone.launcher.dbus.ServiceHandle.lock
     bool out0;
     QMetaObject::invokeMethod(parent(), "lock", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -43,7 +43,7 @@ bool ServiceHandleBridgeAdaptor::lock(const QString &serviceId)
 
 void ServiceHandleBridgeAdaptor::unlock(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.ServiceHandle.unlock
+    // handle method call com.protocolone.launcher.dbus.ServiceHandle.unlock
     QMetaObject::invokeMethod(parent(), "unlock", Q_ARG(QString, serviceId));
 }
 

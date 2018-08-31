@@ -3,7 +3,7 @@
 #include <Host/Connection.h>
 #include <Host/CredentialConverter.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 
@@ -38,13 +38,13 @@ namespace GameNet {
       void ConnectionBridge::setCredential(const Credential& credential)
       {
         Q_ASSERT(this->_connection);
-        this->_connection->setCredential(createGameNetCredential(credential));
+        this->_connection->setCredential(createProtocolOneCredential(credential));
       }
 
       void ConnectionBridge::setSecondCredential(const Credential& credential)
       {
         Q_ASSERT(this->_connection);
-        this->_connection->setSecondCredential(createGameNetCredential(credential));
+        this->_connection->setSecondCredential(createProtocolOneCredential(credential));
       }
 
       void ConnectionBridge::ping()

@@ -7,11 +7,11 @@ class ConnectionBridgeProxy;
 
 namespace P1 {
   namespace RestApi {
-    class GameNetCredential;
+    class ProtocolOneCredential;
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class ClientConnection : public QObject
@@ -24,8 +24,8 @@ namespace GameNet {
       void init();
       void close();
 
-      void setCredential(const P1::RestApi::GameNetCredential& value);
-      void setSecondCredential(const P1::RestApi::GameNetCredential& value);
+      void setCredential(const P1::RestApi::ProtocolOneCredential& value);
+      void setSecondCredential(const P1::RestApi::ProtocolOneCredential& value);
 
     signals:
       void disconnected();

@@ -5,7 +5,7 @@
 #include <QtCore/QMetaType>
 #include <QtDBus/QDBusAbstractAdaptor>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Application;
@@ -18,7 +18,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Application")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Application")
 
         Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
         Q_PROPERTY(int autoStartMode READ autoStartMode WRITE setAutoStartMode NOTIFY autoStartModeChanged)

@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.DownloaderSettings
+ * Adaptor class for interface com.protocolone.launcher.dbus.DownloaderSettings
  */
 class DownloaderSettingsBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.DownloaderSettings")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.DownloaderSettings")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.DownloaderSettings\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.DownloaderSettings\">\n"
 "    <property access=\"readwrite\" type=\"i\" name=\"listeningPort\"/>\n"
 "    <property access=\"readwrite\" type=\"i\" name=\"uploadRate\"/>\n"
 "    <property access=\"readwrite\" type=\"i\" name=\"downloadRate\"/>\n"

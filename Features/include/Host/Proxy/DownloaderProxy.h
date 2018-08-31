@@ -2,7 +2,7 @@
 
 #include <GameDownloader/GameDownloadService.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QObject>
 
@@ -16,7 +16,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Connection;
@@ -36,7 +36,7 @@ namespace GameNet {
         void setServiceHandle(ServiceHandle *value);
 
         const Connection* connection();
-        P1::RestApi::GameNetCredential credential(const QString& serviceId);
+        P1::RestApi::ProtocolOneCredential credential(const QString& serviceId);
 
         virtual bool isInProgress(const P1::Core::Service *service);
         virtual bool isAnyServiceInProgress();
@@ -97,7 +97,7 @@ namespace GameNet {
 
         Connection *_connection;
         P1::GameDownloader::GameDownloadService *_downloader;
-        QHash<QString, P1::RestApi::GameNetCredential> _credentialMap;
+        QHash<QString, P1::RestApi::ProtocolOneCredential> _credentialMap;
         ServiceHandle *_serviceHandle;
         bool _unlockDisabled;
       };

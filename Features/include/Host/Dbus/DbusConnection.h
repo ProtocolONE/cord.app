@@ -3,7 +3,7 @@
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace DBus {
 

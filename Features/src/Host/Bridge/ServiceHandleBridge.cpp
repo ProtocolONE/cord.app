@@ -1,9 +1,9 @@
 #include <Host/Bridge/ServiceHandleBridge.h>
 #include <Host/Proxy/ServiceHandleProxy.h>
 
-using GameNet::Host::Proxy::ServiceHandleProxy;
+using P1::Host::Proxy::ServiceHandleProxy;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 

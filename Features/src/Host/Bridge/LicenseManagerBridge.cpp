@@ -1,7 +1,7 @@
 #include <Host/LicenseManager.h>
 #include <Host/Bridge/LicenseManagerBridge.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
       LicenseManagerBridge::LicenseManagerBridge(QObject *parent)

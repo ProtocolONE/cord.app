@@ -8,7 +8,7 @@ namespace Features {
   class StopDownloadServiceWhileExecuteAnyGame;
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Application;
@@ -33,7 +33,7 @@ namespace GameNet {
       bool init();
       void shutdown();
 
-      bool hasQGNA();
+      bool hasLauncher();
 
     signals:
       void newConnection(Connection *connection);
@@ -48,7 +48,7 @@ namespace GameNet {
 
       void connectionInfoReceived();
 
-      void registerServicesForQGNA(Connection * connection);
+      void registerServicesForLauncher(Connection * connection);
 
       void registerDownloader(Connection* connection);
       void registerMessageAdapter(Connection* connection);

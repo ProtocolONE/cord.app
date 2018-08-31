@@ -15,10 +15,10 @@
 using P1::GameDownloader::GameDownloadService;
 using P1::GameDownloader::ServiceState;
 using P1::GameDownloader::HookBase;
-using GameNet::Host::ServiceProcess::ServiceLoader;
+using P1::Host::ServiceProcess::ServiceLoader;
 using P1::Core::Service;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace GameDownloader {
       namespace Hook {
@@ -55,7 +55,7 @@ namespace GameNet {
         {
           Q_ASSERT(service);
 
-          GameNet::Host::Installer::UninstallInfo info(service->id());
+          P1::Host::Installer::UninstallInfo info(service->id());
           info.setDisplayName(service->displayName());
           info.save();
         }
@@ -64,12 +64,12 @@ namespace GameNet {
         {
           Q_ASSERT(service);
 
-          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
           settings.beginGroup(service->id());
           settings.remove("LicenseHash");
           settings.endGroup();
 
-          GameNet::Host::Installer::UninstallInfo info(service->id());
+          P1::Host::Installer::UninstallInfo info(service->id());
           info.remove();
         }
       }

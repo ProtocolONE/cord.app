@@ -1,7 +1,7 @@
 #include <Host/ServiceProcess/DownloadServiceIcon.h>
 
 #include <Settings/Settings.h>
-#include <Features/GameNetDownloader.h>
+#include <Features/ProtocolOneDownloader.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
@@ -9,11 +9,11 @@
 #include <QtCore/QTimer>
 #include <QtCore/QStandardPaths>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 
-      using GameNet::GameNetDownloader;
+      using P1::ProtocolOneDownloader;
 
       DownloadServiceIcon::DownloadServiceIcon(QObject *parent /*= 0*/)
         : QObject(parent)
@@ -77,18 +77,18 @@ namespace GameNet {
             return;
           }
 
-          GameNetDownloader* downloader = new GameNetDownloader(this);
+          ProtocolOneDownloader* downloader = new ProtocolOneDownloader(this);
           auto* baseClass = this;
           QString localServiceId = serviceId;
 
-          QObject::connect(downloader, &GameNetDownloader::error,
+          QObject::connect(downloader, &ProtocolOneDownloader::error,
             [baseClass, downloader](){
             downloader->deleteLater();
             qDebug() << "Download icon warning";
             baseClass->requestNext();
           });
 
-          QObject::connect(downloader, &GameNetDownloader::downloaded,
+          QObject::connect(downloader, &ProtocolOneDownloader::downloaded,
             [baseClass, downloader, localServiceId, lastModified](){
             baseClass->saveLastModifed(localServiceId, lastModified);
             downloader->deleteLater();

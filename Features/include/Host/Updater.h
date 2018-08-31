@@ -18,7 +18,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Updater : public QObject
@@ -68,7 +68,7 @@ namespace GameNet {
       void startCheckUpdate();
 
       /**
-       * \fn  GGS::Core::Service::Area Updater::applicationArea() const;
+       * \fn  P1::Core::Service::Area Updater::applicationArea() const;
        *
        * \brief Gets the application area.
        *

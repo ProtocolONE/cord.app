@@ -47,10 +47,10 @@
 
 #include <Sddl.h>
 
-using GameNet::Host::DBus::DBusServer;
+using P1::Host::DBus::DBusServer;
 using P1::RestApi::RestApiManager;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class MutexHandle 
@@ -98,7 +98,7 @@ namespace GameNet {
     ConnectionManager::ConnectionManager(QObject *parent /*= 0*/)
       : QObject(parent)
       , _application(nullptr)
-      , _sharedMutex(new MutexHandle("Global\\GameNet_{832D7C60-7B55-4e5d-99F6-1CC18A59F86B}"))
+      , _sharedMutex(new MutexHandle("Global\\ProtocolOne_Launcher_{832D7C60-7B55-4e5d-99F6-1CC18A59F86B}"))
       , _server(nullptr)
       , _stopDownloadServiceOnExecuteGame(nullptr)
     {
@@ -126,11 +126,11 @@ namespace GameNet {
       Q_ASSERT(this->_server);
 #endif
 
-      qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
-      qDBusRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>();
+      qRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>("P1::Host::Bridge::DownloadProgressArgs");
+      qDBusRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>();
 
-      qRegisterMetaType<GameNet::Host::Bridge::Credential>("GameNet::Host::Bridge::Credential");
-      qDBusRegisterMetaType<GameNet::Host::Bridge::Credential>();
+      qRegisterMetaType<P1::Host::Bridge::Credential>("P1::Host::Bridge::Credential");
+      qDBusRegisterMetaType<P1::Host::Bridge::Credential>();
 
 #ifdef USE_SESSION_DBUS
       Connection *connection = new Connection(QDBusConnection::sessionBus(), this);
@@ -143,7 +143,7 @@ namespace GameNet {
 
       // INFO ignored ping-pong disconnect.
 
-      connection->setApplicationName("QGNA");
+      connection->setApplicationName("Launcher");
 #else
 
       if (!this->_server->isConnected()) {
@@ -176,19 +176,19 @@ namespace GameNet {
       const QString& applicationName = connection->applicationName();
       this->_connections[applicationName] = connection;
 
-      if (applicationName == "QGNA") {
-        this->registerServicesForQGNA(connection);
+      if (applicationName == "Launcher") {
+        this->registerServicesForLauncher(connection);
       }
 
       emit this->newConnection(connection);
     }
 
-    bool ConnectionManager::hasQGNA()
+    bool ConnectionManager::hasLauncher()
     {
-      return this->_connections.contains("QGNA");
+      return this->_connections.contains("Launcher");
     }
 
-    void ConnectionManager::registerServicesForQGNA(Connection * connection)
+    void ConnectionManager::registerServicesForLauncher(Connection * connection)
     {
       this->registerApplicationStatistic(connection);
       this->registerApplication(connection);
@@ -358,7 +358,7 @@ namespace GameNet {
       }
 
       #ifdef USE_SESSION_DBUS
-            QDBusConnection::sessionBus().unregisterService("com.gamenet.dbus");
+            QDBusConnection::sessionBus().unregisterService("com.protocolone.launcher.dbus");
       #endif
     }
 

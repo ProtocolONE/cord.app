@@ -3,9 +3,9 @@
 
 #include <Host/Proxy/GameExecutorProxy.h>
 
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Proxy {
 
@@ -21,7 +21,7 @@ namespace GameNet {
       {
       }
 
-      void GameExecutorProxy::setExecutor(GameNet::Host::GameExecutor *value)
+      void GameExecutorProxy::setExecutor(P1::Host::GameExecutor *value)
       {
         Q_ASSERT(value);
         this->_executor = value;
@@ -53,7 +53,7 @@ namespace GameNet {
 
       void GameExecutorProxy::execute(
         const QString& serviceId,
-        const GameNetCredential& credetial)
+        const ProtocolOneCredential& credetial)
       {
         Q_ASSERT(this->_connetion);
         Q_ASSERT(this->_executor);
@@ -68,8 +68,8 @@ namespace GameNet {
 
       void GameExecutorProxy::executeSecond(
         const QString& serviceId,
-        const GameNetCredential& credetial,
-        const GameNetCredential& secondCredetial)
+        const ProtocolOneCredential& credetial,
+        const ProtocolOneCredential& secondCredetial)
       {
         Q_ASSERT(this->_connetion);
         Q_ASSERT(this->_executor);
@@ -84,10 +84,10 @@ namespace GameNet {
 
       void GameExecutorProxy::processExecute(
         const QString& serviceId, 
-        const GameNetCredential& credetial, 
-        const GameNetCredential& secondCredetial)
+        const ProtocolOneCredential& credetial, 
+        const ProtocolOneCredential& secondCredetial)
       {
-        QHash<QString, P1::RestApi::GameNetCredential>& map = 
+        QHash<QString, P1::RestApi::ProtocolOneCredential>& map = 
           secondCredetial.isEmpty() ? this->_executedGame : this->_executedSecondGame;
 
         // INFO всегда переписываем автризацию на новую запускаемую.
@@ -95,7 +95,7 @@ namespace GameNet {
         // она уже запущена. Эта авторизация используется для отправки маркетинга, и поэтому ее нельзя
         // просто так чистить при закрытии игры.
 
-        const GameNetCredential& mainCredential = 
+        const ProtocolOneCredential& mainCredential = 
           secondCredetial.isEmpty() ? credetial : secondCredetial;
 
         map[serviceId] = mainCredential;
@@ -179,18 +179,18 @@ namespace GameNet {
         this->_executor->terminateAll(serviceId);
       }
 
-      GameNetCredential GameExecutorProxy::gameCredential(const QString& serviceId)
+      ProtocolOneCredential GameExecutorProxy::gameCredential(const QString& serviceId)
       {
         if (!this->_executedGame.contains(serviceId))
-          return GameNetCredential();
+          return ProtocolOneCredential();
           
         return this->_executedGame[serviceId];
       }
 
-      GameNetCredential GameExecutorProxy::secondGameCredential(const QString& serviceId)
+      ProtocolOneCredential GameExecutorProxy::secondGameCredential(const QString& serviceId)
       {
         if (!this->_executedSecondGame.contains(serviceId))
-          return GameNetCredential();
+          return ProtocolOneCredential();
 
         return this->_executedSecondGame[serviceId];
       }

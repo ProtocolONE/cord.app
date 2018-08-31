@@ -4,8 +4,8 @@
 #include <Host/SettingsManager.h>
 #include <Host/Bridge/SettingsBridge.h>
 
-using GameNet::Host::SettingsManager;
-using GameNet::Host::Bridge::SettingsBridge;
+using P1::Host::SettingsManager;
+using P1::Host::Bridge::SettingsBridge;
 
 using ::testing::Return;
 
@@ -30,8 +30,8 @@ public:
 
 TEST_F(SettingsBridgeTest, settingsSetValue)
 {
-  QString expectedPath = "qGNA/settings/ABTestGroup/";
-  QString expectedKey = "QGNA1681";
+  QString expectedPath = "launcher/settings/ABTestGroup/";
+  QString expectedKey = "LAUNCHER1681";
   QString expectedValue = "A";
 
   EXPECT_CALL(mock, setValue(expectedPath, expectedKey, expectedValue));
@@ -40,8 +40,8 @@ TEST_F(SettingsBridgeTest, settingsSetValue)
 
 TEST_F(SettingsBridgeTest, settingsGetValue)
 {
-  QString expectedPath = "qGNA/settings/ABTestGroup";
-  QString expectedValue = "QGNA1681";
+  QString expectedPath = "launcher/settings/ABTestGroup";
+  QString expectedValue = "LAUNCHER1681";
   QString defaultVal = "error";
 
   EXPECT_CALL(mock, value(expectedPath, expectedValue, defaultVal)).WillOnce(Return(QString()));

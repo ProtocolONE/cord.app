@@ -1,13 +1,13 @@
 #pragma once
 #include <Host/GameExecutor.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QHash>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Connection;
@@ -22,18 +22,18 @@ namespace GameNet {
         explicit GameExecutorProxy(QObject *parent = 0);
         virtual ~GameExecutorProxy();
 
-        void setExecutor(GameNet::Host::GameExecutor *value);
+        void setExecutor(P1::Host::GameExecutor *value);
         void setConnection(Connection *value);
         void setServiceHandle(ServiceHandle *value);
 
         virtual void execute(
           const QString& serviceId,
-          const P1::RestApi::GameNetCredential& credetial);
+          const P1::RestApi::ProtocolOneCredential& credetial);
 
         virtual void executeSecond(
           const QString& serviceId,
-          const P1::RestApi::GameNetCredential& credetial,
-          const P1::RestApi::GameNetCredential& secondCredetial);
+          const P1::RestApi::ProtocolOneCredential& credetial,
+          const P1::RestApi::ProtocolOneCredential& secondCredetial);
 
         virtual bool isGameStarted(const QString& serviceId) const;
         virtual bool isAnyGameStarted() const;
@@ -42,8 +42,8 @@ namespace GameNet {
 
         virtual void terminateGame(const QString& serviceId = QString());
 
-        P1::RestApi::GameNetCredential gameCredential(const QString& serviceId);
-        P1::RestApi::GameNetCredential secondGameCredential(const QString& serviceId);
+        P1::RestApi::ProtocolOneCredential gameCredential(const QString& serviceId);
+        P1::RestApi::ProtocolOneCredential secondGameCredential(const QString& serviceId);
 
       signals:
         void serviceStarted(const QString& serviceId);
@@ -59,15 +59,15 @@ namespace GameNet {
 
         virtual void processExecute(
           const QString& serviceId,
-          const P1::RestApi::GameNetCredential& credetial,
-          const P1::RestApi::GameNetCredential& secondCredetial  = P1::RestApi::GameNetCredential());
+          const P1::RestApi::ProtocolOneCredential& credetial,
+          const P1::RestApi::ProtocolOneCredential& secondCredetial  = P1::RestApi::ProtocolOneCredential());
 
         Connection *_connetion;
-        GameNet::Host::GameExecutor *_executor;
+        P1::Host::GameExecutor *_executor;
         ServiceHandle *_serviceHandle;
 
-        QHash<QString, P1::RestApi::GameNetCredential> _executedGame;
-        QHash<QString, P1::RestApi::GameNetCredential> _executedSecondGame;
+        QHash<QString, P1::RestApi::ProtocolOneCredential> _executedGame;
+        QHash<QString, P1::RestApi::ProtocolOneCredential> _executedSecondGame;
         
      };
 

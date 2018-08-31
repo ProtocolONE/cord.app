@@ -12,7 +12,7 @@
 
 #include <sstream>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     using namespace P1::GameExecutor;
@@ -30,7 +30,7 @@ namespace GameNet {
     void ElectronExecutorPrivate::execute(
       const P1::Core::Service &service,
       P1::GameExecutor::GameExecutorService *executorService,
-      const P1::RestApi::GameNetCredential& credential,
+      const P1::RestApi::ProtocolOneCredential& credential,
       const QString& scheme)
     {
       if (QSysInfo::WindowsVersion == QSysInfo::WV_XP) {

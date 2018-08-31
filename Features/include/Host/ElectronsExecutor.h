@@ -2,7 +2,7 @@
 
 #include <Host/ElectronExecutor.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class ElectronsExecutor : public ElectronExecutor

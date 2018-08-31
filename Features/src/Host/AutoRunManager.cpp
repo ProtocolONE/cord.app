@@ -6,7 +6,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QCoreApplication>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     AutoRunManager::AutoRunManager(QObject *parent /*= 0*/)
@@ -32,7 +32,7 @@ namespace GameNet {
       if (tmp == value)
         return;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       settings.setValue("AutoRun", value);
       this->addToAutoStart(value);
       emit this->autoStartModeChanged();
@@ -40,7 +40,7 @@ namespace GameNet {
 
     int AutoRunManager::autoStartMode() const
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       bool ok;
       int result = settings.value("AutoRun", 0).toInt(&ok);
       return ok ? result : 0;
@@ -52,7 +52,7 @@ namespace GameNet {
       bool isMinimized = mode == 2;
 
       P1::AutoRunHelper::AutoRunHelper autorunHelper;
-      autorunHelper.setTaskName("GameNet");
+      autorunHelper.setTaskName("ProtocolOne");
 
       if (!autostart) {
         qDebug() << "remove from autorun result: " << autorunHelper.removeFromAutoRun();

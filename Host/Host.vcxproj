@@ -51,12 +51,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\!obj\$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">qGNA</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">qGNA</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">launcher.host</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">launcher.host</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>QGNA_NO_UPDATE;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;NOMINMAX;QT_GUI_LIB;QT_CONCURRENT_LIB;QT_SCRIPT_LIB;QT_XML_LIB;CORE_STATIC_LIB;UPDATESYSTEM_STATIC_LIBRARY;DOWNLOADSERVICE_STATIC_LIB;LIBTORRENTWRAPPER_STATIC_LIB;SETTINGS_STATIC_LIB;APPLICATION_STATIC_LIB;GAMEEXECUTOR_STATIC_LIB;RESTAPI_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;QT_SQL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LAUNCHER_NO_UPDATE;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;NOMINMAX;QT_GUI_LIB;QT_CONCURRENT_LIB;QT_SCRIPT_LIB;QT_XML_LIB;CORE_STATIC_LIB;UPDATESYSTEM_STATIC_LIBRARY;DOWNLOADSERVICE_STATIC_LIB;LIBTORRENTWRAPPER_STATIC_LIB;SETTINGS_STATIC_LIB;APPLICATION_STATIC_LIB;GAMEEXECUTOR_STATIC_LIB;RESTAPI_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;QT_SQL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -70,7 +70,7 @@
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;$(QGNACOMMONDIR)\GGS\GameDownloader\$(GameDownloaderArea)\lib;$(QGNACOMMONDIR)\GGS\UpdateSystem\$(UpdateSystemArea)\lib;$(QGNACOMMONDIR)\GGS\LibtorrentWrapper\$(LibtorrentWrapperArea)\lib;$(QGNACOMMONDIR)\GGS\Settings\$(SettingsArea)\lib;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\GGS\GameExecutor\$(GameExecutorArea)\lib;$(QGNACOMMONDIR)\GGS\RestApi\$(RestApiArea)\lib;$(QGNACOMMONDIR)\GGS\AutoRunHelper\$(AutoRunHelperArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\Log4Qt\$(Log4QtArea)\lib;$(QGNACOMMONDIR)\GGS\Marketing\$(MarketingArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Widgetsd.lib;Qt5DBusd.lib;Qt5Guid.lib;Qt5Concurrentd.lib;Qt5Xmld.lib;Qt5Sqld.lib;CoreX86d.lib;BugTrap.lib;Log4Qtd.lib;UpdateSystemX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;LibtorrentWrapperX86d.lib;SettingsX86d.lib;ApplicationX86d.lib;RestApiX86d.lib;FeaturesX86d.lib;AutoRunHelperX86d.lib;MarketingX86d.lib;Wininet.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Widgetsd.lib;Qt5DBusd.lib;Qt5Guid.lib;Qt5Concurrentd.lib;Qt5Xmld.lib;Qt5Sqld.lib;CoreX86d.lib;BugTrap.lib;log4qt32-vc141-mt_d.lib;UpdateSystemX86d.lib;GameDownloaderX86d.lib;GameExecutorX86d.lib;LibtorrentWrapperX86d.lib;SettingsX86d.lib;ApplicationX86d.lib;RestApiX86d.lib;FeaturesX86d.lib;AutoRunHelperX86d.lib;MarketingX86d.lib;Wininet.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateMapFile>true</GenerateMapFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -141,6 +141,9 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Host.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

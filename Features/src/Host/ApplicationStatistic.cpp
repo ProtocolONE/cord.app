@@ -12,7 +12,7 @@ using P1::Settings::Settings;
 using P1::GameDownloader::GameDownloadService;
 using P1::Application::ArgumentParser;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     ApplicationStatistic::ApplicationStatistic(QObject *parent)
@@ -44,7 +44,7 @@ namespace GameNet {
       }
 
       Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
 
       if (this->_firstStart)
         settings.setValue("firstStart", 1);
@@ -56,7 +56,7 @@ namespace GameNet {
     {
       // INFO reset flag about first app launch
       Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
       settings.setValue("firstStart", 0);
     }
 
@@ -111,14 +111,14 @@ namespace GameNet {
     QString ApplicationStatistic::installWithService() const
     {
       Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
       return settings.value("installWithService", "0").toString();
     }
 
     quint64 ApplicationStatistic::installDate() const
     {
       Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
       return settings.value("installDate", 0).toULongLong();
     }
 
@@ -126,7 +126,7 @@ namespace GameNet {
     {
       quint64 installDate = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
       Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
       settings.setValue("installDate", installDate);
 
       if (this->hasStartingService())

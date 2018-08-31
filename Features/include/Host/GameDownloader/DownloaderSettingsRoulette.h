@@ -1,7 +1,7 @@
 #pragma once
 #include <QtCore/QString>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace GameDownloader {
 

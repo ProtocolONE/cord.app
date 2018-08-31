@@ -24,14 +24,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.Application
+ * Adaptor class for interface com.protocolone.launcher.dbus.Application
  */
 class ApplicationBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Application")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Application")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.Application\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.Application\">\n"
 "    <property access=\"readwrite\" type=\"s\" name=\"language\"/>\n"
 "    <property access=\"readwrite\" type=\"i\" name=\"autoStartMode\"/>\n"
 "    <signal name=\"initCompleted\"/>\n"

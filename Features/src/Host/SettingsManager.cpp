@@ -1,7 +1,7 @@
 #include <Host/SettingsManager.h> 
 #include <Settings/Settings.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     SettingsManager::SettingsManager(QObject * parent /*= 0*/) : QObject(parent)

@@ -4,7 +4,7 @@
 
 #include <QtWidgets/QMessageBox>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     MessageAdapter::MessageAdapter(QObject *parent)

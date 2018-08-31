@@ -5,14 +5,14 @@
 
 #include <QtDBus/QDBusArgument>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 
       /**
        * \struct  Credential
        *
-       * \brief This structure represents user's GameNet credential.
+       * \brief This structure represents user's ProtocolOne credential.
        *
        * \author  Ilya Tkachenko
        * \date  07.10.2014
@@ -20,18 +20,18 @@ namespace GameNet {
 
       /** \var Credential::userId 
 
-      User's identificator in GameNet.
+      User's identificator in ProtocolOne Launcher.
 
       */
       /** \var Credential::appKey 
 
-      User's token for GameNet Web API.
+      User's token for ProtocolOne Web API.
 
       */
 
       /** \var Credential::cookie 
 
-      User's global cookie for authorization on GameNet websites.
+      User's global cookie for authorization on ProtocolOne websites.
 
       */
       typedef struct {
@@ -45,6 +45,6 @@ namespace GameNet {
 }
 
 /// \cond
-QDBusArgument& operator <<(QDBusArgument &argument, const GameNet::Host::Bridge::Credential arg);
-const QDBusArgument& operator >>(const QDBusArgument &argument, GameNet::Host::Bridge::Credential& arg);
+QDBusArgument& operator <<(QDBusArgument &argument, const P1::Host::Bridge::Credential arg);
+const QDBusArgument& operator >>(const QDBusArgument &argument, P1::Host::Bridge::Credential& arg);
 /// \endcond

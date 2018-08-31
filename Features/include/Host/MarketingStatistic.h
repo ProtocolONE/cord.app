@@ -1,6 +1,6 @@
 #pragma once
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -11,7 +11,7 @@ namespace P1 {
   }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     
     class MarketingStatistic : public QObject
@@ -30,7 +30,7 @@ namespace GameNet {
       void onGameDownloadFinished(const P1::Core::Service *service);
 
     private:
-      void setCredential(QVariantMap &params, const P1::RestApi::GameNetCredential &credetial);
+      void setCredential(QVariantMap &params, const P1::RestApi::ProtocolOneCredential &credetial);
     };
 
   }

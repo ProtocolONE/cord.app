@@ -1,6 +1,6 @@
 #include <Host/Dbus/DbusConnection.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace DBus {
 
@@ -18,7 +18,7 @@ namespace GameNet {
 #ifdef USE_SESSION_DBUS
         return QDBusConnection::sessionBus();
 #else
-        QSettings registry("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host", QSettings::NativeFormat);
+        QSettings registry("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher\\Host", QSettings::NativeFormat);
         return  QDBusConnection::connectToPeer(registry.value("DBusAddress").toString(), "UI");
 #endif
       }

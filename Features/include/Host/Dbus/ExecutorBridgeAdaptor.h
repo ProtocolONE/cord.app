@@ -26,14 +26,14 @@ class QVariant;
 QT_END_NAMESPACE
 
 /*
- * Adaptor class for interface com.gamenet.dbus.Executor
+ * Adaptor class for interface com.protocolone.launcher.dbus.Executor
  */
 class ExecutorBridgeAdaptor: public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Executor")
+    Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Executor")
     Q_CLASSINFO("D-Bus Introspection", ""
-"  <interface name=\"com.gamenet.dbus.Executor\">\n"
+"  <interface name=\"com.protocolone.launcher.dbus.Executor\">\n"
 "    <signal name=\"serviceStarted\">\n"
 "      <arg direction=\"out\" type=\"s\" name=\"serviceId\"/>\n"
 "    </signal>\n"
@@ -72,14 +72,14 @@ class ExecutorBridgeAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"execute\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
+"      <annotation value=\"P1::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
 "    </method>\n"
 "    <method name=\"executeSecond\">\n"
 "      <arg direction=\"in\" type=\"s\" name=\"serviceId\"/>\n"
 "      <arg direction=\"in\" type=\"a(sii)\" name=\"credential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
+"      <annotation value=\"P1::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In1\"/>\n"
 "      <arg direction=\"in\" type=\"a(sii)\" name=\"secondCredential\"/>\n"
-"      <annotation value=\"GameNet::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
+"      <annotation value=\"P1::Host::Bridge::Credential\" name=\"org.qtproject.QtDBus.QtTypeName.In2\"/>\n"
 "    </method>\n"
 "  </interface>\n"
         "")
@@ -90,8 +90,8 @@ public:
 public: // PROPERTIES
 public Q_SLOTS: // METHODS
     bool canExecuteSecond(const QString &serviceId);
-    Q_NOREPLY void execute(const QString &serviceId, GameNet::Host::Bridge::Credential credential);
-    Q_NOREPLY void executeSecond(const QString &serviceId, GameNet::Host::Bridge::Credential credential, GameNet::Host::Bridge::Credential secondCredential);
+    Q_NOREPLY void execute(const QString &serviceId, P1::Host::Bridge::Credential credential);
+    Q_NOREPLY void executeSecond(const QString &serviceId, P1::Host::Bridge::Credential credential, P1::Host::Bridge::Credential secondCredential);
     bool isAnyGameStarted();
     bool isGameStarted(const QString &serviceId);
     Q_NOREPLY void shutdownSecond();

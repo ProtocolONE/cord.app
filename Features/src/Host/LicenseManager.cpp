@@ -6,7 +6,7 @@
 #include <Core/Marketing.h>
 #include <Settings/Settings.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     LicenseManager::LicenseManager(QObject *parent)
       : QObject(parent)
@@ -37,7 +37,7 @@ namespace GameNet {
 
     bool LicenseManager::hasAcceptedLicense(const QString &serviceId)
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       settings.beginGroup(serviceId);
       QString hash = settings.value("LicenseHash", "").toString();
  
@@ -52,7 +52,7 @@ namespace GameNet {
     {
       using P1::Core::Marketing;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       settings.beginGroup(serviceId);
       settings.setValue("LicenseHash", hash.isEmpty() ? "1" : hash);
       settings.endGroup();
@@ -63,14 +63,14 @@ namespace GameNet {
     void LicenseManager::acceptWebLicense()
     {
       P1::Settings::Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
       settings.setValue("webLicenseAccepted", "1");
     }
 
     bool LicenseManager::hasAcceptedWebLicense()
     {
       P1::Settings::Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("launcher");
       QString hash = settings.value("webLicenseAccepted", QString()).toString();
       return !hash.isEmpty();
     }

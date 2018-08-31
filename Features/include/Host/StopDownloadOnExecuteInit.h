@@ -10,7 +10,7 @@ namespace Features {
   class StopDownloadServiceWhileExecuteAnyGame;
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class GameExecutor;

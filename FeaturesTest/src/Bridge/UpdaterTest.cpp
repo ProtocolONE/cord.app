@@ -10,12 +10,12 @@
 
 using ::testing::Return;
 
-using GameNet::Host::Bridge::UpdateManagerBridge;
+using P1::Host::Bridge::UpdateManagerBridge;
 
-class UpdaterMock : public GameNet::Host::Updater
+class UpdaterMock : public P1::Host::Updater
 {
 public:
-  using GameNet::Host::Updater::updateState;
+  using P1::Host::Updater::updateState;
   MOCK_METHOD0(updateState, int());
 
   // slots for signals

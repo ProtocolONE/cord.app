@@ -15,7 +15,7 @@
 
 using P1::GameExecutor::GameExecutorService;
 using P1::Core::Service;
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
 namespace Features {
 
@@ -53,7 +53,7 @@ namespace Features {
   }
 
   void PremiumExecutor::executeMain(
-    P1::Core::Service* service, const P1::RestApi::GameNetCredential& credetial)
+    P1::Core::Service* service, const P1::RestApi::ProtocolOneCredential& credetial)
   {
     QMutexLocker locker(&this->_mutex);
     
@@ -68,8 +68,8 @@ namespace Features {
 
   void PremiumExecutor::executeSecond(
     P1::Core::Service* service, 
-    const P1::RestApi::GameNetCredential& credetial, 
-    const P1::RestApi::GameNetCredential& secondCredetial)
+    const P1::RestApi::ProtocolOneCredential& credetial, 
+    const P1::RestApi::ProtocolOneCredential& secondCredetial)
   {
     //QMutexLocker locker(&this->_mutex);
 
@@ -184,7 +184,7 @@ namespace Features {
   void PremiumExecutor::registerExecutors(GameExecutorService *executor)
   {
     using namespace P1::GameExecutor::Executor;
-    using namespace GameNet::Host;
+    using namespace P1::Host;
 
     executor->registerExecutor(new ExecutableFile(this));
     executor->registerExecutor(new ElectronExecutor(this));

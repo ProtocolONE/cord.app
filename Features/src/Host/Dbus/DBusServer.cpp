@@ -8,7 +8,7 @@
 
 #include <QtDBus/QtDBus>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace DBus {
       DBusServer::DBusServer(QObject *parent)
@@ -17,7 +17,7 @@ namespace GameNet {
       {
         QObject::connect(this->_server, &QDBusServer::newConnection, this, &DBusServer::newConnection);
                 
-        QSettings registry("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host", QSettings::NativeFormat);
+        QSettings registry("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher\\Host", QSettings::NativeFormat);
         registry.setValue("DBusAddress", this->_server->address());
         
         qDebug() << "DBus server started with address" << _server->address();

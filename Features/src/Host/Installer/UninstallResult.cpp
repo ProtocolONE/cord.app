@@ -28,7 +28,7 @@ private:
 };
 
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Installer {
 
@@ -39,8 +39,8 @@ namespace GameNet {
         , _memoryHandle(NULL)
         , _uninstallResult(nullptr)
       {
-        this->_eventName = "Global\\GameNet_UninstallComplete_" + serviceId;
-        this->_sharedMemoryName = "Global\\GameNet_UninstallCompleteResult_" + serviceId;
+        this->_eventName = "Global\\ProtocolOne_Launcher_UninstallComplete_" + serviceId;
+        this->_sharedMemoryName = "Global\\ProtocolOne_Launcher_UninstallCompleteResult_" + serviceId;
       }
 
       UninstallResult::~UninstallResult()

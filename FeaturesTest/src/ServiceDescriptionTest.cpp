@@ -3,9 +3,9 @@
 
 #include <Host/ServiceProcess/ServiceDescription.h>
 
-using GameNet::Host::ServiceProcess::ServiceDescription;
-using GameNet::Host::ServiceProcess::DownloadHookDescription;
-using GameNet::Host::ServiceProcess::ExecutorHookDescription;
+using P1::Host::ServiceProcess::ServiceDescription;
+using P1::Host::ServiceProcess::DownloadHookDescription;
+using P1::Host::ServiceProcess::ExecutorHookDescription;
 
 class ServiceDescriptionTest : public ::testing::Test
 {
@@ -49,7 +49,7 @@ TEST_F(ServiceDescriptionTest, name)
 
 TEST_F(ServiceDescriptionTest, torrentUrl)
 {
-  QString torrentUrl = "http://gamenet.dev/game.torrent";
+  QString torrentUrl = "http://protocol.one/game.torrent";
   description.setTorrentUrl(torrentUrl);
   ASSERT_EQ(torrentUrl, description.torrentUrl());
 }

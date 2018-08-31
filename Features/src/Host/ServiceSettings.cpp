@@ -11,7 +11,7 @@
 using P1::Core::Service;
 using P1::Settings::Settings;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     ServiceSettings::ServiceSettings(QObject *parent /*= 0*/)
@@ -65,7 +65,7 @@ namespace GameNet {
       if (!service)
         return;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       settings.beginGroup(serviceId);
 
       if (service->downloadPath() == path && 
@@ -97,7 +97,7 @@ namespace GameNet {
       if (!service)
         return;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       settings.beginGroup(serviceId);
 
       if (service->installPath() == path && 
@@ -123,7 +123,7 @@ namespace GameNet {
 
     bool ServiceSettings::isDefaultDownloadPath(const QString& serviceId) const
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
       settings.beginGroup(serviceId);
       return settings.value("DownloadPath", "").toString().isEmpty();
     }

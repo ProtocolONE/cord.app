@@ -1,12 +1,12 @@
 #include <Host/CredentialConverter.h>
 
-using P1::RestApi::GameNetCredential;
+using P1::RestApi::ProtocolOneCredential;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace Bridge {
 
-      Credential createDbusCredential(const GameNetCredential& credential)
+      Credential createDbusCredential(const ProtocolOneCredential& credential)
       {
         Credential result;
         result.userId = credential.userId();
@@ -15,9 +15,9 @@ namespace GameNet {
         return result;
       }
 
-      GameNetCredential createGameNetCredential(const Credential& credential)
+      ProtocolOneCredential createProtocolOneCredential(const Credential& credential)
       {
-        GameNetCredential result;
+        ProtocolOneCredential result;
         result.setUserId(credential.userId);
         result.setAppKey(credential.appKey);
         result.setCookie(credential.cookie);

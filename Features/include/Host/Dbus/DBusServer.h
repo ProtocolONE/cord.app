@@ -6,7 +6,7 @@ class QDBusServer;
 class QDBusConnection;
 class QDBusError;
 
-namespace GameNet {
+namespace P1 {
     namespace Host {
       namespace DBus {
         class DBusServer: public QObject

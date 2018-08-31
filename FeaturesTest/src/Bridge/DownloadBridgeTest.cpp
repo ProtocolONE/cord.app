@@ -8,9 +8,9 @@
 #include <Host/Application.h>
 #include <Core/Service.h>
 
-using namespace GameNet::Host::Bridge;
-using GameNet::Host::Proxy::DownloaderProxy;
-using GameNet::Host::Application;
+using namespace P1::Host::Bridge;
+using P1::Host::Proxy::DownloaderProxy;
+using P1::Host::Application;
 
 using ::testing::Return;
 
@@ -33,7 +33,7 @@ void constructFakeProgressEventArgs(P1::Libtorrent::EventArgs::ProgressEventArgs
   args.setPeerTotalDownload(1234567890); 
 }
 
-class ServiceLoaderFixture : public GameNet::Host::ServiceProcess::ServiceLoader
+class ServiceLoaderFixture : public P1::Host::ServiceProcess::ServiceLoader
 {
 public:
   explicit ServiceLoaderFixture() {};
@@ -56,7 +56,7 @@ public:
 class DownloadBridgeTestApplicationMock : public Application
 {
 public:
-  MOCK_METHOD1(credential, P1::RestApi::GameNetCredential(const QString&));
+  MOCK_METHOD1(credential, P1::RestApi::ProtocolOneCredential(const QString&));
 };
 
 class GameDownloadServiceMock : public DownloaderProxy
@@ -81,7 +81,7 @@ public:
   MOCK_METHOD1(onServiceUpdated, void(const QString&));
   MOCK_METHOD2(onStatusMessageChanged, void(const QString&, const QString&));
   MOCK_METHOD2(onTotalProgressChanged, void(const QString&, int));
-  MOCK_METHOD3(onDownloadProgressChanged, void(const QString&, int, const GameNet::Host::Bridge::DownloadProgressArgs&));
+  MOCK_METHOD3(onDownloadProgressChanged, void(const QString&, int, const P1::Host::Bridge::DownloadProgressArgs&));
 
   MOCK_METHOD1(onAccessRequired, void(const QString&));
 };
@@ -93,7 +93,7 @@ public:
   {
     qRegisterMetaType<const P1::Core::Service *>("const P1::Core::Service *");
     qRegisterMetaType<P1::GameDownloader::StartType>("P1::GameDownloader::StartType");
-    qRegisterMetaType<GameNet::Host::Bridge::DownloadProgressArgs>("GameNet::Host::Bridge::DownloadProgressArgs");
+    qRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>("P1::Host::Bridge::DownloadProgressArgs");
 
     this->_service.setId("300012010000000000");
     this->_serviceLoaderFixture.setService(&this->_service);

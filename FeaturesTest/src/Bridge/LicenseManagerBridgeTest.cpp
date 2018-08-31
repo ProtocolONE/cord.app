@@ -4,8 +4,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-using GameNet::Host::LicenseManager;
-using GameNet::Host::Bridge::LicenseManagerBridge;
+using P1::Host::LicenseManager;
+using P1::Host::Bridge::LicenseManagerBridge;
 using ::testing::Return;
 
 class LicenseManagerMock : public LicenseManager

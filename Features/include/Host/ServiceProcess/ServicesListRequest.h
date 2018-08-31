@@ -9,7 +9,7 @@
 #include <RestApi/Commands/Service/GetHosts.h>
 #include <Host/ServiceProcess/DownloadServiceIcon.h>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 

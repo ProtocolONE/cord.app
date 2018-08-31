@@ -22,7 +22,7 @@ using P1::Core::Service;
 using P1::GameDownloader::GameDownloadService;
 using P1::GameExecutor::GameExecutorService;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     namespace ServiceProcess {
 
@@ -169,7 +169,7 @@ namespace GameNet {
 
       QString ServiceLoader::getServiceInstallPath(const QString& id)
       {
-        QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+        QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
         settings.beginGroup(id);
 
         return settings.value("InstallPath").toString();
@@ -177,7 +177,7 @@ namespace GameNet {
 
       QString ServiceLoader::getServiceDownloadPath(const QString& id)
       {
-        QSettings settings("HKEY_LOCAL_MACHINE\\Software\\GGS\\QGNA", QSettings::NativeFormat);
+        QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
         settings.beginGroup(id);
 
         return settings.value("DownloadPath").toString();

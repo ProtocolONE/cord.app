@@ -12,16 +12,16 @@
 
 void initBugTrap(const QString &path)
 {
-  BT_SetAppName(_T("GameNet Uninstaller"));
+  BT_SetAppName(_T("ProtocolOne Launcher Uninstaller"));
   BT_SetAppVersion(_T(STRFILEVER));
-  BT_SetSupportEMail(_T("support@gamenet.ru"));
-  BT_SetSupportURL(_T("https://support.gamenet.ru"));
+  BT_SetSupportEMail(_T("support@protocol.one"));
+  BT_SetSupportURL(_T("https://support.protocol.one"));
   BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
-  BT_SetSupportServer(_T("fs1.gamenet.ru"), 9999);
-  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/qgna.log").utf16()));
-  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/qgna.log.1").utf16()));
-  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/host.log").utf16()));
-  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/host.log.1").utf16()));
+  BT_SetSupportServer(_T("fs1.protocol.one"), 9999);
+  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.ui.log").utf16()));
+  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.ui.log.1").utf16()));
+  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.host.log").utf16()));
+  BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.host.log.1").utf16()));
   BT_InstallSehFilter();
 }
 

@@ -10,7 +10,7 @@
 
 #include <Windows.h>
 
-using namespace GameNet::Host::Installer;
+using namespace P1::Host::Installer;
 
 HostProcess::HostProcess(QObject* parent) 
   : QObject(parent)
@@ -46,12 +46,12 @@ void HostProcess::start()
   uninstallResult->asyncWaitResult();
 
 
-  QString qgnaPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath()) + "\\qGNA.exe";
+  QString launcherPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath()) + "\\launcher.hosh.exe";
 
-  QProcess::startDetached(qgnaPath, QCoreApplication::arguments());
+  QProcess::startDetached(launcherPath, QCoreApplication::arguments());
 
   this->_waitAttempts = 45;
-  connect(&this->_waitTimer, SIGNAL(timeout()), this, SLOT(testQGNAReady()));
+  connect(&this->_waitTimer, SIGNAL(timeout()), this, SLOT(testLauncherReady()));
   this->_waitTimer.start(1000);
 }
 
@@ -60,7 +60,7 @@ void HostProcess::onUninstallFinished(int result)
   emit this->uninstallFinished(result);
 }
 
-void HostProcess::testQGNAReady()
+void HostProcess::testLauncherReady()
 {
   WCHAR *mutexName = L"Global\\{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}";
 

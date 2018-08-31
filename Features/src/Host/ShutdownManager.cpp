@@ -10,7 +10,7 @@
 using P1::GameDownloader::GameDownloadService;
 using P1::Application::SingleApplication;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     ShutdownManager::ShutdownManager(QObject *parent /*= 0*/)

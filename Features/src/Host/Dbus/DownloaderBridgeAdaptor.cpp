@@ -35,7 +35,7 @@ DownloaderBridgeAdaptor::~DownloaderBridgeAdaptor()
 
 bool DownloaderBridgeAdaptor::isAnyServiceInProgress()
 {
-    // handle method call com.gamenet.dbus.Downloader.isAnyServiceInProgress
+    // handle method call com.protocolone.launcher.dbus.Downloader.isAnyServiceInProgress
     bool out0;
     QMetaObject::invokeMethod(parent(), "isAnyServiceInProgress", Q_RETURN_ARG(bool, out0));
     return out0;
@@ -43,7 +43,7 @@ bool DownloaderBridgeAdaptor::isAnyServiceInProgress()
 
 bool DownloaderBridgeAdaptor::isInProgress(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Downloader.isInProgress
+    // handle method call com.protocolone.launcher.dbus.Downloader.isInProgress
     bool out0;
     QMetaObject::invokeMethod(parent(), "isInProgress", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -51,7 +51,7 @@ bool DownloaderBridgeAdaptor::isInProgress(const QString &serviceId)
 
 bool DownloaderBridgeAdaptor::isInstalled(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Downloader.isInstalled
+    // handle method call com.protocolone.launcher.dbus.Downloader.isInstalled
     bool out0;
     QMetaObject::invokeMethod(parent(), "isInstalled", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -59,25 +59,25 @@ bool DownloaderBridgeAdaptor::isInstalled(const QString &serviceId)
 
 void DownloaderBridgeAdaptor::pauseSession()
 {
-    // handle method call com.gamenet.dbus.Downloader.pauseSession
+    // handle method call com.protocolone.launcher.dbus.Downloader.pauseSession
     QMetaObject::invokeMethod(parent(), "pauseSession");
 }
 
 void DownloaderBridgeAdaptor::resumeSession()
 {
-    // handle method call com.gamenet.dbus.Downloader.resumeSession
+    // handle method call com.protocolone.launcher.dbus.Downloader.resumeSession
     QMetaObject::invokeMethod(parent(), "resumeSession");
 }
 
 void DownloaderBridgeAdaptor::start(const QString &serviceId, int startType)
 {
-    // handle method call com.gamenet.dbus.Downloader.start
+    // handle method call com.protocolone.launcher.dbus.Downloader.start
     QMetaObject::invokeMethod(parent(), "start", Q_ARG(QString, serviceId), Q_ARG(int, startType));
 }
 
 void DownloaderBridgeAdaptor::stop(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Downloader.stop
+    // handle method call com.protocolone.launcher.dbus.Downloader.stop
     QMetaObject::invokeMethod(parent(), "stop", Q_ARG(QString, serviceId));
 }
 

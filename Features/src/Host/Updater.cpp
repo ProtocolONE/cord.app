@@ -12,7 +12,7 @@ using P1::UpdateSystem::UpdateManagerWorker;
 using P1::UpdateSystem::CheckUpdateHelper;
 using P1::Core::Service;
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     Updater::Updater(QObject* parent)
@@ -83,11 +83,11 @@ namespace GameNet {
 
       QString installUpdateGnaPath = QString("");
 
-#ifdef QGNA_NO_UPDATE
+#ifdef LAUNCHER_NO_UPDATE
       installUpdateGnaPath = QString("tst");
 #endif
 
-      QString updateUrl = QString("https://fs0.gnfiles.com/update/qgna/%1/").arg(QString(this->_applicationArea));
+      QString updateUrl = QString("https://fs0.gnfiles.com/update/launcher/%1/").arg(QString(this->_applicationArea));
       QString updateCrc = QString("%1update.crc.7z").arg(updateUrl);
       this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 

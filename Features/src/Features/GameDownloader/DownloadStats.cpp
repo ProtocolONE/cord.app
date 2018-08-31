@@ -98,7 +98,7 @@ namespace Features {
     void DownloadStats::load()
     {
       P1::Settings::Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("Launcher");
       settings.beginGroup("Features");
       settings.beginGroup("GameDownloaderStatistic");
       settings.beginGroup(this->_id);
@@ -118,7 +118,7 @@ namespace Features {
     void DownloadStats::save()
     {
       P1::Settings::Settings settings;
-      settings.beginGroup("qGNA");
+      settings.beginGroup("Launcher");
       settings.beginGroup("Features");
       settings.beginGroup("GameDownloaderStatistic");
       settings.beginGroup(this->_id);

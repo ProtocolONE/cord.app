@@ -5,14 +5,14 @@
 
 class QNetworkAccessManager;
 
-namespace GameNet {
+namespace P1 {
 
-  class GameNetDownloader : public QObject
+  class ProtocolOneDownloader : public QObject
   {
     Q_OBJECT
   public:
-    explicit GameNetDownloader(QObject *parent = 0);
-    virtual ~GameNetDownloader();
+    explicit ProtocolOneDownloader(QObject *parent = 0);
+    virtual ~ProtocolOneDownloader();
 
   public slots:
     void download(const QString &url, const QString &path);

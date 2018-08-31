@@ -35,7 +35,7 @@ UpdateManagerBridgeAdaptor::~UpdateManagerBridgeAdaptor()
 
 int UpdateManagerBridgeAdaptor::updateState()
 {
-    // handle method call com.gamenet.dbus.Updater.updateState
+    // handle method call com.protocolone.launcher.dbus.Updater.updateState
     int out0;
     QMetaObject::invokeMethod(parent(), "updateState", Q_RETURN_ARG(int, out0));
     return out0;

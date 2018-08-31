@@ -12,9 +12,13 @@ namespace P1 {
   namespace Application {
     class ArgumentParser;
   }
+
+  namespace RestApi {
+    class ProtocolOneCredential;
+  }
 }
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     // UNDONE Нужна помощь с названием этого класса.
@@ -22,7 +26,7 @@ namespace GameNet {
     {
       Q_OBJECT
     public:
-      typedef std::function<bool (P1::RestApi::GameNetCredential&, QString&) > ExecutedGameCredential;
+      typedef std::function<bool (P1::RestApi::ProtocolOneCredential&, QString&) > ExecutedGameCredential;
 
       explicit CommandLineManager(QObject *parent = 0);
       virtual ~CommandLineManager();
@@ -30,7 +34,7 @@ namespace GameNet {
       void commandRecieved(const QString& name, const QStringList& arguments);
 
       /**
-       * \fn  GGS::Core::Service::Area CommandLineManager::gameArea();
+       * \fn  P1::Core::Service::Area CommandLineManager::gameArea();
        *
        * \brief Получить зону для скачивания игр. Зона определяется только при старте приложения.
        *
@@ -42,6 +46,17 @@ namespace GameNet {
       P1::Core::Service::Area gameArea();
 
       QString startingService();
+
+      /**
+       * \fn  bool CommandLineManager::skipUi();
+       *
+       * \brief Метод определяет необходимо ли запустить UI или пропустить.
+       *
+       * \author  Ilya Tkachenko
+       * \date  15.10.2014
+       *
+       * \return  true если необходимо пропустить запуск UI, иначе false.
+       */
 
       bool skipUi();
 
@@ -76,7 +91,7 @@ namespace GameNet {
       /**
        * \fn  void CommandLineManager::uiCommand(const QString& name, const QStringList& arguments);
        *
-       * \brief Комманда для QGNA-UI.
+       * \brief Комманда для UI.
        *
        * \author  Ilya Tkachenko
        * \date  17.10.2014
@@ -111,12 +126,12 @@ namespace GameNet {
       void updateRequested();
 
     private:
-      void gogamenetmoney(const QString& name, const QStringList& arguments);
-      void gogamenethelper(const QString& name, const QStringList& arguments);
+      void goprotocolonemoney(const QString& name, const QStringList& arguments);
+      void goprotocolonehelper(const QString& name, const QStringList& arguments);
       void gocombatarmsrating(const QString& name, const QStringList& arguments);
       
-      bool shouldSendToUi(P1::RestApi::GameNetCredential& credential);
-      void openUrlWithAuth(const QString& url, P1::RestApi::GameNetCredential& credential);
+      bool shouldSendToUi(P1::RestApi::ProtocolOneCredential& credential);
+      void openUrlWithAuth(const QString& url, P1::RestApi::ProtocolOneCredential& credential);
 
       P1::Application::ArgumentParser* _commandLineArguments;
 

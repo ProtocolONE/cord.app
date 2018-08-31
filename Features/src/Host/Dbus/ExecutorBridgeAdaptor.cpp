@@ -35,27 +35,27 @@ ExecutorBridgeAdaptor::~ExecutorBridgeAdaptor()
 
 bool ExecutorBridgeAdaptor::canExecuteSecond(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Executor.canExecuteSecond
+    // handle method call com.protocolone.launcher.dbus.Executor.canExecuteSecond
     bool out0;
     QMetaObject::invokeMethod(parent(), "canExecuteSecond", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
 }
 
-void ExecutorBridgeAdaptor::execute(const QString &serviceId, GameNet::Host::Bridge::Credential credential)
+void ExecutorBridgeAdaptor::execute(const QString &serviceId, P1::Host::Bridge::Credential credential)
 {
-    // handle method call com.gamenet.dbus.Executor.execute
-    QMetaObject::invokeMethod(parent(), "execute", Q_ARG(QString, serviceId), Q_ARG(GameNet::Host::Bridge::Credential, credential));
+    // handle method call com.protocolone.launcher.dbus.Executor.execute
+    QMetaObject::invokeMethod(parent(), "execute", Q_ARG(QString, serviceId), Q_ARG(P1::Host::Bridge::Credential, credential));
 }
 
-void ExecutorBridgeAdaptor::executeSecond(const QString &serviceId, GameNet::Host::Bridge::Credential credential, GameNet::Host::Bridge::Credential secondCredential)
+void ExecutorBridgeAdaptor::executeSecond(const QString &serviceId, P1::Host::Bridge::Credential credential, P1::Host::Bridge::Credential secondCredential)
 {
-    // handle method call com.gamenet.dbus.Executor.executeSecond
-    QMetaObject::invokeMethod(parent(), "executeSecond", Q_ARG(QString, serviceId), Q_ARG(GameNet::Host::Bridge::Credential, credential), Q_ARG(GameNet::Host::Bridge::Credential, secondCredential));
+    // handle method call com.protocolone.launcher.dbus.Executor.executeSecond
+    QMetaObject::invokeMethod(parent(), "executeSecond", Q_ARG(QString, serviceId), Q_ARG(P1::Host::Bridge::Credential, credential), Q_ARG(P1::Host::Bridge::Credential, secondCredential));
 }
 
 bool ExecutorBridgeAdaptor::isAnyGameStarted()
 {
-    // handle method call com.gamenet.dbus.Executor.isAnyGameStarted
+    // handle method call com.protocolone.launcher.dbus.Executor.isAnyGameStarted
     bool out0;
     QMetaObject::invokeMethod(parent(), "isAnyGameStarted", Q_RETURN_ARG(bool, out0));
     return out0;
@@ -63,7 +63,7 @@ bool ExecutorBridgeAdaptor::isAnyGameStarted()
 
 bool ExecutorBridgeAdaptor::isGameStarted(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Executor.isGameStarted
+    // handle method call com.protocolone.launcher.dbus.Executor.isGameStarted
     bool out0;
     QMetaObject::invokeMethod(parent(), "isGameStarted", Q_RETURN_ARG(bool, out0), Q_ARG(QString, serviceId));
     return out0;
@@ -71,19 +71,19 @@ bool ExecutorBridgeAdaptor::isGameStarted(const QString &serviceId)
 
 void ExecutorBridgeAdaptor::shutdownSecond()
 {
-    // handle method call com.gamenet.dbus.Executor.shutdownSecond
+    // handle method call com.protocolone.launcher.dbus.Executor.shutdownSecond
     QMetaObject::invokeMethod(parent(), "shutdownSecond");
 }
 
 void ExecutorBridgeAdaptor::terminateGame()
 {
-    // handle method call com.gamenet.dbus.Executor.terminateGame
+    // handle method call com.protocolone.launcher.dbus.Executor.terminateGame
     QMetaObject::invokeMethod(parent(), "terminateGame");
 }
 
 void ExecutorBridgeAdaptor::terminateGame(const QString &serviceId)
 {
-    // handle method call com.gamenet.dbus.Executor.terminateGame
+    // handle method call com.protocolone.launcher.dbus.Executor.terminateGame
     QMetaObject::invokeMethod(parent(), "terminateGame", Q_ARG(QString, serviceId));
 }
 

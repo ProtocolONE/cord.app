@@ -5,7 +5,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class Connection;
@@ -16,7 +16,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.Connection")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Connection")
       public:
         explicit ConnectionBridge(QObject *parent = 0);
         virtual ~ConnectionBridge();
@@ -41,7 +41,7 @@ namespace GameNet {
         /*
         <method name="setCredential">
           <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="GameNet::Host::Bridge::Credential"/>
+          <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="P1::Host::Bridge::Credential"/>
         </method>
         */
 
@@ -61,7 +61,7 @@ namespace GameNet {
         /*
         <method name="setSecondCredential">
           <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="GameNet::Host::Bridge::Credential"/>
+          <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="P1::Host::Bridge::Credential"/>
         </method>
         */
 

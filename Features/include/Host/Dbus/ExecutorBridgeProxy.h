@@ -23,14 +23,14 @@
 #include <QtDBus/QtDBus>
 
 /*
- * Proxy class for interface com.gamenet.dbus.Executor
+ * Proxy class for interface com.protocolone.launcher.dbus.Executor
  */
 class ExecutorBridgeProxy: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.gamenet.dbus.Executor"; }
+    { return "com.protocolone.launcher.dbus.Executor"; }
 
 public:
     ExecutorBridgeProxy(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
@@ -45,14 +45,14 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("canExecuteSecond"), argumentList);
     }
 
-    inline QDBusPendingReply<> execute(const QString &serviceId, GameNet::Host::Bridge::Credential credential)
+    inline QDBusPendingReply<> execute(const QString &serviceId, P1::Host::Bridge::Credential credential)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(credential);
         return asyncCallWithArgumentList(QStringLiteral("execute"), argumentList);
     }
 
-    inline QDBusPendingReply<> executeSecond(const QString &serviceId, GameNet::Host::Bridge::Credential credential, GameNet::Host::Bridge::Credential secondCredential)
+    inline QDBusPendingReply<> executeSecond(const QString &serviceId, P1::Host::Bridge::Credential credential, P1::Host::Bridge::Credential secondCredential)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(serviceId) << QVariant::fromValue(credential) << QVariant::fromValue(secondCredential);
@@ -99,7 +99,7 @@ Q_SIGNALS: // SIGNALS
 };
 
 namespace com {
-  namespace gamenet {
+  namespace p1 {
     namespace dbus {
       typedef ::ExecutorBridgeProxy Executor;
     }

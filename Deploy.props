@@ -9,7 +9,7 @@
     <RestApiArea>trunk</RestApiArea>
     <SettingsArea>trunk</SettingsArea>
     <AutoRunHelperArea>trunk</AutoRunHelperArea>
-    <Log4QtArea>trunk.vc13</Log4QtArea>
+    <Log4QtArea>1.5.0</Log4QtArea>
     <BugTrapArea>1.3.3718.38316.vs13</BugTrapArea>
     <CoreArea>trunk</CoreArea>
     <LibtorrentWrapperArea>trunk</LibtorrentWrapperArea>

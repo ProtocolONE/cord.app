@@ -2,7 +2,7 @@
 
 #include <QtCore/QObject>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     class ApplicationStatistic;
@@ -13,7 +13,7 @@ namespace GameNet {
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
-        Q_CLASSINFO("D-Bus Interface", "com.gamenet.dbus.ApplicationStatistic")
+        Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.ApplicationStatistic")
       public:
         explicit ApplicationStatisticBridge(QObject *parent = 0);
         virtual ~ApplicationStatisticBridge();
@@ -117,7 +117,7 @@ namespace GameNet {
         /**
          * \fn  QString ApplicationStatisticBridge::installWithService() const;
          *
-         * \brief GameNet application installed the with game 'serviceId'.
+         * \brief ProtocolOne Launcher application installed the with game 'serviceId'.
          *
          * \author  Ilya Tkachenko
          * \date  01.10.2014
@@ -130,13 +130,13 @@ namespace GameNet {
         /**
          * \fn  quint64 ApplicationStatisticBridge::installDate() const;
          *
-         * \brief Query GameNet application install date as the number of seconds that 
+         * \brief Query ProtocolOne Launcher application install date as the number of seconds that 
          *        have passed since 1970-01-01T00:00:00.000. 
          *
          * \author  Ilya Tkachenko
          * \date  01.10.2014
          *
-         * \return GameNet application install date.
+         * \return ProtocolOne Launcher application install date.
          */
 
         quint64 installDate() const;

@@ -7,16 +7,16 @@
 
 #include <Host/Bridge/ApplicationBridge.h>
 
-#include <RestApi/GameNetCredential.h>
+#include <RestApi/ProtocolOneCredential.h>
 
 #include <Settings/Settings.h>
 
 using ::testing::Return;
 
-using GameNet::Host::Bridge::ApplicationBridge;
-using P1::RestApi::GameNetCredential;
+using P1::Host::Bridge::ApplicationBridge;
+using P1::RestApi::ProtocolOneCredential;
 
-class ApplicationMock : public GameNet::Host::Application
+class ApplicationMock : public P1::Host::Application
 {
 public:
    MOCK_METHOD0(isInitCompleted, bool());
@@ -33,7 +33,7 @@ public:
    MOCK_METHOD0(onAdditionalResourcesReady, void());
 };
 
-class TranslationMock : public GameNet::Host::Translation
+class TranslationMock : public P1::Host::Translation
 {
 public:
   MOCK_CONST_METHOD0(language, QString());
@@ -43,7 +43,7 @@ public:
   MOCK_METHOD0(onLanguageChanged, void());
 };
 
-class AutoRunManagerMock : public GameNet::Host::AutoRunManager
+class AutoRunManagerMock : public P1::Host::AutoRunManager
 {
 public:
   MOCK_CONST_METHOD0(autoStartMode, int());
@@ -172,7 +172,7 @@ TEST_F(ApplicationBridgeTest, language)
   QString expectedLanguage("fr");
 
   P1::Settings::Settings settings;
-  settings.setValue("qGNA/language", expectedLanguage);
+  settings.setValue("launcher/language", expectedLanguage);
 
   EXPECT_CALL(translationMock, language())
     .WillOnce(Return(expectedLanguage));

@@ -5,7 +5,7 @@
 
 #include <QtCore/QObject>
 
-using namespace GameNet::Host;
+using namespace P1::Host;
 
 class MockHookBase
 {
