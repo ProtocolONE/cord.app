@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
   QString path = QCoreApplication::applicationDirPath();
   app.setLibraryPaths(QStringList() << path + "/plugins5");
-  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher\\Host");
-  app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
+  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA\\Host");
+  //app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
 
   QThread::currentThread()->setObjectName("Main host thread");
 
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  LoggerHelper logger(logPath + "launcher.host.log");
+  //LoggerHelper logger(logPath + "host.log");
   if (!requireAdminRights())
     return -1;
 

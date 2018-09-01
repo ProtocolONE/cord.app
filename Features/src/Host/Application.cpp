@@ -186,7 +186,7 @@ namespace P1 {
         this, &Application::internalShutdown, Qt::QueuedConnection);
 
       P1::Core::UI::Message::setAdapter(this->_messageAdapter);
-
+      
       this->initRestApi();
       this->_translation->init();
       this->_autoRunManager->init();
