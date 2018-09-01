@@ -68,3 +68,4 @@ packages/
 rebuild.bat
 /!help/html
 /!obj/qml
+.vs/

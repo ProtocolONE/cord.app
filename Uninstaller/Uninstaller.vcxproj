@@ -25,11 +25,11 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing HostProcess.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DCORE_STATIC_LIB -DUPDATESYSTEM_STATIC_LIBRARY -DDOWNLOADSERVICE_STATIC_LIB -DLIBTORRENTWRAPPER_STATIC_LIB -DSETTINGS_STATIC_LIB -DAPPLICATION_STATIC_LIB -DGAMEEXECUTOR_STATIC_LIB -DRESTAPI_STATIC_LIB -DAUTORUNHELPER_STATIC_LIB -D_USING_V110_SDK71_ -D_UNICODE  "-I." "-I.\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUPDATESYSTEM_STATIC_LIB -DSETTINGS_STATIC_LIB -DRESTAPI_STATIC_LIB -DMARKETING_STATIC_LIB -DLIBTORRENTWRAPPER_STATIC_LIB -DGAMEEXECUTOR_STATIC_LIB -DGAMEDOWNLOADER_STATIC_LIB -DCORE_STATIC_LIB -DAPPLICATION_STATIC_LIB -DAUTORUNHELPER_STATIC_LIB -D_USING_V110_SDK71_ -D_UNICODE  "-I." "-I.\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)Features\include" "-I$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\Log4qt\1.5.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\4afe26e39cd704e457a3f60661c6a030ab2f6222\include" "-I$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include" "-I$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\67178596ee76c07b8d1b80456387bd6b32b5e6b7\include"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing HostProcess.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DCORE_STATIC_LIB -DUPDATESYSTEM_STATIC_LIBRARY -DDOWNLOADSERVICE_STATIC_LIB -DLIBTORRENTWRAPPER_STATIC_LIB -DSETTINGS_STATIC_LIB -DAPPLICATION_STATIC_LIB -DGAMEEXECUTOR_STATIC_LIB -DRESTAPI_STATIC_LIB -DAUTORUNHELPER_STATIC_LIB -D_USING_V110_SDK71_ -D_UNICODE  "-I." "-I.\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUPDATESYSTEM_STATIC_LIB -DSETTINGS_STATIC_LIB -DRESTAPI_STATIC_LIB -DMARKETING_STATIC_LIB -DLIBTORRENTWRAPPER_STATIC_LIB -DGAMEEXECUTOR_STATIC_LIB -DGAMEDOWNLOADER_STATIC_LIB -DCORE_STATIC_LIB -DAPPLICATION_STATIC_LIB -DAUTORUNHELPER_STATIC_LIB -D_USING_V110_SDK71_ -D_UNICODE  "-I." "-I.\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)Features\include" "-I$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include" "-I$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include" "-I$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\Log4qt\1.5.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\1e5a7c36a4bdad9ff26874cdafd2460e8b8bcfa9\include" "-I$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include" "-I$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\81730aae476140b1af7d699988eca9603242904e\include"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -63,10 +63,12 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Deploy.props" />
+    <Import Project="..\conan\Debug\conanbuildinfo.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Deploy.props" />
+    <Import Project="..\conan\Release\conanbuildinfo.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -78,19 +80,19 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;CORE_STATIC_LIB;UPDATESYSTEM_STATIC_LIBRARY;DOWNLOADSERVICE_STATIC_LIB;LIBTORRENTWRAPPER_STATIC_LIB;SETTINGS_STATIC_LIB;APPLICATION_STATIC_LIB;GAMEEXECUTOR_STATIC_LIB;RESTAPI_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;.\include;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;.\include;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(SolutionDir)Features\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)!build\Features\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;CoreX86d.lib;FeaturesX86d.lib;ApplicationX86d.lib;BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;CoreX86d.lib;FeaturesX86d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -100,19 +102,19 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;CORE_STATIC_LIB;UPDATESYSTEM_STATIC_LIBRARY;DOWNLOADSERVICE_STATIC_LIB;LIBTORRENTWRAPPER_STATIC_LIB;SETTINGS_STATIC_LIB;APPLICATION_STATIC_LIB;GAMEEXECUTOR_STATIC_LIB;RESTAPI_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;.\include;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(SolutionDir)Features\include;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\include;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)!build\Features\$(Configuration)\;$(QGNACOMMONDIR)\GGS\Application\$(ApplicationArea)\lib;$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\lib;$(QGNACOMMONDIR)\GGS\Core\$(CoreArea)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)!build\Features\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;FeaturesX86.lib;ApplicationX86.lib;BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;FeaturesX86.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>

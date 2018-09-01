@@ -21,11 +21,11 @@ namespace GameNet {
         : layout(TTCCLayout::ISO8601)
         , appender(&layout, path, true) 
       {
-        layout.retain();
+        //layout.retain();
 
         appender.setMaximumFileSize(1000000);
         appender.setMaxBackupIndex(1);
-        appender.retain();
+        //appender.retain();
         appender.activateOptions();
 
         LogManager::qtLogger()->addAppender(&appender);

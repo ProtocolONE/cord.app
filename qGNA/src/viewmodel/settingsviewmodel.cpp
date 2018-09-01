@@ -7,8 +7,8 @@
 #include <Settings/Settings.h>
 #include <Core/UI/Message.h>
 
-#include <AutoRunHelper.h>
-#include <QtConcurrent/QtConcurrentRun>
+#include <AutoRunHelper/AutoRunHelper.h>
+#include <QtConcurrentRun>
 
 #include <QtCore/QDateTime>
 

@@ -1,3 +1,5 @@
+#include <Helper/Logger.hpp>
+
 #include <Host/Application.h>
 
 #include <Application/SingleApplication.h>
@@ -7,7 +9,6 @@
 
 #include <Helper/BugTrap.hpp>
 #include <Helper/Database.hpp>
-#include <Helper/Logger.hpp>
 #include <Helper/ElevateRights.hpp>
 #include <Helper/UserInfoMigration.hpp>
 

@@ -1,4 +1,9 @@
-﻿#include "mainwindow.h"
+﻿#include <Log4Qt/LogManager>
+#include <Log4Qt/Level>
+#include <Log4Qt/RollingFileAppender>
+#include <Log4Qt/TTCCLayout>
+
+#include "mainwindow.h"
 #include "Uninstall.h"
 #include "viewmodel\SettingsViewModel.h"
 
@@ -31,10 +36,6 @@
 #include <QtWidgets/QApplication>
 #include <QResource>
 
-#include <Log4Qt/LogManager>
-#include <Log4Qt/Level>
-#include <Log4Qt/RollingFileAppender>
-#include <Log4Qt/TTCCLayout>
 
 #include <BugTrap/BugTrap.h>
 
@@ -196,12 +197,12 @@ int main(int argc, char *argv[])
   QThreadPool::globalInstance()->setMaxThreadCount(50);
 
   TTCCLayout layout(TTCCLayout::ISO8601);
-  layout.retain();
+ // layout.retain();
 
   RollingFileAppender appender(&layout, logPath + "launcher.host.log", true);
   appender.setMaximumFileSize(1000000);
   appender.setMaxBackupIndex(1);
-  appender.retain();
+  //appender.retain();
   appender.activateOptions();
 
   LogManager::qtLogger()->addAppender(&appender);
