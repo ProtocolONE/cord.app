@@ -11,6 +11,7 @@
 #include <Helper/Database.hpp>
 #include <Helper/ElevateRights.hpp>
 #include <Helper/UserInfoMigration.hpp>
+#include <Helper/RegisterTypes.h>
 
 #include <Core/System/Shell/UrlProtocolHelper.h>
 
@@ -25,7 +26,9 @@
 
 #include <QtGui/QIcon>
 
-using namespace P1::Host;
+
+
+using namespace GameNet::Host;
 using P1::Application::SingleApplication;
 
 Application *createApplication(SingleApplication *app) 
@@ -39,8 +42,10 @@ Application *createApplication(SingleApplication *app)
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
-  QCoreApplication::setOrganizationName("ProtocolOne");
-  QCoreApplication::setApplicationName("Launcher");
+  registerDependenicesTypes();
+
+  QCoreApplication::setOrganizationName("Vebanaul");
+  QCoreApplication::setApplicationName("GameNet");
   migrateUserInfo();
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");

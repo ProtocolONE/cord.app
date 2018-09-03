@@ -171,6 +171,11 @@ namespace P1 {
 
     void Updater::startCheckUpdate()
     {
+      // HACK
+      emit this->allCompleted(false);
+      return;
+
+
       Q_ASSERT(this->_canRestart);
       this->_updateThread = new QThread();
       this->_updateThread->setObjectName("Update manager thread");

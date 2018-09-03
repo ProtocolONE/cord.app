@@ -1367,5 +1367,8 @@
     <ClInclude Include="include\Host\StopDownloadOnExecuteInit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Helper\RegisterTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,6 +26,9 @@ namespace P1 {
 
     QString Translation::language() const
     {
+      // HACK
+      return "en";
+
       P1::Settings::Settings settings;
       return settings.value("launcher/language").toString(); 
     }
