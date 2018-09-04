@@ -82,7 +82,7 @@
     <ClCompile Include="src\Features\ComInitialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\GameNetDownloader.cpp">
+    <ClCompile Include="src\Features\ProtocolOneDownloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp">
@@ -1077,7 +1077,7 @@
     <CustomBuild Include="include\Features\WorkStationLock\WorkStationLockHook.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\Features\GameNetDownloader.h">
+    <CustomBuild Include="include\Features\ProtocolOneDownloader.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="include\Features\LanguageChangeEventFilter.h">
