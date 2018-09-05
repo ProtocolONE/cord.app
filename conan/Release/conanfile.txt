@@ -1,0 +1,23 @@
+[requires]
+AutoRunHelper/1.0.0@common/stable
+Application/1.0.0@common/stable
+BugTrap/1.0.0@common/stable
+Core/1.0.0@common/stable
+GameDownloader/1.0.0@common/stable
+GameExecutor/1.0.0@common/stable
+LibtorrentWrapper/1.0.0@common/stable
+Libtorrent/1.0.5@common/stable
+Log4qt/1.5.0@common/stable
+Marketing/1.0.0@common/stable
+QmlExtension/1.0.0@common/stable
+RestApi/1.0.0@common/stable
+Settings/1.0.0@common/stable
+SevenZip/1.0.0@common/stable
+UpdateSystem/1.0.0@common/stable
+
+[generators]
+visual_studio
+
+[imports]
+bin, *.dll -> ../../!build/FeaturesTest/Release # Copies all dll files from packages bin folder to my "bin" folder
+bin, *.dll -> ../../!build/Launcher/Release # Copies all dll files from packages bin folder to my "bin" folder

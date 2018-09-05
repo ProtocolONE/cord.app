@@ -1,0 +1,26 @@
+[settings]
+os=Windows
+arch=x86
+compiler=Visual Studio
+compiler.version=15
+compiler.runtime=MD
+compiler.toolset=v141_xp
+build_type=Release
+os_build=Windows
+arch_build=x86
+
+[options]
+Core:shared=False
+GameDownloader:shared=False
+GameExecutor:shared=False
+LibtorrentWrapper:shared=True
+Log4qt:shared=False
+Marketing:shared=False
+QmlExtension:shared=True
+RestApi:shared=False
+Settings:shared=False
+SevenZip:shared=False
+UpdateSystem:shared=False
+
+[build_requires]
+[env]
