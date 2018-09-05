@@ -8,7 +8,6 @@
 
 #include <QtCore/QDateTime>
 
-using P1::Settings::Settings;
 using P1::GameDownloader::GameDownloadService;
 using P1::Application::ArgumentParser;
 
@@ -43,7 +42,7 @@ namespace P1 {
         this->setInstallDate();
       }
 
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("launcher");
 
       if (this->_firstStart)
@@ -55,7 +54,7 @@ namespace P1 {
     void ApplicationStatistic::applcationStarted()
     {
       // INFO reset flag about first app launch
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("launcher");
       settings.setValue("firstStart", 0);
     }
@@ -68,7 +67,7 @@ namespace P1 {
 
     quint64 ApplicationStatistic::gameInstallDate(const QString& serviceId) const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("GameDownloader");
       settings.beginGroup(serviceId);
       QDateTime date = settings.value("installDate", 0).toDateTime();
@@ -77,7 +76,7 @@ namespace P1 {
 
     quint64 ApplicationStatistic::gameLastExecutionTime(const QString& serviceId) const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);
@@ -87,7 +86,7 @@ namespace P1 {
 
     int ApplicationStatistic::executeGameSuccessCount(const QString& serviceId) const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);
@@ -96,7 +95,7 @@ namespace P1 {
 
     int ApplicationStatistic::executeGameFailedCount(const QString& serviceId) const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);
@@ -110,14 +109,14 @@ namespace P1 {
 
     QString ApplicationStatistic::installWithService() const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("launcher");
       return settings.value("installWithService", "0").toString();
     }
 
     quint64 ApplicationStatistic::installDate() const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("launcher");
       return settings.value("installDate", 0).toULongLong();
     }
@@ -125,7 +124,7 @@ namespace P1 {
     void ApplicationStatistic::setInstallDate()
     {
       quint64 installDate = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000;
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("launcher");
       settings.setValue("installDate", installDate);
 

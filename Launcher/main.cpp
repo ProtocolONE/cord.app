@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
   plugins << path + "/plugins5";
   app.setLibraryPaths(plugins);
 
-  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\GGS\\QGNA");
-  //app.setWindowIcon(QIcon(path + "/Assets/Images/qgna.ico"));
+  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher");
+  //app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
   initBugTrap(logPath); 
@@ -198,16 +198,18 @@ int main(int argc, char *argv[])
   // использовать по одному потоку на игру.
   QThreadPool::globalInstance()->setMaxThreadCount(50);
 
-//  TTCCLayout layout(TTCCLayout::ISO8601);
-// // layout.retain();
+//  //TTCCLayout layout(TTCCLayout::ISO8601);
+//  TTCCLayout * layout = new TTCCLayout(TTCCLayout::ISO8601);
+//  //layout.retain();
 //
-//  RollingFileAppender appender(&layout, logPath + "qgna.log", true);
-//  appender.setMaximumFileSize(1000000);
-//  appender.setMaxBackupIndex(1);
-//  //appender.retain();
-//  appender.activateOptions();
+//  RollingFileAppender * appender  = new RollingFileAppender(layout, logPath + "launcher.host.log", true);
 //
-//  LogManager::qtLogger()->addAppender(&appender);
+//  appender->setMaximumFileSize(1000000);
+//  appender->setMaxBackupIndex(1);
+//  //appender->retain();
+//  appender->activateOptions();
+//
+//  LogManager::qtLogger()->addAppender(appender);
 //  LogManager::setThreshold(Level::ALL_INT);
 //  
 //#ifndef _DEBUG

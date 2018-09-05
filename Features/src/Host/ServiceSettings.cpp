@@ -9,7 +9,6 @@
 #include <QtCore/QSettings>
 
 using P1::Core::Service;
-using P1::Settings::Settings;
 
 namespace P1 {
   namespace Host {
@@ -160,7 +159,7 @@ namespace P1 {
 
     bool ServiceSettings::isOverlayEnabled(const QString& serviceId) const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);
@@ -169,7 +168,7 @@ namespace P1 {
 
     void ServiceSettings::setOverlayEnabled(const QString& serviceId, bool enabled)
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);
@@ -178,7 +177,7 @@ namespace P1 {
 
     bool ServiceSettings::isPrefer32Bit(const QString& serviceId) const
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);
@@ -187,7 +186,7 @@ namespace P1 {
 
     void ServiceSettings::setPrefer32Bit(const QString& serviceId, bool value)
     {
-      Settings settings;
+      P1::Settings::Settings settings;
       settings.beginGroup("gameExecutor");
       settings.beginGroup("serviceInfo");
       settings.beginGroup(serviceId);

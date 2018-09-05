@@ -7,28 +7,28 @@
 #include <Log4Qt/RollingFileAppender>
 #include <Log4Qt/TTCCLayout>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
     
     using namespace Log4Qt; 
 
     class LoggerHelper {
-      TTCCLayout layout;
-      RollingFileAppender appender;
+      TTCCLayout *layout;
+      RollingFileAppender *appender;
 
     public:
       LoggerHelper(const QString& path) 
-        : layout(TTCCLayout::ISO8601)
-        , appender(&layout, path, true) 
+        : layout(nullptr)
+        , appender(nullptr) 
       {
-        //layout.retain();
+        layout = new TTCCLayout(TTCCLayout::ISO8601);
+        appender = new RollingFileAppender(layout, path, true);
 
-        appender.setMaximumFileSize(1000000);
-        appender.setMaxBackupIndex(1);
-        //appender.retain();
-        appender.activateOptions();
+        appender->setMaximumFileSize(1000000);
+        appender->setMaxBackupIndex(1);
+        appender->activateOptions();
 
-        LogManager::qtLogger()->addAppender(&appender);
+        LogManager::qtLogger()->addAppender(appender);
         LogManager::setThreshold(Level::ALL_INT);
 
 #ifndef _DEBUG

@@ -7,7 +7,7 @@
 #include <Settings/Settings.h>
 #include <Core/UI/Message.h>
 
-#include <AutoRunHelper.h>
+#include <AutoRunHelper/AutoRunHelper.h>
 #include <QtConcurrentRun>
 
 #include <QtCore/QDateTime>
@@ -50,7 +50,7 @@ void SettingsViewModel::setNotifyWhenStartedProtocolOne(bool _notify)
     return;
 
   P1::Settings::Settings settings;
-  settings.setValue("launcher/notifyWhenStartedProtocolOne", _notify, _instantlySave); 
+  settings.setValue("launcher/notifyWhenStartedProtocolOne", _notify, _instantlySave);
   emit this->notifyWhenStartedProtocolOneChanged();
 }
 
@@ -67,7 +67,7 @@ void SettingsViewModel::setNotifyStartEndGameDownload(bool _notify)
     return;
 
   P1::Settings::Settings settings;
-  settings.setValue("launcher/notifyStartEndGameDownload", _notify, _instantlySave); 
+  settings.setValue("launcher/notifyStartEndGameDownload", _notify, _instantlySave);
   emit this->notifyStartEndGameDownloadChanged();
 }
 
@@ -84,7 +84,7 @@ void SettingsViewModel::setNotifyDisconnectFriendFromNetwork(bool _notify)
     return;
 
   P1::Settings::Settings settings;
-  settings.setValue("launcher/notifyDisconnectFriendFromNetwork", _notify, _instantlySave); 
+  settings.setValue("launcher/notifyDisconnectFriendFromNetwork", _notify, _instantlySave);
   emit this->notifyDisconnectFriendFromNetworkChanged();
 }
 
@@ -101,7 +101,7 @@ void SettingsViewModel::setNotifyDisconnectFriendFromGame(bool _notify)
     return;
 
   P1::Settings::Settings settings;
-  settings.setValue("launcher/notifyDisconnectFriendFromGame", _notify, _instantlySave); 
+  settings.setValue("launcher/notifyDisconnectFriendFromGame", _notify, _instantlySave);
   emit this->notifyDisconnectFriendFromGameChanged();
 }
 
@@ -118,7 +118,7 @@ void SettingsViewModel::setNotifyNewMessage(bool _notify)
     return;
 
   P1::Settings::Settings settings;
-  settings.setValue("launcher/notifyNewMessage", _notify, _instantlySave); 
+  settings.setValue("launcher/notifyNewMessage", _notify, _instantlySave);
   emit this->notifyNewMessageChanged();
 }
 
@@ -133,7 +133,7 @@ void SettingsViewModel::setDefaultSettings()
   setNotifyNewMessage(true);
 
   P1::Settings::Settings settings;
-  settings.setValue("Launcher/language", "ru" , true);
+  settings.setValue("Launcher/language", "ru", true);
 
   _instantlySave = true;
 }

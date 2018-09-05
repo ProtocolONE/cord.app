@@ -8,8 +8,6 @@
 #include <random>
 #include <cstdint>
 
-using P1::Settings::Settings;
-
 namespace P1 {
   namespace Host {
     namespace GameDownloader {
@@ -43,7 +41,7 @@ namespace P1 {
 
       QString DownloaderSettingsRoulette::testName() const
       {
-        Settings settings;
+        P1::Settings::Settings settings;
         settings.beginGroup("Launcher");
         settings.beginGroup("Features");
         settings.beginGroup("DownloaderSettingsRoulette");
@@ -52,7 +50,7 @@ namespace P1 {
 
       QString DownloaderSettingsRoulette::groupName() const
       {
-        Settings settings;
+        P1::Settings::Settings settings;
         settings.beginGroup("Launcher");
         settings.beginGroup("Features");
         settings.beginGroup("DownloaderSettingsRoulette");
@@ -85,7 +83,7 @@ namespace P1 {
 
       void DownloaderSettingsRoulette::saveTestGroup(const QString& name, const QString& group)
       {
-        Settings settings;
+        P1::Settings::Settings settings;
         settings.beginGroup("Launcher");
         settings.beginGroup("Features");
         settings.beginGroup("DownloaderSettingsRoulette");

@@ -4,7 +4,7 @@
 
 #include <QtCore/QDebug>
 
-namespace GameNet {
+namespace P1 {
   namespace Host {
 
     bool requireAdminRights() 
