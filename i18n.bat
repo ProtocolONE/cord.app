@@ -4,7 +4,7 @@ SET UpdateConfig= -no-obsolete -locations absolute
 Set TsTool=..\etc\QtTsTool.exe
 
 
-call :create_i18n qGNA
+call :create_i18n Launcher
 call :create_i18n Host
 call :create_i18n Features
 
