@@ -21,3 +21,5 @@ visual_studio
 [imports]
 bin, *.dll -> ../../!build/FeaturesTest/Debug # Copies all dll files from packages bin folder to my "bin" folder
 bin, *.dll -> ../../!build/Launcher/Debug # Copies all dll files from packages bin folder to my "bin" folder
+plugin, *.dll -> ../../!build/Launcher/Debug/plugins5
+plugin, *qmldir -> ../../!build/Launcher/Debug/plugins5
