@@ -30,7 +30,7 @@
 
 #include <Host/Dbus/DBusServer.h>
 
-//#include <Helper/ConfigLoader.hpp>
+#include <QtYaml/ConfigManager.h>
 
 #include <Features/GameDownloader/GameDownloadStatistics.h>
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
@@ -99,6 +99,7 @@ namespace P1 {
       , _updateFinished(false)
       , _closing(false)
       , _licenseManager(new LicenseManager(this))
+      , _configManager(new P1::QtYaml::ConfigManager)
       , QObject(parent)
     {
 
@@ -107,6 +108,7 @@ namespace P1 {
     Application::~Application()
     {
       delete this->_restApiCache;
+      delete this->_configManager;
     }
 
     void Application::setInitFinished() 
@@ -172,6 +174,11 @@ namespace P1 {
 #endif
       // INFO Необходимо инициализировать первым. Там определяется первый ли раз запукается приложение.
       this->_applicationStatistic->init();
+
+      QString path = QCoreApplication::applicationDirPath();
+      path += "/Config.yaml";
+      if (!this->_configManager->load(path))
+        qWarning() << "Cannot read application config file: " << path;
 
       this->_connectionManager->setStopDownloadServiceWhileExecuteAnyGame(this->_stopDownloadServiceOnExecuteGame);
 
@@ -348,27 +355,14 @@ namespace P1 {
     
     void Application::initRestApi()
     {
-      //Features::Helper::DebugConfigLoader debugConfig;
-      //debugConfig.init();
-
-      //QString overrideApiUrl;
-      //bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
-
       QString apiUrl;
-
-      //if (overrideApi) {
-      //  apiUrl = overrideApiUrl;
-      //} else {
-      //  QStringList ports;
-      //  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-      //  QString randomPort = ports.takeAt(qrand() % ports.count());
-      //  apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-      //}
 
       QStringList ports;
       ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
       QString randomPort = ports.takeAt(qrand() % ports.count());
-      apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+      
+      QString urlPatern = this->_configManager->value<QString>("apiUrl", "https://gnapi.com:%1/restapi");
+      apiUrl = QString(urlPatern).arg(randomPort);
 
       P1::Settings::Settings settings;
       settings.setValue("launcher/restApi/url", apiUrl);
@@ -378,9 +372,8 @@ namespace P1 {
       this->_restApiManager->setRequest(P1::RestApi::RequestFactory::Http);
       this->_restApiManager->setCache(this->_restApiCache);
       
-      //bool debugLogEnabled = false;
-      //if (debugConfig.debugApiEnabled(debugLogEnabled))
-      //  this->_restApiManager->setDebugLogEnabled(debugLogEnabled);
+      bool debugLogEnabled = this->_configManager->value<bool>("debugApi", false);
+      this->_restApiManager->setDebugLogEnabled(debugLogEnabled);
 
       P1::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
     }

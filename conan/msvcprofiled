@@ -21,5 +21,7 @@ RestApi:shared=False
 Settings:shared=False
 SevenZip:shared=False
 UpdateSystem:shared=False
+QtYaml:shared=False
+
 [build_requires]
 [env]

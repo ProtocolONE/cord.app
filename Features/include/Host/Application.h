@@ -21,6 +21,9 @@ namespace Features {
 }
 
 namespace P1 {
+  namespace QtYaml {
+    class ConfigManager;
+  }
   namespace Application {
     class SingleApplication;
   }
@@ -173,6 +176,7 @@ namespace P1 {
       AutoRunManager *_autoRunManager;
       DBus::DBusServer *_dbusServer;
       Features::Marketing::SystemInfo::SystemInfoManager *_systemInfoManager;
+      P1::QtYaml::ConfigManager* _configManager;
 
       bool _initFinished;
       bool _updateFinished;

@@ -3,7 +3,7 @@
 #include <QmlMessageAdapter.h>
 
 #include <Features/TaskBarProgressHelper.h>
-
+#include <QtYaml/ConfigManager.h>
 #include <Marketing/MarketingTarget.h>
 
 #include <Core/Service.h>
@@ -294,6 +294,7 @@ private:
   Features::RenderRateHack *_renderRateHack;
 
   BestInstallPath *_bestInstallPath;
+  P1::QtYaml::ConfigManager _configManager;
 
 protected:
   bool event(QEvent* event);

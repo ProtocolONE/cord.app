@@ -86,6 +86,11 @@ MainWindow::MainWindow(QWindow *parent)
 {
   this->hide();
 
+  QString path = QCoreApplication::applicationDirPath();
+  path += "/Config.yaml";
+  if (!this->_configManager.load(path))
+    qWarning() << "Cannot read application config file: " << path;
+
   if (QString::fromLatin1(qgetenv("QT_OPENGL")) == "software") {
     this->_renderRateHack = new Features::RenderRateHack(this);
     this->_renderRateHack->init(this);
@@ -881,28 +886,15 @@ void MainWindow::initFinished()
 
 void MainWindow::initRestApi()
 {
-  //Features::Helper::DebugConfigLoader debugConfig;
-  //debugConfig.init();
-
-  //QString overrideApiUrl;
-  //bool overrideApi = debugConfig.apiConfig(overrideApiUrl);
-
   QString apiUrl;
-
-  //if (overrideApi) {
-  //  apiUrl = overrideApiUrl;
-  //} else {
-  //  QStringList ports;
-  //  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-  //  QString randomPort = ports.takeAt(qrand() % ports.count());
-  //  apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
-  //}
-
 
   QStringList ports;
   ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
   QString randomPort = ports.takeAt(qrand() % ports.count());
-  apiUrl = QString("https://gnapi.com:%1/restapi").arg(randomPort);
+
+  QString urlPatern = this->_configManager.value<QString>("apiUrl", "https://gnapi.com:%1/restapi");
+  apiUrl = QString(urlPatern).arg(randomPort);
+
   P1::Settings::Settings settings;
   settings.setValue("launcher/restApi/url", apiUrl);
 
@@ -912,9 +904,8 @@ void MainWindow::initRestApi()
   this->_restapiManager.setRequest(P1::RestApi::RequestFactory::Http);
   this->_restapiManager.setCache(&_fakeCache);
 
-  //bool debugLogEnabled = false;
-  //if (debugConfig.debugApiEnabled(debugLogEnabled))
-  //  this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
+  bool debugLogEnabled = this->_configManager.value<bool>("debugApi", false);
+  this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
 
   P1::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
 }

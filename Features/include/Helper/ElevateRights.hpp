@@ -11,7 +11,7 @@ namespace P1 {
     {
       using P1::AutoRunHelper::UACHelper;
 
-#ifndef QGNA_NO_ADMIN_REQUIRED
+#ifndef LAUNCHER_NO_ADMIN_REQUIRED
       if(!P1::AutoRunHelper::UACHelper::isUserAdminByRole()) {
         if (!P1::AutoRunHelper::UACHelper::restartToElevateRights()) {    
           qDebug() << "Restart failed. May be user didn't accept UAC.";

@@ -55,15 +55,15 @@ void migrateUserInfo()
 
   QString newLogsPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/logs";
   FileUtils::createDirectory(newLogsPath);
-  QString hostLog = QString("%1/host.log").arg(appRoot);
-  QString hostLog1 = QString("%1/host.log.1").arg(appRoot);
-  QFile::copy(hostLog, QString("%1/host.log").arg(newLogsPath));
-  QFile::copy(hostLog1, QString("%1/host.log.1").arg(newLogsPath));
+  QString hostLog = QString("%1/launcher.host.log").arg(appRoot);
+  QString hostLog1 = QString("%1/launcher.host.log.1").arg(appRoot);
+  QFile::copy(hostLog, QString("%1/launcher.host.log").arg(newLogsPath));
+  QFile::copy(hostLog1, QString("%1/launcher.host.log.1").arg(newLogsPath));
 
-  QString qgnaLog = QString("%1/qgna.log").arg(appRoot);
-  QString qgnaLog1 = QString("%1/qgna.log.1").arg(appRoot);
-  QFile::copy(qgnaLog, QString("%1/qgna.log").arg(newLogsPath));
-  QFile::copy(qgnaLog1, QString("%1/qgna.log.1").arg(newLogsPath));
+  QString launcherLog = QString("%1/launcher.ui.log").arg(appRoot);
+  QString launcherLog1 = QString("%1/launcher.ui.log.1").arg(appRoot);
+  QFile::copy(launcherLog, QString("%1/launcher.ui.log").arg(newLogsPath));
+  QFile::copy(launcherLog1, QString("%1/launcher.ui.log.1").arg(newLogsPath));
 
   //QFile::remove(hostLog);
   //QFile::remove(hostLog1);

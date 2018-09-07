@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationName("Launcher");
   
   QString path = QCoreApplication::applicationDirPath();
- 
+
   QStringList plugins;
   plugins << path + "/plugins5";
   app.setLibraryPaths(plugins);
