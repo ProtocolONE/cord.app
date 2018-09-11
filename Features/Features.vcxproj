@@ -640,6 +640,7 @@
     <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
     <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
     <ClCompile Include="src\Features\GameExecutor\Hook\CheckAsciiPath.cpp" />
+    <ClCompile Include="src\Features\PlainFileCache.cpp" />
     <ClCompile Include="src\Features\ProtocolOneDownloader.cpp" />
     <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp" />
     <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp" />
@@ -947,6 +948,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
+    <ClInclude Include="include\Features\PlainFileCache.h" />
     <ClInclude Include="include\Features\WmiQuery.h" />
     <ClInclude Include="include\Helper\ApplicationArea.hpp" />
     <ClInclude Include="include\Helper\DebugLog.h" />

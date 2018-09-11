@@ -326,6 +326,9 @@
     <ClCompile Include="src\Host\Translation.cpp" />
     <ClCompile Include="src\Host\UIProcess.cpp" />
     <ClCompile Include="src\Host\Updater.cpp" />
+    <ClCompile Include="src\Features\PlainFileCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
@@ -355,6 +358,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Helper\UserInfoMigration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\ConfigLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\PlainFileCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

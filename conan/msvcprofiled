@@ -10,6 +10,7 @@ compiler.toolset=v141_xp
 build_type=Debug
 
 [options]
+AutoRunHelper:shared=False
 Core:shared=False
 GameDownloader:shared=False
 GameExecutor:shared=False

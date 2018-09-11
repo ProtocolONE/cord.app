@@ -10,6 +10,7 @@ os_build=Windows
 arch_build=x86
 
 [options]
+AutoRunHelper:shared=False
 Core:shared=False
 GameDownloader:shared=False
 GameExecutor:shared=False

@@ -76,7 +76,7 @@
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)lib\;$(SolutionDir)!build\Features\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>version.lib;qtmaind.lib;FeaturesX86d.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Scriptd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;Qt5Concurrentd.lib;Qt5Widgetsd.lib;Qt5Multimediad.lib;Qt5DBusd.lib;Qt5Qmld.lib;Qt5Quickd.lib;Qt5WebEngined.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>version.lib;qtmaind.lib;FeaturesX86d.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;Qt5Concurrentd.lib;Qt5Widgetsd.lib;Qt5Multimediad.lib;Qt5DBusd.lib;Qt5Qmld.lib;Qt5Quickd.lib;Qt5WebEngined.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
@@ -268,7 +268,7 @@ exit /b 0
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ProjectDir)lib\;$(SolutionDir)!build\Features\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>version.lib;qtmain.lib;FeaturesX86.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Script.lib;Qt5Xml.lib;Qt5XmlPatterns.lib;Qt5Concurrent.lib;Qt5Widgets.lib;Qt5Multimedia.lib;Qt5DBus.lib;Qt5Qml.lib;Qt5Quick.lib;Qt5WebEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>version.lib;qtmain.lib;FeaturesX86.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Xml.lib;Qt5XmlPatterns.lib;Qt5Concurrent.lib;Qt5Widgets.lib;Qt5Multimedia.lib;Qt5DBus.lib;Qt5Qml.lib;Qt5Quick.lib;Qt5WebEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>

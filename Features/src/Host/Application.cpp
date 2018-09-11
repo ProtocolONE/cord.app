@@ -36,6 +36,8 @@
 #include <Features/StopDownloadServiceWhileExecuteAnyGame.h>
 #include <Features/Marketing/SystemInfo/SystemInfoManager.h>
 
+#include <Features/PlainFileCache.h>
+
 #include <GameDownloader/GameDownloadService.h>
 
 #include <Application/SingleApplication.h>
@@ -370,7 +372,8 @@ namespace P1 {
 
       this->_restApiManager->setUri(apiUrl);
       this->_restApiManager->setRequest(P1::RestApi::RequestFactory::Http);
-      this->_restApiManager->setCache(this->_restApiCache);
+      //this->_restApiManager->setCache(this->_restApiCache);
+      this->_restApiManager->setCache(new Features::PlainFileCache(this->_restApiManager));
       
       bool debugLogEnabled = this->_configManager->value<bool>("debugApi", false);
       this->_restApiManager->setDebugLogEnabled(debugLogEnabled);

@@ -21,8 +21,9 @@ QtYaml/1.0.0@common/stable
 visual_studio_multi
 
 [imports]
-bin, *.dll -> ../!build/FeaturesTest/Debug # Copies all dll files from packages bin folder to my "bin" folder
-bin, *.dll -> ../!build/Launcher/Debug # Copies all dll files from packages bin folder to my "bin" folder
-plugin, *.dll -> ../!build/Launcher/Debug/plugins5
-plugin, *qmldir -> ../!build/Launcher/Debug/plugins5
-i18n, * -> ../i18n
+bin, *.dll -> ../../!build/FeaturesTest/Debug # Copies all dll files from packages bin folder to my "bin" folder
+bin, *.dll -> ../../!build/Launcher/Debug # Copies all dll files from packages bin folder to my "bin" folder
+plugin, *.dll -> ../../!build/Launcher/Debug/plugins5
+plugin, *qmldir -> ../../!build/Launcher/Debug/plugins5
+i18n, * -> ../../i18n
+

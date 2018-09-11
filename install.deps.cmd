@@ -1,2 +1,7 @@
-conan install ./conan/conanfiled.txt -pr ./conan/msvcprofiled --build missing --update -if ./conan 
-conan install ./conan/conanfile.txt -pr ./conan/msvcprofile --build missing --update  -if ./conan
+pushd conan\Debug
+conan install . -pr msvcprofiled --build missing --update
+popd
+
+pushd conan\Release
+conan install . -pr msvcprofile --build missing --update
+popd

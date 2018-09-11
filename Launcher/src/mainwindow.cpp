@@ -8,6 +8,7 @@
 
 #include <Features/RestApi/ServiceHasAccess.h>
 #include <Features/RenderRateHack.h>
+#include <Features/PlainFileCache.h>
 
 #include <Features/Marketing/MarketingIntegrationMarker.h>
 
@@ -902,7 +903,9 @@ void MainWindow::initRestApi()
 
   this->_restapiManager.setUri(apiUrl);
   this->_restapiManager.setRequest(P1::RestApi::RequestFactory::Http);
-  this->_restapiManager.setCache(&_fakeCache);
+  
+  //this->_restapiManager.setCache(&_fakeCache);
+  this->_restapiManager.setCache(new Features::PlainFileCache(&this->_restapiManager));
 
   bool debugLogEnabled = this->_configManager.value<bool>("debugApi", false);
   this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
