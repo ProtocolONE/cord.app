@@ -99,7 +99,6 @@ call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
     <PostBuildEvent>
       <Command>@REM Creating a Newline variable (the two blank lines are required!)
 @set NLM=^
-@set QGNAQMLDIR=D:\Projects\Syncopate\sources\PoneApp\qml
 
 @set NL=^^^%NLM%%NLM%^%NLM%%NLM%
 
@@ -289,7 +288,6 @@ call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
     <PostBuildEvent>
       <Command>@REM Creating a Newline variable (the two blank lines are required!)
 @set NLM=^
-@set QGNAQMLDIR=D:\Projects\Syncopate\sources\PoneApp\qml
 
 @set NL=^^^%NLM%%NLM%^%NLM%%NLM%
 

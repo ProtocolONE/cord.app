@@ -40,32 +40,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="695"/>
-        <location filename="../src/mainwindow.cpp" line="704"/>
-        <location filename="../src/mainwindow.cpp" line="715"/>
-        <location filename="../src/mainwindow.cpp" line="734"/>
-        <location filename="../src/mainwindow.cpp" line="738"/>
+        <location filename="../src/mainwindow.cpp" line="700"/>
+        <location filename="../src/mainwindow.cpp" line="709"/>
+        <location filename="../src/mainwindow.cpp" line="720"/>
+        <location filename="../src/mainwindow.cpp" line="739"/>
+        <location filename="../src/mainwindow.cpp" line="743"/>
         <source>INFO_CAPTION</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="734"/>
+        <location filename="../src/mainwindow.cpp" line="739"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished">Failed to log into the game with this account. Try logging out, then logging back in again. If you get this message again, contact our support service.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="695"/>
-        <location filename="../src/mainwindow.cpp" line="738"/>
+        <location filename="../src/mainwindow.cpp" line="700"/>
+        <location filename="../src/mainwindow.cpp" line="743"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished">Your game account has been blocked. Information about the reason for and duration of the block has been sent to the email address you entered when signing up. If you have any questions, please contact our support service at &lt;a href=&quot;http://support.protocol.one&quot;&gt;http://support.protocol.one&lt;/a&gt; Details can be found in the&lt;a href=&quot;https://support.protocol.one/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="705"/>
+        <location filename="../src/mainwindow.cpp" line="710"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished">You do not have access to %1. Please contact tech support.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="716"/>
+        <location filename="../src/mainwindow.cpp" line="721"/>
         <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
         <translation>This game is not available in your country.</translation>
     </message>
@@ -103,12 +103,12 @@
         <translation type="unfinished">Installing %1 requires at least &lt;b&gt;%2&lt;/b&gt;. The available space on the disk you selected is &lt;b&gt;%3&lt;/b&gt;. Choose another folder or free up space on the disk.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="304"/>
+        <location filename="../src/mainwindow.cpp" line="309"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation type="unfinished">Information</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="303"/>
+        <location filename="../src/mainwindow.cpp" line="308"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation type="unfinished">Oops! Sometimes the application doesn&apos;t run correctly in 16-bit color mode. We apologize if this is what happened this time. We are working on the problem. In the meantime, please change the color settings to 32 bit.</translation>
     </message>
