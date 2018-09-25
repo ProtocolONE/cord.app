@@ -1,214 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Antivirus.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Application.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationRestarter.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatistic.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ApplicationStatisticBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_AutoRunManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_CheckAsciiPath.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_CheckDownload.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ClientConnection.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_CommandLineManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Connection.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConnectionManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_CpuInfo.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DbusConnection.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DBusServer.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettings.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloaderSettingsBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadServiceIcon.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_DownloadStats.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ElectronExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ElectronExecutor_p.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ElectronsExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExecutorHookFactory.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ExternalIpAddress.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_FourGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameDownloadStatistics.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameExecutorProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_GameVendorBase.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Hdd.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_HookFactory.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_LanguageChangeEventFilter.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManagerBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_LicenseManagerBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_MailRu.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapter.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_MessageAdapterBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Nikita.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Origin.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_OsInfo.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_PremiumExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ProtocolOneDownloader.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Ram.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_RegisterSessionNotificationFilter.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_RemouteStartGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_RenderRateHack.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_SaveInstallPath.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Screen.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceDescription.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandle.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHandleProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceHasAccess.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceLoader.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettings.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServiceSettingsBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServicesListRequest.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_SettingsBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ShutdownManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Steam.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_SystemInfoManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_TaskBarEventFilter.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_TaskBarProgressHelper.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Translation.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Ubisoft.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_UIProcess.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_UninstallResult.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateManagerBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Updater.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_UpdateUninstallInfo.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_VendorBase.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_Video.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_WorkStationLockHook.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZZima.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Antivirus.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Application.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationRestarter.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatistic.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ApplicationStatisticBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_AutoRunManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_CheckAsciiPath.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_CheckDownload.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ClientConnection.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_CommandLineManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Connection.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ConnectionManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_CpuInfo.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DbusConnection.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DBusServer.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettings.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloaderSettingsBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadServiceIcon.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_DownloadStats.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ElectronExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ElectronExecutor_p.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ElectronsExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ExecutorHookFactory.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ExternalIpAddress.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_FourGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_GameDownloadStatistics.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_GameExecutorProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_GameVendorBase.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Hdd.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_HookFactory.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_LanguageChangeEventFilter.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_LicenseManagerBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_MailRu.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapter.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_MessageAdapterBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Nikita.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Origin.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_OsInfo.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_PremiumExecutor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ProtocolOneDownloader.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Ram.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_RegisterSessionNotificationFilter.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_RemouteStartGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_RenderRateHack.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_SaveInstallPath.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Screen.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceDescription.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandle.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHandleProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceHasAccess.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceLoader.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettings.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServiceSettingsBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ServicesListRequest.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_SettingsBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_SettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_SettingsBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ShutdownManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Steam.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_StopDownloadServiceWhileExecuteAnyGame.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_SystemInfoManager.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_TaskBarEventFilter.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_TaskBarProgressHelper.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Translation.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Ubisoft.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_UIProcess.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_UninstallResult.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridge.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateManagerBridgeProxy.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Updater.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_UpdateUninstallInfo.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_VendorBase.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_Video.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_WorkStationLockHook.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_ZZima.cpp" />
     <ClCompile Include="src\Features\ComInitialize.cpp" />
     <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
     <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
@@ -331,149 +123,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Features\ComInitialize.h" />
-    <ClInclude Include="include\Features\WmiQuery.h" />
-    <ClInclude Include="include\Helper\DebugLog.h" />
-    <ClInclude Include="include\Helper\FileUtils.h" />
-    <ClInclude Include="include\Helper\RegisterTypes.h" />
-    <ClInclude Include="include\Helper\SystemInfo.h" />
-    <ClInclude Include="include\Helper\TerminateProcess.h" />
-    <ClInclude Include="include\Host\CredentialConverter.h" />
-    <ClInclude Include="include\Host\Factory.h" />
-    <ClInclude Include="include\Host\MarketingStatistic.h" />
-    <ClInclude Include="include\Host\SettingsManager.h" />
-    <ClInclude Include="include\Host\StopDownloadOnExecuteInit.h" />
-    <ClInclude Include="include\Host\Bridge\Credential.h" />
-    <ClInclude Include="include\Host\GameDownloader\DownloaderSettingsRoulette.h" />
-    <ClInclude Include="include\Host\Installer\UninstallInfo.h" />
-    <ClInclude Include="include\Features\Marketing\MarketingIntegrationMarker.h" />
-    <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h" />
-    <ClInclude Include="include\Helper\ElevateRights.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Helper\ApplicationArea.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Helper\Logger.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Helper\UserInfoMigration.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Helper\ConfigLoader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Features\PlainFileCache.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="include\Features\GameDownloader\DownloadStats.h" />
-    <CustomBuild Include="include\Features\GameDownloader\ExternalIpAddress.h" />
-    <CustomBuild Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
-    <CustomBuild Include="include\Features\GameExecutor\Hook\CheckAsciiPath.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\CpuInfo.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Hdd.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\OsInfo.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Ram.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Screen.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\Hardware\Video.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Antivirus.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\FourGame.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\MailRu.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Nikita.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Origin.h" />
-    <CustomBuild Include="include\Host\Updater.h" />
-    <CustomBuild Include="include\Host\UIProcess.h" />
-    <CustomBuild Include="include\Host\Translation.h" />
-    <CustomBuild Include="include\Host\ShutdownManager.h" />
-    <CustomBuild Include="include\Host\ServiceSettings.h" />
-    <CustomBuild Include="include\Host\ServiceHandle.h" />
-    <CustomBuild Include="include\Host\MessageAdapter.h" />
-    <CustomBuild Include="include\Host\LicenseManager.h" />
-    <CustomBuild Include="include\Host\HookFactory.h" />
-    <CustomBuild Include="include\Host\GameExecutor.h" />
-    <CustomBuild Include="include\Host\ExecutorHookFactory.h" />
-    <CustomBuild Include="include\Host\ElectronsExecutor.h" />
-    <CustomBuild Include="include\Host\ElectronExecutor_p.h" />
-    <CustomBuild Include="include\Host\ElectronExecutor.h" />
-    <CustomBuild Include="include\Host\DownloaderSettings.h" />
-    <CustomBuild Include="include\Host\ConnectionManager.h" />
-    <CustomBuild Include="include\Host\Connection.h" />
-    <CustomBuild Include="include\Host\CommandLineManager.h" />
-    <CustomBuild Include="include\Host\ClientConnection.h" />
-    <CustomBuild Include="include\Host\AutoRunManager.h" />
-    <CustomBuild Include="include\Host\ApplicationStatistic.h" />
-    <CustomBuild Include="include\Host\ApplicationRestarter.h" />
-    <CustomBuild Include="include\Host\Application.h" />
-    <CustomBuild Include="include\Host\ServiceProcess\ServicesListRequest.h" />
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceLoader.h" />
-    <CustomBuild Include="include\Host\ServiceProcess\ServiceDescription.h" />
-    <CustomBuild Include="include\Host\ServiceProcess\DownloadServiceIcon.h" />
-    <CustomBuild Include="include\Host\Proxy\ServiceHandleProxy.h" />
-    <CustomBuild Include="include\Host\Proxy\GameExecutorProxy.h" />
-    <CustomBuild Include="include\Host\Proxy\DownloaderProxy.h" />
-    <CustomBuild Include="include\Host\Installer\UninstallResult.h" />
-    <CustomBuild Include="include\Host\GameDownloader\Hook\UpdateUninstallInfo.h" />
-    <CustomBuild Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
-    <CustomBuild Include="include\Host\GameDownloader\Hook\CheckDownload.h" />
-    <CustomBuild Include="include\Host\Dbus\UpdateManagerBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\UpdateManagerBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\SettingsBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\SettingsBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\ServiceSettingsBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\ServiceHandleBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\LicenseManagerBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\LicenseManagerBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\ExecutorBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\ExecutorBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\DownloaderSettingsBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\DownloaderBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\DownloaderBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\DBusServer.h" />
-    <CustomBuild Include="include\Host\Dbus\DbusConnection.h" />
-    <CustomBuild Include="include\Host\Dbus\ConnectionBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\ConnectionBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\ApplicationStatisticBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Dbus\ApplicationBridgeProxy.h" />
-    <CustomBuild Include="include\Host\Dbus\ApplicationBridgeAdaptor.h" />
-    <CustomBuild Include="include\Host\Bridge\UpdateManagerBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\SettingsBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\ServiceSettingsBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\ServiceHandleBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\MessageAdapterBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\LicenseManagerBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\ExecutorBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\DownloaderSettingsBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\DownloaderBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\ConnectionBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\ApplicationStatisticBridge.h" />
-    <CustomBuild Include="include\Host\Bridge\ApplicationBridge.h" />
-    <CustomBuild Include="include\Features\TaskBarProgressHelper.h" />
-    <CustomBuild Include="include\Features\TaskBarEventFilter.h" />
-    <CustomBuild Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h" />
-    <CustomBuild Include="include\Features\RenderRateHack.h" />
-    <CustomBuild Include="include\Features\RemouteStartGame.h" />
-    <CustomBuild Include="include\Features\ProtocolOneDownloader.h" />
-    <CustomBuild Include="include\Features\PremiumExecutor.h" />
-    <CustomBuild Include="include\Features\LanguageChangeEventFilter.h" />
-    <CustomBuild Include="include\Features\WorkStationLock\WorkStationLockHook.h" />
-    <CustomBuild Include="include\Features\WorkStationLock\RegisterSessionNotificationFilter.h" />
-    <CustomBuild Include="include\Features\RestApi\ServiceHasAccess.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\ZZima.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\VendorBase.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Ubisoft.h" />
-    <CustomBuild Include="include\Features\Marketing\SystemInfo\SoftVendor\Steam.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -484,5 +133,387 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="include\Features\GameDownloader\DownloadStats.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\GameDownloader\ExternalIpAddress.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\GameDownloader\GameDownloadStatistics.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\GameExecutor\Hook\CheckAsciiPath.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\CpuInfo.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Hdd.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\OsInfo.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Ram.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Screen.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Video.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Antivirus.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\FourGame.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\MailRu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Nikita.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Origin.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Steam.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Ubisoft.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\VendorBase.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\ZZima.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\RestApi\ServiceHasAccess.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\WorkStationLock\RegisterSessionNotificationFilter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\WorkStationLock\WorkStationLockHook.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\LanguageChangeEventFilter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\PremiumExecutor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\ProtocolOneDownloader.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\RemouteStartGame.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\RenderRateHack.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\StopDownloadServiceWhileExecuteAnyGame.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\TaskBarEventFilter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Features\TaskBarProgressHelper.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ApplicationBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ApplicationStatisticBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ConnectionBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\DownloaderBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\DownloaderSettingsBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ExecutorBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\LicenseManagerBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\MessageAdapterBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ServiceHandleBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ServiceSettingsBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\SettingsBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\UpdateManagerBridge.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ApplicationBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ApplicationBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ApplicationStatisticBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ApplicationStatisticBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ConnectionBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ConnectionBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\DbusConnection.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\DBusServer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\DownloaderBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\DownloaderBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\DownloaderSettingsBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\DownloaderSettingsBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ExecutorBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ExecutorBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\LicenseManagerBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\LicenseManagerBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\MessageAdapterBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\MessageAdapterBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ServiceHandleBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ServiceHandleBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ServiceSettingsBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\ServiceSettingsBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\SettingsBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\SettingsBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\UpdateManagerBridgeAdaptor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Dbus\UpdateManagerBridgeProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\GameDownloader\Hook\CheckDownload.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\GameDownloader\Hook\SaveInstallPath.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\GameDownloader\Hook\UpdateUninstallInfo.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Installer\UninstallResult.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Proxy\DownloaderProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Proxy\GameExecutorProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Proxy\ServiceHandleProxy.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ServiceProcess\DownloadServiceIcon.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ServiceProcess\ServiceDescription.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ServiceProcess\ServiceLoader.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ServiceProcess\ServicesListRequest.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Application.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ApplicationRestarter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ApplicationStatistic.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\AutoRunManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ClientConnection.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\CommandLineManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Connection.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ConnectionManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\DownloaderSettings.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ElectronExecutor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ElectronExecutor_p.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ElectronsExecutor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ExecutorHookFactory.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\GameExecutor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\HookFactory.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\LicenseManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\MessageAdapter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ServiceHandle.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ServiceSettings.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\ShutdownManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Translation.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\UIProcess.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Updater.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Marketing\MarketingIntegrationMarker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\ComInitialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\PlainFileCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\WmiQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\ApplicationArea.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\DebugLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\ElevateRights.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\FileUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\Logger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\RegisterTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\SystemInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\TerminateProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Helper\UserInfoMigration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\Bridge\Credential.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\GameDownloader\DownloaderSettingsRoulette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\Installer\UninstallInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\CredentialConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\MarketingStatistic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\SettingsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Host\StopDownloadOnExecuteInit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

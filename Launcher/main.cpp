@@ -1,7 +1,4 @@
-﻿#include <Log4Qt/LogManager>
-#include <Log4Qt/Level>
-#include <Log4Qt/RollingFileAppender>
-#include <Log4Qt/TTCCLayout>
+#include <Helper/Logger.hpp>
 
 #include "mainwindow.h"
 #include "Uninstall.h"
@@ -198,24 +195,8 @@ int main(int argc, char *argv[])
   // использовать по одному потоку на игру.
   QThreadPool::globalInstance()->setMaxThreadCount(50);
 
-//  //TTCCLayout layout(TTCCLayout::ISO8601);
-//  TTCCLayout * layout = new TTCCLayout(TTCCLayout::ISO8601);
-//  //layout.retain();
-//
-//  RollingFileAppender * appender  = new RollingFileAppender(layout, logPath + "launcher.host.log", true);
-//
-//  appender->setMaximumFileSize(1000000);
-//  appender->setMaxBackupIndex(1);
-//  //appender->retain();
-//  appender->activateOptions();
-//
-//  LogManager::qtLogger()->addAppender(appender);
-//  LogManager::setThreshold(Level::ALL_INT);
-//  
-//#ifndef _DEBUG
-//  LogManager::setHandleQtMessages(true);
-//#endif
-
+  P1::Host::LoggerHelper logger(logPath + "launcher.ui.log");
+  
   initOpenglRender(app);
 
 #ifndef LAUNCHER_NO_ADMIN_REQUIRED
@@ -273,9 +254,8 @@ int main(int argc, char *argv[])
   if (QFile::exists(altConfigPth)) 
     QResource::registerResource(altConfigPth);
   
-  QResource::registerResource(path + "/launcher.rcc");
+  QResource::registerResource(path + "/Launcher.rcc");
   QResource::registerResource(path + "/smiles.rcc");
-
   
 
   QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);

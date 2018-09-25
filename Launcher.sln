@@ -1,7 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Launcher.vcxproj", "{7ACF4961-015A-43B4-99D5-DA43AD44C41F}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher.UI", "Launcher\Launcher.vcxproj", "{146D4E63-FD88-40A1-92AD-435BDC279C8C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FD2D3608-E77C-46C1-92CC-01A7E9AB2B18} = {FD2D3608-E77C-46C1-92CC-01A7E9AB2B18}
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
@@ -19,7 +21,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FeaturesTest", "FeaturesTes
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Host", "Host\Host.vcxproj", "{FD2D3608-E77C-46C1-92CC-01A7E9AB2B18}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher.Host", "Host\Host.vcxproj", "{FD2D3608-E77C-46C1-92CC-01A7E9AB2B18}"
 	ProjectSection(ProjectDependencies) = postProject
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E} = {970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}
 	EndProjectSection
@@ -35,10 +37,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Debug|Win32.Build.0 = Debug|Win32
-		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Release|Win32.ActiveCfg = Release|Win32
-		{7ACF4961-015A-43B4-99D5-DA43AD44C41F}.Release|Win32.Build.0 = Release|Win32
+		{146D4E63-FD88-40A1-92AD-435BDC279C8C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{146D4E63-FD88-40A1-92AD-435BDC279C8C}.Debug|Win32.Build.0 = Debug|Win32
+		{146D4E63-FD88-40A1-92AD-435BDC279C8C}.Release|Win32.ActiveCfg = Release|Win32
+		{146D4E63-FD88-40A1-92AD-435BDC279C8C}.Release|Win32.Build.0 = Release|Win32
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Debug|Win32.Build.0 = Debug|Win32
 		{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}.Release|Win32.ActiveCfg = Release|Win32
@@ -60,7 +62,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = $(DefaultQtVersion)
 		QtVersion = $(DefaultQtVersion)
+		Qt5Version = conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11
+		SolutionGuid = {7A699E0C-CDA9-4000-8FF1-DB7DE68F645A}
 	EndGlobalSection
 EndGlobal

@@ -15,6 +15,7 @@ namespace P1 {
         : QObject(parent)
         , _server(new QDBusServer("tcp:host=127.0.0.1,port=0,family=ipv4", this))
       {
+        this->_server->setAnonymousAuthenticationAllowed(true);
         QObject::connect(this->_server, &QDBusServer::newConnection, this, &DBusServer::newConnection);
                 
         QSettings registry("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher\\Host", QSettings::NativeFormat);

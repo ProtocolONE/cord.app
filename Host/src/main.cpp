@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     app.startListen();
   }
 
-  //LoggerHelper logger(logPath + "launcher.host.log");
+  LoggerHelper logger(logPath + "launcher.host.log");
 
   if (!requireAdminRights())
     return -1;

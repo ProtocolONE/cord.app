@@ -62,11 +62,12 @@ namespace P1 {
 
     void ClientConnection::timeoutTick()
     {
-      this->_timeoutFail++;
-      if (this->_timeoutFail < this->_maxTimeoutFail)
-        return;
+      // HACK disabled. Debug works very poor.
+      //this->_timeoutFail++;
+      //if (this->_timeoutFail < this->_maxTimeoutFail)
+      //  return;
 
-      this->internalDisconnected();
+      //this->internalDisconnected();
     }
 
     void ClientConnection::sendPing()
@@ -87,6 +88,9 @@ namespace P1 {
 
     void ClientConnection::onPong()
     {
+
+      DEBUG_LOG << "!!!! ClientConnection::onPong()";
+
       this->_timeoutTimer.start();
       this->_timeoutFail = 0;
     }

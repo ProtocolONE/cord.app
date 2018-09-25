@@ -893,7 +893,7 @@ void MainWindow::initRestApi()
   ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
   QString randomPort = ports.takeAt(qrand() % ports.count());
 
-  QString urlPatern = this->_configManager.value<QString>("apiUrl", "https://gnapi.com:%1/restapi");
+  QString urlPatern = this->_configManager.value<QString>("apiUrlPat", "https://gnapi.com:%1/restapi");
   apiUrl = QString(urlPatern).arg(randomPort);
 
   P1::Settings::Settings settings;

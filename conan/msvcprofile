@@ -2,9 +2,9 @@
 os=Windows
 arch=x86
 compiler=Visual Studio
-compiler.version=15
+compiler.version=12
 compiler.runtime=MD
-compiler.toolset=v141_xp
+compiler.toolset=v120_xp
 build_type=Release
 os_build=Windows
 arch_build=x86
@@ -22,8 +22,10 @@ RestApi:shared=False
 Settings:shared=False
 SevenZip:shared=False
 UpdateSystem:shared=False
+dbus:nolink=True
 yaml-cpp:shared=False
 QtYaml:shared=False
 
 [build_requires]
+
 [env]

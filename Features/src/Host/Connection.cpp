@@ -125,13 +125,13 @@ namespace P1 {
 
     void Connection::timeoutTick()
     {
-      this->_timeoutFail++;
-      if (this->_timeoutFail < this->_maxTimeoutFail)
-        return;
+      //this->_timeoutFail++;
+      //if (this->_timeoutFail < this->_maxTimeoutFail)
+      //  return;
 
-      this->_timeoutTimer.stop();
-      qDebug() << "Client" << this->_applicationName << "disconnected";
-      emit this->disconnected();
+      //this->_timeoutTimer.stop();
+      //qDebug() << "Client" << this->_applicationName << "disconnected";
+      //emit this->disconnected();
     }
 
     void Connection::close()

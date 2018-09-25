@@ -21,6 +21,8 @@ namespace P1 {
         : layout(nullptr)
         , appender(nullptr) 
       {
+        auto q = LogManager::qtLogger()->logger();
+
         layout = new TTCCLayout(TTCCLayout::ISO8601);
         appender = new RollingFileAppender(layout, path, true);
 
