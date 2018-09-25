@@ -25,12 +25,12 @@
 <context>
     <name>P1::Host::ClientConnection</name>
     <message>
-        <location filename="../src/Host/ClientConnection.cpp" line="121"/>
+        <location filename="../src/Host/ClientConnection.cpp" line="122"/>
         <source>DBUS_DISCONNECTED_TEXT</source>
         <translation type="unfinished">An error occurred, and the application was closed. Please launch it again to continue.</translation>
     </message>
     <message>
-        <location filename="../src/Host/ClientConnection.cpp" line="121"/>
+        <location filename="../src/Host/ClientConnection.cpp" line="122"/>
         <source>DBUS_DISCONNECTED_TITLE</source>
         <translation type="unfinished">Attention</translation>
     </message>

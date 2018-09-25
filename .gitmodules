@@ -1,0 +1,3 @@
+[submodule "qml"]
+	path = qml
+	url = ssh://git@git.syncopate.local:7999/pon/qml.git

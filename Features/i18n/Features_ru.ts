@@ -48,12 +48,12 @@
 <context>
     <name>P1::Host::ClientConnection</name>
     <message>
-        <location filename="../src/Host/ClientConnection.cpp" line="121"/>
+        <location filename="../src/Host/ClientConnection.cpp" line="122"/>
         <source>DBUS_DISCONNECTED_TEXT</source>
         <translation>Произошла ошибка. Мы вынуждены закрыть приложение. Пожалуйста, запустите его снова чтобы продолжить.</translation>
     </message>
     <message>
-        <location filename="../src/Host/ClientConnection.cpp" line="121"/>
+        <location filename="../src/Host/ClientConnection.cpp" line="122"/>
         <source>DBUS_DISCONNECTED_TITLE</source>
         <translation>Внимание</translation>
     </message>

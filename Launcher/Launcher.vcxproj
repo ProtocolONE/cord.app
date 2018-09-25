@@ -84,19 +84,17 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PreBuildEvent>
-      <Command>if "$(QGNAQMLDIR)"=="" (
-ECHO QGNAQMLDIR not defined!
-EXIT /B 1
-)
+      <Command>set QMLDIR=$(SolutionDir)qml
 
 echo =============== build QML  ===================
-echo SCRIPT: call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
-call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+echo SCRIPT: call "%QMLDIR%\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+call "%QMLDIR%\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 </Command>
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>echo QtDir=$(QTDIR)
+set QMLDIR=$(SolutionDir)qml
 @REM Creating a Newline variable (the two blank lines are required!)
 @set NLM=^
 
@@ -105,14 +103,14 @@ call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 @set COPY_CHANGED=xcopy /Y /I /R
 @set COPY_DIR=xcopy /Y /I /R /S 
 
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wav" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.ttf" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.png" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.gif" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.jpg" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.ico" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.wma" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.wav" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.style" "$(TargetDir)Assets\"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -128,7 +126,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 %COPY_CHANGED% "$(SolutionDir)i18n\*.ts" "$(TargetDir)"
 %COPY_CHANGED% "$(SolutionDir)Features\i18n\*.ts" "$(TargetDir)"
 
-%COPY_CHANGED% "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "%QMLDIR%\i18n\*.ts" "$(TargetDir)"
 
 
 mkdir "$(TargetDir)languages"
@@ -147,18 +145,16 @@ del /F /Q "$(TargetDir)*.ts"
 %COPY_CHANGED% "$(SolutionDir)render.json" "$(TargetDir)"
 
 @REM QT binaries
-set ICU_AREA=53.vc13
-@REM %COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icudt53.dll" "$(TargetDir)"
-@REM %COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuin53.dll" "$(TargetDir)"
-@REM %COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuuc53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
 
-@rem %COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\opengl32sw.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\opengl32sw.dll" "$(TargetDir)"
 
-@rem %COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
 
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
@@ -182,9 +178,6 @@ set ICU_AREA=53.vc13
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebEngineCore%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\QtWebEngineProcess.exe" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebSockets%D%.dll" "$(TargetDir)"
-
-@rem Этот файл вроде бы нужен, хотя и не особо используется
-@rem %COPY_CHANGED% "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
 @rem PLUGINS
 %COPY_CHANGED% "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
@@ -232,7 +225,6 @@ del /F /Q /S "$(TargetDir)WebPlayer\*.*"
 @rem %COPY_CHANGED% /E "$(QGNACOMMONDIR)\GGS\WebPlayer\$(WebPlayerArea)\bin\*.*" "$(TargetDir)WebPlayer\"
 @rem %COPY_CHANGED% /E "$(QGNACOMMONDIR)\Adobe\FlashPepPlugin\$(PepFlashArea)\bin\pepflashplayer32.dll" "$(TargetDir)WebPlayer\resources\app\"
 
-exit /b 0 
 </Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
@@ -268,19 +260,17 @@ exit /b 0
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PreBuildEvent>
-      <Command>if "$(QGNAQMLDIR)"=="" (
-ECHO QGNAQMLDIR not defined!
-EXIT /B 1
-)
+      <Command>set QMLDIR=$(SolutionDir)qml
 
 echo =============== build QML  ===================
-echo SCRIPT: call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
-call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+echo SCRIPT: call "%QMLDIR%\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
+call "%QMLDIR%\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 </Command>
       <Message>Check the env variables existense.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>echo QtDir=$(QTDIR)
+set QMLDIR=$(SolutionDir)qml
 @REM Creating a Newline variable (the two blank lines are required!)
 @set NLM=^
 
@@ -289,14 +279,14 @@ call "$(QGNAQMLDIR)\build.cmd" "$(SolutionDir)!obj\qml" "$(TargetDir)"
 @set COPY_CHANGED=xcopy /Y /I /R
 @set COPY_DIR=xcopy /Y /I /R /S 
 
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ttf" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.png" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.gif" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.jpg" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.ico" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wma" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.wav" "$(TargetDir)Assets\"
-%COPY_DIR% "$(QGNAQMLDIR)\Assets\*.style" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.ttf" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.png" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.gif" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.jpg" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.ico" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.wma" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.wav" "$(TargetDir)Assets\"
+%COPY_DIR% "%QMLDIR%\Assets\*.style" "$(TargetDir)Assets\"
 
 SET D=
 IF "$(Configuration)"=="Debug" (
@@ -312,7 +302,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)\." -ts "$(ProjectDir)\i18n\$(ProjectName
 %COPY_CHANGED% "$(SolutionDir)i18n\*.ts" "$(TargetDir)"
 %COPY_CHANGED% "$(SolutionDir)Features\i18n\*.ts" "$(TargetDir)"
 
-%COPY_CHANGED% "$(QGNAQMLDIR)\i18n\*.ts" "$(TargetDir)"
+%COPY_CHANGED% "%QMLDIR%\i18n\*.ts" "$(TargetDir)"
 
 
 mkdir "$(TargetDir)languages"
@@ -331,18 +321,16 @@ del /F /Q "$(TargetDir)*.ts"
 %COPY_CHANGED% "$(SolutionDir)render.json" "$(TargetDir)"
 
 @REM QT binaries
-set ICU_AREA=53.vc13
-@REM %COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icudt53.dll" "$(TargetDir)"
-@REM %COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuin53.dll" "$(TargetDir)"
-@REM %COPY_CHANGED% "$(QGNACOMMONDIR)\icu\%ICU_AREA%\bin\icuuc53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\icudt53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\icuin53.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\icuuc53.dll" "$(TargetDir)"
 
-@rem %COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\dbus-1.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\opengl32sw.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\D3DCompiler_47.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\freetype26.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\opengl32sw.dll" "$(TargetDir)"
 
-@rem %COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
-@rem %COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\libEGL%D%.dll" "$(TargetDir)"
+%COPY_CHANGED% "$(QTDIR)\bin\libGLESv2%D%.dll" "$(TargetDir)"
 
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5Concurrent%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5Core%D%.dll" "$(TargetDir)"
@@ -366,9 +354,6 @@ set ICU_AREA=53.vc13
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebEngineCore%D%.dll" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\QtWebEngineProcess.exe" "$(TargetDir)"
 %COPY_CHANGED% "$(QTDIR)\bin\Qt5WebSockets%D%.dll" "$(TargetDir)"
-
-@rem Этот файл вроде бы нужен, хотя и не особо используется
-@rem %COPY_CHANGED% "$(QTDIR)\bin\libexpat.dll" "$(TargetDir)"
 
 @rem PLUGINS
 %COPY_CHANGED% "$(QTDIR)\plugins\platforms\qwindows%D%.dll" "$(TargetDir)platforms\"
@@ -416,7 +401,6 @@ del /F /Q /S "$(TargetDir)WebPlayer\*.*"
 @rem %COPY_CHANGED% /E "$(QGNACOMMONDIR)\GGS\WebPlayer\$(WebPlayerArea)\bin\*.*" "$(TargetDir)WebPlayer\"
 @rem %COPY_CHANGED% /E "$(QGNACOMMONDIR)\Adobe\FlashPepPlugin\$(PepFlashArea)\bin\pepflashplayer32.dll" "$(TargetDir)WebPlayer\resources\app\"
 
-exit /b 0 
 </Command>
       <Message>Copy binary and QML files. </Message>
     </PostBuildEvent>
