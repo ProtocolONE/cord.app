@@ -10,9 +10,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher.UI", "Launcher\Lau
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C4F26DF-8DE3-4800-9788-C688F6F15708}"
-	ProjectSection(SolutionItems) = preProject
-		Deploy.props = Deploy.props
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Features", "Features\Features.vcxproj", "{970D0320-A7D7-4CC6-99A0-7A43CE24FF3E}"
 EndProject
@@ -62,8 +59,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		QtVersion = $(DefaultQtVersion)
-		Qt5Version = conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11
 		SolutionGuid = {7A699E0C-CDA9-4000-8FF1-DB7DE68F645A}
+		Qt5Version = conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11
+		QtVersion = $(DefaultQtVersion)
 	EndGlobalSection
 EndGlobal

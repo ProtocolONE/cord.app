@@ -20,6 +20,8 @@
 #include <Host/Dbus/ServiceSettingsBridgeProxy.h>
 #include <Host/Dbus/DownloaderBridgeProxy.h>
 
+#include <QtYaml/ConfigManager.h>
+
 using P1::Core::Service;
 
 #define CRITICAL_LOG qCritical() << __FILE__ << __LINE__ << __FUNCTION__
@@ -109,7 +111,14 @@ void GameSettingsViewModel::createShortcut(const QString& path, const QString& s
   object.setDescription(QString("Short cut for game %1").arg(name));
   object.setShowCmd(P1::Core::System::Shell::ShortCut::MinNoActive);
   object.setWorkingDirectory(QCoreApplication::applicationDirPath());
-  object.setPath(QString("protocolone://startservice/%1").arg(serviceId));
+
+  QString configPath = path + "/Config.yaml";
+  P1::QtYaml::ConfigManager configManager;
+  configManager.load(configPath);
+
+  object.setPath(QString("%1://startservice/%2").arg(
+    configManager.value<QString>("urlProtocolScheme", "protocolone"),
+    serviceId));
 
   QString iconPath = QString("%1/icons/%2.ico")
     .arg(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).arg(serviceId);

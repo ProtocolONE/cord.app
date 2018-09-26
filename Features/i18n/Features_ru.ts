@@ -40,7 +40,7 @@
 <context>
     <name>P1::Host::AutoRunManager</name>
     <message>
-        <location filename="../src/Host/AutoRunManager.cpp" line="64"/>
+        <location filename="../src/Host/AutoRunManager.cpp" line="73"/>
         <source>AUTORUN_TASK_DESCRIPTION</source>
         <translation>Обеспечивает поддержание приложения ProtocolOne Application в актуальном состоянии. Если отключить или снять эту задачу, то приложение ProtocolOne Application перестанет обновляться, что может вызвать отключение части функций или ошибки в работе приложения. При удалении приложения ProtocolOne Application, задача будет автоматически удалена.</translation>
     </message>

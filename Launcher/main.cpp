@@ -42,6 +42,8 @@
 
 #include <QtWebEngine/QtWebEngine>
 
+#include <QtYaml/ConfigManager.h>
+
 using namespace Log4Qt;
 using namespace P1;
 using P1::Application::SingleApplication;
@@ -149,8 +151,13 @@ int main(int argc, char *argv[])
   registerDependenicesTypes();
   app.setQuitOnLastWindowClosed(false);
 
-  QCoreApplication::setOrganizationName("ProtocolOne");
-  QCoreApplication::setApplicationName("Launcher");
+  QString configPath = QCoreApplication::applicationDirPath() + "/Config.yaml";
+  
+  P1::QtYaml::ConfigManager configManager;
+  configManager.load(configPath);
+
+  QCoreApplication::setOrganizationName(configManager.value<QString>("organizationName", "ProtocolOne"));
+  QCoreApplication::setApplicationName(configManager.value<QString>("applicationName", "Launcher"));
   
   QString path = QCoreApplication::applicationDirPath();
 
@@ -158,8 +165,8 @@ int main(int argc, char *argv[])
   plugins << path + "/plugins5";
   app.setLibraryPaths(plugins);
 
-  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher");
-  //app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
+  app.setIpcPortPath(QString("HKEY_CURRENT_USER\\Software\\%1\\%2").arg(QCoreApplication::organizationName(), QCoreApplication::applicationName()));
+  app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");
   initBugTrap(logPath); 
@@ -199,20 +206,21 @@ int main(int argc, char *argv[])
   
   initOpenglRender(app);
 
+  if (configManager.value<QString>("requireAdminRights", "false").toLower() == "true") {
 #ifndef LAUNCHER_NO_ADMIN_REQUIRED
-  if (!P1::AutoRunHelper::UACHelper::isUserAdminByRole()) {
-    if (!P1::AutoRunHelper::UACHelper::restartToElevateRights()) {
-      qDebug() << "Restart failed. May be user didn't accept UAC.";
+    if (!P1::AutoRunHelper::UACHelper::isUserAdminByRole()) {
+      if (!P1::AutoRunHelper::UACHelper::restartToElevateRights()) {
+        qDebug() << "Restart failed. May be user didn't accept UAC.";
 
-      LogManager::qtLogger()->removeAllAppenders(); 
-      return -1;
+        LogManager::qtLogger()->removeAllAppenders();
+        return -1;
+      }
+
+      LogManager::qtLogger()->removeAllAppenders();
+      return 0;
     }
-
-    LogManager::qtLogger()->removeAllAppenders(); 
-    return 0;
-  }
 #endif
-
+  }
   if (!initDatabase()) {
     MessageBoxW(0, L"Could not create settings.", L"Error", MB_OK);
     LogManager::qtLogger()->removeAllAppenders(); 
@@ -240,25 +248,15 @@ int main(int argc, char *argv[])
 
   P1::Application::LanguageChangeEventFilter *languageChangeEventFilter = new P1::Application::LanguageChangeEventFilter(&app);
   app.installNativeEventFilter(languageChangeEventFilter);
-
-  //P1::ResourceHelper::ResourceLoader loader;
-
-  //QString altConfigPth = path + "/Config.rcc";
-  //if (QFile::exists(altConfigPth)) 
-  //  loader.load(altConfigPth);
-
-  //loader.load(path + "/launcher.rcc");
-  //loader.load(path + "/smiles.rcc");
-
-  QString altConfigPth = path + "/Config.rcc";
-  if (QFile::exists(altConfigPth)) 
-    QResource::registerResource(altConfigPth);
   
   QResource::registerResource(path + "/Launcher.rcc");
   QResource::registerResource(path + "/smiles.rcc");
-  
 
-  QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+  QSettings settings(QString("HKEY_CURRENT_USER\\Software\\%1\\%2").arg(
+    QCoreApplication::organizationName(), 
+    QCoreApplication::applicationName()), 
+    QSettings::NativeFormat);
+
   settings.setValue("Path",  QDir::toNativeSeparators(path));
 
   MainWindow w;

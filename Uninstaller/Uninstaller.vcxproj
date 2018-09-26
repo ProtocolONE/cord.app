@@ -11,36 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GeneratedFiles\Debug\moc_HostProcess.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_HostProcess.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\HostProcess.cpp" />
-    <ClCompile Include="src\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="include\HostProcess.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing HostProcess.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DTORRENT_DISABLE_ENCRYPTION -DTORRENT_DISABLE_INVARIANT_CHECKS -DTORRENT_NO_DEPRECATE -DTORRENT_NO_ASSERTS -DTORRENT_DEBUG -DUPDATESYSTEM_STATIC_LIBRARY -DSETTINGS_STATIC_LIB -DRESTAPI_STATIC_LIB -DCORE_STATIC_LIB -DMARKETING_STATIC_LIB -DLOG4QT_STATIC -DGAMEEXECUTOR_STATIC_LIB -DDOWNLOADSERVICE_STATIC_LIB -DAUTORUNHELPER_STATIC_LIB -D_USING_V110_SDK71_ -D_UNICODE  "-I." "-I.\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)Features\include" "-I$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include" "-I$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\7177fdeecbc6a1ff973c1426f23d76b4389b47dd\include" "-I$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\1edc5909dd148369878b2f1be333ce5011b7c0eb\include" "-I$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\33875823dfdb878a0ca31ba85399215e34feead2\include" "-I$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include" "-I$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include\log4qt" "-I$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\7aaaabdd59b8644c7f536cf53196ef797aecd990\include" "-I$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\331a96a167ce8aef0a68125688ddb3ed2deaf6e8\include" "-I$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include" "-I$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include" "-I$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\6631cbbd383afc61fa33f2a2d69d9f89b6148991\include" "-I$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include" "-I$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include" "-I$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\fd4f6ddfbaf65a472e40377babdb20ecfaba0885\include" "-I$(USERPROFILE)\.conan\data\QtYaml\1.0.0\common\stable\package\ba730c75ae9f69f45396399665d18ad003695c6d\include" "-I$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include" "-I$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include\minizip" "-IC:\.conan\tu1x0tec\1\include" "-I$(USERPROFILE)\.conan\data\Libtorrent\1.0.5\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include" "-I$(USERPROFILE)\.conan\data\SevenZip\1.0.0\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include" "-I$(USERPROFILE)\.conan\data\yaml-cpp\0.6.2\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing HostProcess.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DTORRENT_DISABLE_ENCRYPTION -DTORRENT_DISABLE_INVARIANT_CHECKS -DTORRENT_NO_DEPRECATE -DTORRENT_NO_ASSERTS -DUPDATESYSTEM_STATIC_LIBRARY -DSETTINGS_STATIC_LIB -DRESTAPI_STATIC_LIB -DCORE_STATIC_LIB -DMARKETING_STATIC_LIB -DLOG4QT_STATIC -DGAMEEXECUTOR_STATIC_LIB -DDOWNLOADSERVICE_STATIC_LIB -DAUTORUNHELPER_STATIC_LIB -D_USING_V110_SDK71_ -D_UNICODE  "-I." "-I.\include" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)Features\include" "-I$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include" "-I$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\58a334d4b51f503ccb1d135be832997bfdee3282\include" "-I$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\4246ac3628b89fc6e238aa8984fe5e37a50b9386\include" "-I$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\fc1cf2cb0e739d816c1769f326b7868e01d06781\include" "-I$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include" "-I$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include\log4qt" "-I$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\afe0c381517599b298db4400bf64a4a76487c6ca\include" "-I$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\9bc8d94302b5326e655a0df30d64d6cb24921400\include" "-I$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include" "-I$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include" "-I$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\b5dc8fbf4612b64e31e69e3a06d0f8c4710dd174\include" "-I$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include" "-I$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include" "-I$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\7926b8dd1fc655b82320b53462e7a8883ae791ab\include" "-I$(USERPROFILE)\.conan\data\QtYaml\1.0.0\common\stable\package\0bf3963b271b074fe57b05225c862472093597f1\include" "-I$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include" "-I$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include\minizip" "-IC:\.conan\tu1x0tec\1\include" "-I$(USERPROFILE)\.conan\data\Libtorrent\1.0.5\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include" "-I$(USERPROFILE)\.conan\data\SevenZip\1.0.0\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include" "-I$(USERPROFILE)\.conan\data\yaml-cpp\0.6.2\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include"</Command>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="version.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="Uninstaller.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="icon.ico" />
+    <ClInclude Include="version.h" />
+    <QtMoc Include="include\HostProcess.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="Uninstaller.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\HostProcess.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E3A241C6-E59E-4BF9-A5CA-6EE18FCBB3D9}</ProjectGuid>
@@ -59,6 +45,15 @@
     <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
@@ -71,7 +66,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)!build\$(SolutionName)\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)!build\$(SolutionName)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\!obj\$(ProjectName)\$(Configuration)\</IntDir>
@@ -85,6 +80,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -96,6 +92,12 @@
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
+    <QtMoc>
+      <OutputFile>GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <IncludePath>.;.\include;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(SolutionDir)Features\include;E:\.c\AutoRunHelper\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;E:\.c\BugTrap\1.0.0\common\stable\package\7177fdeecbc6a1ff973c1426f23d76b4389b47dd\include;E:\.c\GameDownloader\1.0.0\common\stable\package\1edc5909dd148369878b2f1be333ce5011b7c0eb\include;E:\.c\GameExecutor\1.0.0\common\stable\package\33875823dfdb878a0ca31ba85399215e34feead2\include;E:\.c\Log4qt\1.4.2\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;E:\.c\Log4qt\1.4.2\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include\log4qt;E:\.c\Marketing\1.0.0\common\stable\package\7aaaabdd59b8644c7f536cf53196ef797aecd990\include;E:\.c\QmlExtension\1.0.0\common\stable\package\331a96a167ce8aef0a68125688ddb3ed2deaf6e8\include;E:\.c\Application\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;E:\.c\Core\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;E:\.c\LibtorrentWrapper\1.0.0\common\stable\package\6631cbbd383afc61fa33f2a2d69d9f89b6148991\include;E:\.c\RestApi\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;E:\.c\Settings\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;E:\.c\UpdateSystem\1.0.0\common\stable\package\fd4f6ddfbaf65a472e40377babdb20ecfaba0885\include;E:\.c\QtYaml\1.0.0\common\stable\package\ba730c75ae9f69f45396399665d18ad003695c6d\include;E:\.c\minizip\1.2.11\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include;E:\.c\minizip\1.2.11\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include\minizip;E:\.c\Qt\5.5.1\common\stable\package\333e69ac00eb936364053dce8d4cab2a1a5a9a11\include;E:\.c\Libtorrent\1.0.5\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include;E:\.c\SevenZip\1.0.0\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include;E:\.c\yaml-cpp\0.6.2\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;TORRENT_DISABLE_ENCRYPTION;TORRENT_DISABLE_INVARIANT_CHECKS;TORRENT_NO_DEPRECATE;TORRENT_NO_ASSERTS;TORRENT_DEBUG;UPDATESYSTEM_STATIC_LIBRARY;SETTINGS_STATIC_LIB;RESTAPI_STATIC_LIB;CORE_STATIC_LIB;MARKETING_STATIC_LIB;LOG4QT_STATIC;GAMEEXECUTOR_STATIC_LIB;DOWNLOADSERVICE_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;_USING_V110_SDK71_;_UNICODE</Define>
+    </QtMoc>
     <Manifest>
       <AdditionalManifestFiles>Uninstaller.manifest</AdditionalManifestFiles>
     </Manifest>
@@ -118,16 +120,25 @@
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
+    <QtMoc>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <IncludePath>.;.\include;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(SolutionDir)Features\include;E:\.c\AutoRunHelper\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;E:\.c\BugTrap\1.0.0\common\stable\package\58a334d4b51f503ccb1d135be832997bfdee3282\include;E:\.c\GameDownloader\1.0.0\common\stable\package\4246ac3628b89fc6e238aa8984fe5e37a50b9386\include;E:\.c\GameExecutor\1.0.0\common\stable\package\fc1cf2cb0e739d816c1769f326b7868e01d06781\include;E:\.c\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;E:\.c\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include\log4qt;E:\.c\Marketing\1.0.0\common\stable\package\afe0c381517599b298db4400bf64a4a76487c6ca\include;E:\.c\QmlExtension\1.0.0\common\stable\package\9bc8d94302b5326e655a0df30d64d6cb24921400\include;E:\.c\Application\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;E:\.c\Core\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;E:\.c\LibtorrentWrapper\1.0.0\common\stable\package\b5dc8fbf4612b64e31e69e3a06d0f8c4710dd174\include;E:\.c\RestApi\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;E:\.c\Settings\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;E:\.c\UpdateSystem\1.0.0\common\stable\package\7926b8dd1fc655b82320b53462e7a8883ae791ab\include;E:\.c\QtYaml\1.0.0\common\stable\package\0bf3963b271b074fe57b05225c862472093597f1\include;E:\.c\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;E:\.c\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include\minizip;E:\.c\Qt\5.5.1\common\stable\package\333e69ac00eb936364053dce8d4cab2a1a5a9a11\include;E:\.c\Libtorrent\1.0.5\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;E:\.c\SevenZip\1.0.0\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;E:\.c\yaml-cpp\0.6.2\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;TORRENT_DISABLE_ENCRYPTION;TORRENT_DISABLE_INVARIANT_CHECKS;TORRENT_NO_DEPRECATE;TORRENT_NO_ASSERTS;UPDATESYSTEM_STATIC_LIBRARY;SETTINGS_STATIC_LIB;RESTAPI_STATIC_LIB;CORE_STATIC_LIB;MARKETING_STATIC_LIB;LOG4QT_STATIC;GAMEEXECUTOR_STATIC_LIB;DOWNLOADSERVICE_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;_USING_V110_SDK71_;_UNICODE</Define>
+    </QtMoc>
     <Manifest>
       <AdditionalManifestFiles>Uninstaller.manifest</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11" MocOptions="" />
+      <UserProperties Qt5Version_x0020_Win32="conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -26,6 +26,9 @@ dbus:nolink=True
 yaml-cpp:shared=False
 QtYaml:shared=False
 
+OpenSSL:shared=True
+OpenSSL:no_sse2=True
+
 [build_requires]
 
 [env]

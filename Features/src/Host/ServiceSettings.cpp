@@ -7,6 +7,7 @@
 #include <GameDownloader/GameDownloadService.h>
 
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 using P1::Core::Service;
 
@@ -64,7 +65,11 @@ namespace P1 {
       if (!service)
         return;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       settings.beginGroup(serviceId);
 
       if (service->downloadPath() == path && 
@@ -96,7 +101,11 @@ namespace P1 {
       if (!service)
         return;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       settings.beginGroup(serviceId);
 
       if (service->installPath() == path && 
@@ -122,7 +131,11 @@ namespace P1 {
 
     bool ServiceSettings::isDefaultDownloadPath(const QString& serviceId) const
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       settings.beginGroup(serviceId);
       return settings.value("DownloadPath", "").toString().isEmpty();
     }

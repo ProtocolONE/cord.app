@@ -2,6 +2,7 @@
 
 #include <QtCore/QStringList>
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 #include <Core/Marketing.h>
 #include <Settings/Settings.h>
@@ -37,7 +38,11 @@ namespace P1 {
 
     bool LicenseManager::hasAcceptedLicense(const QString &serviceId)
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       settings.beginGroup(serviceId);
       QString hash = settings.value("LicenseHash", "").toString();
  
@@ -52,7 +57,11 @@ namespace P1 {
     {
       using P1::Core::Marketing;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       settings.beginGroup(serviceId);
       settings.setValue("LicenseHash", hash.isEmpty() ? "1" : hash);
       settings.endGroup();

@@ -40,32 +40,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="702"/>
-        <location filename="../src/mainwindow.cpp" line="711"/>
-        <location filename="../src/mainwindow.cpp" line="722"/>
-        <location filename="../src/mainwindow.cpp" line="741"/>
-        <location filename="../src/mainwindow.cpp" line="745"/>
+        <location filename="../src/mainwindow.cpp" line="688"/>
+        <location filename="../src/mainwindow.cpp" line="697"/>
+        <location filename="../src/mainwindow.cpp" line="708"/>
+        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>INFO_CAPTION</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="741"/>
+        <location filename="../src/mainwindow.cpp" line="727"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation type="unfinished">Failed to log into the game with this account. Try logging out, then logging back in again. If you get this message again, contact our support service.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="702"/>
-        <location filename="../src/mainwindow.cpp" line="745"/>
+        <location filename="../src/mainwindow.cpp" line="688"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation type="unfinished">Your game account has been blocked. Information about the reason for and duration of the block has been sent to the email address you entered when signing up. If you have any questions, please contact our support service at &lt;a href=&quot;http://support.protocol.one&quot;&gt;http://support.protocol.one&lt;/a&gt; Details can be found in the&lt;a href=&quot;https://support.protocol.one/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="712"/>
+        <location filename="../src/mainwindow.cpp" line="698"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation type="unfinished">You do not have access to %1. Please contact tech support.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="723"/>
+        <location filename="../src/mainwindow.cpp" line="709"/>
         <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
         <translation>This game is not available in your country.</translation>
     </message>

@@ -658,23 +658,11 @@ void MainWindow::commandRecieved(QString name, QStringList arguments)
     return;
   } 
 
-  if (name == "goprotocolonehelper" && arguments.size() > 0) {
-    QString gameId = arguments.at(0);
-    QString url = QString("http://www.protocol.one/games/%1/guides").arg(gameId);
-    this->openExternalUrlWithAuth(url);
-    return;
-  } 
-
   if (name == "goprotocolonemoney") {
       this->navigate("goprotocolonemoney");
 
     return;
   }
-
-  if (name == "gocombatarmsrating") {
-    this->openExternalUrlWithAuth("http://www.combatarms.ru/ratings/user/");
-    return;
-  } 
 
   if (name == "uninstall" && arguments.size() > 0) {
     QString serviceId = arguments.at(0);
@@ -927,7 +915,12 @@ bool MainWindow::event(QEvent* event)
 
 void MainWindow::initMarketing()
 {
-  QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+  QSettings midSettings(
+    QSettings::NativeFormat,
+    QSettings::UserScope,
+    QCoreApplication::organizationName(),
+    QCoreApplication::applicationName());
+
   QString mid = midSettings.value("MID", "").toString();
   this->_marketingTargetFeatures.init("Launcher", mid);
 

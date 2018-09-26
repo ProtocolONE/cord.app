@@ -7,6 +7,7 @@
 #include <Core/Service.h>
 
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 using P1::GameDownloader::GameDownloadService;
 using P1::GameDownloader::ServiceState;
@@ -39,7 +40,13 @@ namespace P1 {
           P1::Core::Service *service = this->_services->getService(id);
           Q_ASSERT(service);
 
-          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+          QSettings settings(
+            QSettings::NativeFormat,
+            QSettings::UserScope,
+            QCoreApplication::organizationName(),
+            QCoreApplication::applicationName());
+
+          settings.beginGroup("Integration");
           settings.beginGroup(id);
           if (state->startType() != StartType::Uninstall) {
             settings.setValue("DownloadPath", this->_settings->downloadPath(id));

@@ -1,6 +1,7 @@
 #include <Features/Marketing/MarketingIntegrationMarker.h>
 
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 namespace Features {
   namespace Marketing {
@@ -15,18 +16,26 @@ namespace Features {
 
     void MarketingIntegrationMarker::init()
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher\\Integration", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
 
-      // Для InstallMonster помечены текущие активные пользователи, для
-      // отрезания их при массовой уставноке приложения.
+      settings.beginGroup("Integration");
       settings.setValue("IMV", "3.8");
     }
 
     bool MarketingIntegrationMarker::isActiveUser()
     {
       bool result = true;
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher\\Integration", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
 
+      settings.beginGroup("Integration");
       result &= settings.value("IMV", QString()).toString() == "3.8";
 
       return result;

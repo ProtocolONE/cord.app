@@ -1,6 +1,5 @@
-conan install ./conan/conanfiled.txt -pr ./conan/msvcprofiled --build missing --update -if ./conan 
-@rem conan install ./conan/conanfile.txt -pr ./conan/msvcprofile --build missing --update  -if ./conan
+@rem Should be installed this way to call `deploy` method. Deploy method register this qt version for visual studio add-in.
+conan install Qt/5.5.1@common/stable -pr conan/msvcprofile
 
-pushd conan\Release
-conan install . -pr msvcprofile --build missing --update
-popd
+conan install ./conan/conanfiled.txt -pr ./conan/msvcprofiled --build missing --update -if ./conan 
+conan install ./conan/conanfile.txt -pr ./conan/msvcprofile --build missing --update  -if ./conan

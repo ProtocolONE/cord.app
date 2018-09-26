@@ -2,6 +2,7 @@
 
 #include <QtCore/QString>
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 #include <stdint.h>
 #include <string>
@@ -156,7 +157,12 @@ namespace P1 {
     {
       this->_area = DefaultArea;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
+
       bool ok = false;
       int area = settings.value("Repository", 0).toInt(&ok);
       if (!ok)
@@ -168,7 +174,11 @@ namespace P1 {
 
     void save()
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       settings.setValue("Repository", this->_area);
     }
 

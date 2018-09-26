@@ -11,6 +11,7 @@
 #include <Core/Service.h>
 
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 using P1::GameDownloader::GameDownloadService;
 using P1::GameDownloader::ServiceState;
@@ -64,7 +65,12 @@ namespace P1 {
         {
           Q_ASSERT(service);
 
-          QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+          QSettings settings(
+            QSettings::NativeFormat,
+            QSettings::UserScope,
+            QCoreApplication::organizationName(),
+            QCoreApplication::applicationName());
+
           settings.beginGroup(service->id());
           settings.remove("LicenseHash");
           settings.endGroup();

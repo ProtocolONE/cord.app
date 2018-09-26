@@ -1,0 +1,19 @@
+{
+  "response": [
+    {
+      "id": "1121",
+      "gridId": "147",
+      "serviceId": "300003010000000000",
+      "serviceName": "BS.ru",
+      "typeShortcut": "",
+      "imageId": "160",
+      "image": "https://gn525.cdn.gamenet.ru/TY0Xuy2SQE/4BPI5/o_15oRUk.png",
+      "col": "1",
+      "row": "1",
+      "width": "1",
+      "height": "2",
+      "url": null,
+      "buttonText": null
+    }
+  ]
+}

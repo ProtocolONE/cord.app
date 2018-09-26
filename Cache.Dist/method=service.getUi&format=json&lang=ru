@@ -1,0 +1,154 @@
+{
+  "response": [
+    {
+      "gameId": 0,
+      "serviceId": "0",
+      "name": "GameNet",
+      "gaName": "GameNet",
+      "gameType": "standalone",
+      "genre": null,
+      "genreId": 0,
+      "genrePosition": 0,
+      "imageSmall": null,
+      "imageHorizontalSmall": null,
+      "imageLogoSmall": "https://images.gamenet.ru/pics/app/service/1422885741101.png",
+      "imagePopupArt": null,
+      "forumUrl": "https://forum.gamenet.ru/forumdisplay.php?f=92",
+      "guideUrl": "",
+      "blogUrl": "/games/platform/blog/",
+      "licenseUrl": "/games/platform/rules/",
+      "mainUrl": "/games/platform/",
+      "maintenanceProposal1": "30000000000",
+      "maintenanceProposal2": "30000000000",
+      "logoText": "",
+      "aboutGame": "",
+      "miniToolTip": "",
+      "shortDescription": "",
+      "secondAllowed": false,
+      "widgetList": null,
+      "isPublishedInApp": false,
+      "isRunnable": false,
+      "iconInApp": "https://gn510.cdn.gamenet.ru/TY0Xuw1Ey2/tFvf/o_1BofRy.ico",
+      "typeShortcut": "",
+      "sortPositionInApp": 84,
+      "hasOverlay": false,
+      "socialNet": [
+        {
+          "id": "vk",
+          "name": "VK",
+          "link": "//vk.com/gamenetru"
+        },
+        {
+          "id": "fb",
+          "name": "Facebook",
+          "link": "https://www.facebook.com/GameNetCommunity"
+        },
+        {
+          "id": "ok",
+          "name": "Одноклассники",
+          "link": "http://www.ok.ru/gamenet"
+        },
+        {
+          "id": "mm",
+          "name": "МойМир",
+          "link": ""
+        },
+        {
+          "id": "gp",
+          "name": "Google+",
+          "link": "//google.com/+GamenetRussia"
+        },
+        {
+          "id": "tw",
+          "name": "Twitter",
+          "link": ""
+        },
+        {
+          "id": "yt",
+          "name": "YouTube",
+          "link": ""
+        }
+      ],
+      "backgroundInApp": "",
+      "supportId": 0,
+      "isStandalone": false,
+      "isClosedBeta": false,
+      "sellsStandaloneItems": null
+    },
+    {
+      "gameId": 71,
+      "serviceId": "300003010000000000",
+      "name": "BS.ru",
+      "gaName": "BloodAndSoul",
+      "gameType": "standalone",
+      "genre": "MMORPG",
+      "genreId": 3,
+      "genrePosition": 1,
+      "imageSmall": "https://gn702.cdn.gamenet.ru/TY0Xuw2htm/F4YS/o_1i91d5.png",
+      "imageHorizontalSmall": "https://gn97.cdn.gamenet.ru/TY0Xuw2htm/F4Ya/o_PD1zK.png",
+      "imageLogoSmall": "https://gn24.cdn.gamenet.ru/TY0Xuw2htm/F4Ys/o_HMlYv.png",
+      "imagePopupArt": "https://gn684.cdn.gamenet.ru/TY0Xux1iCM/yKpX/o_WWfCQ.png",
+      "forumUrl": "https://forum.gamenet.ru/forumdisplay.php?f=4",
+      "guideUrl": "/games/bs/guides/",
+      "blogUrl": "/games/bs/blog/",
+      "licenseUrl": "/games/bs/rules/",
+      "mainUrl": "/games/bs/",
+      "maintenanceProposal1": "660000000000",
+      "maintenanceProposal2": "640000000000",
+      "logoText": "Романтическая ролевая игра",
+      "aboutGame": "BS — классическая ролевая игра, сочетающая многоуровневую систему развития персонажа, поиска и улучшения экипировки с мощной социальной частью, позволяющей найти друзей, создать семью, основать гильдию и доминировать в мире BS!",
+      "miniToolTip": "Есть красивая онлайн-игра, полная любви и беспощадных межсерверных сражений.",
+      "shortDescription": "Романтическая онлайн игра",
+      "secondAllowed": true,
+      "widgetList": "\"gameDownloading\":\"GameAdBanner\",\"gameStarting\":\"GameAdBanner\",\"gameFailedFinish\":\"GameFailed\",\"gameBoredFinish\":\"GameIsBoring\",\"gameSuccessFinish\":\"\"",
+      "isPublishedInApp": true,
+      "isRunnable": true,
+      "iconInApp": "https://gn26.cdn.gamenet.ru/TY0XuyNp4S/bU4V/o_1WXWW9.ico",
+      "typeShortcut": "",
+      "sortPositionInApp": 41,
+      "hasOverlay": true,
+      "socialNet": [
+        {
+          "id": "vk",
+          "name": "VK",
+          "link": "http://vk.com/bloodandsoul"
+        },
+        {
+          "id": "fb",
+          "name": "Facebook",
+          "link": ""
+        },
+        {
+          "id": "ok",
+          "name": "Одноклассники",
+          "link": ""
+        },
+        {
+          "id": "mm",
+          "name": "МойМир",
+          "link": ""
+        },
+        {
+          "id": "gp",
+          "name": "Google+",
+          "link": ""
+        },
+        {
+          "id": "tw",
+          "name": "Twitter",
+          "link": ""
+        },
+        {
+          "id": "yt",
+          "name": "YouTube",
+          "link": "http://www.youtube.com/bloodandsoulru"
+        }
+      ],
+      "backgroundInApp": "https://gn339.cdn.gamenet.ru/TY0Xuw2htm/F4ZF/o_aMOMU.jpg",
+      "supportId": 0,
+      "isStandalone": false,
+      "isClosedBeta": false,
+      "sellsStandaloneItems": null
+    }
+  ]
+}

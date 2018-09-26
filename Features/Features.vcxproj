@@ -11,13 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="i18n\Features_en.ts" />
+    <None Include="i18n\Features_ru.ts" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\Features\ComInitialize.cpp" />
     <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
     <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
     <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
     <ClCompile Include="src\Features\GameExecutor\Hook\CheckAsciiPath.cpp" />
-    <ClCompile Include="src\Features\PlainFileCache.cpp" />
-    <ClCompile Include="src\Features\ProtocolOneDownloader.cpp" />
     <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp" />
     <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp" />
     <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\CpuInfo.cpp" />
@@ -38,7 +40,9 @@
     <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\VendorBase.cpp" />
     <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\ZZima.cpp" />
     <ClCompile Include="src\Features\Marketing\SystemInfo\SystemInfoManager.cpp" />
+    <ClCompile Include="src\Features\PlainFileCache.cpp" />
     <ClCompile Include="src\Features\PremiumExecutor.cpp" />
+    <ClCompile Include="src\Features\ProtocolOneDownloader.cpp" />
     <ClCompile Include="src\Features\RemouteStartGame.cpp" />
     <ClCompile Include="src\Features\RenderRateHack.cpp" />
     <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp" />
@@ -328,33 +332,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)!build\$(ProjectName)\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)!build\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)!obj\$(ProjectName)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)!obj\$(ProjectName)\$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)X86</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)X86d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)X86</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>LAUNCHER_NO_UPDATE;UNICODE;WIN32;NOMINMAX;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
-      <WarningLevel>Level1</WarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <OutputFile>$(TargetPath)</OutputFile>
@@ -372,23 +367,19 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)." -ts "$(ProjectDir)i18n\$(ProjectName)_
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\7177fdeecbc6a1ff973c1426f23d76b4389b47dd\include;$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\1edc5909dd148369878b2f1be333ce5011b7c0eb\include;$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\33875823dfdb878a0ca31ba85399215e34feead2\include;$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include\log4qt;$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\7aaaabdd59b8644c7f536cf53196ef797aecd990\include;$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\331a96a167ce8aef0a68125688ddb3ed2deaf6e8\include;$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\6631cbbd383afc61fa33f2a2d69d9f89b6148991\include;$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\5e5df2d6bb28723151a94787e30148b3edb6f553\include;$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\fd4f6ddfbaf65a472e40377babdb20ecfaba0885\include;$(USERPROFILE)\.conan\data\QtYaml\1.0.0\common\stable\package\ba730c75ae9f69f45396399665d18ad003695c6d\include;$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include;$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include\minizip;C:\.conan\tu1x0tec\1\include;$(USERPROFILE)\.conan\data\Libtorrent\1.0.5\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include;$(USERPROFILE)\.conan\data\SevenZip\1.0.0\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include;$(USERPROFILE)\.conan\data\yaml-cpp\0.6.2\common\stable\package\3d16d926de9b3b06034ae1de4c796a92cf92b401\include</IncludePath>
-      <Define>LAUNCHER_NO_UPDATE;UNICODE;WIN32;NOMINMAX;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;QT_XML_LIB;TORRENT_DISABLE_ENCRYPTION;TORRENT_DISABLE_INVARIANT_CHECKS;TORRENT_NO_DEPRECATE;TORRENT_NO_ASSERTS;TORRENT_DEBUG;UPDATESYSTEM_STATIC_LIBRARY;SETTINGS_STATIC_LIB;RESTAPI_STATIC_LIB;CORE_STATIC_LIB;MARKETING_STATIC_LIB;LOG4QT_STATIC;GAMEEXECUTOR_STATIC_LIB;DOWNLOADSERVICE_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;_USING_V110_SDK71_;_UNICODE</Define>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml</IncludePath>
+      <Define>LAUNCHER_NO_UPDATE;UNICODE;WIN32;NOMINMAX;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;QT_XML_LIB;_USING_V110_SDK71_;_UNICODE</Define>
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>LAUNCHER_NO_UPDATE;UNICODE;WIN32;NOMINMAX;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-      <WarningLevel>Level3</WarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <Optimization>Disabled</Optimization>
-      <ExceptionHandling>Async</ExceptionHandling>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
@@ -407,7 +398,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)." -ts "$(ProjectDir)i18n\$(ProjectName)_
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\58a334d4b51f503ccb1d135be832997bfdee3282\include;$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\4246ac3628b89fc6e238aa8984fe5e37a50b9386\include;$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\fc1cf2cb0e739d816c1769f326b7868e01d06781\include;$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include\log4qt;$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\afe0c381517599b298db4400bf64a4a76487c6ca\include;$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\9bc8d94302b5326e655a0df30d64d6cb24921400\include;$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\b5dc8fbf4612b64e31e69e3a06d0f8c4710dd174\include;$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\7926b8dd1fc655b82320b53462e7a8883ae791ab\include;$(USERPROFILE)\.conan\data\QtYaml\1.0.0\common\stable\package\0bf3963b271b074fe57b05225c862472093597f1\include;$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include\minizip;C:\.conan\tu1x0tec\1\include;$(USERPROFILE)\.conan\data\Libtorrent\1.0.5\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;$(USERPROFILE)\.conan\data\SevenZip\1.0.0\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;$(USERPROFILE)\.conan\data\yaml-cpp\0.6.2\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include</IncludePath>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;$(ProjectDir)include;.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDBus;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtConcurrent;$(QTDIR)\include\QtScript;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWinExtras;$(QTDIR)\include\QtXml;$(USERPROFILE)\.conan\data\AutoRunHelper\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\BugTrap\1.0.0\common\stable\package\58a334d4b51f503ccb1d135be832997bfdee3282\include;$(USERPROFILE)\.conan\data\GameDownloader\1.0.0\common\stable\package\4246ac3628b89fc6e238aa8984fe5e37a50b9386\include;$(USERPROFILE)\.conan\data\GameExecutor\1.0.0\common\stable\package\fc1cf2cb0e739d816c1769f326b7868e01d06781\include;$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\Log4qt\1.4.2\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include\log4qt;$(USERPROFILE)\.conan\data\Marketing\1.0.0\common\stable\package\afe0c381517599b298db4400bf64a4a76487c6ca\include;$(USERPROFILE)\.conan\data\QmlExtension\1.0.0\common\stable\package\9bc8d94302b5326e655a0df30d64d6cb24921400\include;$(USERPROFILE)\.conan\data\Application\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\Core\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\LibtorrentWrapper\1.0.0\common\stable\package\b5dc8fbf4612b64e31e69e3a06d0f8c4710dd174\include;$(USERPROFILE)\.conan\data\RestApi\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\Settings\1.0.0\common\stable\package\ce204853b09dfc71de23c1f30236cc1a98fac33e\include;$(USERPROFILE)\.conan\data\UpdateSystem\1.0.0\common\stable\package\7926b8dd1fc655b82320b53462e7a8883ae791ab\include;$(USERPROFILE)\.conan\data\QtYaml\1.0.0\common\stable\package\0bf3963b271b074fe57b05225c862472093597f1\include;$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;$(USERPROFILE)\.conan\data\minizip\1.2.11\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include\minizip;C:\.conan\et4jhqqx\1\include;$(USERPROFILE)\.conan\data\Libtorrent\1.0.5\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;$(USERPROFILE)\.conan\data\SevenZip\1.0.0\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include;$(USERPROFILE)\.conan\data\yaml-cpp\0.6.2\common\stable\package\4a4dee728f45654d729e8a4562482100aaab855b\include</IncludePath>
       <Define>LAUNCHER_NO_UPDATE;UNICODE;WIN32;NOMINMAX;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;FEATURES_LIB;QT_NETWORK_LIB;QT_XML_LIB;TORRENT_DISABLE_ENCRYPTION;TORRENT_DISABLE_INVARIANT_CHECKS;TORRENT_NO_DEPRECATE;TORRENT_NO_ASSERTS;UPDATESYSTEM_STATIC_LIBRARY;SETTINGS_STATIC_LIB;RESTAPI_STATIC_LIB;CORE_STATIC_LIB;MARKETING_STATIC_LIB;LOG4QT_STATIC;GAMEEXECUTOR_STATIC_LIB;DOWNLOADSERVICE_STATIC_LIB;AUTORUNHELPER_STATIC_LIB;_USING_V110_SDK71_;_UNICODE</Define>
     </QtMoc>
   </ItemDefinitionGroup>
@@ -419,7 +410,7 @@ $(QTDIR)\bin\lupdate.exe "$(ProjectDir)." -ts "$(ProjectDir)i18n\$(ProjectName)_
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11" MocOptions="" />
+      <UserProperties Qt5Version_x0020_Win32="conan-333e69ac00eb936364053dce8d4cab2a1a5a9a11" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

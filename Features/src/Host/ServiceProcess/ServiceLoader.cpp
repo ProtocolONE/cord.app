@@ -17,6 +17,7 @@
 #include <GameExecutor/Hook/ActivateWindow.h>
 
 #include <QtCore/QSettings>
+#include <QtCore/QCoreApplication>
 
 using P1::Core::Service;
 using P1::GameDownloader::GameDownloadService;
@@ -169,7 +170,12 @@ namespace P1 {
 
       QString ServiceLoader::getServiceInstallPath(const QString& id)
       {
-        QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+        QSettings settings(
+          QSettings::NativeFormat,
+          QSettings::UserScope,
+          QCoreApplication::organizationName(),
+          QCoreApplication::applicationName());
+
         settings.beginGroup(id);
 
         return settings.value("InstallPath").toString();
@@ -177,7 +183,12 @@ namespace P1 {
 
       QString ServiceLoader::getServiceDownloadPath(const QString& id)
       {
-        QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+        QSettings settings(
+          QSettings::NativeFormat,
+          QSettings::UserScope,
+          QCoreApplication::organizationName(),
+          QCoreApplication::applicationName());
+
         settings.beginGroup(id);
 
         return settings.value("DownloadPath").toString();

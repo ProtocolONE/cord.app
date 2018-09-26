@@ -40,32 +40,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="702"/>
-        <location filename="../src/mainwindow.cpp" line="711"/>
-        <location filename="../src/mainwindow.cpp" line="722"/>
-        <location filename="../src/mainwindow.cpp" line="741"/>
-        <location filename="../src/mainwindow.cpp" line="745"/>
+        <location filename="../src/mainwindow.cpp" line="688"/>
+        <location filename="../src/mainwindow.cpp" line="697"/>
+        <location filename="../src/mainwindow.cpp" line="708"/>
+        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>INFO_CAPTION</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="741"/>
+        <location filename="../src/mainwindow.cpp" line="727"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
         <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="702"/>
-        <location filename="../src/mainwindow.cpp" line="745"/>
+        <location filename="../src/mainwindow.cpp" line="688"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
         <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки. Подробности в &lt;a href=&quot;https://support.protocol.one/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="712"/>
+        <location filename="../src/mainwindow.cpp" line="698"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
         <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="723"/>
+        <location filename="../src/mainwindow.cpp" line="709"/>
         <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
         <translation>Эта игра недоступна в вашей стране.</translation>
     </message>

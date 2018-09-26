@@ -445,7 +445,12 @@ namespace P1 {
 
     void Application::initMarketing()
     {
-      QSettings midSettings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings midSettings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
+
       QString mid = midSettings.value("MID", "").toString();
       this->_marketingTarget->init("Launcher", mid);
 

@@ -32,7 +32,12 @@ namespace P1 {
       if (tmp == value)
         return;
 
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
+
       settings.setValue("AutoRun", value);
       this->addToAutoStart(value);
       emit this->autoStartModeChanged();
@@ -40,7 +45,11 @@ namespace P1 {
 
     int AutoRunManager::autoStartMode() const
     {
-      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\ProtocolOne\\Launcher", QSettings::NativeFormat);
+      QSettings settings(
+        QSettings::NativeFormat,
+        QSettings::UserScope,
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName());
       bool ok;
       int result = settings.value("AutoRun", 0).toInt(&ok);
       return ok ? result : 0;

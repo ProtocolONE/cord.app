@@ -18,6 +18,7 @@ UpdateSystem/1.0.0@common/stable
 dbus/1.12.10@common/stable
 yaml-cpp/0.6.2@common/stable
 QtYaml/1.0.0@common/stable
+OpenSSL/1.0.2p@conan/stable
 
 [generators]
 visual_studio_multi
@@ -25,7 +26,11 @@ visual_studio_multi
 [imports]
 # bin, *.dll -> ../!build/FeaturesTest/Release # Copies all dll files from packages bin folder to my "bin" folder
 # bin, *.dll -> ../!build/Launcher/Release # Copies all dll files from packages bin folder to my "bin" folder
+bin, *.dll -> ../!build/Launcher/Release @ root_package=LibtorrentWrapper
+bin, *.dll -> ../!build/Launcher/Release @ root_package=BugTrap
 bin, dbus-1.dll -> ../!build/Launcher/Release @ root_package=dbus
+bin, ssleay32.dll -> ../!build/Launcher/Release @ root_package=OpenSSL
+bin, libeay32.dll -> ../!build/Launcher/Release @ root_package=OpenSSL
 plugin, *.dll -> ../!build/Launcher/Release/plugins5
 plugin, *qmldir -> ../!build/Launcher/Release/plugins5
 i18n, * -> ../i18n

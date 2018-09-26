@@ -1,0 +1,16 @@
+organizationName: ProtocolOne
+ApplicationName: Launcher
+overrideApi: false
+wwwUrl: 'https://gamenet.ru'
+gnloginUrl: 'https://gnlogin.ru'
+apiUrl: 'https://gnapi.com:8443/restapi'
+apiUrlPat: 'https://gnapi.com:%1/restapi'
+statusUrl: 'https://gnapi.com/status.json'
+debugApi: false
+jabber:
+    url: 'qj.gamenet.ru'
+status: 
+    url: 'https://gnapi.com/status.json'
+    enabled: true
+saveApi: false
+urlProtocolScheme: protocolone

@@ -1,128 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\Features\ComInitialize.cpp" />
-    <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp" />
-    <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp" />
-    <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp" />
-    <ClCompile Include="src\Features\GameExecutor\Hook\CheckAsciiPath.cpp" />
-    <ClCompile Include="src\Features\ProtocolOneDownloader.cpp" />
-    <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp" />
-    <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\CpuInfo.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Hdd.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\OsInfo.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Ram.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Screen.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Video.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Antivirus.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\FourGame.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\MailRu.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Nikita.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Origin.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Steam.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Ubisoft.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\VendorBase.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\ZZima.cpp" />
-    <ClCompile Include="src\Features\Marketing\SystemInfo\SystemInfoManager.cpp" />
-    <ClCompile Include="src\Features\PremiumExecutor.cpp" />
-    <ClCompile Include="src\Features\RemouteStartGame.cpp" />
-    <ClCompile Include="src\Features\RenderRateHack.cpp" />
-    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp" />
-    <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp" />
-    <ClCompile Include="src\Features\TaskBarEventFilter.cpp" />
-    <ClCompile Include="src\Features\TaskBarProgressHelper.cpp" />
-    <ClCompile Include="src\Features\WmiQuery.cpp" />
-    <ClCompile Include="src\Features\WorkStationLock\RegisterSessionNotificationFilter.cpp" />
-    <ClCompile Include="src\Features\WorkStationLock\WorkStationLockHook.cpp" />
-    <ClCompile Include="src\Helper\FileUtils.cpp" />
-    <ClCompile Include="src\Helper\TerminateProcess.cpp" />
-    <ClCompile Include="src\Host\Application.cpp" />
-    <ClCompile Include="src\Host\ApplicationRestarter.cpp" />
-    <ClCompile Include="src\Host\ApplicationStatistic.cpp" />
-    <ClCompile Include="src\Host\AutoRunManager.cpp" />
-    <ClCompile Include="src\Host\Bridge\ApplicationBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\ApplicationStatisticBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\ConnectionBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\Credential.cpp" />
-    <ClCompile Include="src\Host\Bridge\DownloaderBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\LicenseManagerBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\MessageAdapterBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\ServiceHandleBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\ServiceSettingsBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\SettingsBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\UpdateManagerBridge.cpp" />
-    <ClCompile Include="src\Host\ClientConnection.cpp" />
-    <ClCompile Include="src\Host\CommandLineManager.cpp" />
-    <ClCompile Include="src\Host\Connection.cpp" />
-    <ClCompile Include="src\Host\ConnectionManager.cpp" />
-    <ClCompile Include="src\Host\CredentialConverter.cpp" />
-    <ClCompile Include="src\Host\Dbus\ApplicationBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\ApplicationBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\ConnectionBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\ConnectionBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\DBusConnection.cpp" />
-    <ClCompile Include="src\Host\Dbus\DBusServer.cpp" />
-    <ClCompile Include="src\Host\Dbus\DownloaderBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\DownloaderBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\ExecutorBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\ExecutorBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\SettingsBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\SettingsBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeAdaptor.cpp" />
-    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeProxy.cpp" />
-    <ClCompile Include="src\Host\DownloaderSettings.cpp" />
-    <ClCompile Include="src\Host\ElectronExecutor.cpp" />
-    <ClCompile Include="src\Host\ElectronExecutor_p.cpp" />
-    <ClCompile Include="src\Host\ElectronsExecutor.cpp" />
-    <ClCompile Include="src\Host\ExecutorHookFactory.cpp" />
-    <ClCompile Include="src\Host\GameDownloader\DownloaderSettingsRoulette.cpp" />
-    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp" />
-    <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp" />
-    <ClCompile Include="src\Host\GameDownloader\Hook\UpdateUninstallInfo.cpp" />
-    <ClCompile Include="src\Host\GameExecutor.cpp" />
-    <ClCompile Include="src\Host\HookFactory.cpp" />
-    <ClCompile Include="src\Host\Installer\UninstallInfo.cpp" />
-    <ClCompile Include="src\Host\Installer\UninstallResult.cpp" />
-    <ClCompile Include="src\Host\LicenseManager.cpp" />
-    <ClCompile Include="src\Host\MarketingStatistic.cpp" />
-    <ClCompile Include="src\Host\MessageAdapter.cpp" />
-    <ClCompile Include="src\Host\Proxy\DownloaderProxy.cpp" />
-    <ClCompile Include="src\Host\Proxy\GameExecutorProxy.cpp" />
-    <ClCompile Include="src\Host\Proxy\ServiceHandleProxy.cpp" />
-    <ClCompile Include="src\Host\ServiceHandle.cpp" />
-    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp" />
-    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp" />
-    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp" />
-    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp" />
-    <ClCompile Include="src\Host\ServiceSettings.cpp" />
-    <ClCompile Include="src\Host\SettingsManager.cpp" />
-    <ClCompile Include="src\Host\ShutdownManager.cpp" />
-    <ClCompile Include="src\Host\StopDownloadOnExecuteInit.cpp" />
-    <ClCompile Include="src\Host\Translation.cpp" />
-    <ClCompile Include="src\Host\UIProcess.cpp" />
-    <ClCompile Include="src\Host\Updater.cpp" />
-    <ClCompile Include="src\Features\PlainFileCache.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -133,6 +11,380 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="i18n\Features_ru.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="i18n\Features_en.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Features\GameDownloader\DownloadStats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\GameDownloader\ExternalIpAddress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\GameDownloader\GameDownloadStatistics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\GameExecutor\Hook\CheckAsciiPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\CpuInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Hdd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\OsInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Ram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\Hardware\Video.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Antivirus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\FourGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\MailRu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Nikita.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Origin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Steam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\Ubisoft.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\VendorBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\ZZima.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\SystemInfo\SystemInfoManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\WorkStationLock\RegisterSessionNotificationFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\WorkStationLock\WorkStationLockHook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\ComInitialize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\LanguageChangeEventFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\PlainFileCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\PremiumExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\ProtocolOneDownloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\RemouteStartGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\RenderRateHack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\TaskBarEventFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\TaskBarProgressHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\WmiQuery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Helper\FileUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Helper\TerminateProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ApplicationBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ApplicationStatisticBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ConnectionBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\Credential.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\DownloaderBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\LicenseManagerBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\MessageAdapterBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ServiceHandleBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\ServiceSettingsBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\SettingsBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Bridge\UpdateManagerBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ApplicationBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ApplicationBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ConnectionBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ConnectionBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\DBusConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\DBusServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\DownloaderBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\DownloaderBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\DownloaderSettingsBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ExecutorBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ExecutorBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\LicenseManagerBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\MessageAdapterBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ServiceHandleBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\ServiceSettingsBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\SettingsBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\SettingsBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeAdaptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameDownloader\Hook\UpdateUninstallInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameDownloader\DownloaderSettingsRoulette.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Installer\UninstallInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Installer\UninstallResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Proxy\DownloaderProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Proxy\GameExecutorProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Proxy\ServiceHandleProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\DownloadServiceIcon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServiceLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceProcess\ServicesListRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ApplicationRestarter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ApplicationStatistic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\AutoRunManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ClientConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\CommandLineManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ConnectionManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\CredentialConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\DownloaderSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ElectronExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ElectronExecutor_p.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ElectronsExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ExecutorHookFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\GameExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\HookFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\LicenseManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\MarketingStatistic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\MessageAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceHandle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ServiceSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\SettingsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\ShutdownManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\StopDownloadOnExecuteInit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Translation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\UIProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Host\Updater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="include\Features\GameDownloader\DownloadStats.h">

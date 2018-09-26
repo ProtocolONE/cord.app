@@ -1,0 +1,16 @@
+{
+  "response": {
+    "schedule": {
+      "300003010000000000": {
+        "id": "300003010000000000",
+        "startTime": 1537246800,
+        "endTime": 1537254000,
+        "title": "",
+        "newsTitle": "",
+        "newsLink": "",
+        "newsText": "",
+        "isSticky": true
+      }
+    }
+  }
+}

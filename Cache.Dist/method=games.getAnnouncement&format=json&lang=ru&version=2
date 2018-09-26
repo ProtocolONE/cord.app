@@ -1,0 +1,19 @@
+{
+  "response": {
+    "announcement": [
+      {
+        "id": 586,
+        "serviceId": "0",
+        "size": "big",
+        "startTime": 1537275600,
+        "endTime": 1539327600,
+        "url": "https://gamenet.ru/games/blackdesert/post/2h9Obi/",
+        "text": "",
+        "textOnButton": "Подробнее",
+        "image": "https://gn2.cdn.gamenet.ru/TY0Xv4yshu/6s9rA/o_8sqM8.png",
+        "isTested": 1,
+        "buttonColor": 1
+      }
+    ]
+  }
+}

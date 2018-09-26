@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<response>
+	<row>
+		<serviceId>0</serviceId>
+		<gameId>0</gameId>
+		<name>GameNet</name>
+		<folderName></folderName>
+		<torrentUrl><![CDATA[]]></torrentUrl>
+		<hasDownloadPath>0</hasDownloadPath>
+		<isBrowserGame></isBrowserGame>
+		<extractorType></extractorType>
+		<executeUrl><![CDATA[]]></executeUrl>
+		<dependencyList></dependencyList>
+		<gameSize></gameSize>
+		<downloadHooks></downloadHooks>
+		<executorHooks></executorHooks>
+		<isPublishedInApp></isPublishedInApp>
+		<iconInApp>https://gn510.cdn.gamenet.ru/TY0Xuw1Ey2/tFvf/o_1BofRy.ico</iconInApp>
+		<isStandalone></isStandalone>
+	</row>
+	<row>
+		<serviceId>300003010000000000</serviceId>
+		<gameId>71</gameId>
+		<name>BS.ru</name>
+		<folderName>BS</folderName>
+		<torrentUrl><![CDATA[http://fs0.gamenet.ru/update/bs/]]></torrentUrl>
+		<hasDownloadPath>0</hasDownloadPath>
+		<isBrowserGame></isBrowserGame>
+		<extractorType>3A3AC78E-0332-45F4-A466-89C2B8E8BB9C</extractorType>
+		<executeUrl><![CDATA[exe:%gamePath%/client/client.exe?workingDir=%gamePath%/&args=%userId% %appKey% %token%]]></executeUrl>
+		<dependencyList></dependencyList>
+		<gameSize>2400</gameSize>
+		<downloadHooks></downloadHooks>
+		<executorHooks>0:54B0860B-215C-462F-A80E-F7664DEA984F,100:5E2D9B5B-D8C8-460A-A048-F7F4D18C7A37</executorHooks>
+		<isPublishedInApp>1</isPublishedInApp>
+		<iconInApp>https://gn26.cdn.gamenet.ru/TY0XuyNp4S/bU4V/o_1WXWW9.ico</iconInApp>
+		<isStandalone></isStandalone>
+	</row>
+</response>

@@ -17,7 +17,7 @@
 <context>
     <name>P1::Host::AutoRunManager</name>
     <message>
-        <location filename="../src/Host/AutoRunManager.cpp" line="64"/>
+        <location filename="../src/Host/AutoRunManager.cpp" line="73"/>
         <source>AUTORUN_TASK_DESCRIPTION</source>
         <translation type="unfinished">This function keeps the ProtocolOne application up to date. If you disable this option, the ProtocolOne application will stop updating, which could lead to errors or prevent some of the application&apos;s functions from working. The option will be disabled automatically if you delete the ProtocolOne application.</translation>
     </message>

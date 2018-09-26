@@ -23,12 +23,13 @@
 #include <QtCore/QTime>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QFile>
+#include <QtCore/QDir>
 
 #include <QtGui/QIcon>
 
+#include <QtYaml/ConfigManager.h>
 
-
-using namespace GameNet::Host;
+using namespace P1::Host;
 using P1::Application::SingleApplication;
 
 Application *createApplication(SingleApplication *app) 
@@ -42,6 +43,22 @@ Application *createApplication(SingleApplication *app)
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
+  QString path = QCoreApplication::applicationDirPath();
+
+  QString configPath = path + "/Config.yaml";
+  P1::QtYaml::ConfigManager configManager;
+  configManager.load(configPath);
+
+  QCoreApplication::setOrganizationName(configManager.value<QString>("organizationName", "ProtocolOne"));
+  QCoreApplication::setApplicationName(configManager.value<QString>("applicationName", "Launcher"));
+
+  QSettings settings(
+    QSettings::NativeFormat, 
+    QSettings::UserScope, 
+    QCoreApplication::organizationName(), 
+    QCoreApplication::applicationName());
+  settings.setValue("Path", QDir::toNativeSeparators(path));
+
   registerDependenicesTypes();
 
   QCoreApplication::setOrganizationName("Vebanaul");
@@ -55,11 +72,10 @@ int main(int argc, char *argv[])
     Uninstall::run(app.arguments());
     return 0;
   }
-
-  QString path = QCoreApplication::applicationDirPath();
+  
   app.setLibraryPaths(QStringList() << path + "/plugins5");
-  app.setIpcPortPath("HKEY_CURRENT_USER\\Software\\ProtocolOne\\Launcher\\Host");
-  //app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
+  app.setIpcPortPath(QString("HKEY_CURRENT_USER\\Software\\%1\\%2\\Host").arg(QCoreApplication::organizationName(), QCoreApplication::applicationName()));
+  app.setWindowIcon(QIcon(path + "/Assets/Images/launcher.ico"));
 
   QThread::currentThread()->setObjectName("Main host thread");
 
@@ -87,8 +103,10 @@ int main(int argc, char *argv[])
 
   LoggerHelper logger(logPath + "launcher.host.log");
 
-  if (!requireAdminRights())
-    return -1;
+  if (configManager.value<QString>("requireAdminRights", "false").toLower() == "true") {
+    if (!requireAdminRights())
+      return -1;
+  }
 
   Features::Marketing::MarketingIntegrationMarker marketingIntegrationMarker;
   marketingIntegrationMarker.init();
@@ -103,7 +121,7 @@ int main(int argc, char *argv[])
   P1::Settings::SettingsSaver saver; 
   P1::Settings::Settings::setSettingsSaver(&saver); 
 
-  P1::Core::System::Shell::UrlProtocolHelper::registerProtocol("protocolone");
+  P1::Core::System::Shell::UrlProtocolHelper::registerProtocol(configManager.value<QString>("urlProtocolScheme","protocolone"));
 
   Application *application = createApplication(&app);
 

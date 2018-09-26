@@ -1,0 +1,72 @@
+{
+  "response": {
+    "news": {
+      "1535440515": {
+        "eventId": "2gQGFm",
+        "gameId": "71",
+        "gameShortName": "bs",
+        "title": "<![CDATA[Акция “Летнее настроение”]]>",
+        "announcement": "<![CDATA[<!--p=https://gn53.cdn.gamenet.ru/TY0Xv7PRxi/6kSiR/l_1Nd4b2.png-->С 28 августа на полках премиум-магазина появятся интересные новинки!  \n …]]>",
+        "time": "1535440515",
+        "commentCount": "0",
+        "likeCount": "16",
+        "isSticky": 1
+      },
+      "1537109995": {
+        "eventId": "2hNEoI",
+        "gameId": "71",
+        "gameShortName": "bs",
+        "title": "<![CDATA[Итоги \"Войны Тотемов\", 16 сентября]]>",
+        "announcement": "<![CDATA[<!--p=https://gn754.cdn.gamenet.ru/TY0Xv50UFg/6rT3c/l_QD6Vg.png-->\"Война Тотемов\" завершилась победой сервера Фобос! \n …]]>",
+        "time": "1537109995",
+        "commentCount": "0",
+        "likeCount": "5",
+        "isSticky": 0
+      },
+      "1537197432": {
+        "eventId": "2hPdmu",
+        "gameId": "71",
+        "gameShortName": "bs",
+        "title": "<![CDATA[Плановые технические работы]]>",
+        "announcement": "<![CDATA[<!--p=https://gn643.cdn.gamenet.ru/TY0Xv7PRxi/6kEBh/l_27oD5F.png-->Во вторник, 18 сентября, с 8:00 до 10:00 по московскому времени серверы будут остановлены для проведения технических работ. В это время игра будет недоступна.UPD: Технические работы завершены. Игра доступна для входа. \n …]]>",
+        "time": "1537197432",
+        "commentCount": "0",
+        "likeCount": "7",
+        "isSticky": 0
+      },
+      "1537535399": {
+        "eventId": "2hYfhw",
+        "gameId": "71",
+        "gameShortName": "bs",
+        "title": "<![CDATA[Демонион 22-23 сентября]]>",
+        "announcement": "<![CDATA[<!--p=https://gn540.cdn.gamenet.ru/TY0Xv8u0m0/6tFhU/l_GOT0U.png-->Приглашаем всех игроков 90 и выше уровней сразиться за звание сильнейшего сервера на широкомасштабном ивенте Битва Тотемов на сервере Демонион!  …]]>",
+        "time": "1537535399",
+        "commentCount": "0",
+        "likeCount": 0,
+        "isSticky": 0
+      },
+      "1537627895": {
+        "eventId": "2hbSRw",
+        "gameId": "71",
+        "gameShortName": "bs",
+        "title": "<![CDATA[Итоги \"Войны Тотемов\", 22 сентября]]>",
+        "announcement": "<![CDATA[<!--p=https://gn809.cdn.gamenet.ru/TY0Xv8u0m0/6tdnf/l_2KaaP5.png-->\"Война Тотемов\" завершилась победой сервера Фобос!  …]]>",
+        "time": "1537627895",
+        "commentCount": "0",
+        "likeCount": "3",
+        "isSticky": 0
+      },
+      "1537715005": {
+        "eventId": "2heEPA",
+        "gameId": "71",
+        "gameShortName": "bs",
+        "title": "<![CDATA[Итоги \"Войны Тотемов\", 23 сентября]]>",
+        "announcement": "<![CDATA[<!--p=https://gn243.cdn.gamenet.ru/TY0Xv50UFg/6u0Sg/l_BnlBf.png-->Вот и завершилась очередная \"Война Тотемов\", участие в которой приняли игроки Младшей Лиги. \n …]]>",
+        "time": "1537715005",
+        "commentCount": "0",
+        "likeCount": 0,
+        "isSticky": 0
+      }
+    }
+  }
+}
