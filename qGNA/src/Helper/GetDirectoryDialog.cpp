@@ -1,4 +1,4 @@
-﻿#include <Helper/GetDirectoryDialog.h>
+#include <Helper/GetDirectoryDialog.h>
 
 #include <Core/UI/Message>
 
