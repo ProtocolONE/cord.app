@@ -11,6 +11,7 @@
 #include <GameExecutor/Hook/DisableAeroHook.h>
 #include <GameExecutor/Hook/DefaultAikaSettings.h>
 #include <GameExecutor/Hook/BannerDownload.h>
+#include <GameExecutor/Hook/RestoreFileModification.h>
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QSettings>
@@ -150,16 +151,27 @@ void ServiceLoader::setExecuteUrl(const QString& id, QString currentInstallPath)
       "launcher/serverinfo_back.xml,http://files.gamenet.ru/update/bs/,1,config/lastlogin.xml,http://files.gamenet.ru/update/bs/,0");
     service->setGameId("71");
 
-    // HACK
-    //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
+    GGS::Settings::Settings settings;
+    settings.beginGroup("gameExecutor");
+    settings.beginGroup("serviceInfo");
+    settings.beginGroup(id);
     
-    //#ifdef _DEBUG
-    //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
-    //#else
-    //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
-    //#endif
-    //
-    //url.addQueryItem("injectDll", injectedDll);
+    bool ok;
+    int overlayEnabled = settings.value("overlayEnabled", 1).toInt(&ok);
+    if (overlayEnabled != 0 || !ok) {
+      // HACK
+      //url.addQueryItem("injectDll", "D:\\Prog\\Qt\\!GIT\\QGNA Components\\overlay\\!build\\Overlay\\Debug\\OverlayX86d.dll");
+
+      // Выключили 01.03.2013
+      //#ifdef _DEBUG
+      //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86d.dll"; 
+      //#else
+      //    QString injectedDll = QCoreApplication::applicationDirPath() + "/OverlayX86.dll";
+      //#endif
+      //
+      //url.addQueryItem("injectDll", injectedDll);
+
+    }
 
   } else if (id == "300005010000000000") {
     url.setScheme("exe");
@@ -216,6 +228,7 @@ void ServiceLoader::initHooks(const QString& id, GGS::Core::Service* service)
 
   if (id == "300006010000000000") {
     this->_gameExecutorService->addHook(*service, new Mw2DownloadAndCheckXmlConfig(service), 100);
+    this->_gameExecutorService->addHook(*service, new RestoreFileModification(service), 0);
     service->setExternalDependencyList("vcredist_x86.exe,/Q");
   }
 
