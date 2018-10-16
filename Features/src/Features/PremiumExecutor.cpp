@@ -10,6 +10,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMutexLocker>
+#include <QtCore/QUrlQuery>
 
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
@@ -199,9 +200,27 @@ namespace Features {
       return;
 
     QUrl url(service->url());
-    url.removeAllQueryItems("noinject");
-    url.addQueryItem("noinject", value);
+    QUrlQuery query(url);
+    query.removeAllQueryItems("noinject");
+    query.addQueryItem("noinject", value);
+    url.setQuery(query);
     service->setUrl(url);
+  }
+
+  QString PremiumExecutor::firstRunningGame()
+  {
+    if (this->_mainGameStarted.isEmpty())
+      return QString ();
+
+    return *this->_mainGameStarted.begin();
+  }
+
+  QString PremiumExecutor::firstRunningSecondGame()
+  {
+    if (this->_secondGameStarted.isEmpty())
+      return QString();
+
+    return *this->_secondGameStarted.begin();
   }
 
   bool PremiumExecutor::isMainGameStarted()

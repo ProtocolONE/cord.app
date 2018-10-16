@@ -24,6 +24,12 @@ namespace P1 {
     {
     }
 
+    void CommandLineManager::setExecutedGameCredential(ExecutedGameCredential value)
+    {
+      Q_ASSERT(value);
+      this->_executedGameCredential = value;
+    }
+
     void CommandLineManager::commandRecieved(const QString& name, const QStringList& arguments)
     {
       if (name == "quit") {

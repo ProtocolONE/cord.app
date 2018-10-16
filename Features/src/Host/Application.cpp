@@ -97,6 +97,7 @@ namespace P1 {
       , _autoRunManager(new AutoRunManager(this))
       , _dbusServer(nullptr)
       , _servicesListRequest(new ServiceProcess::ServicesListRequest(this))
+      , _systemInfoManager(new Features::Marketing::SystemInfo::SystemInfoManager(this))
       , _initFinished(false)
       , _updateFinished(false)
       , _closing(false)
@@ -247,7 +248,7 @@ namespace P1 {
       this->_shutdown->setExecutor(this->_executor);
       this->_shutdown->setSingleApplication(this->_singleApplication);
       this->_shutdown->setConnectionManager(this->_connectionManager);
-
+      
       this->_applicationRestarter->setShutdownManager(this->_shutdown);
       
       this->_uiProcess->setDirectory(QCoreApplication::applicationDirPath());
@@ -438,7 +439,7 @@ namespace P1 {
       qDebug() << "Starting Launcher UI";
       QStringList args = QCoreApplication::arguments();
       args.removeFirst(); // INFO first argument always self execute path
-      
+
       this->_uiProcess->destroyProcess();
       this->_uiProcess->start(args);
     }

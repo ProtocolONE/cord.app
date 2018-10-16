@@ -9,6 +9,7 @@
 #include <GameDownloader/Hooks/PreventWin32Download.h>
 
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
+#include <Host/GameDownloader/Hook/UpdateUninstallInfo.h>
 #include <Host/GameDownloader/Hook/CheckDownload.h>
 
 #include <RestApi/ProtocolOneCredential.h>
@@ -71,7 +72,7 @@ namespace P1 {
 
         QObject::connect(hook, &CheckDownload::internalError, []()
         {
-          // INFO HACK пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ Checkdownload 
+          // INFO HACK перевод не работает в Checkdownload 
           QString title = tr("RESTAPI_ERROR_CAPTION");
           QString msg = tr("HAS_ACCESS_INTERNAL_ERROR");
           Message::warning(title, msg);

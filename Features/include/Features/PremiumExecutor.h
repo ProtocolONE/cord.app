@@ -42,6 +42,9 @@ namespace Features {
     bool isSecondGameStarted(const QString& id);
     bool isAnyGameStarted();
 
+    QString firstRunningGame();
+    QString firstRunningSecondGame();
+
     bool isMainGameStarted();
     bool isSecondGameStarted();
 

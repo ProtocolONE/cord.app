@@ -220,6 +220,7 @@ namespace P1 {
       DEBUG_LOG << "Launcher UI process finished with exit code" << exitCode;
 
       this->_d->closeHandle();
+      emit this->closed();
     }
 
     void UIProcess::closeUI()
@@ -253,45 +254,3 @@ namespace P1 {
     }
   }
 }
-      wchar_t file_w[MAX_PATH];
-      name.toWCharArray(file_w);
-      file_w[name.count()] = '\0';
-
-      DWORD count;
-      DWORD processes[1024];
-      if (!EnumProcesses(processes, sizeof(processes), &count)){
-        return;
-
-      count /= sizeof(DWORD);
-
-      for (unsigned int i = 0; i < count; i++) {
-        wchar_t szProcessName[MAX_PATH] = TEXT("<unknown>");
-
-        if (processes[i] == 0) 
-          continue;
-
-        HANDLE hProcess = OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION, FALSE, processes[i]);
-
-        if (hProcess == NULL)
-          continue;
-
-        wchar_t processFileName[MAX_PATH];
-
-        if (GetProcessImageFileName(hProcess, processFileName, MAX_PATH) == 0)
-          continue;
-
-        if (wcsstr(processFileName, file_w) != 0) {
-          DWORD result = WAIT_OBJECT_0;
-
-          while(result == WAIT_OBJECT_0) {
-            result = WaitForSingleObject(hProcess, 100);
-            TerminateProcess(hProcess, 0);
-          }
-        }
-
-        CloseHandle(hProcess);
-      }
-#include <QtCore/QProcess>
-#include <QtCore/QMutex>
-#include <QtCore/QMutexLocker>
-

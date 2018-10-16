@@ -34,5 +34,3 @@ bin, libeay32.dll -> ../!build/Launcher/Release @ root_package=OpenSSL
 plugin, *.dll -> ../!build/Launcher/Release/plugins5
 plugin, *qmldir -> ../!build/Launcher/Release/plugins5
 i18n, * -> ../i18n
-
-

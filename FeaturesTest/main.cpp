@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     QStringList plugins;
     QString path = QCoreApplication::applicationDirPath();
 
-    checkProtector();
+    plugins << path + "/plugins";
+    a.setLibraryPaths(plugins);
 
     ::testing::InitGoogleMock(&argc, argv);
     ::testing::InitGoogleTest(&argc, argv);

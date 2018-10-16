@@ -33,12 +33,15 @@
 #include <QtWidgets/QApplication>
 #include <QResource>
 
+#include <Log4Qt/LogManager>
+#include <Log4Qt/Level>
+#include <Log4Qt/RollingFileAppender>
+#include <Log4Qt/TTCCLayout>
 
 #include <BugTrap/BugTrap.h>
 
 #include <Helper/DBusConnectionCheck.h>
 #include <Helper/FileUtils.h>
-#include <Helper/RegisterTypes.h>
 
 #include <QtWebEngine/QtWebEngine>
 
@@ -148,7 +151,6 @@ void initOpenglRender(SingleApplication& app)
 int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
-  registerDependenicesTypes();
   app.setQuitOnLastWindowClosed(false);
 
   QString configPath = QCoreApplication::applicationDirPath() + "/Config.yaml";

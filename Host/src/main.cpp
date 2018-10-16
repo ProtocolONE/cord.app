@@ -61,8 +61,6 @@ int main(int argc, char *argv[])
 
   registerDependenicesTypes();
 
-  QCoreApplication::setOrganizationName("Vebanaul");
-  QCoreApplication::setApplicationName("GameNet");
   migrateUserInfo();
 
   QString logPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QString("/logs/");

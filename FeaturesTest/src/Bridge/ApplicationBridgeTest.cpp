@@ -164,7 +164,7 @@ TEST_F(ApplicationBridgeTest, isInitCompleted)
   EXPECT_CALL(appMock, isInitCompleted())
     .WillOnce(Return(true));
 
-  ASSERT_EQ(true, appMock.isInitCompleted());
+  ASSERT_EQ(true, bridge.isInitCompleted());
 }
 
 TEST_F(ApplicationBridgeTest, language)

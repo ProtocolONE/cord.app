@@ -35,7 +35,7 @@ namespace Features {
               QFileInfo info(gameExePath);
               gameName = info.dir().dirName();
               if (gameName == ".")
-                gameName = "";
+                gameName = QString();
             }
 
             this->writeGame(gameId, gameName, writer);

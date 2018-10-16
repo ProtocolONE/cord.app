@@ -14,7 +14,7 @@ namespace P1 {
 
     namespace Bridge {
 
-      class ApplicationBridge : public QObject, protected QDBusContext
+      class ApplicationBridge : public QObject
       {
         Q_OBJECT
         Q_CLASSINFO("Version", "1.0.0.0")
@@ -183,7 +183,3 @@ namespace P1 {
     }
   }
 }
-      class ApplicationBridge : public QObject
-        void setAutoRunManager(AutoRunManager *value);
-
-        QString language() const;
