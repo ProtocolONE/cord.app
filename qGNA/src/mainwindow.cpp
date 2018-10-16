@@ -170,7 +170,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   Message::setAdapter(messageAdapter);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->_gameExecutorService, SIGNAL(finished()), this, SLOT(activateWindow())));
+  SIGNAL_CONNECT_CHECK(QObject::connect(&this->_gameExecutorService, SIGNAL(finished(const GGS::Core::Service &, GGS::GameExecutor::FinishState)), this, SLOT(activateWindow())));
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(activate()), this, SLOT(activateWindow())));
   SIGNAL_CONNECT_CHECK(QObject::connect(this->_trayWindow, SIGNAL(menuClick(int)), this, SLOT(menuItemTrigger(int))));
 }
