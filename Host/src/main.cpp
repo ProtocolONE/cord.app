@@ -42,6 +42,11 @@ Application *createApplication(SingleApplication *app)
 
 int main(int argc, char *argv[])
 {
+  // Get current flag
+// Turn off memory profiler - Qt working too long with this
+  int tmpFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+  tmpFlag = _CrtSetDbgFlag(0);
+
   SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
   QString path = QCoreApplication::applicationDirPath();
 

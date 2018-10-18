@@ -129,17 +129,14 @@ namespace P1 {
       qRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>("P1::Host::Bridge::DownloadProgressArgs");
       qDBusRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>();
 
-      qRegisterMetaType<P1::Host::Bridge::Credential>("P1::Host::Bridge::Credential");
-      qDBusRegisterMetaType<P1::Host::Bridge::Credential>();
-
 #ifdef USE_SESSION_DBUS
       Connection *connection = new Connection(QDBusConnection::sessionBus(), this);
 
       QObject::connect(connection, &Connection::connectionInfoReceived,
         this, &ConnectionManager::connectionInfoReceived);
 
-      QObject::connect(this->_application->_restApiManager, &RestApiManager::genericErrorEx,
-        connection, &Connection::onGenericError);
+      QObject::connect(this->_application->_restApiManager, &RestApiManager::authorizationError,
+        connection, &Connection::onAuthorizationError);
 
       // INFO ignored ping-pong disconnect.
 
@@ -159,8 +156,11 @@ namespace P1 {
         QObject::connect(connection, &Connection::connectionInfoReceived,
           this, &ConnectionManager::connectionInfoReceived);
 
-        QObject::connect(this->_application->_restApiManager, &RestApiManager::genericErrorEx,
-          connection, &Connection::onGenericError);
+        QObject::connect(this->_application->_restApiManager, &RestApiManager::authorizationError,
+          connection, &Connection::onAuthorizationError);
+
+        QObject::connect(connection, &Connection::credentialUpdated,
+          this->_application->_restApiManager, &RestApiManager::updateCredential, Qt::QueuedConnection);
 
         QObject::connect(connection, &Connection::disconnected,
           this, &ConnectionManager::onClientDisconnected, Qt::QueuedConnection);
@@ -292,12 +292,6 @@ namespace P1 {
 
       QObject::connect(executor, &Proxy::GameExecutorProxy::serviceFinished,
         this->_application->_marketingStatistic, &MarketingStatistic::onServiceFinished);
-
-      QObject::connect(executor, &Proxy::GameExecutorProxy::secondServiceStarted,
-        this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceStarted);
-
-      QObject::connect(executor, &Proxy::GameExecutorProxy::secondServiceFinished,
-        this->_application->_marketingStatistic, &MarketingStatistic::onSecondServiceFinished);
 
       Bridge::ExecutorBridge* executorBridge = new Bridge::ExecutorBridge(connection);
       executorBridge->setExecutor(executor);

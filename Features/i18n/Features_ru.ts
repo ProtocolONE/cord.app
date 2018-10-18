@@ -61,14 +61,12 @@
 <context>
     <name>P1::Host::HookFactory</name>
     <message>
-        <location filename="../src/Host/HookFactory.cpp" line="77"/>
         <source>HAS_ACCESS_INTERNAL_ERROR</source>
-        <translation>Произошла ошибка. Попробуйте позже.</translation>
+        <translation type="vanished">Произошла ошибка. Попробуйте позже.</translation>
     </message>
     <message>
-        <location filename="../src/Host/HookFactory.cpp" line="76"/>
         <source>RESTAPI_ERROR_CAPTION</source>
-        <translation>Внимание</translation>
+        <translation type="vanished">Внимание</translation>
     </message>
 </context>
 </TS>

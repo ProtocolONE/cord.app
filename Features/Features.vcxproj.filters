@@ -100,9 +100,6 @@
     <ClCompile Include="src\Features\Marketing\MarketingIntegrationMarker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Features\WorkStationLock\RegisterSessionNotificationFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -116,9 +113,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Features\PlainFileCache.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Features\PremiumExecutor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Features\ProtocolOneDownloader.cpp">
@@ -155,9 +149,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\Bridge\ConnectionBridge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\Bridge\Credential.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\Bridge\DownloaderBridge.cpp">
@@ -265,9 +256,6 @@
     <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeProxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -328,19 +316,7 @@
     <ClCompile Include="src\Host\ConnectionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Host\CredentialConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Host\DownloaderSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ElectronExecutor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ElectronExecutor_p.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Host\ElectronsExecutor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Host\ExecutorHookFactory.cpp">
@@ -450,9 +426,6 @@
     <QtMoc Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="include\Features\RestApi\ServiceHasAccess.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="include\Features\WorkStationLock\RegisterSessionNotificationFilter.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -460,9 +433,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="include\Features\LanguageChangeEventFilter.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="include\Features\PremiumExecutor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="include\Features\ProtocolOneDownloader.h">
@@ -496,9 +466,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="include\Host\Bridge\DownloaderSettingsBridge.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="include\Host\Bridge\ExecutorBridge.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="include\Host\Bridge\LicenseManagerBridge.h">
@@ -597,9 +564,6 @@
     <QtMoc Include="include\Host\Dbus\UpdateManagerBridgeProxy.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="include\Host\GameDownloader\Hook\CheckDownload.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="include\Host\GameDownloader\Hook\SaveInstallPath.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -657,15 +621,6 @@
     <QtMoc Include="include\Host\DownloaderSettings.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="include\Host\ElectronExecutor.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="include\Host\ElectronExecutor_p.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="include\Host\ElectronsExecutor.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="include\Host\ExecutorHookFactory.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -697,6 +652,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="include\Host\Updater.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="include\Host\Bridge\ExecutorBridge.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -743,16 +701,10 @@
     <ClInclude Include="include\Helper\UserInfoMigration.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Host\Bridge\Credential.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Host\GameDownloader\DownloaderSettingsRoulette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Host\Installer\UninstallInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Host\CredentialConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Host\Factory.h">

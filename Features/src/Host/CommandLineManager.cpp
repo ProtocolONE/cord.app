@@ -166,19 +166,21 @@ namespace P1 {
 
     void CommandLineManager::openUrlWithAuth(const QString& url, ProtocolOneCredential& credential)
     {
-      QString authUrl;
-      if (credential.isEmpty()) {
-        authUrl = url;
-      } else {
-        authUrl = "https://gnlogin.ru/?auth=";
-        authUrl.append(credential.cookie());
-        authUrl.append("&rp=");
-        authUrl.append(QUrl::toPercentEncoding(url));
-      }
+      // UNDONE unsupported now
 
-      authUrl.append('\0');
+      //QString authUrl;
+      //if (credential.isEmpty()) {
+      //  authUrl = url;
+      //} else {
+      //  authUrl = "https://gnlogin.ru/?auth=";
+      //  authUrl.append(credential.cookie());
+      //  authUrl.append("&rp=");
+      //  authUrl.append(QUrl::toPercentEncoding(url));
+      //}
 
-      emit this->openBrowser(authUrl);
+      //authUrl.append('\0');
+
+      emit this->openBrowser(url);
     }
 
   }

@@ -5,7 +5,7 @@
 
 #include <QtCore/QDebug>
 
-using P1::RestApi::CommandBase;
+
 using P1::RestApi::ProtocolOneCredential;
 
 namespace P1 {
@@ -60,11 +60,6 @@ namespace P1 {
       }
     }
 
-    void Connection::setSecondCredential(const ProtocolOneCredential& value)
-    {
-      this->_secondCredential = value;
-    }
-
     const ProtocolOneCredential& Connection::credential()
     {
       return this->_credential;
@@ -85,6 +80,29 @@ namespace P1 {
       return this->_lockedServices.contains(serviceId);
     }
 
+    void Connection::onAuthorizationError(const P1::RestApi::ProtocolOneCredential &credential)
+    {
+      // UNDONE In current UI credential here and in GameExecutor::execute are same.
+      // In a future we should compare token with all used by conenction.
+
+      if (credential.userId() != this->_credential.userId())
+        return;
+
+      if (credential != this->_credential && this->_credential.isValid()) {
+        this->updateCredential(credential, this->_credential);
+        return;
+      }
+
+      emit this->authorizationError(credential);
+    }
+
+    void Connection::updateCredential(
+      const P1::RestApi::ProtocolOneCredential &credentialOld,
+      const P1::RestApi::ProtocolOneCredential &credentialNew)
+    {
+      emit this->credentialUpdated(credentialOld, credentialNew);
+    }
+
     void Connection::lockService(const QString& serviceId)
     {
       this->_lockedServices.insert(serviceId);
@@ -93,27 +111,6 @@ namespace P1 {
     void Connection::unlockService(const QString& serviceId)
     {
       this->_lockedServices.remove(serviceId);
-    }
-
-    void Connection::onGenericError(CommandBase::Error error, QString message, CommandBase *command)
-    {
-      switch(error) {
-      case CommandBase::AuthorizationFailed: // break пропущен не спроста
-      case CommandBase::AccountNotExists:
-      case CommandBase::AuthorizationLimitExceed:
-      case CommandBase::UnknownAccountStatus:
-        break;
-      default:
-        return; // ignore all other error 
-      }
-      
-      const QMap<QString, QString>* params = command->commandParameters();
-      QString userId = params->value("userId", "");
-      if (userId.isEmpty())
-        return;
-
-      if (this->_credential.userId() == userId || this->_secondCredential.userId() == userId)
-        emit this->wrongCredential(userId);
     }
 
     void Connection::ping()

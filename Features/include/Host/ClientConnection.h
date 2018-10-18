@@ -25,11 +25,12 @@ namespace P1 {
       void close();
 
       void setCredential(const P1::RestApi::ProtocolOneCredential& value);
-      void setSecondCredential(const P1::RestApi::ProtocolOneCredential& value);
+      void updateCredential(const P1::RestApi::ProtocolOneCredential& valueOld, const P1::RestApi::ProtocolOneCredential& valueNew);
 
     signals:
       void disconnected();
-      void wrongCredential(const QString& userId);
+
+      void authorizationError(const QString& accessToken, const QString &acccessTokenExpiredTime);
 
     private:
       void timeoutTick();

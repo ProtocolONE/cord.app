@@ -6,7 +6,7 @@
 #include <QtCore/QString>
 
 #include <Core/Service.h>
-#include <RestApi/Commands/Service/GetHosts.h>
+
 #include <Host/ServiceProcess/DownloadServiceIcon.h>
 
 namespace P1 {
@@ -35,7 +35,7 @@ namespace P1 {
       private:
         void registerServices(const QList<QMap<QString, QString>>& servicesData);
         int getRetryInterval();
-        void getHostsResult(P1::RestApi::CommandBase::CommandResults result);
+        void getHostsResult();
 
         ServiceLoader* _serviceLoader;
         int _retryCount;

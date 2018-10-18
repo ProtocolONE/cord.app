@@ -47,8 +47,6 @@
 
 #include <Settings/Settings.h>
 
-#include <Marketing/MarketingTarget.h>
-
 #include <Helper/TerminateProcess.h>
 #include <Helper/SystemInfo.h>
 
@@ -88,7 +86,7 @@ namespace P1 {
       , _executorHookFactory(new ExecutorHookFactory(this))
       , _applicationStatistic(new ApplicationStatistic(this))
       , _marketingStatistic(new MarketingStatistic(this))
-      , _marketingTarget(new P1::Marketing::MarketingTarget(this))
+//      , _marketingTarget(new P1::Marketing::MarketingTarget(this))
       , _commandLineManager(new CommandLineManager(this))
       , _messageAdapter(new MessageAdapter(this))
       , _translation(new Translation(this))
@@ -175,6 +173,7 @@ namespace P1 {
         return;
       }
 #endif
+
       // INFO Необходимо инициализировать первым. Там определяется первый ли раз запукается приложение.
       this->_applicationStatistic->init();
 
@@ -233,8 +232,6 @@ namespace P1 {
       this->_serviceLoader->setGameArea(this->_commandLineManager->gameArea());
       this->_serviceLoader->setDownloader(this->_gameDownloader);
       this->_serviceLoader->setExecutor(this->_executor->mainExecutor());
-      this->_serviceLoader->setSimpleMainExecutor(this->_executor->simpleMainExecutor());
-      this->_serviceLoader->setSecondExecutor(this->_executor->secondExecutor());
       this->_serviceLoader->setDownloaderHookFactory(this->_downloaderHookFactory);
       this->_serviceLoader->setExecuterHookFactory(this->_executorHookFactory);
 
@@ -358,25 +355,13 @@ namespace P1 {
     
     void Application::initRestApi()
     {
-      QString apiUrl;
-
-      QStringList ports;
-      ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-      QString randomPort = ports.takeAt(qrand() % ports.count());
-      
-      QString urlPatern = this->_configManager->value<QString>("apiUrl", "https://gnapi.com:%1/restapi");
-      apiUrl = QString(urlPatern).arg(randomPort);
-
-      P1::Settings::Settings settings;
-      settings.setValue("launcher/restApi/url", apiUrl);
-      qDebug() << "Using rest api url " << apiUrl;
+      QString apiUrl = this->_configManager->value<QString>("api\\url", "https://api.tst.protocol.one/");
+      qDebug() << "Using RestApi url " << apiUrl;
 
       this->_restApiManager->setUri(apiUrl);
-      this->_restApiManager->setRequest(P1::RestApi::RequestFactory::Http);
-      //this->_restApiManager->setCache(this->_restApiCache);
       this->_restApiManager->setCache(new Features::PlainFileCache(this->_restApiManager));
       
-      bool debugLogEnabled = this->_configManager->value<bool>("debugApi", false);
+      bool debugLogEnabled = this->_configManager->value<bool>("api\\debug", false);
       this->_restApiManager->setDebugLogEnabled(debugLogEnabled);
 
       P1::RestApi::RestApiManager::setCommonInstance(this->_restApiManager);
@@ -446,20 +431,21 @@ namespace P1 {
 
     void Application::initMarketing()
     {
-      QSettings midSettings(
-        QSettings::NativeFormat,
-        QSettings::UserScope,
-        QCoreApplication::organizationName(),
-        QCoreApplication::applicationName());
+      //QSettings midSettings(
+      //  QSettings::NativeFormat,
+      //  QSettings::UserScope,
+      //  QCoreApplication::organizationName(),
+      //  QCoreApplication::applicationName());
 
-      QString mid = midSettings.value("MID", "").toString();
-      this->_marketingTarget->init("Launcher", mid);
+      //QString mid = midSettings.value("MID", "").toString();
+      //this->_marketingTarget->init("Launcher", mid);
 
-      int installerKey = midSettings.value("InstKey").toInt();
-      this->_marketingTarget->setInstallerKey(installerKey);
-      this->_marketingTarget->setRequestInterval(1000);
+      //int installerKey = midSettings.value("InstKey").toInt();
+      //this->_marketingTarget->setInstallerKey(installerKey);
+      //this->_marketingTarget->setRequestInterval(1000);
 
-      this->_systemInfoManager->setMid(mid);
+      //this->_systemInfoManager->setMid(mid);
+
       this->_systemInfoManager->init();
     }
 

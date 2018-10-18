@@ -7,8 +7,6 @@
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusAbstractAdaptor>
 
-#include <Host/Bridge/Credential.h>
-
 namespace P1 {
   namespace Host {
 
@@ -31,32 +29,11 @@ namespace P1 {
         void setExecutor(Proxy::GameExecutorProxy *value);
         
       public slots:
-
-        /*
-        <method name="execute">
-          <arg name="serviceId" type="s" direction="in"/>
-          <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="P1::Host::Bridge::Credential"/>
-        </method>
-        */
-        Q_NOREPLY void execute(const QString& serviceId, const Credential& credential);
-        
-        /*
-        <method name="executeSecond">
-          <arg name="serviceId" type="s" direction="in"/>
-          <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="P1::Host::Bridge::Credential"/>
-          <arg name="secondCredential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="P1::Host::Bridge::Credential"/>
-        </method>
-        */
-        Q_NOREPLY void executeSecond(const QString& serviceId, const Credential& credential, const Credential& secondCredential);
+        Q_NOREPLY void execute(const QString& serviceId, const QString& accessToken, const QString& acccessTokenExpiredTime);
 
         bool isGameStarted(const QString& serviceId) const;
         bool isAnyGameStarted() const;
-        bool canExecuteSecond(const QString& serviceId) const;
-        Q_NOREPLY void shutdownSecond();
-
+        
         /*!
         \fn Q_NOREPLY void ExecutorBridge::terminateGame(const QString& serviceId = QString());
         
@@ -73,8 +50,6 @@ namespace P1 {
       signals:
         void serviceStarted(const QString& serviceId);
         void serviceFinished(const QString& serviceId, int finishState);
-        void secondServiceStarted(const QString& serviceId);
-        void secondServiceFinished(const QString& serviceId, int finishState);
         
       private:
         Proxy::GameExecutorProxy *_executor;

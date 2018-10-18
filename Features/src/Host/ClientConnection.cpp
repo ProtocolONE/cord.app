@@ -3,8 +3,6 @@
 #include <Host/Dbus/ConnectionBridgeProxy.h>
 #include <Host/Dbus/DbusConnection.h>
 
-#include <Host/CredentialConverter.h>
-
 #include <Core/UI/Message.h>
 
 #include <RestApi/ProtocolOneCredential.h>
@@ -13,8 +11,6 @@
 
 using P1::Host::DBus::DBusConnection;
 using P1::RestApi::ProtocolOneCredential;
-
-using P1::Host::Bridge::createDbusCredential;
 
 namespace P1 {
   namespace Host {
@@ -52,8 +48,8 @@ namespace P1 {
       QObject::connect(this->_connection, &ConnectionBridgeProxy::pong,
         this, &ClientConnection::onPong);
 
-      QObject::connect(this->_connection, &ConnectionBridgeProxy::wrongCredential,
-        this, &ClientConnection::wrongCredential);
+      QObject::connect(this->_connection, &ConnectionBridgeProxy::authorizationError,
+        this, &ClientConnection::authorizationError);
 
       this->sendPing();
       this->_pingpongTimer.start();
@@ -72,7 +68,7 @@ namespace P1 {
 
     void ClientConnection::sendPing()
     {
-      Q_ASSERT(this->_connection);
+      Q_CHECK_PTR(this->_connection);
       QDBusPendingReply<> result = this->_connection->ping();
 
       if (!result.isError())
@@ -97,14 +93,18 @@ namespace P1 {
 
     void ClientConnection::setCredential(const P1::RestApi::ProtocolOneCredential& value)
     {
-      Q_ASSERT(this->_connection);
-      this->_connection->setCredential(createDbusCredential(value));
+      Q_CHECK_PTR(this->_connection);
+      this->_connection->setCredential(value.acccessTokent(), value.accessTokenExpiredTimeAsString());
     }
 
-    void ClientConnection::setSecondCredential(const P1::RestApi::ProtocolOneCredential& value)
+    void ClientConnection::updateCredential(
+      const P1::RestApi::ProtocolOneCredential& valueOld,
+      const P1::RestApi::ProtocolOneCredential& valueNew)
     {
-      Q_ASSERT(this->_connection);
-      this->_connection->setSecondCredential(createDbusCredential(value));
+      Q_CHECK_PTR(this->_connection);
+      this->_connection->updateCredential(
+          valueOld.acccessTokent(), valueOld.accessTokenExpiredTimeAsString()
+        , valueNew.acccessTokent(), valueNew.accessTokenExpiredTimeAsString());
     }
 
     void ClientConnection::close()

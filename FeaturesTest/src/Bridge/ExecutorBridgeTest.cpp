@@ -1,5 +1,5 @@
 #include <Host/GameExecutor.h>
-#include <Host/CredentialConverter.h>
+
 #include <Host/Bridge/ExecutorBridge.h>
 
 #include <Host/Proxy/GameExecutorProxy.h>
@@ -10,12 +10,12 @@
 #include <gtest/gtest.h>
 
 #include <QtCore/QString>
+#include <QtCore/QDateTime>
 
 using P1::Host::GameExecutor;
 using P1::Host::Proxy::GameExecutorProxy;
 using P1::Host::Bridge::ExecutorBridge;
-using P1::Host::Bridge::Credential;
-using P1::Host::Bridge::createProtocolOneCredential;
+
 using P1::RestApi::ProtocolOneCredential;
 
 using ::testing::Return;
@@ -24,31 +24,21 @@ class GameExecutorMock : public GameExecutorProxy
 {
 public:
   using GameExecutorProxy::execute;
-  using GameExecutorProxy::executeSecond;
   
 // slots
   MOCK_METHOD2(
     execute, 
     void(const QString& serviceId, const ProtocolOneCredential& credential));
 
-  MOCK_METHOD3(
-    executeSecond, 
-    void(const QString& serviceId, 
-         const ProtocolOneCredential& credential, 
-         const ProtocolOneCredential& secondCredential));
 
   MOCK_CONST_METHOD1(isGameStarted, bool(const QString&));
   MOCK_CONST_METHOD0(isAnyGameStarted, bool());
-  MOCK_CONST_METHOD1(canExecuteSecond, bool(const QString&));
-  MOCK_METHOD0(shutdownSecond, void());
   
   MOCK_METHOD1(terminateGame, void(const QString&));
 
 // slots for signals
   MOCK_CONST_METHOD1(onServiceStarted, void(const QString&));
   MOCK_CONST_METHOD2(onServiceFinished, void(const QString&, int));
-  MOCK_CONST_METHOD1(onSecondServiceStarted, void(const QString&));
-  MOCK_CONST_METHOD2(onSecondServiceFinished, void(const QString&, int));
 };
 
 class ExecutorBridgeTest : public ::testing::Test 
@@ -56,17 +46,24 @@ class ExecutorBridgeTest : public ::testing::Test
 public:
   ExecutorBridgeTest() 
   {
+    QDateTime now = QDateTime::currentDateTime();
+    now.addSecs(30);
     serviceId = "123456";
-    credential.userId = "qwe123eqwe123";
-    credential.appKey = "asdfgdfjkghlk";
-    credential.cookie = "zxcvbmvbxmcvb";
 
-    secondCredential.userId = "secondUserId";
-    secondCredential.appKey = "secondAppKey";
-    secondCredential.cookie = "secondcookie";
+    accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1MzkxNTM0MTEsImV4cCI6MTUzOTE1NTI"
+      "xMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlkIjoiNWJiZDlkZTMzNDg5ZDI5YzgzMGZkYjBkIn0.SKo"
+      "EfLk7b4GshpXWXobtQeF00XVjWh1vQDe41hWVtcHGf_qSEG3WqcRFsgRdWsJ1vBTBSHjmoSupxSdNyHY"
+      "6lP04wlnaFwr7w5ofBVeNPaP78bX6qnXvmBpfrvRzLX2IQBJLw89CAqfiCDJgTZzJ9Gu9K8Vwygjwdtj"
+      "qEhq3ugEbaBslO_dHQ-6rXwk5CnjsSTsTleyTERCIathB_Zl4L0UUXHgjXZ3gE_4CdTmuCnHjFOjdGmL"
+      "td1v80ZXWyuQifbwL32QPV4FniRXCrI7zEEXcBJAlGwF0gPYeOht3G2wgpYw4rD0dADYEX1J5gtAnKuj"
+      "xdULdvR1S6Xnq0Rt9rKAkC0OC2Gz9RjWfY92Kw-NPDeFlXHBEaIm0Q6XOvX9ctRSb5S7K4_FbPFTlIBQ"
+      "nlzipWt7pXUH6ObSJw0y_ZsmBfvbL0nCgqyZzKCAYOo2T88gjhbdl7hivICjcVNWD6R1cU5llwEC85t2"
+      "AyqLpZPDdgpuevwDjXOwCDJLylrYxTK5oL_bi-2fKLzxRqNNhAYQ3Hs4CpAMML1PqmcxKXApN8U7d1jx"
+      "gteL8l0XIEK47ZjoyD2kXL9fHCK0HmDeY5GWv1yRpVPExLxATcQiHyTZJQ51vdnWxn1zx9bVU8ZUCuJg"
+      "GwbZYB1oVSXNWH7t5y_2Bh6_dfmxeg3ITUWZ0kCI";
+    acccessTokenExpiredTime = QString::number(now.toMSecsSinceEpoch() / 1000);
 
-    expectedCredential = createProtocolOneCredential(credential);
-    expectedSecondCredential = createProtocolOneCredential(secondCredential);
+    expectedCredential = ProtocolOneCredential(accessToken, acccessTokenExpiredTime);
 
     bridge.setExecutor(&executor);
     
@@ -76,22 +73,16 @@ public:
     QObject::connect(&bridge, &ExecutorBridge::serviceFinished,
       &executor, &GameExecutorMock::onServiceFinished);
 
-    QObject::connect(&bridge, &ExecutorBridge::secondServiceStarted,
-      &executor, &GameExecutorMock::onSecondServiceStarted);
-
-    QObject::connect(&bridge, &ExecutorBridge::secondServiceFinished,
-      &executor, &GameExecutorMock::onSecondServiceFinished);
   }
 
   QString serviceId;
 
-  Credential credential;
+  QString accessToken;
+  QString acccessTokenExpiredTime;
   ProtocolOneCredential expectedCredential;
 
-  Credential secondCredential;
-  ProtocolOneCredential expectedSecondCredential;
-
   ExecutorBridge bridge;
+
   GameExecutorMock executor;
 };
 
@@ -100,15 +91,7 @@ TEST_F(ExecutorBridgeTest, execute)
   EXPECT_CALL(executor, execute(serviceId, expectedCredential))
     .Times(1);
 
-  bridge.execute(serviceId, credential);
-}
-
-TEST_F(ExecutorBridgeTest, executeSecond)
-{
-  EXPECT_CALL(executor, executeSecond(serviceId, expectedCredential, expectedSecondCredential))
-    .Times(1);
-
-  bridge.executeSecond(serviceId, credential, secondCredential);
+  bridge.execute(serviceId, accessToken, acccessTokenExpiredTime);
 }
 
 TEST_F(ExecutorBridgeTest, isGameStarted)
@@ -131,22 +114,6 @@ TEST_F(ExecutorBridgeTest, isAnyGameStarted)
   ASSERT_FALSE(bridge.isAnyGameStarted());
 }
 
-TEST_F(ExecutorBridgeTest, canExecuteSecond)
-{
-  EXPECT_CALL(executor, canExecuteSecond(serviceId))
-    .WillOnce(Return(true))
-    .WillOnce(Return(false));
-
-  ASSERT_TRUE(bridge.canExecuteSecond(serviceId));
-  ASSERT_FALSE(bridge.canExecuteSecond(serviceId));
-}
-
-TEST_F(ExecutorBridgeTest, shutdownSecond)
-{
-  EXPECT_CALL(executor, shutdownSecond()).Times(1);
-  bridge.shutdownSecond();
-}
-
 TEST_F(ExecutorBridgeTest, serviceStarted)
 {
   EXPECT_CALL(executor, onServiceStarted(serviceId)).Times(1);
@@ -157,18 +124,6 @@ TEST_F(ExecutorBridgeTest, serviceFinished)
 {
   EXPECT_CALL(executor, onServiceFinished(serviceId, 42)).Times(1);
   executor.serviceFinished(serviceId, 42);
-}
-
-TEST_F(ExecutorBridgeTest, secondServiceStarted)
-{
-  EXPECT_CALL(executor, onSecondServiceStarted(serviceId)).Times(1);
-  executor.secondServiceStarted(serviceId);
-}
-
-TEST_F(ExecutorBridgeTest, secondServiceFinished)
-{
-  EXPECT_CALL(executor, onSecondServiceFinished(serviceId, 42)).Times(1);
-  executor.secondServiceFinished(serviceId, 42);
 }
 
 TEST_F(ExecutorBridgeTest, terminateGame)

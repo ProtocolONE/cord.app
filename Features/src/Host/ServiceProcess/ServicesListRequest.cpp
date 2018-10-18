@@ -3,6 +3,8 @@
 
 #include <Helper/ApplicationArea.hpp>
 
+#include <RestApi/Api/V1/GetHost.h>
+
 #include <QtCore/QTimer>
 
 namespace P1 {
@@ -12,7 +14,7 @@ namespace P1 {
       ServicesListRequest::ServicesListRequest(QObject *parent)
         : _retryCount(0)
         , _serviceLoader(nullptr)
-        , _overrideWebScheme(true)
+        , _overrideWebScheme(false)
         , QObject(parent)
       {
         this->_retryIntervals << 5000 << 15000 << 30000 << 60000 << 90000;
@@ -32,23 +34,24 @@ namespace P1 {
 
       void ServicesListRequest::request()
       {
-        using P1::RestApi::Commands::Service::GetHosts;
-        GetHosts *cmd = new GetHosts(this);
-        QObject::connect(cmd, &GetHosts::result, this, &ServicesListRequest::getHostsResult);
+        using P1::RestApi::Api::V1::GetHost;
+        
+        GetHost *cmd = new GetHost(this);
+        QObject::connect(cmd, &GetHost::result, this, &ServicesListRequest::getHostsResult);
 
         cmd->execute();
       }
 
-      void ServicesListRequest::getHostsResult(P1::RestApi::CommandBase::CommandResults result) 
+      void ServicesListRequest::getHostsResult() 
       {
         Q_ASSERT(this->_serviceLoader);
 
-        using P1::RestApi::Commands::Service::GetHosts;
-        GetHosts* cmd = qobject_cast<GetHosts*>(sender());
+        using P1::RestApi::Api::V1::GetHost;
+        GetHost* cmd = qobject_cast<GetHost*>(sender());
         if (!cmd)
           return;
 
-        if (result == P1::RestApi::CommandBase::NoError) {
+        if (cmd->isSuccess()) {
           this->registerServices(cmd->servicesData());
           this->_downloadIconHelper.start();
           emit this->finished();
@@ -57,7 +60,9 @@ namespace P1 {
         }
 
         int interval = this->getRetryInterval();
-        qCritical() << "Get services from RestApi, result" << result << "error" << cmd->errorCode() << "retry interval" << interval;
+        qCritical() << "Get services from RestApi, errorCode " << cmd->errorCode()
+          << " statusCode " << cmd->statusCode()
+          << " retry interval " << interval;
 
         QTimer::singleShot(interval, cmd, SLOT(execute()));
       }

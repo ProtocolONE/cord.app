@@ -55,30 +55,6 @@ namespace P1 {
       Marketing::send(Marketing::CloseService, serviceId, params);
     }
 
-    void MarketingStatistic::onSecondServiceStarted(const QString& serviceId)
-    {
-      GameExecutorProxy *executor = qobject_cast<GameExecutorProxy *>(QObject::sender());
-      if (!executor)
-        return;
-
-      QVariantMap params;
-      this->setCredential(params, executor->secondGameCredential(serviceId));
-
-      Marketing::sendOnceByService(Marketing::FirstRunService, serviceId, params);
-      Marketing::send(Marketing::StartService, serviceId, params);
-    }
-
-    void MarketingStatistic::onSecondServiceFinished(const QString& serviceId, int finishState)
-    {
-      GameExecutorProxy *executor = qobject_cast<GameExecutorProxy *>(QObject::sender());
-      if (!executor)
-        return;
-
-      QVariantMap params;
-      this->setCredential(params, executor->secondGameCredential(serviceId));
-      Marketing::send(Marketing::CloseService, serviceId, params);
-    }
-
     void MarketingStatistic::onGameDownloadStarted(const Service *service)
     {
       DownloaderProxy *downloader = qobject_cast<DownloaderProxy *>(QObject::sender());
@@ -123,8 +99,8 @@ namespace P1 {
     void MarketingStatistic::setCredential(QVariantMap &params, const ProtocolOneCredential &credetial)
     {
       params["userId"] = credetial.userId();
-      params["overrideUserId"] = credetial.userId();
-      params["overrideAppKey"] = credetial.appKey();
+      //params["overrideUserId"] = credetial.userId();
+      //params["overrideAppKey"] = credetial.appKey();
     }
 
   }

@@ -47,6 +47,8 @@
 
 #include <QtYaml/ConfigManager.h>
 
+#include <Helper/RegisterTypes.h>
+
 using namespace Log4Qt;
 using namespace P1;
 using P1::Application::SingleApplication;
@@ -83,7 +85,7 @@ void initBugTrap(const QString &path)
   BT_SetSupportEMail(_T("support@protocol.one"));
   BT_SetSupportURL(_T("https://support.protocol.one"));
   BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
-  BT_SetSupportServer(_T("fs1.protocol.one"), 9999);
+  BT_SetSupportServer(_T("fs1.protocol.one"), 9999); // UNDONE add support of config
   BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.ui.log").utf16()));
   BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.ui.log.1").utf16()));
   BT_AddLogFile(reinterpret_cast<const wchar_t*>(QString(path + "/launcher.host.log").utf16()));
@@ -152,6 +154,13 @@ int main(int argc, char *argv[])
 {
   SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
   app.setQuitOnLastWindowClosed(false);
+
+  // Get current flag
+  // Turn off memory profiler - Qt working too long with this
+  int tmpFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+  tmpFlag = _CrtSetDbgFlag(0);
+
+  registerDependenicesTypes();
 
   QString configPath = QCoreApplication::applicationDirPath() + "/Config.yaml";
   
@@ -275,21 +284,32 @@ int main(int argc, char *argv[])
   QObject::connect(&app, &SingleApplication::forceQuit, 
     &w, &MainWindow::onWindowClose, Qt::DirectConnection);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(secondInstanceExecuteRequest()), &app, SLOT(allowSecondInstance()), Qt::DirectConnection)); 
+  QObject::connect(&w, &MainWindow::secondInstanceExecuteRequest, 
+    &app, &SingleApplication::allowSecondInstance, Qt::DirectConnection);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(commandRecieved(QString, QStringList)), &w, SLOT(commandRecieved(QString, QStringList)), Qt::QueuedConnection)); 
+  QObject::connect(&app, &SingleApplication::commandRecieved,
+    &w, &MainWindow::commandRecieved, Qt::QueuedConnection);
 
   Features::RemouteStartGame remouteStartGame;
-  SIGNAL_CONNECT_CHECK(QObject::connect(&app, SIGNAL(commandRecieved(QString, QStringList)), &remouteStartGame, SLOT(commandRecieved(QString, QStringList)), Qt::QueuedConnection));  
-  SIGNAL_CONNECT_CHECK(QObject::connect(&remouteStartGame, SIGNAL(startGameRequest(QString)), &w, SLOT(removeStartGame(QString))));
+  QObject::connect(&app, &SingleApplication::commandRecieved,
+    &remouteStartGame, &Features::RemouteStartGame::commandRecieved, Qt::QueuedConnection);
+  QObject::connect(&remouteStartGame, &Features::RemouteStartGame::startGameRequest,
+    &w, &MainWindow::removeStartGame, Qt::QueuedConnection);
 
   P1::Settings::SettingsSaver saver; 
   P1::Settings::Settings::setSettingsSaver(&saver); 
+  
+  QObject::connect(&w, &MainWindow::updateFinished,
+    &app, &SingleApplication::initializeFinished, Qt::QueuedConnection);
 
-  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(updateFinished()), &app, SLOT(initializeFinished())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(&w, SIGNAL(taskBarButtonMsgRegistered(unsigned int)), taskBarFilter, SLOT(onTaskBarButtonMsgRegistered(unsigned int))));
-  SIGNAL_CONNECT_CHECK(QObject::connect(taskBarFilter, SIGNAL(taskBarButtonCreated()), &w, SLOT(onTaskbarButtonCreated())));
-  SIGNAL_CONNECT_CHECK(QObject::connect(languageChangeEventFilter, SIGNAL(languageChanged()), &w, SLOT(onLanguageChanged())));
+  QObject::connect(&w, &MainWindow::taskBarButtonMsgRegistered,
+    taskBarFilter, &P1::Application::TaskBarEventFilter::onTaskBarButtonMsgRegistered, Qt::QueuedConnection);
+  QObject::connect(taskBarFilter, &P1::Application::TaskBarEventFilter::taskBarButtonCreated,
+    &w, &MainWindow::onTaskbarButtonCreated, Qt::QueuedConnection);
+  
+
+  QObject::connect(languageChangeEventFilter, &P1::Application::LanguageChangeEventFilter::languageChanged,
+    &w, &MainWindow::onLanguageChanged, Qt::QueuedConnection);
 
   int result = app.exec();
 

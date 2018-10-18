@@ -38,9 +38,9 @@ namespace P1 {
     class ProtocolOneCredential;
   }
 
-  namespace Marketing {
-    class MarketingTarget;
-  }
+  //namespace Marketing {
+  //  class MarketingTarget;
+  //}
 }
 
 namespace P1 {
@@ -168,7 +168,7 @@ namespace P1 {
       ApplicationRestarter *_applicationRestarter;
       ApplicationStatistic *_applicationStatistic;
       MarketingStatistic *_marketingStatistic;
-      P1::Marketing::MarketingTarget *_marketingTarget;
+      //P1::Marketing::MarketingTarget *_marketingTarget;
       CommandLineManager *_commandLineManager;
       Translation *_translation;
       MessageAdapter *_messageAdapter;

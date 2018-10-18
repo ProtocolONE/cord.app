@@ -16,7 +16,6 @@ GameDownloader:shared=False
 GameExecutor:shared=False
 LibtorrentWrapper:shared=True
 Log4qt:shared=False
-Marketing:shared=False
 QmlExtension:shared=True
 RestApi:shared=False
 Settings:shared=False

@@ -38,14 +38,12 @@
 <context>
     <name>P1::Host::HookFactory</name>
     <message>
-        <location filename="../src/Host/HookFactory.cpp" line="77"/>
         <source>HAS_ACCESS_INTERNAL_ERROR</source>
-        <translation type="unfinished">An error occurred. Please try again.</translation>
+        <translation type="obsolete">An error occurred. Please try again.</translation>
     </message>
     <message>
-        <location filename="../src/Host/HookFactory.cpp" line="76"/>
         <source>RESTAPI_ERROR_CAPTION</source>
-        <translation type="unfinished">Attention</translation>
+        <translation type="obsolete">Attention</translation>
     </message>
 </context>
 </TS>

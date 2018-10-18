@@ -3,12 +3,12 @@
 #include <QmlMessageAdapter.h>
 
 #include <Features/TaskBarProgressHelper.h>
+
 #include <QtYaml/ConfigManager.h>
-#include <Marketing/MarketingTarget.h>
+//#include <Marketing/MarketingTarget.h>
 
 #include <Core/Service.h>
 
-#include <RestApi/FakeCache.h>
 #include <RestApi/ProtocolOneCredential.h>
 #include <RestApi/RestApiManager.h>
 
@@ -56,10 +56,6 @@ class LicenseManagerBridgeProxy;
 class SettingsViewModel;
 class GameSettingsViewModel;
 
-namespace Features {
-  class RenderRateHack;
-}
-
 namespace P1 {
   namespace Host {
     class ClientConnection;
@@ -78,7 +74,7 @@ public:
   virtual ~MainWindow();
 
   QString language();
-  const QString& fileVersion() { return _fileVersion; }
+  const QString& fileVersion() const;
   Q_INVOKABLE void saveLanguage(const QString& language);
   Q_INVOKABLE void selectLanguage(const QString& language);
   void setFileVersion(const QString& fileVersion) { _fileVersion = fileVersion; }
@@ -94,7 +90,10 @@ public slots:
   void switchClientVersion();
 
   void restartApplication(bool shouldStartWithSameArguments = true);
-  void authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie);
+  
+  void authSuccessSlot(const QString& accessToken, const QString& acccessTokenExpiredTime);
+  void updateAuthCredential(const QString& accessTokenOld, const QString& acccessTokenExpiredTimeOld
+    , const QString& accessTokenNew, const QString& acccessTokenExpiredTimeNew);
 
   void openExternalUrlWithAuth(const QString& url);
   void openExternalUrl(const QString& url);
@@ -112,8 +111,6 @@ public slots:
   void updateFinishedSlot();
   void activateWindow();
   bool executeService(QString id);
-  bool executeSecondService(QString id, QString userId, QString appKey);
-  void terminateSecondService();
 
   bool isWindowVisible();
 
@@ -139,6 +136,7 @@ public slots:
   void shutdownUISlot();
 
   void terminateGame(const QString& serviceId);
+  void removeStartGame(QString serviceId);
 
 signals:
   /*
@@ -148,12 +146,6 @@ signals:
   void restartUIRequest();
   void shutdownUIRequest();
 
-  void nickNameChanged();
-  void nickNameValueChanged(QString &value);
-  void techNameChanged();
-  void techNameValueChanged(QString &value);
-
-  void mediumAvatarUrlChanged(); 
   void languageChanged();
   void fileVersionChanged();
 
@@ -174,7 +166,6 @@ signals:
   void secondInstanceExecuteRequest();
 
   void selectService(QString serviceId);
-  void needPakkanenVerification(QString serviceId);
 
   void downloaderStarted(QString service, int startType);
   void downloaderFinished(QString service);
@@ -197,18 +188,16 @@ signals:
   void serviceFinished(QString service, int serviceState);
   void serviceInstalled(QString serviceId);
 
-  void secondServiceStarted(QString service);
-  void secondServiceFinished(QString service, int serviceState);
-
   void authBeforeStartGameRequest(QString serviceId);
-  void authGuestConfirmRequest(QString serviceId);
 
   void taskBarButtonMsgRegistered(unsigned int msgId);
 
   void showLicense(QString serviceId);
   void showWebLicense(QString serviceId);
   void quit();
-  void wrongCredential(const QString& userId);
+  //void wrongCredential(const QString& userId);
+  
+  void authorizationError(const QString& accessToken, const QString &acccessTokenExpiredTime);
 
   void gameDownloaderAccessRequired(const QString& serviceId);
   void uninstallServiceRequest(QString serviceId);
@@ -217,9 +206,6 @@ signals:
 private slots:
   void onServiceStarted(const QString &serviceId);
   void onServiceFinished(const QString &serviceId, int state);
-
-  void onSecondServiceStarted(const QString &serviceId);
-  void onSecondServiceFinished(const QString &serviceId, int state);
 
   void downloadGameTotalProgressChanged(const QString& serviceId, int progress);
   void downloadGameProgressChanged(
@@ -235,18 +221,14 @@ private slots:
   void gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message);
   void gameDownloaderServiceInstalled(const QString& serviceId); 
   void gameDownloaderServiceUpdated(const QString& serviceId); 
-  void removeStartGame(QString serviceId);
 
-  void restApiGenericError(
-    P1::RestApi::CommandBase::Error error,
-    QString message,
-    P1::RestApi::CommandBase *command);
+
 
 private:
   void sendStartingMarketing();
   
   void initRestApi();
-  void initMarketing();
+  //void initMarketing();
 
   void checkDesktopDepth();
 
@@ -254,9 +236,9 @@ private:
 
   void prepairGameDownloader();
   void postUpdateInit();
-  void onApplicationStateChanged(Qt::ApplicationState state);
 
-  P1::RestApi::FakeCache _fakeCache;
+  void onAuthorizationError(const P1::RestApi::ProtocolOneCredential &credential);
+
   P1::RestApi::ProtocolOneCredential _credential;
   P1::RestApi::RestApiManager _restapiManager;
 
@@ -267,9 +249,8 @@ private:
   QString _language;
   QString _fileVersion;
 
-  //MQDeclarativeView *nQMLContainer;
-
   bool m_WindowState; // false - normal size, true - max size  
+
   P1::Application::ArgumentParser _commandLineArguments;
   P1::Core::Service::Area _gameArea;
   P1::KeyboardLayoutHelper _keyboardLayoutHelper;
@@ -279,7 +260,7 @@ private:
 
   P1::Core::Service::Area _applicationArea;
 
-  P1::Marketing::MarketingTarget _marketingTargetFeatures;
+  //P1::Marketing::MarketingTarget _marketingTargetFeatures;
 
   Features::TaskBarHelper _taskBarHelper;
 
@@ -291,7 +272,6 @@ private:
   ApplicationStatisticBridgeProxy* _applicationStatistic;
   LicenseManagerBridgeProxy* _licenseManager;
   P1::Host::ClientConnection *_clientConnection;
-  Features::RenderRateHack *_renderRateHack;
 
   BestInstallPath *_bestInstallPath;
   P1::QtYaml::ConfigManager _configManager;

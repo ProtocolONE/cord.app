@@ -22,8 +22,6 @@ namespace P1 {
 
       void onServiceStarted(const QString& serviceId);
       void onServiceFinished(const QString& serviceId, int finishState);
-      void onSecondServiceStarted(const QString& serviceId);
-      void onSecondServiceFinished(const QString& serviceId, int finishState);
 
       void onGameDownloadStarted(const P1::Core::Service *service);
       void onGameTorrentDownloadFinished(const P1::Core::Service *service);

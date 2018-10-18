@@ -4,10 +4,7 @@
 #include <HostMessageAdapter.h>
 
 #include <Helper/CacheNetworkManagerFactory.h>
-//#include <Helper/ConfigLoader.hpp>
 
-#include <Features/RestApi/ServiceHasAccess.h>
-#include <Features/RenderRateHack.h>
 #include <Features/PlainFileCache.h>
 
 #include <Features/Marketing/MarketingIntegrationMarker.h>
@@ -19,7 +16,6 @@
 #include <viewmodel/ServiceHandleViewModel.h>
 #include <viewmodel/SettingsManagerViewModel.h>
 
-#include <Host/CredentialConverter.h>
 #include <Host/Translation.h>
 #include <Host/ClientConnection.h>
 
@@ -41,7 +37,7 @@
 
 #include <UpdateSystem/UpdateInfoGetterResultInterface.h>
 
-#include <RestApi/RequestFactory.h>
+#include <RestApi/Request/RequestFactory.h>
 
 #include <Application/WindowHelper.h>
 
@@ -63,14 +59,14 @@
 
 #include <QMetaType>
 
+
+
+
 #define SIGNAL_CONNECT_CHECK(X) { bool result = X; Q_ASSERT_X(result, __FUNCTION__ , #X); }
 
-using P1::Host::Bridge::Credential;
 using P1::Host::DBus::DBusConnection;
 using P1::Host::ClientConnection;
-
-using P1::Host::Bridge::createDbusCredential;
-using P1::Host::Bridge::createProtocolOneCredential;
+using P1::RestApi::ProtocolOneCredential;
 
 MainWindow::MainWindow(QWindow *parent)
   : QQuickView(parent)
@@ -83,7 +79,6 @@ MainWindow::MainWindow(QWindow *parent)
   , _applicationStatistic(nullptr)
   , _clientConnection(nullptr)
   , _bestInstallPath(nullptr)
-  , _renderRateHack(nullptr)
 {
   this->hide();
 
@@ -91,13 +86,6 @@ MainWindow::MainWindow(QWindow *parent)
   path += "/Config.yaml";
   if (!this->_configManager.load(path))
     qWarning() << "Cannot read application config file: " << path;
-
-  if (QString::fromLatin1(qgetenv("QT_OPENGL")) == "software") {
-    this->_renderRateHack = new Features::RenderRateHack(this);
-    this->_renderRateHack->init(this);
-    QObject::connect(qApp, &QGuiApplication::applicationStateChanged, this, &MainWindow::onApplicationStateChanged);
-
-  }
 }
 
 MainWindow::~MainWindow()
@@ -108,9 +96,6 @@ void MainWindow::initialize()
 {
   qRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>("P1::Host::Bridge::DownloadProgressArgs");
   qDBusRegisterMetaType<P1::Host::Bridge::DownloadProgressArgs>();
-  
-  qRegisterMetaType<P1::Host::Bridge::Credential>("P1::Host::Bridge::Credential");
-  qDBusRegisterMetaType<P1::Host::Bridge::Credential>();
 
   // DBUS...
   QDBusConnection &connection = DBusConnection::bus();
@@ -122,8 +107,8 @@ void MainWindow::initialize()
   QObject::connect(this->_clientConnection, &ClientConnection::disconnected,
     this, &MainWindow::onWindowClose);
   
-  QObject::connect(this->_clientConnection, &ClientConnection::wrongCredential,
-    this, &MainWindow::wrongCredential);
+  QObject::connect(this->_clientConnection, &ClientConnection::authorizationError,
+    this, &MainWindow::authorizationError);
   
   this->_applicationProxy = new ApplicationBridgeProxy(dbusService, "/application", connection, this);
   this->_downloader = new DownloaderBridgeProxy(dbusService, "/downloader", connection, this);
@@ -198,15 +183,16 @@ void MainWindow::initialize()
   qmlRegisterUncreatableType<P1::Downloader::DownloadResultsWrapper>("Launcher.Library", 1, 0,  "DownloadResults", "");
   qmlRegisterUncreatableType<P1::UpdateSystem::UpdateInfoGetterResultsWrapper>("Launcher.Library", 1, 0,  "UpdateInfoGetterResults", "");
   
-  this->initMarketing();
+  //this->initMarketing();
   
   this->engine()->setNetworkAccessManagerFactory(new CacheNetworkManagerFactory(this));
   this->engine()->addImportPath(":/");
   this->engine()->addImportPath((QCoreApplication::applicationDirPath() + "/plugins5/"));
   this->engine()->addPluginPath(QCoreApplication::applicationDirPath() + "/plugins5/");
 
-  QObject::connect(&this->_restapiManager, &P1::RestApi::RestApiManager::genericErrorEx,
-    this, &MainWindow::restApiGenericError);
+  QObject::connect(
+    &this->_restapiManager, &P1::RestApi::RestApiManager::authorizationError,
+    this, &MainWindow::onAuthorizationError);
   
   messageAdapter = new QmlMessageAdapter(this);
     
@@ -232,8 +218,8 @@ void MainWindow::initialize()
     // UNDONE решить что делать в случаи фейла верстки
   }
   
-  SIGNAL_CONNECT_CHECK(QObject::connect(this->engine(), SIGNAL(quit()), this, SLOT(onWindowClose())));
-  connect(this, &MainWindow::quit, this, &MainWindow::onWindowClose);
+  QObject::connect(this->engine(), &QQmlEngine::quit, this, &MainWindow::onWindowClose);
+  QObject::connect(this, &MainWindow::quit, this, &MainWindow::onWindowClose);
 
   Message::setAdapter(messageAdapter);
 
@@ -351,6 +337,11 @@ QString MainWindow::language()
   return this->_applicationProxy->language();
 }
 
+const QString& MainWindow::fileVersion() const
+{
+  return _fileVersion;
+}
+
 void MainWindow::saveLanguage(const QString& language)
 {
   this->_applicationProxy->setLanguage(language);
@@ -361,7 +352,7 @@ void MainWindow::selectLanguage(const QString& language)
   if (this->translators[language])
     QApplication::installTranslator(this->translators[language]);
 
-  emit languageChanged();
+  emit this->languageChanged();
 }
 
 void MainWindow::onWindowClose()
@@ -374,19 +365,32 @@ void MainWindow::onWindowClose()
   QCoreApplication::quit();
 }
 
-void MainWindow::authSuccessSlot(const QString& userId, const QString& appKey, const QString& cookie)
+void MainWindow::authSuccessSlot(const QString& accessToken, const QString& acccessTokenExpiredTime)
 {
-  qDebug() << "Auth success with userId " << userId;
+  this->_credential.setAcccessTokent(accessToken);
+  this->_credential.setAccessTokenExpiredTime(acccessTokenExpiredTime);
 
-  P1::RestApi::ProtocolOneCredential credential;
-  credential.setUserId(userId);
-  credential.setAppKey(appKey);
-  credential.setCookie(cookie);
+  qDebug() << "Auth success with userId " << this->_credential.userId();
 
-  this->_credential = credential;
-  this->_restapiManager.setCridential(credential);
+  this->_restapiManager.setCridential(this->_credential);
+  this->_clientConnection->setCredential(this->_credential);
+}
 
-  this->_clientConnection->setCredential(credential);
+void MainWindow::updateAuthCredential(const QString& accessTokenOld, const QString& acccessTokenExpiredTimeOld
+  , const QString& accessTokenNew, const QString& acccessTokenExpiredTimeNew)
+{
+  if (accessTokenOld == this->_credential.acccessTokent()) {
+    this->_credential.setAcccessTokent(accessTokenNew);
+    this->_credential.setAccessTokenExpiredTime(acccessTokenExpiredTimeNew);
+
+    this->_restapiManager.setCridential(this->_credential);
+    this->_clientConnection->setCredential(this->_credential);
+  }
+
+  ProtocolOneCredential oldValue(accessTokenOld, acccessTokenExpiredTimeOld);
+  ProtocolOneCredential newValue(accessTokenNew, acccessTokenExpiredTimeNew);
+  this->_restapiManager.updateCredential(oldValue, newValue);
+  this->_clientConnection->updateCredential(oldValue, newValue);
 }
 
 void MainWindow::restartApplication(bool shouldStartWithSameArguments)
@@ -396,19 +400,20 @@ void MainWindow::restartApplication(bool shouldStartWithSameArguments)
 
 void MainWindow::openExternalUrlWithAuth(const QString& url)
 {
-  QString authUrl;
-  if(this->_credential.appKey().isEmpty()) {
-    authUrl = url;
-  } else {
-    authUrl = "https://gnlogin.ru/?auth=";
-    authUrl.append(this->_credential.cookie());
-    authUrl.append("&rp=");
-    authUrl.append(QUrl::toPercentEncoding(url));
-  }
+  //QString authUrl;
+  //if(this->_credential.appKey().isEmpty()) {
+  //  authUrl = url;
+  //} else {
+  //  authUrl = "https://gnlogin.ru/?auth=";
+  //  authUrl.append(this->_credential.cookie());
+  //  authUrl.append("&rp=");
+  //  authUrl.append(QUrl::toPercentEncoding(url));
+  //}
 
-  authUrl.append('\0');
+  //authUrl.append('\0');
 
-  this->openExternalUrl(authUrl);
+  // UNDONE There are no shared auth between sites now.
+  this->openExternalUrl(url);
 }
 
 void MainWindow::openExternalUrl(const QString& url)
@@ -418,10 +423,7 @@ void MainWindow::openExternalUrl(const QString& url)
 
 void MainWindow::logout()
 {
-  this->_credential.setAppKey("");
-  this->_credential.setUserId("");
-  this->_credential.setCookie("");
-
+  this->_credential.clear();
   this->_restapiManager.setCridential(this->_credential);
 
   this->_clientConnection->setCredential(this->_credential);
@@ -514,7 +516,7 @@ bool MainWindow::executeService(QString id)
     return false;
   }
 
-  if (this->_restapiManager.credential().userId().isEmpty()) {
+  if (this->_restapiManager.credential().isValid()) {
     emit this->authBeforeStartGameRequest(id);
     return false;
   }
@@ -525,7 +527,7 @@ bool MainWindow::executeService(QString id)
   P1::RestApi::ProtocolOneCredential baseCredential =
     P1::RestApi::RestApiManager::commonInstance()->credential();
 
-  this->_executor->execute(id, createDbusCredential(baseCredential));
+  this->_executor->execute(id, baseCredential.acccessTokent(), baseCredential.accessTokenExpiredTimeAsString());
   this->startGame(id);
   return true;
 }
@@ -599,7 +601,9 @@ void MainWindow::downloadButtonPause(QString serviceId)
   P1::RestApi::ProtocolOneCredential baseCredential = 
     P1::RestApi::RestApiManager::commonInstance()->credential();
     
-  this->_executor->execute(serviceId, createDbusCredential(baseCredential));
+  this->_executor->execute(serviceId
+    , baseCredential.acccessTokent()
+    , baseCredential.accessTokenExpiredTimeAsString());
 }
 
 void MainWindow::uninstallService(const QString serviceId)
@@ -627,7 +631,7 @@ void MainWindow::startGame(const QString& serviceId)
     return;
   }
   
-  bool isAuthed = !this->_restapiManager.credential().userId().isEmpty();
+  bool isAuthed = !this->_restapiManager.credential().isValid();
   if (!isAuthed) {
     emit this->authBeforeStartGameRequest(serviceId);
     return;
@@ -636,7 +640,7 @@ void MainWindow::startGame(const QString& serviceId)
   P1::RestApi::ProtocolOneCredential baseCredential = 
     P1::RestApi::RestApiManager::commonInstance()->credential();
 
-  this->_executor->execute(serviceId, createDbusCredential(baseCredential));
+  this->_executor->execute(serviceId, baseCredential.acccessTokent(), baseCredential.accessTokenExpiredTimeAsString());
 }
 
 void MainWindow::commandRecieved(QString name, QStringList arguments)
@@ -678,65 +682,6 @@ void MainWindow::onServiceStarted(const QString &serviceId)
 void MainWindow::onServiceFinished(const QString &serviceId, int state) 
 {
   emit this->serviceFinished(serviceId, state);
-
-  switch(state) {
-  case P1::GameExecutor::AuthorizationError:
-    emit this->wrongCredential(this->_credential.userId());
-    break;
-  case P1::GameExecutor::ServiceAccountBlockedError:
-    if (P1::Core::UI::Message::Support == 
-      P1::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"), 
-      static_cast<Message::StandardButton>(P1::Core::UI::Message::Ok | P1::Core::UI::Message::Support)))
-      this->openExternalUrl("https://support.protocol.one");
-    break;
-  case P1::GameExecutor::ServiceAuthorizationImpossible:
-    //INFO Handled in qml 
-    break;
-  case P1::GameExecutor::PakkanenPermissionDenied:
-    P1::Core::UI::Message::warning(
-      tr("INFO_CAPTION"), 
-      tr("SERVICE_ACCOUNT_CBT_PERMISSION_INFO").arg(this->_serviceSettings->name(serviceId)));
-    break;
-  case P1::GameExecutor::PakkanenPhoneVerification:
-    emit this->needPakkanenVerification(serviceId);
-    break;
-  case P1::GameExecutor::GuestAccountExpired:
-    emit this->authGuestConfirmRequest(serviceId);
-    break;
-  case P1::GameExecutor::PakkanenGeoIpBlocked:
-    P1::Core::UI::Message::warning(
-      tr("INFO_CAPTION"),
-      tr("SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO").arg(this->_serviceSettings->name(serviceId)));
-    break;
-  }
-}
-
-void MainWindow::onSecondServiceStarted(const QString &serviceId)
-{
-  emit this->secondServiceStarted(serviceId);
-}
-
-void MainWindow::onSecondServiceFinished(const QString &serviceId, int state) 
-{
-  emit this->secondServiceFinished(serviceId, state);
-
-  DEBUG_LOG << "Finish state" << state;
-
-  switch(state) {
-  case P1::GameExecutor::AuthorizationError:
-    P1::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SECOND_SERVICE_AUTH_ERROR")); 
-    break;
-  case P1::GameExecutor::ServiceAccountBlockedError:
-    if (P1::Core::UI::Message::Support ==
-      P1::Core::UI::Message::warning(tr("INFO_CAPTION"), tr("SERVICE_ACCOUNT_BLOCKED_INFO"),
-      static_cast<Message::StandardButton>(P1::Core::UI::Message::Ok | P1::Core::UI::Message::Support)))
-      this->openExternalUrlWithAuth("https://support.protocol.one");
-    break;
-    break;
-  case P1::GameExecutor::ServiceAuthorizationImpossible:
-    //INFO Handled in qml 
-    break;
-  }
 }
 
 void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, const QString& message)
@@ -744,29 +689,15 @@ void MainWindow::gameDownloaderStatusMessageChanged(const QString& serviceId, co
   emit this->downloaderServiceStatusMessageChanged(serviceId, message);
 }
 
-void MainWindow::restApiGenericError(
-  P1::RestApi::CommandBase::Error error,
-  QString message,
-  P1::RestApi::CommandBase *command)
+void MainWindow::onAuthorizationError(const P1::RestApi::ProtocolOneCredential &credential)
 {
-  using P1::RestApi::CommandBase;
-
-  switch(error) {
-  case CommandBase::AuthorizationFailed: // break пропущен не спроста
-  case CommandBase::AccountNotExists:
-  case CommandBase::AuthorizationLimitExceed:
-  case CommandBase::UnknownAccountStatus:
-    break;
-  default:
-    return; // ignore all other error 
+  if (credential.userId() == this->_credential.userId()
+    && this->_credential != credential
+    && this->_credential.isValid()) {
+    this->_clientConnection->updateCredential(credential, this->_credential);
   }
 
-  const QMap<QString, QString>* params = command->commandParameters();
-  QString userId = params->value("userId", "");
-  if (userId.isEmpty())
-    return;
-
-  emit this->wrongCredential(userId);
+  emit this->authorizationError(credential.acccessTokent(), credential.accessTokenExpiredTimeAsString());
 }
 
 void MainWindow::showEvent(QShowEvent* event)
@@ -803,21 +734,6 @@ void MainWindow::postUpdateInit()
 
   QObject::connect(this->_executor, &ExecutorBridgeProxy::serviceFinished,
     this, &MainWindow::onServiceFinished);
-
-  QObject::connect(this->_executor, &ExecutorBridgeProxy::secondServiceStarted,
-    this, &MainWindow::onSecondServiceStarted);
-
-  QObject::connect(this->_executor, &ExecutorBridgeProxy::secondServiceFinished,
-    this, &MainWindow::onSecondServiceFinished);
-}
-
-void MainWindow::onApplicationStateChanged(Qt::ApplicationState state)
-{
-  if (!this->_renderRateHack)
-    return;
-
-  bool active = state == Qt::ApplicationActive;
-  this->_renderRateHack->setVsyncDelay(active ? 40 : 200);
 }
 
 bool MainWindow::anyLicenseAccepted()
@@ -875,27 +791,13 @@ void MainWindow::initFinished()
 
 void MainWindow::initRestApi()
 {
-  QString apiUrl;
-
-  QStringList ports;
-  ports << "443" << "7443" << "8443" << "9443" << "10443" << "11443";
-  QString randomPort = ports.takeAt(qrand() % ports.count());
-
-  QString urlPatern = this->_configManager.value<QString>("apiUrlPat", "https://gnapi.com:%1/restapi");
-  apiUrl = QString(urlPatern).arg(randomPort);
-
-  P1::Settings::Settings settings;
-  settings.setValue("launcher/restApi/url", apiUrl);
-
-  qDebug() << "Using rest api url " << apiUrl;
+  QString apiUrl = this->_configManager.value<QString>("api\\url", "https://api.tst.protocol.one/");
+  qDebug() << "Using RestApi url " << apiUrl;
 
   this->_restapiManager.setUri(apiUrl);
-  this->_restapiManager.setRequest(P1::RestApi::RequestFactory::Http);
-  
-  //this->_restapiManager.setCache(&_fakeCache);
   this->_restapiManager.setCache(new Features::PlainFileCache(&this->_restapiManager));
 
-  bool debugLogEnabled = this->_configManager.value<bool>("debugApi", false);
+  bool debugLogEnabled = this->_configManager.value<bool>("api\\debug", false);
   this->_restapiManager.setDebugLogEnabled(debugLogEnabled);
 
   P1::RestApi::RestApiManager::setCommonInstance(&this->_restapiManager);
@@ -913,49 +815,21 @@ bool MainWindow::event(QEvent* event)
   return QQuickView::event(event);
 }
 
-void MainWindow::initMarketing()
-{
-  QSettings midSettings(
-    QSettings::NativeFormat,
-    QSettings::UserScope,
-    QCoreApplication::organizationName(),
-    QCoreApplication::applicationName());
-
-  QString mid = midSettings.value("MID", "").toString();
-  this->_marketingTargetFeatures.init("Launcher", mid);
-
-  int installerKey = midSettings.value("InstKey").toInt();
-  this->_marketingTargetFeatures.setInstallerKey(installerKey);
-  this->_marketingTargetFeatures.setRequestInterval(1000);
-}
-
-bool MainWindow::executeSecondService(QString id, QString userId, QString appKey)
-{
-  if (!this->_executor->canExecuteSecond(id))
-    return false;
-
-  P1::RestApi::ProtocolOneCredential baseCredential = 
-    P1::RestApi::RestApiManager::commonInstance()->credential();
-
-  P1::RestApi::ProtocolOneCredential credential;
-  credential.setUserId(userId);
-  credential.setAppKey(appKey);
-  // set cookie if needed 
-
-  this->_clientConnection->setSecondCredential(credential);
-
-  this->_executor->executeSecond(
-    id,
-    createDbusCredential(baseCredential),
-    createDbusCredential(credential));
-
-  return true;
-}
-
-void MainWindow::terminateSecondService()
-{
-  this->_executor->shutdownSecond();
-}
+//void MainWindow::initMarketing()
+//{
+//  QSettings midSettings(
+//    QSettings::NativeFormat,
+//    QSettings::UserScope,
+//    QCoreApplication::organizationName(),
+//    QCoreApplication::applicationName());
+//
+//  QString mid = midSettings.value("MID", "").toString();
+//  this->_marketingTargetFeatures.init("Launcher", mid);
+//
+//  int installerKey = midSettings.value("InstKey").toInt();
+//  this->_marketingTargetFeatures.setInstallerKey(installerKey);
+//  this->_marketingTargetFeatures.setRequestInterval(1000);
+//}
 
 void MainWindow::mousePressEvent(QMouseEvent* event) 
 {

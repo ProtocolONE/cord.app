@@ -42,9 +42,6 @@ namespace P1 {
         void setDownloader(P1::GameDownloader::GameDownloadService *value);
         void setExecutor(P1::GameExecutor::GameExecutorService *value);
 
-        void setSimpleMainExecutor(P1::GameExecutor::GameExecutorService *value);
-        void setSecondExecutor(P1::GameExecutor::GameExecutorService *value);
-
         void setDownloaderHookFactory(HookFactory *value);
         void setExecuterHookFactory(ExecutorHookFactory *value);
 
@@ -69,8 +66,6 @@ namespace P1 {
         P1::GameDownloader::GameDownloadService *_downloader;
 
         P1::GameExecutor::GameExecutorService *_executor;
-        P1::GameExecutor::GameExecutorService *_secondExecutor; // Executor for premium second game
-        P1::GameExecutor::GameExecutorService *_simpleMainExecutor; // Executor for main copy of game when second still alive.
 
         HookFactory *_factory;
         ExecutorHookFactory *_executorHookFactory;

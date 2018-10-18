@@ -41,11 +41,9 @@
     <ClCompile Include="src\Features\Marketing\SystemInfo\SoftVendor\ZZima.cpp" />
     <ClCompile Include="src\Features\Marketing\SystemInfo\SystemInfoManager.cpp" />
     <ClCompile Include="src\Features\PlainFileCache.cpp" />
-    <ClCompile Include="src\Features\PremiumExecutor.cpp" />
     <ClCompile Include="src\Features\ProtocolOneDownloader.cpp" />
     <ClCompile Include="src\Features\RemouteStartGame.cpp" />
     <ClCompile Include="src\Features\RenderRateHack.cpp" />
-    <ClCompile Include="src\Features\RestApi\ServiceHasAccess.cpp" />
     <ClCompile Include="src\Features\StopDownloadServiceWhileExecuteAnyGame.cpp" />
     <ClCompile Include="src\Features\TaskBarEventFilter.cpp" />
     <ClCompile Include="src\Features\TaskBarProgressHelper.cpp" />
@@ -61,7 +59,6 @@
     <ClCompile Include="src\Host\Bridge\ApplicationBridge.cpp" />
     <ClCompile Include="src\Host\Bridge\ApplicationStatisticBridge.cpp" />
     <ClCompile Include="src\Host\Bridge\ConnectionBridge.cpp" />
-    <ClCompile Include="src\Host\Bridge\Credential.cpp" />
     <ClCompile Include="src\Host\Bridge\DownloaderBridge.cpp" />
     <ClCompile Include="src\Host\Bridge\DownloaderSettingsBridge.cpp" />
     <ClCompile Include="src\Host\Bridge\ExecutorBridge.cpp" />
@@ -75,7 +72,6 @@
     <ClCompile Include="src\Host\CommandLineManager.cpp" />
     <ClCompile Include="src\Host\Connection.cpp" />
     <ClCompile Include="src\Host\ConnectionManager.cpp" />
-    <ClCompile Include="src\Host\CredentialConverter.cpp" />
     <ClCompile Include="src\Host\Dbus\ApplicationBridgeAdaptor.cpp" />
     <ClCompile Include="src\Host\Dbus\ApplicationBridgeProxy.cpp" />
     <ClCompile Include="src\Host\Dbus\ApplicationStatisticBridgeAdaptor.cpp" />
@@ -103,12 +99,8 @@
     <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeAdaptor.cpp" />
     <ClCompile Include="src\Host\Dbus\UpdateManagerBridgeProxy.cpp" />
     <ClCompile Include="src\Host\DownloaderSettings.cpp" />
-    <ClCompile Include="src\Host\ElectronExecutor.cpp" />
-    <ClCompile Include="src\Host\ElectronExecutor_p.cpp" />
-    <ClCompile Include="src\Host\ElectronsExecutor.cpp" />
     <ClCompile Include="src\Host\ExecutorHookFactory.cpp" />
     <ClCompile Include="src\Host\GameDownloader\DownloaderSettingsRoulette.cpp" />
-    <ClCompile Include="src\Host\GameDownloader\Hook\CheckDownload.cpp" />
     <ClCompile Include="src\Host\GameDownloader\Hook\SaveInstallPath.cpp" />
     <ClCompile Include="src\Host\GameDownloader\Hook\UpdateUninstallInfo.cpp" />
     <ClCompile Include="src\Host\GameExecutor.cpp" />
@@ -136,53 +128,21 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="include\Features\GameDownloader\DownloadStats.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\GameDownloader\ExternalIpAddress.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\GameDownloader\GameDownloadStatistics.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\GameExecutor\Hook\CheckAsciiPath.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\CpuInfo.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Hdd.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\OsInfo.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Ram.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Screen.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\Hardware\Video.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Antivirus.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\FourGame.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\GameVendorBase.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\MailRu.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Nikita.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\Origin.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\Features\ComInitialize.h" />
     <ClInclude Include="include\Features\PlainFileCache.h" />
     <ClInclude Include="include\Features\WmiQuery.h" />
@@ -195,7 +155,6 @@
     <ClInclude Include="include\Helper\SystemInfo.h" />
     <ClInclude Include="include\Helper\TerminateProcess.h" />
     <ClInclude Include="include\Helper\UserInfoMigration.hpp" />
-    <ClInclude Include="include\Host\CredentialConverter.h" />
     <ClInclude Include="include\Host\Factory.h" />
     <ClInclude Include="include\Host\MarketingStatistic.h" />
     <ClInclude Include="include\Host\SettingsManager.h" />
@@ -211,9 +170,6 @@
     <QtMoc Include="include\Host\HookFactory.h" />
     <QtMoc Include="include\Host\GameExecutor.h" />
     <QtMoc Include="include\Host\ExecutorHookFactory.h" />
-    <QtMoc Include="include\Host\ElectronsExecutor.h" />
-    <QtMoc Include="include\Host\ElectronExecutor_p.h" />
-    <QtMoc Include="include\Host\ElectronExecutor.h" />
     <QtMoc Include="include\Host\DownloaderSettings.h" />
     <QtMoc Include="include\Host\ConnectionManager.h" />
     <QtMoc Include="include\Host\Connection.h" />
@@ -223,7 +179,6 @@
     <QtMoc Include="include\Host\ApplicationStatistic.h" />
     <QtMoc Include="include\Host\ApplicationRestarter.h" />
     <QtMoc Include="include\Host\Application.h" />
-    <ClInclude Include="include\Host\Bridge\Credential.h" />
     <ClInclude Include="include\Host\GameDownloader\DownloaderSettingsRoulette.h" />
     <ClInclude Include="include\Host\Installer\UninstallInfo.h" />
     <QtMoc Include="include\Host\ServiceProcess\ServicesListRequest.h" />
@@ -236,7 +191,6 @@
     <QtMoc Include="include\Host\Installer\UninstallResult.h" />
     <QtMoc Include="include\Host\GameDownloader\Hook\UpdateUninstallInfo.h" />
     <QtMoc Include="include\Host\GameDownloader\Hook\SaveInstallPath.h" />
-    <QtMoc Include="include\Host\GameDownloader\Hook\CheckDownload.h" />
     <QtMoc Include="include\Host\Dbus\UpdateManagerBridgeProxy.h" />
     <QtMoc Include="include\Host\Dbus\UpdateManagerBridgeAdaptor.h" />
     <QtMoc Include="include\Host\Dbus\SettingsBridgeProxy.h" />
@@ -281,13 +235,11 @@
     <QtMoc Include="include\Features\RenderRateHack.h" />
     <QtMoc Include="include\Features\RemouteStartGame.h" />
     <QtMoc Include="include\Features\ProtocolOneDownloader.h" />
-    <QtMoc Include="include\Features\PremiumExecutor.h" />
     <QtMoc Include="include\Features\LanguageChangeEventFilter.h" />
     <ClInclude Include="include\Features\Marketing\MarketingIntegrationMarker.h" />
     <ClInclude Include="include\Features\Marketing\SystemInfo\SoftVendor\RegistryHelper.h" />
     <QtMoc Include="include\Features\WorkStationLock\WorkStationLockHook.h" />
     <QtMoc Include="include\Features\WorkStationLock\RegisterSessionNotificationFilter.h" />
-    <QtMoc Include="include\Features\RestApi\ServiceHasAccess.h" />
     <QtMoc Include="include\Features\Marketing\SystemInfo\SystemInfoManager.h" />
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\ZZima.h" />
     <QtMoc Include="include\Features\Marketing\SystemInfo\SoftVendor\VendorBase.h" />

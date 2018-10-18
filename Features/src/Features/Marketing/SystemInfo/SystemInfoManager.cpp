@@ -16,15 +16,10 @@
 #include <Features/Marketing/SystemInfo/Hardware/Screen.h>
 #include <Features/Marketing/SystemInfo/Hardware/OsInfo.h>
 
-#include <RestApi/Commands/Marketing/SetGnaInstallStep.h>
-
 #include <Settings/Settings.h>
 #include <Core/System/HardwareId.h>
 
-using P1::RestApi::Commands::Marketing::SetGnaInstallStep;
-using P1::RestApi::CommandBase;
 using P1::RestApi::ProtocolOneCredential;
-using P1::RestApi::RestApiManager;
 using P1::Settings::Settings;
 
 
@@ -50,9 +45,11 @@ namespace Features {
 
       void SystemInfoManager::init()
       {
-        QObject::connect(&this->_timer, &QTimer::timeout, this, &SystemInfoManager::send);
-        this->_timer.start(3600000);
-        QTimer::singleShot(300000, this, SLOT(send()));
+        // INFO turned off until Marketing isn't available.
+
+        //QObject::connect(&this->_timer, &QTimer::timeout, this, &SystemInfoManager::send);
+        //this->_timer.start(3600000);
+        //QTimer::singleShot(300000, this, SLOT(send()));
       }
 
       void SystemInfoManager::setCredential(const P1::RestApi::ProtocolOneCredential& value)
@@ -67,27 +64,27 @@ namespace Features {
 
       void SystemInfoManager::send()
       {
-        if (!this->canSendStatistic())
-          return;
+        //if (!this->canSendStatistic())
+        //  return;
 
-        QString xml = this->getSystemInfo(this->_credential.userId());
+        //QString xml = this->getSystemInfo(this->_credential.userId());
 
-        SetGnaInstallStep *cmd = new SetGnaInstallStep();
-        cmd->setUserId(this->_credential.userId());
-        cmd->setAppKey(this->_credential.appKey());
-        cmd->setHwid(P1::Core::System::HardwareId::value());
-        cmd->setServiceId(QLatin1String("1"));
-        cmd->setMarketingTarget(2761);
-        cmd->setMarketingId(this->_mid);
-        cmd->appendParameter("params", xml);
+        //SetGnaInstallStep *cmd = new SetGnaInstallStep();
+        //cmd->setUserId(this->_credential.userId());
+        //cmd->setAppKey(this->_credential.appKey());
+        //cmd->setHwid(P1::Core::System::HardwareId::value());
+        //cmd->setServiceId(QLatin1String("1"));
+        //cmd->setMarketingTarget(2761);
+        //cmd->setMarketingId(this->_mid);
+        //cmd->appendParameter("params", xml);
 
-        QObject::connect(cmd, &SetGnaInstallStep::result, [this, cmd](CommandBase::CommandResults result) {
-          cmd->deleteLater();
-          if (result == P1::RestApi::CommandBase::NoError)
-            this->saveSendDate();
-        });
+        //QObject::connect(cmd, &SetGnaInstallStep::result, [this, cmd](CommandBase::CommandResults result) {
+        //  cmd->deleteLater();
+        //  if (result == P1::RestApi::CommandBase::NoError)
+        //    this->saveSendDate();
+        //});
 
-        cmd->execute();
+        //cmd->execute();
       }
 
       QString SystemInfoManager::getSystemInfo(const QString& userId)

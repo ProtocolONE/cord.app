@@ -1,16 +1,24 @@
-organizationName: ProtocolOne
-ApplicationName: Launcher
+organizationName: 'ProtocolOne'
+applicationName: 'Launcher'
 overrideApi: false
 wwwUrl: 'https://gamenet.ru'
 gnloginUrl: 'https://gnlogin.ru'
 apiUrl: 'https://gnapi.com:8443/restapi'
 apiUrlPat: 'https://gnapi.com:%1/restapi'
 statusUrl: 'https://gnapi.com/status.json'
-debugApi: false
+debugApi: true
 jabber:
     url: 'qj.gamenet.ru'
 status: 
     url: 'https://gnapi.com/status.json'
     enabled: true
 saveApi: false
-urlProtocolScheme: protocolone
+auth:
+    debug: true
+    url: 'http://vb-auth.protocol.one:8001'
+    version: 'v1'
+    localWebSocketUrl: 'ws://wss.protocol.one'
+api:
+    debug: false
+    url: 'http://vb-api.protocol.one:8021'
+    version: 'v1'

@@ -2,7 +2,6 @@
 #include <Host/ServiceProcess/ServiceLoader.h>
 #include <Host/ServiceSettings.h>
 
-#include <Features/PremiumExecutor.h>
 #include <Helper/SystemInfo.h>
 
 #include <GameExecutor/ServiceInfoCounter.h>
@@ -14,7 +13,13 @@
 #include <QtCore/QUrlQuery>
 #include <QtCore/QCoreApplication>
 
-using Features::PremiumExecutor;
+#include <GameExecutor/Executor/ExecutableFile.h>
+#include <GameExecutor/Executor/WebLink.h>
+#include <GameExecutor/Executor/WebLinkSsl.h>
+
+//#include <Host/ElectronExecutor.h>
+//#include <Host/ElectronsExecutor.h>
+
 using P1::GameExecutor::GameExecutorService;
 using P1::GameExecutor::ServiceInfoCounter;
 using P1::Core::Service;
@@ -25,7 +30,6 @@ namespace P1 {
     
     GameExecutor::GameExecutor(QObject *parent /*= 0*/)
       : QObject(parent)
-      , _premiumExecutor(new PremiumExecutor(this))
       , _mainExecutor(new GameExecutorService(this))
       , _gameExecutorServiceInfoCounter(new ServiceInfoCounter(this))
       , _services(nullptr)
@@ -54,20 +58,20 @@ namespace P1 {
       Q_ASSERT(this->_mainExecutor);
       Q_ASSERT(this->_serviceSettings);
 
-      this->_premiumExecutor->setMainExecutor(this->_mainExecutor);
-      this->_premiumExecutor->init();
+      using namespace P1::GameExecutor::Executor;
+      using namespace P1::Host;
 
-      QObject::connect(this->_premiumExecutor, &PremiumExecutor::serviceStarted,
-        this, &GameExecutor::onServiceStarted);
+      this->_mainExecutor->registerExecutor(new ExecutableFile(this));
+      //this->_mainExecutor->registerExecutor(new ElectronExecutor(this));
+      //this->_mainExecutor->registerExecutor(new ElectronsExecutor(this));
+      this->_mainExecutor->registerExecutor(new WebLink(this));
+      this->_mainExecutor->registerExecutor(new WebLinkSsl(this));
 
-      QObject::connect(this->_premiumExecutor, &PremiumExecutor::serviceFinished,
-        this, &GameExecutor::onServiceFinished);
+      QObject::connect(this->_mainExecutor, &GameExecutorService::started,
+        this, &GameExecutor::onServiceStarted, Qt::QueuedConnection);
 
-      QObject::connect(this->_premiumExecutor, &PremiumExecutor::secondServiceStarted,
-        this, &GameExecutor::onSecondServiceStarted);
-
-      QObject::connect(this->_premiumExecutor, &PremiumExecutor::secondServiceFinished,
-        this, &GameExecutor::onSecondServiceFinished);
+      QObject::connect(this->_mainExecutor, &GameExecutorService::finished,
+        this, &GameExecutor::onServiceFinished, Qt::QueuedConnection);
 
       QObject::connect(this->_mainExecutor, &GameExecutorService::started,
         this->_gameExecutorServiceInfoCounter, &ServiceInfoCounter::started);
@@ -78,76 +82,50 @@ namespace P1 {
 
     void GameExecutor::shutdown()
     {
-      this->_premiumExecutor->shutdown();
+      this->_mainExecutor->shutdown();
     }
 
-    void GameExecutor::execute(
-      const QString& serviceId, const ProtocolOneCredential& credetial)
+    void GameExecutor::execute(const QString& serviceId, const ProtocolOneCredential& credetial)
     {
       Q_ASSERT(this->_services);
-      Q_ASSERT(this->_premiumExecutor);
+      Q_ASSERT(this->_mainExecutor);
 
       Service *service = this->_services->getService(serviceId);
       if (!service)
         return;
 
       this->prepairExecuteUrl(service);
-      this->_premiumExecutor->executeMain(service, credetial);
-    }
 
-    void GameExecutor::executeSecond(
-      const QString& serviceId, 
-      const ProtocolOneCredential& credetial, 
-      const ProtocolOneCredential& secondCredetial)
-    {
-      Q_ASSERT(this->_services);
-      Q_ASSERT(this->_premiumExecutor);
-      P1::Core::Service *service = this->_services->getService(serviceId);
-      if (!service)
-        return;
+      QMutexLocker locker(&this->_mutex);
 
-      this->_premiumExecutor->executeSecond(service, credetial, secondCredetial);
+      this->_mainExecutor->execute(*service, credetial);
+      this->_mainGameStarted.insert(serviceId);
     }
 
     bool GameExecutor::isGameStarted(const QString& serviceId) const
     {
-      return this->_premiumExecutor->isGameStarted(serviceId);
-    }
-
-    bool GameExecutor::isSecondGameStarted(const QString& serviceId) const
-    {
-      return this->_premiumExecutor->isSecondGameStarted(serviceId);
+      return this->_mainExecutor->isGameStarted(serviceId);
     }
 
     bool GameExecutor::isAnyGameStarted() const
     {
-      return this->_premiumExecutor->isAnyGameStarted();
-    }
-
-    bool GameExecutor::canExecuteSecond(const QString& serviceId) const
-    {
-      Q_ASSERT(this->_premiumExecutor);
-      return this->_premiumExecutor->canExecuteSecond(serviceId);
+      return this->_mainExecutor->isAnyGameStarted();
     }
 
     void GameExecutor::onServiceStarted(const Service &service)
     {
+      this->_mainGameStarted.insert(service.id());
       emit this->serviceStarted(service.id());
     }
 
     void GameExecutor::onServiceFinished(const Service &service, P1::GameExecutor::FinishState state)
     {
+      {
+        QMutexLocker locker(&this->_mutex);
+        this->_mainGameStarted.remove(service.id());
+      }
+
       emit this->serviceFinished(service.id(), static_cast<int>(state));
-    }
-
-    void GameExecutor::onSecondServiceStarted(const Service &service)
-    {
-      emit this->secondServiceStarted(service.id());
-    }
-
-    void GameExecutor::onSecondServiceFinished(const Service &service, P1::GameExecutor::FinishState state)
-    {
-      emit this->secondServiceFinished(service.id(), static_cast<int>(state));
     }
 
     GameExecutorService* GameExecutor::mainExecutor()
@@ -196,39 +174,18 @@ namespace P1 {
       service->setUrl(result);
     }
 
-    void GameExecutor::shutdownSecond()
-    {
-      this->_premiumExecutor->shutdownSecond();
-    }
-
     QString GameExecutor::executedGame() const
     {
-      QString result = this->_premiumExecutor->firstRunningGame();
+      if (this->_mainGameStarted.isEmpty())
+        return QString();
 
-      if (result.isEmpty())
-        result = this->_premiumExecutor->firstRunningSecondGame();
-
-      return result;
-    }
-
-    P1::GameExecutor::GameExecutorService* GameExecutor::secondExecutor()
-    {
-      return this->_premiumExecutor->secondExecutor();
-    }
-
-    P1::GameExecutor::GameExecutorService* GameExecutor::simpleMainExecutor()
-    {
-      return this->_premiumExecutor->simpleMainExecutor();
+      return *this->_mainGameStarted.begin();
     }
 
     void GameExecutor::terminateAll(const QString& serviceId /*= QString()*/)
     {
-      this->_premiumExecutor->terminateAll(serviceId);
-    }
-
-    void GameExecutor::terminateSecond(const QString& serviceId /*= QString()*/)
-    {
-      this->_premiumExecutor->shutdownSecond(serviceId);
+      if (this->_mainExecutor->isAnyGameStarted())
+        this->_mainExecutor->terminate(serviceId);
     }
 
   }

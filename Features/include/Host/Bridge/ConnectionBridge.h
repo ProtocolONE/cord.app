@@ -1,11 +1,13 @@
 #pragma once
 
-#include <Host/Bridge/Credential.h>
-
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
 namespace P1 {
+  namespace RestApi {
+    class ProtocolOneCredential;
+  }
+
   namespace Host {
 
     class Connection;
@@ -19,7 +21,7 @@ namespace P1 {
         Q_CLASSINFO("D-Bus Interface", "com.protocolone.launcher.dbus.Connection")
       public:
         explicit ConnectionBridge(QObject *parent = 0);
-        virtual ~ConnectionBridge();
+        virtual ~ConnectionBridge() = default;
 
         void setConnection(Connection* value);
 
@@ -38,15 +40,8 @@ namespace P1 {
 
         void setApplicationName(const QString& applicationName);
 
-        /*
-        <method name="setCredential">
-          <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="P1::Host::Bridge::Credential"/>
-        </method>
-        */
-
         /**
-         * \fn  void ConnectionBridge::setCredential(const Credential& credential);
+         * \fn  void ConnectionBridge::setCredential(const QString& accessToken, const QString& acccessTokenExpiredTime);
          *
          * \brief Sets a user's credential.
          *
@@ -55,28 +50,11 @@ namespace P1 {
          *
          * \param credential  The credential.
          */
-        void setCredential(const Credential& credential);
+        void setCredential(const QString& accessToken, const QString& acccessTokenExpiredTime);
 
-
-        /*
-        <method name="setSecondCredential">
-          <arg name="credential" type="a(sii)" direction="in"/>
-          <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="P1::Host::Bridge::Credential"/>
-        </method>
-        */
-
-        /**
-         * \fn  void ConnectionBridge::setSecondCredential(const Credential& credential);
-         *
-         * \brief Sets a user's second credential. It's available only for premium users.
-         *
-         * \author  Ilya Tkachenko
-         * \date  27.10.2014
-         *
-         * \param credential  The credential.
-         */
-
-        void setSecondCredential(const Credential& credential);
+        void updateCredential(
+            const QString& accessTokenOld, const QString& acccessTokenExpiredTimeOld
+          , const QString& accessTokenNew, const QString& acccessTokenExpiredTimeNew);
 
         /**
          * \fn  void ConnectionBridge::ping();
@@ -103,18 +81,7 @@ namespace P1 {
 
       signals:
 
-        /**
-         * \fn  void ConnectionBridge::wrongCredential(const QString& userId);
-         *
-         * \brief Wrong credential for user with identifier 'userId'.
-         *
-         * \author  Ilya Tkachenko
-         * \date  27.10.2014
-         *
-         * \param userId  Identifier for the user.
-         */
-
-        void wrongCredential(const QString& userId);
+        void authorizationError(const QString& accessToken, const QString& acccessTokenExpiredTime);
 
         /**
          * \fn  void ConnectionBridge::pong();
@@ -129,6 +96,8 @@ namespace P1 {
 
       private:
         Connection *_connection;
+
+        void onAuthorizationError(const P1::RestApi::ProtocolOneCredential& credential);
 
       };
 

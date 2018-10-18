@@ -40,34 +40,24 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="688"/>
-        <location filename="../src/mainwindow.cpp" line="697"/>
-        <location filename="../src/mainwindow.cpp" line="708"/>
-        <location filename="../src/mainwindow.cpp" line="727"/>
-        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>INFO_CAPTION</source>
-        <translation>Внимание</translation>
+        <translation type="vanished">Внимание</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="727"/>
         <source>SECOND_SERVICE_AUTH_ERROR</source>
-        <translation>Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
+        <translation type="vanished">Не удалось войти в игру этим аккаунтом. Попробуйте выйти из него и войти заново. Если это сообщение будет повторяться, обратитесь в службу поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="688"/>
-        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>SERVICE_ACCOUNT_BLOCKED_INFO</source>
-        <translation>Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки. Подробности в &lt;a href=&quot;https://support.protocol.one/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
+        <translation type="vanished">Ваш аккаунт в игре заблокирован. Информация о причинах и сроке блокировки отправлена на e-mail, указанный вами при регистрации. При возникновении вопросов обращайтесь в службу поддержки. Подробности в &lt;a href=&quot;https://support.protocol.one/kb/articles/899&quot;&gt;KB-899&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="698"/>
         <source>SERVICE_ACCOUNT_CBT_PERMISSION_INFO</source>
-        <translation>У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
+        <translation type="vanished">У вас нет доступа к игре %1. Пожалуйста обратитесь в службу технической поддержки.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="709"/>
         <source>SERVICE_ACCOUNT_GEO_IP_BLOCKED_INFO</source>
-        <translation>Эта игра недоступна в вашей стране.</translation>
+        <translation type="vanished">Эта игра недоступна в вашей стране.</translation>
     </message>
 </context>
 <context>
@@ -103,12 +93,12 @@
         <translation>Для установки &quot;%1&quot; требуется не менее &lt;b&gt;%2&lt;/b&gt;. На выбранном вами диске доступно &lt;b&gt;%3&lt;/b&gt;. Выберите другой каталог или освободите место на диске.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="309"/>
+        <location filename="../src/mainwindow.cpp" line="295"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_CAPTION</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="308"/>
+        <location filename="../src/mainwindow.cpp" line="294"/>
         <source>SCREEN_DEPTH_LOVER_THAN_16_INFO</source>
         <translation>Упс! У нас иногда не получается нормально запускаться в режиме цветопередачи 16-бит. Простите, если это произошло в этот раз. Мы исправимся, а пока измените настроки цветопередачи на 32-бита.</translation>
     </message>

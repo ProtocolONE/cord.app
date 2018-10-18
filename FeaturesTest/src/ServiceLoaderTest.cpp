@@ -17,7 +17,6 @@
 
 #include <GameExecutor/GameExecutorService.h>
 #include <GameExecutor/hookinterface.h>
-#include <GameExecutor/Hook/SendPlayingInfo.h>
 #include <GameExecutor/Hook/ActivateWindow.h>
 
 #include <QtCore/QCoreApplication>
@@ -36,24 +35,12 @@ using P1::Core::Service;
 using P1::GameExecutor::GameExecutorService;
 using P1::GameExecutor::HookInterface;
 using P1::GameExecutor::Hook::ActivateWindow;
-using P1::GameExecutor::Hook::SendPlayingInfo;
 
 using P1::GameDownloader::GameDownloadService;
 using P1::GameDownloader::HookBase;
 using P1::GameDownloader::Hooks::InstallDependency;
 
 using Features::WorkStationLock::WorkStationLockHook;
-
-class SendPlayingInfoMock : public HookInterface 
-{
-public :
-  SendPlayingInfoMock() 
-    : HookInterface()
-  {
-  }
-
-  static QString id() { return SendPlayingInfo::id(); }
-};
 
 class ExecutorTestHook1 : public HookInterface
 {
@@ -151,13 +138,10 @@ public:
     downloaderHookFactory.setServiceLoader(&loader);
     downloaderHookFactory.setServiceSettings(&settigns);
 
-    executorHookFactory.reg<SendPlayingInfoMock>();
     executorHookFactory.reg<ActivateWindow>();
     executorHookFactory.reg<WorkStationLockHook>();
     
     loader.setExecutor(&executor);
-    loader.setSimpleMainExecutor(&simpleMainExecutor);
-    loader.setSecondExecutor(&secondExecutor);
     loader.setDownloader(&downloader);
     loader.setExecuterHookFactory(&executorHookFactory);
     loader.setDownloaderHookFactory(&downloaderHookFactory);
@@ -165,8 +149,7 @@ public:
 
   ServiceDescription description;
   GameExecutorServiceMock executor;
-  GameExecutorServiceMock simpleMainExecutor;
-  GameExecutorServiceMock secondExecutor;
+
   ServiceLoaderTestGameDownloadServiceMock downloader;
   HookFactory downloaderHookFactory;
   ExecutorHookFactory executorHookFactory;

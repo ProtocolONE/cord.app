@@ -31,12 +31,6 @@ namespace P1 {
 
         QObject::connect(value, &GameExecutor::serviceFinished,
           this, &GameExecutorProxy::onServiceFinished, Qt::QueuedConnection);
-
-        QObject::connect(value, &GameExecutor::secondServiceStarted,
-          this, &GameExecutorProxy::onSecondServiceStarted, Qt::QueuedConnection);
-
-        QObject::connect(value, &GameExecutor::secondServiceFinished,
-          this, &GameExecutorProxy::onSecondServiceFinished, Qt::QueuedConnection);
       }
 
       void GameExecutorProxy::setConnection(Connection *value)
@@ -66,39 +60,16 @@ namespace P1 {
         this->_executor->execute(serviceId, credetial);
       }
 
-      void GameExecutorProxy::executeSecond(
-        const QString& serviceId,
-        const ProtocolOneCredential& credetial,
-        const ProtocolOneCredential& secondCredetial)
-      {
-        Q_ASSERT(this->_connetion);
-        Q_ASSERT(this->_executor);
-        Q_ASSERT(this->_serviceHandle);
-
-        if (!this->_serviceHandle->lock(serviceId, this->_connetion))
-          return;
-
-        this->processExecute(serviceId, credetial, secondCredetial);
-        this->_executor->executeSecond(serviceId, credetial, secondCredetial);
-      }
-
       void GameExecutorProxy::processExecute(
         const QString& serviceId, 
-        const ProtocolOneCredential& credetial, 
-        const ProtocolOneCredential& secondCredetial)
+        const ProtocolOneCredential& credetial)
       {
-        QHash<QString, P1::RestApi::ProtocolOneCredential>& map = 
-          secondCredetial.isEmpty() ? this->_executedGame : this->_executedSecondGame;
-
         // INFO всегда переписываем автризацию на новую запускаемую.
         // UI приложение должно следить и не запускать из одного подключения игру, если
         // она уже запущена. Эта авторизация используется для отправки маркетинга, и поэтому ее нельзя
         // просто так чистить при закрытии игры.
 
-        const ProtocolOneCredential& mainCredential = 
-          secondCredetial.isEmpty() ? credetial : secondCredetial;
-
-        map[serviceId] = mainCredential;
+        this->_executedGame[serviceId] = credetial;
       }
 
       void GameExecutorProxy::onServiceStarted(const QString& serviceId)
@@ -119,34 +90,8 @@ namespace P1 {
         if (!this->_connetion->isOwnService(serviceId))
           return;
 
-        if (!this->_executor->isSecondGameStarted(serviceId))
-          this->_serviceHandle->unlock(serviceId, this->_connetion);
-
+        this->_serviceHandle->unlock(serviceId, this->_connetion);
         this->serviceFinished(serviceId, finishState);
-      }
-
-      void GameExecutorProxy::onSecondServiceStarted(const QString& serviceId)
-      {
-        Q_ASSERT(this->_connetion);
-
-        if (!this->_connetion->isOwnService(serviceId))
-          return;
-
-        this->secondServiceStarted(serviceId);
-      }
-
-      void GameExecutorProxy::onSecondServiceFinished(const QString& serviceId, int finishState)
-      {
-        Q_ASSERT(this->_connetion);
-        Q_ASSERT(this->_serviceHandle);
-
-        if (!this->_connetion->isOwnService(serviceId))
-          return;
-
-        if (!this->_executor->isGameStarted(serviceId))
-          this->_serviceHandle->unlock(serviceId, this->_connetion);
-
-        this->secondServiceFinished(serviceId, finishState);
       }
 
       bool GameExecutorProxy::isGameStarted(const QString& serviceId) const
@@ -159,18 +104,6 @@ namespace P1 {
       {
         Q_ASSERT(this->_executor);
         return this->_executor->isAnyGameStarted();
-      }
-
-      bool GameExecutorProxy::canExecuteSecond(const QString& serviceId) const
-      {
-        Q_ASSERT(this->_executor);
-        return this->_executor->canExecuteSecond(serviceId);
-      }
-
-      void GameExecutorProxy::shutdownSecond()
-      {
-        Q_ASSERT(this->_executor);
-        this->_executor->shutdownSecond();
       }
 
       void GameExecutorProxy::terminateGame(const QString& serviceId /*= QString()*/)
@@ -187,13 +120,6 @@ namespace P1 {
         return this->_executedGame[serviceId];
       }
 
-      ProtocolOneCredential GameExecutorProxy::secondGameCredential(const QString& serviceId)
-      {
-        if (!this->_executedSecondGame.contains(serviceId))
-          return ProtocolOneCredential();
-
-        return this->_executedSecondGame[serviceId];
-      }
 
     }
   }

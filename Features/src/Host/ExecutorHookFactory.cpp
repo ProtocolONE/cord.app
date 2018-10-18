@@ -9,7 +9,6 @@
 #include <GameExecutor/Hook/DisableDEP.h>
 #include <GameExecutor/Hook/DownloadCustomFile.h>
 #include <GameExecutor/Hook/DisableIEDefalutProxy.h>
-#include <GameExecutor/Hook/SendPlayingInfo.h>
 #include <GameExecutor/Hook/DisableAeroHook.h>
 #include <GameExecutor/Hook/PreventWinXpLaunch.h>
 
@@ -88,7 +87,6 @@ namespace P1 {
       this->reg<DisableDEP>();
       this->reg<DownloadCustomFile>();
       this->reg<DisableIEDefalutProxy>();
-      this->reg<SendPlayingInfo>();
       this->reg<DisableAeroHook>();
       this->reg<PreventWinXpLaunch>();
       this->reg<CheckAsciiPath>();

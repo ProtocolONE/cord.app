@@ -9,7 +9,6 @@ GameExecutor/1.0.0@common/stable
 LibtorrentWrapper/1.0.0@common/stable
 Libtorrent/1.0.5@common/stable
 Log4qt/1.4.2@common/stable
-Marketing/1.0.0@common/stable
 QmlExtension/1.0.0@common/stable
 RestApi/1.0.0@common/stable
 Settings/1.0.0@common/stable

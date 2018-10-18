@@ -10,7 +10,6 @@
 
 #include <Host/GameDownloader/Hook/SaveInstallPath.h>
 #include <Host/GameDownloader/Hook/UpdateUninstallInfo.h>
-#include <Host/GameDownloader/Hook/CheckDownload.h>
 
 #include <RestApi/ProtocolOneCredential.h>
 
@@ -24,7 +23,6 @@ using P1::GameDownloader::Hooks::PreventWinXpDownload;
 using P1::GameDownloader::Hooks::PreventWin32Download;
 using P1::Host::GameDownloader::Hook::SaveInstallPath;
 using P1::Host::GameDownloader::Hook::UpdateUninstallInfo;
-using P1::Host::GameDownloader::Hook::CheckDownload;
 
 namespace P1 {
   namespace Host {
@@ -57,27 +55,6 @@ namespace P1 {
         SaveInstallPath *hook = new SaveInstallPath(this);
         hook->setServiceSettings(this->_serviceSettings);
         hook->setServiceLoader(this->_serviceLoader);
-        result = hook;
-      } else if (guid == "81F2D0B8-298E-4041-83B0-EA5D417F580A") {
-        CheckDownload *hook = new CheckDownload(this);
-        hook->setCredential([this](const QString& serviceId)-> P1::RestApi::ProtocolOneCredential
-        {
-          Connection* connection = this->_serviceHandle->connectionLockedService(serviceId);
-          if (!connection) {
-            return P1::RestApi::ProtocolOneCredential();
-          }
-
-          return connection->credential();
-        });
-
-        QObject::connect(hook, &CheckDownload::internalError, []()
-        {
-          // INFO HACK перевод не работает в Checkdownload 
-          QString title = tr("RESTAPI_ERROR_CAPTION");
-          QString msg = tr("HAS_ACCESS_INTERNAL_ERROR");
-          Message::warning(title, msg);
-        });
-
         result = hook;
       } else if (guid == "65CE6F6B-B21A-4d8b-8FD4-B5B750D556CD") {
         UpdateUninstallInfo *hook = new UpdateUninstallInfo(this);

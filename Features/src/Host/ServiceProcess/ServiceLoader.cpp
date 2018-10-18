@@ -13,7 +13,6 @@
 
 #include <GameExecutor/GameExecutorService.h>
 #include <GameExecutor/HookInterface.h>
-#include <GameExecutor/Hook/SendPlayingInfo.h>
 #include <GameExecutor/Hook/ActivateWindow.h>
 
 #include <QtCore/QSettings>
@@ -31,8 +30,6 @@ namespace P1 {
         : QObject(parent)
         , _downloader(nullptr)
         , _executor(nullptr)
-        , _secondExecutor(nullptr)
-        , _simpleMainExecutor(nullptr)
         , _factory(nullptr)
         , _executorHookFactory(nullptr)
         , _gameArea(Service::Live)
@@ -53,18 +50,6 @@ namespace P1 {
       {
         Q_ASSERT(value);
         this->_executor = value;
-      }
-
-      void ServiceLoader::setSimpleMainExecutor(GameExecutorService *value)
-      {
-        Q_ASSERT(value);
-        this->_simpleMainExecutor = value;
-      }
-
-      void ServiceLoader::setSecondExecutor(GameExecutorService *value)
-      {
-        Q_ASSERT(value);
-        this->_secondExecutor = value;
       }
 
       void ServiceLoader::setDownloaderHookFactory(HookFactory *value)
@@ -225,11 +210,8 @@ namespace P1 {
       void ServiceLoader::initExecutorHooks(const Service *service, const ServiceDescription& description)
       {
         Q_ASSERT(this->_executor);
-        Q_ASSERT(this->_secondExecutor);
-        Q_ASSERT(this->_simpleMainExecutor);
 
         using P1::GameExecutor::HookInterface;
-        using P1::GameExecutor::Hook::SendPlayingInfo;
         using P1::GameExecutor::Hook::ActivateWindow;
 
         using Features::WorkStationLock::WorkStationLockHook;
@@ -244,39 +226,11 @@ namespace P1 {
 
         // INFO тут обязательные хуки !!! Внимание эти хуки должны быть зарегистрированы в тестах!
         if (description.isDownloadable()) {
-          HookInterface *playing = this->_executorHookFactory->create(SendPlayingInfo::id());
-          Q_ASSERT(playing);
-          this->_executor->addHook(*service, playing, 0);
-
-          playing = this->_executorHookFactory->create(SendPlayingInfo::id());
-          Q_ASSERT(playing);
-          this->_secondExecutor->addHook(*service, playing, 0);
-
-          playing = this->_executorHookFactory->create(SendPlayingInfo::id());
-          Q_ASSERT(playing);
-          this->_simpleMainExecutor->addHook(*service, playing, 0);
-
           HookInterface* activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
           Q_ASSERT(activateWindow);
           this->_executor->addHook(*service, activateWindow, 0);
 
-          activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
-          Q_ASSERT(activateWindow);
-          this->_secondExecutor->addHook(*service, activateWindow, 0);
-
-          activateWindow = this->_executorHookFactory->create(ActivateWindow::id());
-          Q_ASSERT(activateWindow);
-          this->_simpleMainExecutor->addHook(*service, activateWindow, 0);
-
           HookInterface* workStationLock = this->_executorHookFactory->create(WorkStationLockHook::id());
-          Q_ASSERT(workStationLock);
-          this->_simpleMainExecutor->addHook(*service, workStationLock, 0);
-
-          workStationLock = this->_executorHookFactory->create(WorkStationLockHook::id());
-          Q_ASSERT(workStationLock);
-          this->_secondExecutor->addHook(*service, workStationLock, 0);
-
-          workStationLock = this->_executorHookFactory->create(WorkStationLockHook::id());
           Q_ASSERT(workStationLock);
           this->_executor->addHook(*service, workStationLock, 0);
         }
