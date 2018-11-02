@@ -152,7 +152,7 @@ void initOpenglRender(SingleApplication& app)
 
 int main(int argc, char *argv[])
 {
-  SingleApplication app(argc, argv, "{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+  SingleApplication app(argc, argv, "{74EB070B-4619-43B7-8049-97B9E398ADF4}");
   app.setQuitOnLastWindowClosed(false);
 
   // Get current flag

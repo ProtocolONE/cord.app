@@ -516,10 +516,11 @@ bool MainWindow::executeService(QString id)
     return false;
   }
 
-  if (this->_restapiManager.credential().isValid()) {
-    emit this->authBeforeStartGameRequest(id);
-    return false;
-  }
+  // UNDONE we shouldn't check here
+  //if (!this->_restapiManager.credential().isValid()) {
+  //  emit this->authBeforeStartGameRequest(id);
+  //  return false;
+  //}
 
   if (!this->_serviceSettings->isDownloadable(id))
     this->_licenseManager->acceptWebLicense();
@@ -527,7 +528,11 @@ bool MainWindow::executeService(QString id)
   P1::RestApi::ProtocolOneCredential baseCredential =
     P1::RestApi::RestApiManager::commonInstance()->credential();
 
-  this->_executor->execute(id, baseCredential.acccessTokent(), baseCredential.accessTokenExpiredTimeAsString());
+  this->_executor->execute(
+    id, 
+    baseCredential.acccessTokent(), 
+    baseCredential.accessTokenExpiredTimeAsString());
+
   this->startGame(id);
   return true;
 }
@@ -630,17 +635,21 @@ void MainWindow::startGame(const QString& serviceId)
     this->_downloader->start(serviceId, static_cast<int>(P1::GameDownloader::Normal));
     return;
   }
-  
-  bool isAuthed = !this->_restapiManager.credential().isValid();
-  if (!isAuthed) {
-    emit this->authBeforeStartGameRequest(serviceId);
-    return;
-  }
+
+  // UNDONE we shouldn't check here
+  //bool isAuthed = !this->_restapiManager.credential().isValid();
+  //if (!isAuthed) {
+  //  emit this->authBeforeStartGameRequest(serviceId);
+  //  return;
+  //}
 
   P1::RestApi::ProtocolOneCredential baseCredential = 
     P1::RestApi::RestApiManager::commonInstance()->credential();
 
-  this->_executor->execute(serviceId, baseCredential.acccessTokent(), baseCredential.accessTokenExpiredTimeAsString());
+  this->_executor->execute(
+    serviceId, 
+    baseCredential.acccessTokent(), 
+    baseCredential.accessTokenExpiredTimeAsString());
 }
 
 void MainWindow::commandRecieved(QString name, QStringList arguments)

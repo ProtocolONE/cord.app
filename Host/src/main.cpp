@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   int tmpFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
   tmpFlag = _CrtSetDbgFlag(0);
 
-  SingleApplication app(argc, argv, "{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}");
+  SingleApplication app(argc, argv, "{0DF08C1B-5888-4623-A414-398C01CF831B}");
   QString path = QCoreApplication::applicationDirPath();
 
   QString configPath = path + "/Config.yaml";

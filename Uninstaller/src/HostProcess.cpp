@@ -62,7 +62,7 @@ void HostProcess::onUninstallFinished(int result)
 
 void HostProcess::testLauncherReady()
 {
-  WCHAR *mutexName = L"Global\\{CCC143CA-F620-41B2-A3DD-CB5DFAEE5DD7}";
+  WCHAR *mutexName = L"Global\\{0DF08C1B-5888-4623-A414-398C01CF831B}";
 
   HANDLE hMutex = ::OpenMutex(SYNCHRONIZE, FALSE, mutexName);
   if (hMutex != NULL) {

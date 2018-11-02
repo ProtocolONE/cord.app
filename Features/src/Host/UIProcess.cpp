@@ -243,7 +243,7 @@ namespace P1 {
 
     bool UIProcess::isStarted()
     {
-      const std::string name("Global\\{34688F78-432F-4C5A-BFC7-CD1BC88A30CC}");
+      const std::string name("Global\\{74EB070B-4619-43B7-8049-97B9E398ADF4}");
       HANDLE h = OpenMutexA(MUTEX_ALL_ACCESS, 0, name.c_str());
       bool result = h != NULL;
 
