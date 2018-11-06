@@ -82,7 +82,16 @@ namespace P1 {
           serviceDist.setGameId(data["gameId"]);
           serviceDist.setName(data["folderName"]);
           serviceDist.setDisplayName(data["name"]);
-          serviceDist.setTorrentUrl(data["torrentUrl"]);
+          
+          QString torrentUrl = data["torrentUrl"];
+          if (!torrentUrl.isEmpty()) {
+            if (!torrentUrl.endsWith('/')) {
+              WARNING_LOG << "Torrent url should end with '/'. Current value: " << torrentUrl;
+              torrentUrl += '/';
+            }
+          }
+
+          serviceDist.setTorrentUrl(torrentUrl);
           serviceDist.setIsDownloadable(data["isBrowserGame"] != "1");
           serviceDist.setHasDownloadPath(data["hasDownloadPath"] == "1");
           serviceDist.setExtractorType(data["extractorType"]);
