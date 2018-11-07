@@ -8,6 +8,8 @@
 
 #include <QtCore/QSettings>
 
+#include <QtYaml/ConfigManager.h>
+
 using P1::UpdateSystem::UpdateManagerWorker;
 using P1::UpdateSystem::CheckUpdateHelper;
 using P1::Core::Service;
@@ -20,6 +22,7 @@ namespace P1 {
       , _updateState(-1)
       , _updateThread(0)
       , _retryTimer(new QTimer(this))
+      , _enabled(true)
     {
       this->_updateManagerWorker = new UpdateManagerWorker();
       this->_retryTimer->setInterval(60000);
@@ -81,19 +84,30 @@ namespace P1 {
     {
       this->_applicationArea.load();
 
-      QString installUpdateGnaPath = QString("");
+      QString configPath = QCoreApplication::applicationDirPath() + "/Config.yaml";
+      P1::QtYaml::ConfigManager configManager;
+      configManager.load(configPath);
 
-#ifdef LAUNCHER_NO_UPDATE
-      installUpdateGnaPath = QString("tst");
-#endif
+      this->_enabled = configManager.value<QString>("update\\enabled", "true") == "true";
+      
+      QString installUpdateGnaPath = configManager.value<QString>("update\\directory", "");
 
-      QString updateUrl = QString("https://fs0.gnfiles.com/update/launcher/%1/").arg(QString(this->_applicationArea));
+      
+      QString updateUrl = configManager.value<QString>("update\\url", "");
+
+      if (!updateUrl.isEmpty()) {
+        if (!updateUrl.endsWith('/')) {
+          updateUrl += '/';
+        }
+
+        updateUrl += QString(this->_applicationArea) + "/";
+      }
+
       QString updateCrc = QString("%1update.crc.7z").arg(updateUrl);
       this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 
       this->_updateManagerWorker->setUpdateUrl(updateUrl);
       this->_updateManagerWorker->setInstallSubDir(installUpdateGnaPath);
-
       QObject::connect(
         &this->_checkUpdateHelper, &CheckUpdateHelper::finished,
         this, &Updater::checkUpdateHelperFinished);
@@ -171,10 +185,10 @@ namespace P1 {
 
     void Updater::startCheckUpdate()
     {
-      // HACK
-      emit this->allCompleted(false);
-      return;
-
+      if (!this->_enabled) {
+        emit this->allCompleted(false);
+        return;
+      }
 
       Q_ASSERT(this->_canRestart);
       this->_updateThread = new QThread();

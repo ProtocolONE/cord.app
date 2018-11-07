@@ -229,6 +229,8 @@ signals:
       int _updateState;
       QThread* _updateThread;
       QTimer* _retryTimer;
+
+      bool _enabled;
       
       std::function<bool ()> _canRestart;
     };

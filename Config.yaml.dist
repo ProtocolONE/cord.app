@@ -1,24 +1,24 @@
 organizationName: 'ProtocolOne'
 applicationName: 'Launcher'
-overrideApi: false
-wwwUrl: 'https://gamenet.ru'
-gnloginUrl: 'https://gnlogin.ru'
-apiUrl: 'https://gnapi.com:8443/restapi'
-apiUrlPat: 'https://gnapi.com:%1/restapi'
-statusUrl: 'https://gnapi.com/status.json'
-debugApi: true
-jabber:
-    url: 'qj.gamenet.ru'
+urlProtocolScheme: 'protocolone'
 status: 
     url: 'https://gnapi.com/status.json'
-    enabled: true
-saveApi: false
+    enabled: false
 auth:
     debug: true
-    url: 'http://vb-auth.protocol.one:8001'
+    url: 'http://auth.protocol.local:8080'
     version: 'v1'
     localWebSocketUrl: 'ws://wss.protocol.one'
 api:
     debug: false
-    url: 'http://vb-api.protocol.one:8021'
+    url: 'http://api.protocol.local:8080'
     version: 'v1'
+support:
+    url: 'http://google.com'
+googleAnalytic:
+    enabled: true
+    trackingId: ''
+update:
+    enabled: false
+    url: http://fs.protocol.local:8080/update/launcher/
+    directory: 'tst'
