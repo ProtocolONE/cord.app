@@ -1,13 +1,4 @@
 @ECHO OFF
-REM /****************************************************************************
-REM ** This file is a part of Syncopate Limited GameNet Application or it parts.
-REM **
-REM ** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-REM ** All rights reserved.
-REM **
-REM ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-REM ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-REM ****************************************************************************/
 
 IF "%1" == "/?" (
     ECHO Usage: tsmerge lang outputFileName sourcePath  
