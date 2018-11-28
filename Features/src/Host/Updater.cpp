@@ -107,7 +107,7 @@ namespace P1 {
         updateUrl += QString(this->_applicationArea) + "/";
       }
 
-      QString updateCrc = QString("%1update.crc.7z").arg(updateUrl);
+      QString updateCrc = QString("%1update.crc.zip").arg(updateUrl);
       this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 
       this->_updateManagerWorker->setUpdateUrl(updateUrl);
