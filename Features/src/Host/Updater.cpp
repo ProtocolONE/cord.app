@@ -28,7 +28,7 @@ namespace P1 {
       , _retryTimer(new QTimer(this))
       , _enabled(true)
     {
-      this->_updateManagerWorker = new UpdateManagerWorker(new P1::Extractor::MiniZipExtactor);
+      this->_updateManagerWorker = new UpdateManagerWorker(new P1::Extractor::MiniZipExtractor);
       this->_retryTimer->setInterval(60000);
       this->_retryTimer->setSingleShot(true);
 
