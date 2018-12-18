@@ -2,6 +2,10 @@
 #include <Host/GameExecutor.h>
 
 #include <UpdateSystem/UpdateManagerWorker.h>
+#include <UpdateSystem/Extractor/MiniZipExtractor.h>
+#include <UpdateSystem/Extractor/SevenZipExtractor.h>
+
+#include <UpdateSystem/UpdateManagerWorker.h>
 #include <UpdateSystem/CheckUpdateHelper.h>
 
 #include <Core/Service.h>
@@ -24,7 +28,7 @@ namespace P1 {
       , _retryTimer(new QTimer(this))
       , _enabled(true)
     {
-      this->_updateManagerWorker = new UpdateManagerWorker();
+      this->_updateManagerWorker = new UpdateManagerWorker(new P1::Extractor::MiniZipExtractor);
       this->_retryTimer->setInterval(60000);
       this->_retryTimer->setSingleShot(true);
 
@@ -103,7 +107,7 @@ namespace P1 {
         updateUrl += QString(this->_applicationArea) + "/";
       }
 
-      QString updateCrc = QString("%1update.crc.7z").arg(updateUrl);
+      QString updateCrc = QString("%1update.crc.zip").arg(updateUrl);
       this->_checkUpdateHelper.setUpdateUrl(updateCrc);
 
       this->_updateManagerWorker->setUpdateUrl(updateUrl);
