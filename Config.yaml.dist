@@ -2,8 +2,8 @@ organizationName: 'ProtocolOne'
 applicationName: 'Launcher'
 urlProtocolScheme: 'protocolone'
 status: 
-    url: 'https://gnapi.com/status.json'
     enabled: false
+    url: 'https://gnapi.com/status.json'
 auth:
     debug: true
     url: 'http://auth.protocol.local:8080'
@@ -16,7 +16,7 @@ api:
 support:
     url: 'http://google.com'
 googleAnalytic:
-    enabled: true
+    enabled: false
     trackingId: ''
 update:
     enabled: false
